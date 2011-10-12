@@ -37,7 +37,6 @@ $(function(){
 	
 	$( "#kuler-activation" ).click(initialize_kuler);
 	
-	
 	//This function adds necessary markup and CSS as well as 
 	//setting up draggable events and paging
  	function initialize_kuler() {
