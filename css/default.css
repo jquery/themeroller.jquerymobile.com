@@ -36,15 +36,7 @@
 	color: 					#2489CE /*{global-link-color}*/;
 	font-weight: bold;
 }
-.ui-bar-a .ui-link:hover {
-	color: 					#2489CE /*{global-link-hover}*/;
-}
-.ui-bar-a .ui-link:active {
-	color: 					#2489CE /*{global-link-active}*/;
-}
-.ui-bar-a .ui-link:visited {
-	color: 					#2489CE /*{global-link-visited}*/;
-}
+
 .ui-bar-a,
 .ui-bar-a input,
 .ui-bar-a select,
@@ -78,15 +70,7 @@
 	color: 					#2489CE /*{global-link-color}*/;
 	font-weight: bold;
 }
-.ui-body-a .ui-link:hover {
-	color: 					#2489CE /*{global-link-hover}*/;
-}
-.ui-body-a .ui-link:active {
-	color: 					#2489CE /*{global-link-active}*/;
-}
-.ui-body-a .ui-link:visited {
-	color: 					#2489CE /*{global-link-visited}*/;
-}
+
 .ui-btn-up-a {
 	border: 1px solid 		#ccc /*{a-bup-border}*/;
 	background: 			#eee /*{a-bup-background-color}*/;
@@ -150,6 +134,25 @@
 
 a.ui-link-inherit {
 	text-decoration: none !important;
+}
+
+/* links and their different states
+-----------------------------------------------------------------------------------------------------------*/
+
+.ui-link{
+	color: #2489CE /*{global-link-color}*/
+}
+
+.ui-link:hover{
+	color: #2489CE /*{global-link-hover}*/
+}
+
+.ui-link:active{
+	color: #2489CE /*{global-link-active}*/
+}
+
+.ui-link:visited{
+    color: #2489CE /*{global-link-visited}*/
 }
 
 /* Active class used as the "on" state across all themes
