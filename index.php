@@ -136,7 +136,7 @@ if(isset($_GET)) {
 	<div id="colorpicker"></div>
 	<div id="themeroller_mobile">
 		<div id="themeroller_header">
-			<div href="#" id="themeroller_logo"><img src="images/themeroller_logo.png" alt=" "/></div>
+			<div id="themeroller_logo"><img src="images/themeroller_logo.png" alt=" "/></div>
 			<a href="#" id="themeroller_download"><img src="images/themeroller_download.png" alt=" "/></a>
 			<div id="separator"></div>
 			<span id="tr_links"><a href="#" id="tr_help">Help</a><a href="#" id="themeroller_upload">Import</a><a href="#" id="generate_url">Share</a></span>
@@ -185,17 +185,6 @@ if(isset($_GET)) {
 						</form>
 					</div>
 				</div>
-				<div class="accordion" data-form="ui-link">
-					<div>
-						<h3><a href="#">Link</a></h3>
-						<form>
-							<label class="first">LINK</label><input data-type="link" data-name="global-link-color" class="colorwell" value="#2489CE"/><br class="clear" />
-							<label class="first">LINK HOVER</label><input data-type="link" data-name="global-link-hover" class="colorwell" value="#2489CE"/><br class="clear" />
-							<label class="first">LINK ACTIVE</label><input data-type="link" data-name="global-link-active" class="colorwell" value="#2489CE"/><br class="clear" />
-							<label class="first">LINK VISITED</label><input data-type="link" data-name="global-link-visited" class="colorwell" value="#2489CE"/>
-						</form>
-					</div>
-				</div>
 				<div class="accordion">
 					<div>
 						<h3><a href="#">Box Shadow</a></h3>
@@ -230,6 +219,12 @@ if(isset($_GET)) {
 						<h3><a href="#">Content Body</a></h3>
 						<form>
 							<label class="first">FONT</label><input data-type="font-family" data-name="a-body-font" value="Helvetica, Arial, Sans serif"/><br class="clear"/>
+							<label class="first">LINK COLOR</label><input data-type="link" data-name="a-body-link-color" class="colorwell" value="#2489CE"/>&nbsp;&nbsp;<a class="more" data-name="a-body-link-color" href="#">+</a><br class="clear" />
+							<div class="start-end links" data-name="a-body-link-color">
+								<label class="first">LINK HOVER</label><input data-type="link" data-name="a-body-link-hover" class="colorwell" value="#2489CE"/><br class="clear" />
+								<label class="first">LINK ACTIVE</label><input data-type="link" data-name="a-body-link-active" class="colorwell" value="#2489CE"/><br class="clear" />
+								<label class="first">LINK VISITED</label><input data-type="link" data-name="a-body-link-visited" class="colorwell" value="#2489CE"/>
+							</div>
 							<label class="first">TEXT COLOR</label><input data-type="color" data-name="a-body-color" class="colorwell" value="#333333"/><br class="clear"/>
 							<label class="first">TEXT SHADOW</label><input title="Controls the horizontal offset of text shadow" data-type="text-shadow" data-name="a-body-shadow-x" value="0px"/>&nbsp;<input title="Controls the vertical offset of text shadow" data-type="text-shadow" data-name="a-body-shadow-y" value="1px"/>&nbsp;<input title="Controls the blur of text shadow" data-type="text-shadow" data-name="a-body-shadow-radius" value="0px"/>&nbsp;<input data-name="a-body-shadow-color" data-type="text-shadow" class="colorwell" value="#FFFFFF"/><br class="clear"/>
 							<div class="separator"></div>

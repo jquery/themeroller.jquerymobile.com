@@ -62,6 +62,7 @@ img{border: none;}
 #themeroller_mobile input#box-shadow-opacity{width: 30px;}
 #themeroller_mobile input#box-shadow-size{width: 30px;}
 #themeroller_mobile .end-label{position: relative; top: -3px;}
+#themeroller_mobile .start-end.links{margin-top: 0}
 
 
 #themeroller_mobile h1 a{float: right; font-size: 10px;}
