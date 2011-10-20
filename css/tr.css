@@ -79,3 +79,8 @@ img{border: none;}
 #themeroller_mobile .ui-tabs .ui-tabs-nav li a, .ui-tabs.ui-tabs-collapsible .ui-tabs-nav li.ui-tabs-selected a { cursor: pointer; } /* first selector in group seems obsolete, but required to overcome bug in Opera applying cursor: text overall if defined elsewhere... */
 #themeroller_mobile div.ui-tabs .ui-tabs-panel { display: block; border-width: 0; padding: 0; background: none;}
 #themeroller_mobile .ui-tabs .ui-tabs-hide { display: none !important; }
+
+
+.highlight {
+	color: #FD9F24;
+}
