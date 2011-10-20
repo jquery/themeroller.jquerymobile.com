@@ -89,7 +89,7 @@ if(isset($_GET)) {
 			This will generate a Zip file that contains both a compressed (for production) and uncompressed (for editing) 
 			version of the theme.
 		</p>
-		<p><strong>To use your theme</strong>, add it to the head of your page after the core jquery.mobile.css file, like this:</p>
+		<p><strong>To use your theme</strong>, add it to the head of your page after the jquery.mobile.structure file, like this:</p>
 		<pre>
 			<code>
 &lt;!DOCTYPE html&gt;
@@ -100,10 +100,10 @@ if(isset($_GET)) {
   &lt;meta charset=utf-8 /&gt;
   &lt;meta name="viewport" content="width=device-width, initial-scale="1""&gt;
   
-  &lt;link rel="stylesheet"  href="http://code.jquery.com/mobile/latest/jquery.mobile.css" /&gt; 
-  <span style="color: #FD9F24">&lt;link rel="stylesheet" href="css/my-custom-theme.css" /&gt;</span>
-  &lt;script src="http://code.jquery.com/jquery-1.6.2.min.js"&gt;&lt;/script&gt; 
-  &lt;script src="http://code.jquery.com/mobile/latest/jquery.mobile.min.js"&gt;&lt;/script&gt; 
+  &lt;link rel="stylesheet"  href="http://code.jquery.com/mobile/1.0rc2/jquery.mobile.structure-1.0rc2.min.css" /&gt; 
+  <span style="color: #FD9F24">&lt;link rel="stylesheet" href="css/themes/my-custom-theme.css" /&gt;</span>
+  &lt;script src="http://code.jquery.com/jquery-1.6.4.min.js"&gt;&lt;/script&gt; 
+  &lt;script src="http://code.jquery.com/mobile/1.0rc2/jquery.mobile-1.0rc2.min.js"&gt;&lt;/script&gt; 
 
 &lt;/head&gt;
 			</code>
