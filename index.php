@@ -1,29 +1,29 @@
 <?php
-if(isset($_GET)) {
+if ( isset($_GET['style_id']) ) {
 	$style_id = $_GET['style_id'];
 }
-?>
-<!DOCTYPE html>
-
+?><!DOCTYPE html>
 <html>             
 <head>
-<meta charset="UTF-8" />
-<title>ThemeRoller | jQuery Mobile</title>
-<link rel='shortcut icon' href ="images/favicon.png" type = 'image/x-icon' />
+	<meta charset="UTF-8" />
 
-<link rel="stylesheet" type="text/css" media="all" href="css/layout.css" />
-<link type="text/css" href="css/jquery-ui.css" rel="stylesheet" />
-<link rel="stylesheet" href="css/farbtastic.css" type="text/css" />
-<link rel="stylesheet" href="css/tr.css" type="text/css" />
+	<title>ThemeRoller | jQuery Mobile</title>
 
-<script type="text/javascript" src="js/jquery.js"></script>
-<script type="text/javascript" src="js/jquery-ui.js"></script>
-<script type="text/javascript" src="js/jquery-ui-tabs-paging.js"></script>
-<script type="text/javascript" src="js/jquery.color.js"></script>
-<script type="text/javascript" src="js/farbtastic.js"></script>
-<script type="text/javascript" src="js/app.js"></script>
-<script type="text/javascript" src="js/tr.js"></script>
-<script type="text/javascript" src="js/kuler.js"></script>
+	<link rel="shortcut icon" type="image/x-icon" href="images/favicon.png" />
+
+	<link rel="stylesheet" type="text/css" href="css/layout.css" media="all" />
+	<link rel="stylesheet" type="text/css" href="css/jquery-ui.css" />
+	<link rel="stylesheet" type="text/css" href="css/farbtastic.css" />
+	<link rel="stylesheet" type="text/css" href="css/tr.css" />
+
+	<script src="js/jquery.js"></script>
+	<script src="js/jquery-ui.js"></script>
+	<script src="js/jquery-ui-tabs-paging.js"></script>
+	<script src="js/jquery.color.js"></script>
+	<script src="js/farbtastic.js"></script>
+	<script src="js/app.js"></script>
+	<script src="js/tr.js"></script>
+	<script src="js/kuler.js"></script>
 </head>
 <body>
 	
@@ -39,7 +39,7 @@ if(isset($_GET)) {
 	<div id="welcome" class="dialog" title=" ">
 		<h1><strong>Welcome</strong> to ThemeRoller for jQuery Mobile</h1>
 		<p>
-			You can create up to 26 theme “swatches” lettered from A-Z, 
+			You can create up to 26 theme "swatches" lettered from A-Z, 
 			each with a unique color scheme that can be mixed and
 			matched for unlimited possibilities.
 		</p>
@@ -97,11 +97,11 @@ if(isset($_GET)) {
 &lt;head&gt;
   
   &lt;title&gt;jQuery Mobile page&lt;/title&gt;
-  &lt;meta charset=utf-8 /&gt;
-  &lt;meta name="viewport" content="width=device-width, initial-scale="1""&gt;
+  &lt;meta charset="utf-8" /&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;
   
   &lt;link rel="stylesheet" href="http://code.jquery.com/mobile/1.0rc2/jquery.mobile.structure-1.0rc2.min.css" /&gt; 
-  <span style="color: #FD9F24">&lt;link rel="stylesheet" href="css/themes/my-custom-theme.css" /&gt;</span>
+  <span class="highlight">&lt;link rel="stylesheet" href="css/themes/my-custom-theme.css" /&gt;</span>
   &lt;script src="http://code.jquery.com/jquery-1.6.4.min.js"&gt;&lt;/script&gt; 
   &lt;script src="http://code.jquery.com/mobile/1.0rc2/jquery.mobile-1.0rc2.min.js"&gt;&lt;/script&gt; 
 
@@ -122,7 +122,7 @@ if(isset($_GET)) {
 			Use this link to share a copy of your theme. People can download 
 			or edit a copy of the theme, but your version won’t be changed. 
 		</p>
-		<input value="" />
+		<input type="text" value="" />
 		<div class="buttonpane">
 			<div class="separator"></div>
 			<img src="images/target_big.png" alt=" "/>
@@ -359,13 +359,9 @@ if(isset($_GET)) {
 			</iframe>
 		</div>
 	
-		<div id="style"><?php
-				if(isset($style_id)) {
-					echo file_get_contents('css/user_themes/' . $style_id . '.css');
-				} else {
-					echo file_get_contents('css/default.css');
-				}
-			?></div>
+		<div id="style">
+			<?php	echo file_get_contents( 'css/' . ( isset($style_id) ? 'user_themes/' . $style_id : 'default' ) . '.css');?>
+		</div>
 	
 	</div>
 	</div>
