@@ -67,7 +67,7 @@
 	fwrite($new_file, $original);
 	fclose($new_file);
 	
-	$url = 'http://ent-designs.com/tr/index.php?style_id=' . $new_file_id;
+	$url = 'http://jquerymobile.com/themeroller-test/index.php?style_id=' . $new_file_id;
 	echo $url;
 
 ?>
