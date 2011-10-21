@@ -32,10 +32,16 @@ $(function(){
 			$( selected = this ).css( "opacity", 1 ).addClass( "colorwell-selected" );
 	  	});
 	
+	resize();
+	
+	$(window).resize( resize );
+	
 	//sizing content to the right of the TR panel
-	var top_border = $( "#themeroller_mobile" ).css( "border-top-width" ).substring( 0, 1 );
-	$( "#themeroller_mobile" ).height( $(window).height() - top_border );
-	$( "#content" ).height( $(window).height() - $("#header-wrapper").outerHeight() - 3 );
+	function resize() {
+		var top_border = $( "#themeroller_mobile" ).css( "border-top-width" ).substring( 0, 1 );
+		$( "#themeroller_mobile" ).height( $(window).height() - top_border );
+		$( "#content" ).height( $(window).height() - $("#header-wrapper").outerHeight() - 3 );
+	}
 	
 	//global array of color values in quickswatch colors for lightness/saturation adjustments
 	$( "#quickswatch .color-drag:not(.disabled)" ).each(function() {
