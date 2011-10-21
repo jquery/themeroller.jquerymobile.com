@@ -69,7 +69,10 @@
 	
 	function getScriptURLDirectory() {
 		$pageURL = 'http';
-		$dir = dirname($_SERVER["REQUEST_URI"])."/";
+		$dir = dirname($_SERVER["REQUEST_URI"]);
+		if($dir !== "/") {
+			$dir .= "/";
+		}
 		if ($_SERVER["HTTPS"] == "on") {
 			$pageURL .= "s";
 		}
