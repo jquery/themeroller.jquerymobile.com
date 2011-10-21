@@ -1,3 +1,6 @@
 <?php
-	$kuler_key = "6F58FBAB4B2FD2E7B9BC42242664608F";
+
+// Add your Kuler API key between the quotes below.
+$kuler_key = "";
+
 ?>
