@@ -82,7 +82,6 @@
 		return $pageURL;
 	}
 	
-	$url = getScriptURLDirectory() . 'index.php?style_id=' . $new_file_id;
-	echo $url;
+	echo getScriptURLDirectory() . 'index.php?style_id=' . $new_file_id;
 
 ?>
