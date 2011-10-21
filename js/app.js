@@ -99,28 +99,32 @@ $(function( $ ) {
     $( ".dialog#download" ).dialog({
         autoOpen: false,
         modal: true,
-        width: 800,
+        width: 850,
 		resizable: false,
 		draggable: false,
         buttons: {
 			"Close": function() { 
-                $( ".dialog#download" ).dialog( "close" ); 
+                $( this ).dialog( "close" ); 
             },
  			"Download Zip": function() { 
-	
-				$.ajax({
-					url: "./generate_zip.php",
-					type: "POST",
-					data: "file=" + encodeURIComponent(style_block.text()),
-					dataType: "text",
-					mimeType: "text/plain",
-					beforeSend: function() {
-						//loading gif here
-					},
-					success: function(response) {
-						window.location = response;
-					}
-				});
+				var theme_name = $( "input", this ).val();
+				if( theme_name && theme_name.indexOf(" ") == -1 ) {
+					$.ajax({
+						url: "./generate_zip.php",
+						type: "POST",
+						data: "theme_name=" + $( "input", this ).val() + "&file=" + encodeURIComponent(style_block.text()),
+						dataType: "text",
+						mimeType: "text/plain",
+						beforeSend: function() {
+							//loading gif here
+						},
+						success: function(response) {
+							window.location = response;
+						}
+					});
+				} else {
+					alert( "Invalid theme name" );
+				}
             }
         }
     });

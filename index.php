@@ -1,8 +1,10 @@
 <?php
+require_once( 'version.php' );
 if ( isset($_GET['style_id']) ) {
 	$style_id = $_GET['style_id'];
 }
-?><!DOCTYPE html>
+?>
+<!DOCTYPE html>
 <html>             
 <head>
 	<meta charset="UTF-8" />
@@ -83,8 +85,9 @@ if ( isset($_GET['style_id']) ) {
 		</div>
 	</div>
 	
+	
 	<div id="download" class="dialog" title=" ">
-		<h1><strong>Download</strong> Theme</h1>
+		<h1><strong>Download</strong> Theme<input value="" /><label for="theme-name">Theme Name</label></h1>
 		<p>
 			This will generate a Zip file that contains both a compressed (for production) and uncompressed (for editing) 
 			version of the theme.
@@ -100,10 +103,10 @@ if ( isset($_GET['style_id']) ) {
   &lt;meta charset="utf-8" /&gt;
   &lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;
   
-  &lt;link rel="stylesheet" href="http://code.jquery.com/mobile/1.0rc2/jquery.mobile.structure-1.0rc2.min.css" /&gt; 
+  &lt;link rel="stylesheet" href="http://code.jquery.com/mobile/<?php echo $JQM_VERSION; ?>/jquery.mobile.structure-<?php echo $JQM_VERSION; ?>.min.css" /&gt; 
   <span class="highlight">&lt;link rel="stylesheet" href="css/themes/my-custom-theme.css" /&gt;</span>
-  &lt;script src="http://code.jquery.com/jquery-1.6.4.min.js"&gt;&lt;/script&gt; 
-  &lt;script src="http://code.jquery.com/mobile/1.0rc2/jquery.mobile-1.0rc2.min.js"&gt;&lt;/script&gt; 
+  &lt;script src="http://code.jquery.com/jquery-<?php echo $JQUERY_VERSION; ?>.min.js"&gt;&lt;/script&gt; 
+  &lt;script src="http://code.jquery.com/mobile/<?php echo $JQM_VERSION; ?>/jquery.mobile-<?php echo $JQM_VERSION; ?>.min.js"&gt;&lt;/script&gt; 
 
 &lt;/head&gt;
 			</code>
@@ -359,9 +362,7 @@ if ( isset($_GET['style_id']) ) {
 			</iframe>
 		</div>
 	
-		<div id="style">
-			<?php	echo file_get_contents( 'css/' . ( isset($style_id) ? 'user_themes/' . $style_id : 'default' ) . '.css');?>
-		</div>
+		<div id="style"><?php	echo file_get_contents( 'css/' . ( isset($style_id) ? 'user_themes/' . $style_id : 'default' ) . '.css');?></div>
 	
 	</div>
 	</div>

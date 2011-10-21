@@ -34,7 +34,7 @@ h2{
 	padding: 15px;
 }
 
-.dialog input{
+.dialog input[type=text]{
 	margin-bottom: 20px;
 	width: 716px;
 	padding: 10px;
@@ -77,6 +77,20 @@ h2{
 
 #welcome + .ui-dialog-buttonpane .separator{
 	width: 536px;
+}
+
+#download label{
+	margin: 10px;
+	font-size: 15px;
+	float: right;
+}
+
+#download input{
+	margin-top: 8px;
+	font-size: 12px;
+	float: right;
+	height: 15px;
+	width: 200px;
 }
 
 #colors{
