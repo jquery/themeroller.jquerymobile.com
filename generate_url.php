@@ -67,7 +67,22 @@
 	fwrite($new_file, $original);
 	fclose($new_file);
 	
-	$url = 'http://jquerymobile.com/themeroller-test/index.php?style_id=' . $new_file_id;
+	function getScriptURLDirectory() {
+		$pageURL = 'http';
+		$dir = dirname($_SERVER["REQUEST_URI"])."/";
+		if ($_SERVER["HTTPS"] == "on") {
+			$pageURL .= "s";
+		}
+		$pageURL .= "://";
+		if ($_SERVER["SERVER_PORT"] != "80") {
+			$pageURL .= $_SERVER["SERVER_NAME"].":".$_SERVER["SERVER_PORT"].$dir;
+		} else {
+			$pageURL .= $_SERVER["SERVER_NAME"].$dir;
+		}
+		return $pageURL;
+	}
+	
+	$url = getScriptURLDirectory() . 'index.php?style_id=' . $new_file_id;
 	echo $url;
 
 ?>
