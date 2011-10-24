@@ -102,9 +102,8 @@ if ( isset($_GET['style_id']) ) {
   &lt;title&gt;jQuery Mobile page&lt;/title&gt;
   &lt;meta charset="utf-8" /&gt;
   &lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;
-  
-  &lt;link rel="stylesheet" href="http://code.jquery.com/mobile/<?php echo $JQM_VERSION; ?>/jquery.mobile.structure-<?php echo $JQM_VERSION; ?>.min.css" /&gt; 
   <span class="highlight">&lt;link rel="stylesheet" href="css/themes/my-custom-theme.css" /&gt;</span>
+  &lt;link rel="stylesheet" href="http://code.jquery.com/mobile/<?php echo $JQM_VERSION; ?>/jquery.mobile.structure-<?php echo $JQM_VERSION; ?>.min.css" /&gt; 
   &lt;script src="http://code.jquery.com/jquery-<?php echo $JQUERY_VERSION; ?>.min.js"&gt;&lt;/script&gt; 
   &lt;script src="http://code.jquery.com/mobile/<?php echo $JQM_VERSION; ?>/jquery.mobile-<?php echo $JQM_VERSION; ?>.min.js"&gt;&lt;/script&gt; 
 
