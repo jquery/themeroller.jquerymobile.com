@@ -140,7 +140,7 @@ $(function(){
 		}
 		
 		
-		for( var i = 0; i< colors.length; i++ ) {
+		for( var i = 1; i< colors.length; i++ ) {
 			var orig = $.Color( colors[i] );
 			$( "#quickswatch .color-drag:nth-child(" + (i + 1) + ")" )
 				.css("background-color", orig.saturation(sat_str + sat_percent).lightness(lit_str + lit_percent) );
@@ -166,7 +166,7 @@ $(function(){
 			lit_percent = lit_percent - (2 * lit_percent);
 		}
 		
-		for( var i = 0; i < colors.length; i++ ) {
+		for( var i = 1; i < colors.length; i++ ) {
 			var orig = $.Color( colors[i] );
 			$( "#quickswatch .color-drag:nth-child(" + (i + 1) + ")" )
 				.css("background-color", orig.saturation(sat_str + sat_percent).lightness(lit_str + lit_percent) );
