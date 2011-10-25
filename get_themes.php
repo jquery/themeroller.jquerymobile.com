@@ -6,8 +6,12 @@
 	//get.cfm gets certain listTypes
 
 	//referenced in $kuler_key below
-	//private file that stores the kuler-api key being used
 	require_once( "kuler-api-key.php" );
+	
+	//set $kuler_key in kuler-api-key.php or in .htaccess with directive SetEnv "kuler-api-key" "key_goes_here"
+	if($kuler_key === "") {
+		$kuler_key = $_SERVER["kuler-api-key"];
+	}
 	
 	$post = $_POST;
 	
