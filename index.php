@@ -170,7 +170,13 @@ if ( isset($_GET['style_id']) ) {
 			<p>This is a beta version of a developer tool so we're committing to supporting the <strong>latest</strong> versions of popular desktop browsers: Chrome, Firefox, Internet Explorer, Safari. If you're running into issues, maybe try a different browser or <a href="https://github.com/jquery/web-jquery-mobile-theme-roller/issues" target="new"><strong>log an issue</strong></a> in the tracker.</p>
 			
 		
-
+		<div class="buttonpane">
+			<div class="separator"></div>
+			<img src="images/target_big.png" alt=" "/>
+			<p>
+				This is your guide to ThemeRoller and all you can do with it. Don't forget to share your themes!
+			</p>
+		</div>
 	</div>
 	
 	

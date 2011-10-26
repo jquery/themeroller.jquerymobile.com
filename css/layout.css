@@ -11,7 +11,7 @@ h2{
 .dialog{
 	padding: 20px 27px 0px;
 	overflow: none;
-	font-family:; "Segoe UI", sans-serif;
+	font-family: "Segoe UI", sans-serif;
 }
 
 .ui-dialog a{
@@ -296,107 +296,107 @@ iframe body{
 .radio{
 	text-align: center;
 	float: left;
-	padding: 8px 15px 5px 15px;
+	padding: 6px 15px 8px 15px;
 	font-weight: bold;
 	cursor: pointer;
 	font-size: 12px;
 	width: 20px;
 	height: 16px;
-	font-family: Helvetica, Arial, sans-serif  /*{global-active-font}*/;
-	border: 1px solid  		#ccc  /*{a-bup-border}*/;
-	background:  			#eee  /*{a-bup-background-color}*/;
-	color:  					#2F3E46  /*{a-bup-color}*/;
-	text-shadow:  0  /*{a-bup-shadow-x}*/  1px  /*{a-bup-shadow-y}*/  1px  /*{a-bup-shadow-radius}*/  #f6f6f6  /*{a-bup-shadow-color}*/;
-	background-image: -webkit-gradient(linear, left top, left bottom,  #fdfdfd  /*{a-bup-background-start}*/),  #eee  /*{a-bup-background-end}*/)); /* Saf4+, Chrome */
-	background-image: -webkit-linear-gradient(top,  #fdfdfd  /*{a-bup-background-start}*/,  #eee  /*{a-bup-background-end}*/); /* Chrome 10+, Saf5.1+ */
-	background-image:    -moz-linear-gradient(top,  #fdfdfd  /*{a-bup-background-start}*/,  #eee  /*{a-bup-background-end}*/); /* FF3.6 */
-	background-image:     -ms-linear-gradient(top,  #fdfdfd  /*{a-bup-background-start}*/,  #eee  /*{a-bup-background-end}*/); /* IE10 */
-	background-image:      -o-linear-gradient(top,  #fdfdfd  /*{a-bup-background-start}*/,  #eee  /*{a-bup-background-end}*/); /* Opera 11.10+ */
-	background-image:         linear-gradient(top,  #fdfdfd  /*{a-bup-background-start}*/,  #eee  /*{a-bup-background-end}*/);
+	font-family: "Segoe UI", Verdana, Arial, sans-serif;
+	border: 1px solid  		#ccc;
+	background:  			#eee;
+	color:  					#2F3E46;
+	text-shadow:  0 1px 1px #f6f6f6;
+	background-image: -webkit-gradient(linear, left top, left bottom,  #fdfdfd),  #eee )); /* Saf4+, Chrome */
+	background-image: -webkit-linear-gradient(top,  #fdfdfd,  #eee); /* Chrome 10+, Saf5.1+ */
+	background-image:    -moz-linear-gradient(top,  #fdfdfd,  #eee); /* FF3.6 */
+	background-image:     -ms-linear-gradient(top,  #fdfdfd,  #eee); /* IE10 */
+	background-image:      -o-linear-gradient(top,  #fdfdfd,  #eee); /* Opera 11.10+ */
+	background-image:         linear-gradient(top,  #fdfdfd,  #eee);
 }
 
 .radio:hover{
-	border: 1px solid  		#bbb  /*{a-bhover-border}*/;
-	background:  			#dadada  /*{a-bhover-background-color}*/;
-	color:  					#2F3E46  /*{a-bhover-color}*/;
-	text-shadow:  0  /*{a-bhover-shadow-x}*/  1px  /*{a-bhover-shadow-y}*/  1px  /*{a-bhover-shadow-radius}*/  #fff  /*{a-bhover-shadow-color}*/;
-	background-image: -webkit-gradient(linear, left top, left bottom,  #ededed  /*{a-bhover-background-start}*/),  #dadada  /*{a-bhover-background-end}*/)); /* Saf4+, Chrome */
-	background-image: -webkit-linear-gradient(top,  #ededed  /*{a-bhover-background-start}*/,  #dadada  /*{a-bhover-background-end}*/); /* Chrome 10+, Saf5.1+ */
-	background-image:    -moz-linear-gradient(top,  #ededed  /*{a-bhover-background-start}*/,  #dadada  /*{a-bhover-background-end}*/); /* FF3.6 */
-	background-image:     -ms-linear-gradient(top,  #ededed  /*{a-bhover-background-start}*/,  #dadada  /*{a-bhover-background-end}*/); /* IE10 */
-	background-image:      -o-linear-gradient(top,  #ededed  /*{a-bhover-background-start}*/,  #dadada  /*{a-bhover-background-end}*/); /* Opera 11.10+ */
-	background-image:         linear-gradient(top,  #ededed  /*{a-bhover-background-start}*/,  #dadada  /*{a-bhover-background-end}*/);
+	border: 1px solid  		#bbb;
+	background:  			#dadada;
+	color:  					#2F3E46;
+	text-shadow:  0 1px 1px #fff;
+	background-image: -webkit-gradient(linear, left top, left bottom,  #ededed),  #dadada)); /* Saf4+, Chrome */
+	background-image: -webkit-linear-gradient(top,  #ededed,  #dadada); /* Chrome 10+, Saf5.1+ */
+	background-image:    -moz-linear-gradient(top,  #ededed,  #dadada); /* FF3.6 */
+	background-image:     -ms-linear-gradient(top,  #ededed,  #dadada); /* IE10 */
+	background-image:      -o-linear-gradient(top,  #ededed,  #dadada); /* Opera 11.10+ */
+	background-image:         linear-gradient(top,  #ededed,  #dadada);
 }
 
 .radio:active{
-	border: 1px solid  		#808080  /*{a-bdown-border}*/;
-	background:  			#fdfdfd  /*{a-bdown-background-color}*/;
-	color:  					#2F3E46  /*{a-bdown-color}*/;
-	text-shadow:  0  /*{a-bdown-shadow-x}*/  1px  /*{a-bdown-shadow-y}*/  1p  /*{a-bdown-shadow-radius}*/  #ffffff  /*{a-bdown-shadow-color}*/;
-	background-image: -webkit-gradient(linear, left top, left bottom,  #eee  /*{a-bdown-background-start}*/),  #fdfdfd  /*{a-bdown-background-end}*/)); /* Saf4+, Chrome */
-	background-image: -webkit-linear-gradient(top,  #eee  /*{a-bdown-background-start}*/,  #fdfdfd  /*{a-bdown-background-end}*/); /* Chrome 10+, Saf5.1+ */
-	background-image:    -moz-linear-gradient(top,  #eee  /*{a-bdown-background-start}*/,  #fdfdfd  /*{a-bdown-background-end}*/); /* FF3.6 */
-	background-image:     -ms-linear-gradient(top,  #eee  /*{a-bdown-background-start}*/,  #fdfdfd  /*{a-bdown-background-end}*/); /* IE10 */
-	background-image:      -o-linear-gradient(top,  #eee  /*{a-bdown-background-start}*/,  #fdfdfd  /*{a-bdown-background-end}*/); /* Opera 11.10+ */
-	background-image:         linear-gradient(top,  #eee  /*{a-bdown-background-start}*/,  #fdfdfd  /*{a-bdown-background-end}*/);
+	border: 1px solid  		#808080;
+	background:  			#fdfdfd;
+	color:  					#2F3E46;
+	text-shadow:  0 1px 1px #ffffff;
+	background-image: -webkit-gradient(linear, left top, left bottom,  #eee),  #fdfdfd  /*{a-bdown-background-end}*/)); /* Saf4+, Chrome */
+	background-image: -webkit-linear-gradient(top,  #eee,  #fdfdfd); /* Chrome 10+, Saf5.1+ */
+	background-image:    -moz-linear-gradient(top,  #eee,  #fdfdfd); /* FF3.6 */
+	background-image:     -ms-linear-gradient(top,  #eee,  #fdfdfd); /* IE10 */
+	background-image:      -o-linear-gradient(top,  #eee,  #fdfdfd); /* Opera 11.10+ */
+	background-image:         linear-gradient(top,  #eee,  #fdfdfd);
 }
 
 .radio.left{
 	margin-left: 10px;
-	-moz-border-radius-topleft: 		.6em /*{global-radii-blocks}*/;
-	-webkit-border-top-left-radius: 	.6em /*{global-radii-blocks}*/;
-	border-top-left-radius: 			.6em /*{global-radii-blocks}*/;
-	-moz-border-radius-bottomleft: 		.6em /*{global-radii-blocks}*/;
-	-webkit-border-bottom-left-radius: 	.6em /*{global-radii-blocks}*/;
-	border-bottom-left-radius: 			.6em /*{global-radii-blocks}*/;
+	-moz-border-radius-topleft: 		.6em;
+	-webkit-border-top-left-radius: 	.6em;
+	border-top-left-radius: 			.6em;
+	-moz-border-radius-bottomleft: 		.6em;
+	-webkit-border-bottom-left-radius: 	.6em;
+	border-bottom-left-radius: 			.6em;
 }
 
 .radio.right{
-	-moz-border-radius-topright:  			.6em  /*{global-radii-blocks}*/;
-	-webkit-border-top-right-radius:  			.6em  /*{global-radii-blocks}*/;
-	border-top-right-radius:  			.6em  /*{global-radii-blocks}*/;
-	-moz-border-radius-bottomright:  			.6em  /*{global-radii-blocks}*/;
-	-webkit-border-bottom-right-radius:  			.6em  /*{global-radii-blocks}*/;
-	border-bottom-right-radius:  			.6em  /*{global-radii-blocks}*/;
+	-moz-border-radius-topright:  			.6em;
+	-webkit-border-top-right-radius:  			.6em;
+	border-top-right-radius:  			.6em;
+	-moz-border-radius-bottomright:  			.6em;
+	-webkit-border-bottom-right-radius:  			.6em ;
+	border-bottom-right-radius:  			.6em;
 }
 
 .radio.on {
-	border: 1px solid #b4dd4b /*{global-active-border}*/;
-	background: #87ff52 /*{global-active-background-color}*/;
-	color:  					#fff  /*{global-active-color}*/;
-	text-shadow:  0  /*{global-active-shadow-x}*/  -1px  /*{global-active-shadow-y}*/  1px  /*{global-active-shadow-radius}*/ #969696 /*{global-active-shadow-color}*/;
-	background-image: -webkit-gradient(linear, left top, left bottom, #b4dd4b /*{global-active-background-start}*/), #9ec441 /*{global-active-background-end}*/)); /* Saf4+, Chrome */
-	background-image: -webkit-linear-gradient(top, #b4dd4b /*{global-active-background-start}*/, #9ec441 /*{global-active-background-end}*/); /* Chrome 10+, Saf5.1+ */
-	background-image:    -moz-linear-gradient(top, #b4dd4b /*{global-active-background-start}*/, #9ec441 /*{global-active-background-end}*/); /* FF3.6 */
-	background-image:     -ms-linear-gradient(top, #b4dd4b /*{global-active-background-start}*/, #9ec441 /*{global-active-background-end}*/); /* IE10 */
-	background-image:      -o-linear-gradient(top, #b4dd4b /*{global-active-background-start}*/, #9ec441 /*{global-active-background-end}*/); /* Opera 11.10+ */
-	background-image:         linear-gradient(top, #b4dd4b /*{global-active-background-start}*/, #9ec441 /*{global-active-background-end}*/);
+	border: 1px solid #b4dd4b ;
+	background: #87ff52 ;
+	color:  					#fff  ;
+	text-shadow:  0    -1px    1px   #969696 ;
+	background-image: -webkit-gradient(linear, left top, left bottom, #b4dd4b ), #9ec441 )); /* Saf4+, Chrome */
+	background-image: -webkit-linear-gradient(top, #b4dd4b , #9ec441 ); /* Chrome 10+, Saf5.1+ */
+	background-image:    -moz-linear-gradient(top, #b4dd4b , #9ec441 ); /* FF3.6 */
+	background-image:     -ms-linear-gradient(top, #b4dd4b , #9ec441 ); /* IE10 */
+	background-image:      -o-linear-gradient(top, #b4dd4b , #9ec441 ); /* Opera 11.10+ */
+	background-image:         linear-gradient(top, #b4dd4b , #9ec441 );
 }
 
 .radio.on:hover{
-	border: 1px solid #b4dd4b /*{global-active-border}*/;
-	background: #87ff52 /*{global-active-background-color}*/;
-	color:  					#fff  /*{global-active-color}*/;
-	text-shadow:  0  /*{global-active-shadow-x}*/  -1px  /*{global-active-shadow-y}*/  1px  /*{global-active-shadow-radius}*/ #969696 /*{global-active-shadow-color}*/;
-	background-image: -webkit-gradient(linear, left top, left bottom, #b4dd4b /*{global-active-background-start}*/), #9ec441 /*{global-active-background-end}*/)); /* Saf4+, Chrome */
-	background-image: -webkit-linear-gradient(top, #b4dd4b /*{global-active-background-start}*/, #9ec441 /*{global-active-background-end}*/); /* Chrome 10+, Saf5.1+ */
-	background-image:    -moz-linear-gradient(top, #b4dd4b /*{global-active-background-start}*/, #9ec441 /*{global-active-background-end}*/); /* FF3.6 */
-	background-image:     -ms-linear-gradient(top, #b4dd4b /*{global-active-background-start}*/, #9ec441 /*{global-active-background-end}*/); /* IE10 */
-	background-image:      -o-linear-gradient(top, #b4dd4b /*{global-active-background-start}*/, #9ec441 /*{global-active-background-end}*/); /* Opera 11.10+ */
-	background-image:         linear-gradient(top, #b4dd4b /*{global-active-background-start}*/, #9ec441 /*{global-active-background-end}*/);
+	border: 1px solid #b4dd4b ;
+	background: #87ff52 ;
+	color:  					#fff  ;
+	text-shadow:  0    -1px    1px   #969696 ;
+	background-image: -webkit-gradient(linear, left top, left bottom, #b4dd4b ), #9ec441 )); /* Saf4+, Chrome */
+	background-image: -webkit-linear-gradient(top, #b4dd4b , #9ec441 ); /* Chrome 10+, Saf5.1+ */
+	background-image:    -moz-linear-gradient(top, #b4dd4b , #9ec441 ); /* FF3.6 */
+	background-image:     -ms-linear-gradient(top, #b4dd4b , #9ec441 ); /* IE10 */
+	background-image:      -o-linear-gradient(top, #b4dd4b , #9ec441 ); /* Opera 11.10+ */
+	background-image:         linear-gradient(top, #b4dd4b , #9ec441 );
 	}
 
 .radio.on:active{
-	border: 1px solid #b4dd4b /*{global-active-border}*/;
-	background: #87ff52 /*{global-active-background-color}*/;
-	color:  					#fff  /*{global-active-color}*/;
-	text-shadow:  0  /*{global-active-shadow-x}*/  -1px  /*{global-active-shadow-y}*/  1px  /*{global-active-shadow-radius}*/ #969696 /*{global-active-shadow-color}*/;
-	background-image: -webkit-gradient(linear, left top, left bottom, #b4dd4b /*{global-active-background-start}*/), #9ec441 /*{global-active-background-end}*/)); /* Saf4+, Chrome */
-	background-image: -webkit-linear-gradient(top, #b4dd4b /*{global-active-background-start}*/, #9ec441 /*{global-active-background-end}*/); /* Chrome 10+, Saf5.1+ */
-	background-image:    -moz-linear-gradient(top, #b4dd4b /*{global-active-background-start}*/, #9ec441 /*{global-active-background-end}*/); /* FF3.6 */
-	background-image:     -ms-linear-gradient(top, #b4dd4b /*{global-active-background-start}*/, #9ec441 /*{global-active-background-end}*/); /* IE10 */
-	background-image:      -o-linear-gradient(top, #b4dd4b /*{global-active-background-start}*/, #9ec441 /*{global-active-background-end}*/); /* Opera 11.10+ */
-	background-image:         linear-gradient(top, #b4dd4b /*{global-active-background-start}*/, #9ec441 /*{global-active-background-end}*/);
+	border: 1px solid #b4dd4b ;
+	background: #87ff52 ;
+	color:  					#fff  ;
+	text-shadow:  0    -1px    1px   #969696 ;
+	background-image: -webkit-gradient(linear, left top, left bottom, #b4dd4b ), #9ec441 )); /* Saf4+, Chrome */
+	background-image: -webkit-linear-gradient(top, #b4dd4b , #9ec441 ); /* Chrome 10+, Saf5.1+ */
+	background-image:    -moz-linear-gradient(top, #b4dd4b , #9ec441 ); /* FF3.6 */
+	background-image:     -ms-linear-gradient(top, #b4dd4b , #9ec441 ); /* IE10 */
+	background-image:      -o-linear-gradient(top, #b4dd4b , #9ec441 ); /* Opera 11.10+ */
+	background-image:         linear-gradient(top, #b4dd4b , #9ec441 );
 }
 
 #load-mask{

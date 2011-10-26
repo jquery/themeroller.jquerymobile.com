@@ -98,13 +98,13 @@ $(function( $ ) {
 
 	$( "#help" ).dialog({
 		autoOpen: false,
-		width: 560,
+		width: 700,
 		height: 400,
 		modal: true,
-		resizable: true,
-		draggable: true,
+		resizable: false,
+		draggable: false,
 		buttons: {
-			"Close help": function() {
+			"Close": function() {
 				$( this ).dialog( "close" );
 			}
 		}
