@@ -56,9 +56,9 @@
 
 /* Component containers
 ----------------------------------*/
-.ui-widget { font-family: Verdana,Arial,sans-serif; font-size: 1.1em; }
+.ui-widget { font-family: "Segoe UI",Verdana,Arial,sans-serif; font-size: 1.1em; }
 .ui-widget .ui-widget { font-size: 1em; }
-.ui-widget input, .ui-widget select, .ui-widget textarea, .ui-widget button { font-family: Verdana,Arial,sans-serif; font-size: 1em; }
+.ui-widget input, .ui-widget select, .ui-widget textarea, .ui-widget button { font-family: "Segoe UI",Verdana,Arial,sans-serif; font-size: 1em; }
 .ui-widget-content { border: 1px solid #dddddd; background: #dddddd url(images/ui-bg_flat_90_dddddd_40x100.png) 50% 50% repeat-x; color: #777777; }
 .ui-widget-content a { color: #777777; text-decoration: none; }
 .ui-widget-header { background: #666; color: #f1a704; font-weight: bold; }

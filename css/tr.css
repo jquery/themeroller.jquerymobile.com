@@ -68,14 +68,14 @@ img{border: none;}
 #themeroller_mobile h1 a{float: right; font-size: 10px;}
 
 
-#themeroller_mobile .ui-tabs {font-weight: normal; position: relative; padding: .2em; zoom: 1; padding: 0; margin: 0; border: 0;} /* position: relative prevents IE scroll bug (element with position: relative inside container with overflow: auto appear as "fixed") */
+#themeroller_mobile .ui-tabs {font-family:"Segoe ui", verdana, arial, sans-serif; font-weight: normal; position: relative; padding: .2em; zoom: 1; padding: 0; margin: 0; border: 0;} /* position: relative prevents IE scroll bug (element with position: relative inside container with overflow: auto appear as "fixed") */
 #themeroller_mobile .ui-tabs .ui-widget-header{background: #777; padding: 0; border: 0;}
 #themeroller_mobile .ui-tabs h1{color: #F1A704; background: white; height: 20px; font-size: 12px; margin: 0; padding: 5px;}
 #themeroller_mobile .ui-tabs .ui-tabs-nav { margin: 0; padding: 0; border: 0px 0px 0px 0px; padding-bottom: 1px}
 #themeroller_mobile .ui-tabs .ui-tabs-nav li {line-height: inherit; background: #666; border: 1px solid #333; list-style: none; float: left; margin: 0 1px 0 0; position: relative; top: 1px; border-bottom: 0 !important; padding: 0; white-space: nowrap; }
 #themeroller_mobile .ui-tabs .ui-tabs-nav li a { font-weight: normal; color: #fff; font-size: 11px; float: left; padding: .5em 1em; text-decoration: none; text-shadow: 0px 1px 1px #000}
 #themeroller_mobile .ui-tabs .ui-tabs-nav li.ui-tabs-selected { background: #FFFFFF; margin-bottom: 0; padding-bottom: 1px; }
-#themeroller_mobile .ui-tabs .ui-tabs-nav li.ui-tabs-selected a, .ui-tabs .ui-tabs-nav li.ui-state-disabled a, .ui-tabs .ui-tabs-nav li.ui-state-processing a { cursor: text; color: #000;  text-shadow: 0px 1px 1px #888}
+#themeroller_mobile .ui-tabs .ui-tabs-nav li.ui-tabs-selected a, .ui-tabs .ui-tabs-nav li.ui-state-disabled a, .ui-tabs .ui-tabs-nav li.ui-state-processing a { cursor: text; color: #000;  }
 #themeroller_mobile .ui-tabs .ui-tabs-nav li a, .ui-tabs.ui-tabs-collapsible .ui-tabs-nav li.ui-tabs-selected a { cursor: pointer; } /* first selector in group seems obsolete, but required to overcome bug in Opera applying cursor: text overall if defined elsewhere... */
 #themeroller_mobile div.ui-tabs .ui-tabs-panel { display: block; border-width: 0; padding: 0; background: none;}
 #themeroller_mobile .ui-tabs .ui-tabs-hide { display: none !important; }

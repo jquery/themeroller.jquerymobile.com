@@ -1,6 +1,6 @@
 body{
 	margin: 0;
-	font: 62.5% Segue UI, sans-serif;
+	font: 62.5% "Segoe UI", sans-serif;
 }
 
 h2{
@@ -11,8 +11,12 @@ h2{
 .dialog{
 	padding: 20px 27px 0px;
 	overflow: none;
+	font-family:; "Segoe UI", sans-serif;
 }
 
+.ui-dialog a{
+	color:#336699;
+}
 .dialog h1{
 	margin: 0 0 15px;
 	font-weight: normal;
@@ -40,7 +44,7 @@ h2{
 	padding: 10px;
 	font-size: 15px;
 	border: 1px solid #ddd;
-	font: 62.5% Segue UI, sans-serif;
+	font: 62.5% "Segoe UI", sans-serif;
 }
 
 .dialog .buttonpane{
@@ -68,6 +72,30 @@ h2{
 	float: left;
 	font-size: 14px;
 	margin-top: 3px;
+}
+
+.ui-dialog ul li{
+	margin:5px 0;
+}
+
+.ui-dialog ul a{
+	color:#336699;
+	font-size:13px;
+	font-weight:normal;
+}
+
+.ui-dialog h3{
+	color:#222;
+	border-top:1px solid #ccc;
+	padding-top:10px;
+	margin-top:20px;
+}
+
+.ui-dialog a.help-top{
+	color:#336699;
+	float:right;
+	font-size:11px;
+	font-weight:normal;
 }
 
 #share + .ui-dialog-buttonpane p{

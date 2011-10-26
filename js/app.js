@@ -95,6 +95,20 @@ $(function( $ ) {
             }
         }
     });
+
+	$( "#help" ).dialog({
+		autoOpen: false,
+		width: 560,
+		height: 400,
+		modal: true,
+		resizable: true,
+		draggable: true,
+		buttons: {
+			"Close help": function() {
+				$( this ).dialog( "close" );
+			}
+		}
+	});
 	
     $( ".dialog#download" ).dialog({
         autoOpen: false,
@@ -258,6 +272,14 @@ $(function( $ ) {
 				$( "#share input" ).val( data ).css( "color", "#000" );
 			}
 		});
+		
+	});
+	
+	//help dialog
+	$( "#tr_help" ).click(function(e) {
+		e.preventDefault();
+		
+		$( "#help" ).dialog( "open" );
 		
 	});
 	
