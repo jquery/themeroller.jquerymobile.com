@@ -1,44 +1,7 @@
 <?php
 	date_default_timezone_set('America/Los_Angeles');
 	
-	$original = file_get_contents('css/default.css', 'r');
-	
-	$start = strpos($original, '/* A');
-	$end = strpos($original, '/* Structure');
-	$swatch_template = substr($original, $start, $end-$start);
-	
-	$swatch_counter = 1;
-	$alpha = array('Global', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z');
-	
-	//loop to find new swatches
-	foreach($_POST as $index => $value) {
-		$reg = preg_quote('/*{' . $index . '}*/');
-		if(!preg_match($reg, $original)) {
-			$start = strpos($original, '/* ' . $alpha[swatch_counter]);
-			$end = strpos($original, '/* Structure');
-			$lower = strtolower($alpha[$swatch_counter + 1]);
-			$temp_swatch_template = preg_replace('/-a,/', '-' . $lower . ',', $swatch_template);
-			$temp_swatch_template = preg_replace('/{a-/', '{' . $lower . '-', $temp_swatch_template);
-			$temp_swatch_template = preg_replace('/-a /', '-' . $lower . ' ', $temp_swatch_template);
-			$temp_swatch_template = preg_replace('/\/\* A/', '/* ' . $alpha[$swatch_counter + 1], $temp_swatch_template);
-			
-			$new_file = substr($original, 0, $end);
-			$new_file .= $temp_swatch_template;
-			$new_file .= substr($original, $end, strlen($original) - $end);
-			$original = $new_file;
-	
-			$swatch_counter++;
-		}
-	}
-	
-	foreach($_POST as $index => $value) {
-		$suffix = substr($index, -4, 4);
-		if($suffix != 'font') {
-			$original = preg_replace('/\s[^\s]*\s\/\*{' . $index . '}\*\//', ' ' . $value . ' /*{' . $index . '}*/', $original);
-		} else {
-			$original = preg_replace('/font-family:\s.*\s\/\*{' . $index . '}\*\//', $value . ' /*{' . $index . '}*/', $original);
-		}
-	}
+	$original = $_POST["file"];
 	
 	$dir = scandir('css/user_themes');
 	$today = date('Ymd', strtotime('today'));

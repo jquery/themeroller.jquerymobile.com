@@ -256,10 +256,7 @@ $(function( $ ) {
 		
 		$( "#share" ).dialog( "open" );
 		
-		var post_data = "";
-		for( var i in $.tr.style_array ) {
-			post_data += "&" + i + "=" + $.tr.style_array[i];
-		}
+		var post_data = "file=" + style_block.text();
 		
 		$.ajax({
 			type: "post",
@@ -269,7 +266,7 @@ $(function( $ ) {
 				$( "#share" ).dialog("open" );
 			},
 			success: function( data ) {
-				$( "#share input" ).val( data ).css( "color", "#000" );
+				$( "#share input" ).val( data );
 			}
 		});
 		
