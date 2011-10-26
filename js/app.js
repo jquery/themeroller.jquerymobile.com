@@ -465,7 +465,8 @@ $(function( $ ) {
     //to functions that change CSS rules and call updateAllCSS()
 
     $( "[data-type=font-family]" ).bind( "blur change keyup", function() {
-        $.tr.style_array[$( this ).attr( "data-name" )] = "font-family: " + this.value;
+		var name = $( this ).attr( "data-name" );
+        $.tr.style_array[name] = "font-family: " + this.value;
         updateAllCSS();
     });
 

@@ -56,7 +56,7 @@
 .ui-bar-a select,
 .ui-bar-a textarea,
 .ui-bar-a button {
-	font-family: Helvetica, Arial, sans-serif /*{a-bar-font}*/;
+	font-family: Helvetica, Arial, sans-serif /*{global-font-family}*/;
 }
 .ui-body-a {
 	border: 1px solid 		#B3B3B3 /*{a-body-border}*/;
@@ -75,7 +75,7 @@
 .ui-body-a select,
 .ui-body-a textarea,
 .ui-body-a button {
-	font-family: Helvetica, Arial, sans-serif /*{a-body-font}*/;
+	font-family: Helvetica, Arial, sans-serif /*{global-font-family}*/;
 }
 
 .ui-body-a .ui-link-inherit {
@@ -151,7 +151,7 @@
 .ui-btn-up-a,
 .ui-btn-hover-a,
 .ui-btn-down-a {
-	font-family: Helvetica, Arial, sans-serif /*{a-button-font}*/;
+	font-family: Helvetica, Arial, sans-serif /*{global-font-family}*/;
 	text-decoration: none;
 }
 
@@ -197,7 +197,7 @@
 .ui-bar-b select,
 .ui-bar-b textarea,
 .ui-bar-b button {
-	font-family: Helvetica, Arial, sans-serif /*{b-bar-font}*/;
+	font-family: Helvetica, Arial, sans-serif /*{global-font-family}*/;
 }
 .ui-body-b {
 	border: 1px solid 		#B3B3B3 /*{b-body-border}*/;
@@ -216,7 +216,7 @@
 .ui-body-b select,
 .ui-body-b textarea,
 .ui-body-b button {
-	font-family: Helvetica, Arial, sans-serif /*{b-body-font}*/;
+	font-family: Helvetica, Arial, sans-serif /*{global-font-family}*/;
 }
 
 .ui-body-b .ui-link-inherit {
@@ -292,7 +292,7 @@
 .ui-btn-up-b,
 .ui-btn-hover-b,
 .ui-btn-down-b {
-	font-family: Helvetica, Arial, sans-serif /*{b-button-font}*/;
+	font-family: Helvetica, Arial, sans-serif /*{global-font-family}*/;
 	text-decoration: none;
 }
 
@@ -339,7 +339,7 @@
 .ui-bar-c select,
 .ui-bar-c textarea,
 .ui-bar-c button {
-	font-family: Helvetica, Arial, sans-serif /*{c-bar-font}*/;
+	font-family: Helvetica, Arial, sans-serif /*{global-font-family}*/;
 }
 .ui-body-c {
 	border: 1px solid 		#B3B3B3 /*{c-body-border}*/;
@@ -358,7 +358,7 @@
 .ui-body-c select,
 .ui-body-c textarea,
 .ui-body-c button {
-	font-family: Helvetica, Arial, sans-serif /*{c-body-font}*/;
+	font-family: Helvetica, Arial, sans-serif /*{global-font-family}*/;
 }
 
 .ui-body-c .ui-link-inherit {
@@ -434,7 +434,7 @@
 .ui-btn-up-c,
 .ui-btn-hover-c,
 .ui-btn-down-c {
-	font-family: Helvetica, Arial, sans-serif /*{c-button-font}*/;
+	font-family: Helvetica, Arial, sans-serif /*{global-font-family}*/;
 	text-decoration: none;
 }
 

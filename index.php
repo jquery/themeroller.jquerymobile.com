@@ -200,9 +200,16 @@ if ( isset($_GET['style_id']) ) {
 			
 				<div class="accordion" data-form="ui-btn-active">
 					<div>
+						<h3><a href="#">Font Family</a></h3>
+						<form>
+							<label class="first">FONT</label><input data-type="font-family" data-name="global-font-family" value="Helvetica, Arial, Sans serif"/><br class="clear"/>
+						</form>
+					</div>
+				</div>
+				<div class="accordion" data-form="ui-btn-active">
+					<div>
 						<h3><a href="#">Active State</a></h3>
 						<form>
-							<label class="first">FONT</label><input data-type="font-family" data-name="global-active-font" value="Helvetica, Arial, Sans serif"/><br class="clear"/>
 							<label class="first">TEXT COLOR</label><input data-type="color" data-name="global-active-color" class="colorwell"  value="#FFFFFF"/><br class="clear"/>
 							<label class="first">TEXT SHADOW</label><input title="Controls the horizontal offset of text shadow" data-type="text-shadow" data-name="global-active-shadow-x" value="0px"/>&nbsp;<input title="Controls the vertical offset of text shadow" data-type="text-shadow" data-name="global-active-shadow-y" value="-1px"/>&nbsp;<input title="Controls the blur of text shadow" data-type="text-shadow" data-name="global-active-shadow-radius" value="1px"/>&nbsp;<input data-name="global-active-shadow-color" data-type="text-shadow" class="colorwell" value="#145072"/><br class="clear"/>
 							<div class="separator"></div>
@@ -250,7 +257,6 @@ if ( isset($_GET['style_id']) ) {
 					<div>
 						<h3><a href="#">Header/Footer Bar</a></h3>
 						<form>
-							<label class="first">FONT</label><input data-type="font-family" data-name="a-bar-font" value="Helvetica, Arial, Sans serif"/><br class="clear"/>
 							<label class="first">TEXT COLOR</label><input data-type="color" data-name="a-bar-color" class="colorwell" value="#3E3E3E"/><br class="clear"/>
 							<label class="first">TEXT SHADOW</label><input title="Controls the horizontal offset of text shadow" data-type="text-shadow" data-name="a-bar-shadow-x" value="0px"/>&nbsp;<input title="Controls the vertical offset of text shadow" data-type="text-shadow" data-name="a-bar-shadow-y" value="1px"/>&nbsp;<input title="Controls the blur of text shadow" data-type="text-shadow" data-name="a-bar-shadow-radius" value="1px"/>&nbsp;<input data-name="a-bar-shadow-color" data-type="text-shadow" class="colorwell" value="#FFFFFF"/><br class="clear"/>
 							<div class="separator"></div>
@@ -265,7 +271,6 @@ if ( isset($_GET['style_id']) ) {
 					<div>
 						<h3><a href="#">Content Body</a></h3>
 						<form>
-							<label class="first">FONT</label><input data-type="font-family" data-name="a-body-font" value="Helvetica, Arial, Sans serif"/><br class="clear"/>
 							<label class="first">LINK COLOR</label><input data-type="link" data-name="a-body-link-color" class="colorwell" value="#2489CE"/>&nbsp;&nbsp;<a class="more" data-name="a-body-link-color" href="#">+</a><br class="clear" />
 							<div class="start-end links" data-name="a-body-link-color">
 								<label class="first">LINK HOVER</label><input data-type="link" data-name="a-body-link-hover" class="colorwell" value="#2489CE"/><br class="clear" />
@@ -286,7 +291,6 @@ if ( isset($_GET['style_id']) ) {
 					<div>
 						<h3><a href="#">Button: Normal</a></h3>
 						<form>
-							<label class="first">FONT</label><input data-type="font-family" data-name="a-button-font" value="Helvetica, Arial, Sans serif"/><br class="clear"/>
 							<label class="first">TEXT COLOR</label><input data-type="color" data-name="a-bup-color" class="colorwell" value="#444444"/><br class="clear"/>
 							<label class="first">TEXT SHADOW</label><input title="Controls the horizontal offset of text shadow" data-type="text-shadow" data-name="a-bup-shadow-x" value="0px"/>&nbsp;<input title="Controls the vertical offset of text shadow" data-type="text-shadow" data-name="a-bup-shadow-y" value="1px"/>&nbsp;<input title="Controls the blur of text shadow" data-type="text-shadow" data-name="a-bup-shadow-radius" value="1px"/>&nbsp;<input data-name="a-bup-shadow-color" data-type="text-shadow" class="colorwell" value="#F6F6F6"/><br class="clear"/>
 							<div class="separator"></div>
@@ -301,7 +305,6 @@ if ( isset($_GET['style_id']) ) {
 					<div>
 						<h3><a href="#">Button: Hover</a></h3>
 						<form>
-							<label class="first">FONT</label><input data-type="font-family" data-name="a-button-font" value="Helvetica, Arial, Sans serif"/><br class="clear"/>
 							<label class="first">TEXT COLOR</label><input data-type="color" data-name="a-bhover-color" class="colorwell" value="#101010"/><br class="clear"/>
 							<label class="first">TEXT SHADOW</label><input title="Controls the horizontal offset of text shadow" data-type="text-shadow" data-name="a-bhover-shadow-x" value="0px"/>&nbsp;<input title="Controls the vertical offset of text shadow" data-type="text-shadow" data-name="a-bhover-shadow-y" value="1px"/>&nbsp;<input title="Controls the blur of text shadow" data-type="text-shadow" data-name="a-bhover-shadow-radius" value="1px"/>&nbsp;<input data-name="a-bhover-shadow-color" data-type="text-shadow" class="colorwell" value="#FFFFFF"/><br class="clear"/>
 							<div class="separator"></div>
@@ -316,7 +319,6 @@ if ( isset($_GET['style_id']) ) {
 					<div>
 						<h3><a href="#">Button: Pressed</a></h3>
 						<form>
-							<label class="first">FONT</label><input data-type="font-family" data-name="a-button-font" value="Helvetica, Arial, Sans serif"/><br class="clear"/>
 							<label class="first">TEXT COLOR</label><input data-type="color" data-name="a-bdown-color" class="colorwell"  value="#FFFFFF"/><br class="clear"/>
 							<label class="first">TEXT SHADOW</label><input title="Controls the horizontal offset of text shadow" data-type="text-shadow" data-name="a-bdown-shadow-x" value="0px"/>&nbsp;<input title="Controls the vertical offset of text shadow" data-type="text-shadow" data-name="a-bdown-shadow-y" value="1px"/>&nbsp;<input title="Controls the blur of text shadow" data-type="text-shadow" data-name="a-bdown-shadow-radius" value="1px"/>&nbsp;<input data-name="a-bdown-shadow-color" data-type="text-shadow" class="colorwell" value="#FFFFFF"/><br class="clear"/>
 							<div class="separator"></div>
