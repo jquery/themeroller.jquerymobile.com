@@ -167,14 +167,14 @@ if ( isset($_GET['style_id']) ) {
 			<p>To generate a theme URL that can be shared with others, click the <strong>Share</strong> link and copy the URL. Post it on Twitter and become a famous theme artist. Anyone that opens the shared URL can edit or download the theme, but theor activity won't affect your original theme. Note that due to the high volume of traffic, we can only store your theme on the server for 30 days so shared links have an expiration date. Be sure to download a copy of your theme for safekeeping.</p>
 			
 			<h3 id="supported">Supported browsers <a href="#help-top" class="help-top">^ Top</a></h3>
-			<p>This is a beta version of a developer tool so we're committing to supporting the <strong>latest</strong> versions of popular desktop browsers: Chrome, Firefox, Internet Explorer, Safari. If you're running into issues, maybe try a different browser or <a href="https://github.com/jquery/web-jquery-mobile-theme-roller/issues" target="new"><strong>log an issue</strong></a> in the tracker.</p>
+			<p>This is a beta version of a developer tool so we're committing to supporting the <strong>latest</strong> versions of popular desktop browsers: Chrome, Firefox, Internet Explorer, Safari. Even though the tool works in IE9, it doesn't support CSS gradients so we don't recommend recommend using this browser to create themes. If you're running into issues, maybe try a different browser or <a href="https://github.com/jquery/web-jquery-mobile-theme-roller/issues" target="new"><strong>log an issue</strong></a> in the tracker.</p>
 			
 		
 		<div class="buttonpane">
 			<div class="separator"></div>
 			<img src="images/target_big.png" alt=" "/>
 			<p>
-				This is your guide to ThemeRoller and all you can do with it. Don't forget to share your themes!
+				&nbsp;&nbsp;
 			</p>
 		</div>
 	</div>

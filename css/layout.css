@@ -179,10 +179,10 @@ h2{
 	cursor: pointer;
 }
 
-#quickswatch #kuler-activation img{
+#quickswatch h2 #kuler-activation img{
 	position: relative;
-	top: -2px;
-	left: -2px;
+	top: -1px;
+	margin-left: 4px;
 }
 
 #quickswatch .colors{
