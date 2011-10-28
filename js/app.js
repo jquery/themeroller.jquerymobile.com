@@ -1,9 +1,18 @@
-//this file holds the main functionality of ThemeRoller
-$(function( $ ) {
-    /*Global Variables*/
+//Object that can be used across multiple files to reference certain functions
+$.tr = {};
 
-	//Object that can be used across multiple files to reference certain functions
-	$.tr = {};
+(function( $, window, undefined ) {
+//this file holds the main functionality of ThemeRoller
+
+var isDOMReady = false,
+isIFrameReady = false;
+
+function initializeThemeRoller()
+{
+
+	if ( !isDOMReady || !isIFrameReady ) {
+		return;
+	}
 	
     //Style
     var style_block; //reference to #styleblock in iframe - defined on iframe load
@@ -144,7 +153,6 @@ $(function( $ ) {
     });
 	
     //Binds add-swatch box to newSwatch and sets up the Inspector
-    $( "#frame" ).load(function(){
     	//define global reference style_block to #styleblock in iframe
         frame = $( "#frame" ).contents();
 
@@ -248,7 +256,6 @@ $(function( $ ) {
 		
         frame.find( "#styleblock" ).text( css );
         frame.find( "body" ).show().delay( 600 );
-    });
     		
 	//ajax call performed when share link is clicked
 	$( "#generate_url" ).click(function(e) {
@@ -1562,4 +1569,19 @@ $(function( $ ) {
 	$.tr.rgbtohex = rgbtohex;
 	$.tr.addMostRecent = addMostRecent;
 	$.tr.moving_color = moving_color;
+
+	$(document).trigger("themerollerready");
+}
+
+$.tr.iframeLoadCallback = function()
+{
+	isIFrameReady = true;
+	initializeThemeRoller();
+}
+
+$(function() {
+	isDOMReady = true;
+	initializeThemeRoller();
 });
+
+})( jQuery, window );

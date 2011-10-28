@@ -403,7 +403,7 @@ if ( isset($_GET['style_id']) ) {
 		</div>
 	
 		<div id="content">
-			<iframe id="frame" src="preview.html">
+			<iframe id="frame" src="preview.html" onload="$.tr.iframeLoadCallback();">
 			</iframe>
 		</div>
 	

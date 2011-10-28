@@ -1,5 +1,5 @@
 //this file is used to initialize the jquery-ui behaviors and the farbtastic colorpicker
-$(function(){
+$(document).bind("themerollerready", function(){
 		
 	//size the load mask and show the rest of the content after 3000ms
 	$( "#load-mask" ).height($(window).height()).width($(window).width() + 15);
