@@ -1362,6 +1362,7 @@ function initializeThemeRoller()
     
 	//function to restyle and reconnect different input elements in the new swatch"s control panel
     function updateThemeRoller( tab ) {
+	
         $( "#tab" + tab + " .accordion" ).accordion({
             header: "h3", 
             active: false, 
