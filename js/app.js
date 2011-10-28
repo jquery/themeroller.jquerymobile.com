@@ -1,8 +1,10 @@
-//Object that can be used across multiple files to reference certain functions
-$.tr = {};
+
 
 (function( $, window, undefined ) {
 //this file holds the main functionality of ThemeRoller
+
+//Object that can be used across multiple files to reference certain functions
+$.tr = {};
 
 var isDOMReady = false,
 isIFrameReady = false;
@@ -24,7 +26,7 @@ function initializeThemeRoller()
 	
     //New Swatch
     var first_add = 1;//used to initialize the paging of the tabs
-    var tab_counter = 3;//initially we have a global tab an A tab and an add swatch taba
+    var tab_counter = 5;//initially we have a global tab an A tab and an add swatch taba
     //global lookup objects to convert number to alpha and visa versa
     var num = { "global": 0, "a": 1, "b": 2, "c": 3, "d": 4, "e": 5, "f": 6, "g": 7, "h": 8, "i": 9, "j": 10, "k": 11, "l": 12, "m": 13, "n": 14, "o": 15, "p": 16, "q": 17, "r": 18, "s": 19, "t": 20, "u": 21, "v": 22, "w": 23, "x": 24, "y": 25, "z": 26 };
     var alpha = [ "global", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z" ];
@@ -583,7 +585,7 @@ function initializeThemeRoller()
     });
     
     //initial binding for newSwatch
-    $( "[href=#tab3]" ).bind( "click", newSwatch );
+    $( "[href=#tab5]" ).bind( "click", newSwatch );
 
     //removing the close button from ui-dialogs
     $( ".tr_widget .ui-dialog-titlebar-close" ).remove();

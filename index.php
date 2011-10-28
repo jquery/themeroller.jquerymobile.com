@@ -192,7 +192,9 @@ if ( isset($_GET['style_id']) ) {
 			<ul>
 				<li><a href="#tab1">Global</a></li>
 				<li><a href="#tab2">A</a></li>
-				<li><a href="#tab3">+</a></li>
+				<li><a href="#tab3">B</a></li>
+				<li><a href="#tab4">C</a></li>
+				<li><a href="#tab5">+</a></li>
 			</ul>
 			<div id="tab1">
 				<h1>Theme Settings</h1>
@@ -330,7 +332,167 @@ if ( isset($_GET['style_id']) ) {
 				</div>
 			</div>
 			<div id="tab3">
-				<!--Add Swatch-->
+				<h1>Swatch B<a class="delete-swatch-b" href="">Delete</a></h1>
+			
+				<div class="accordion" data-form="ui-bar-b">
+					<div>
+						<h3><a href="#">Header/Footer Bar</a></h3>
+						<form>
+							<label class="first">TEXT COLOR</label><input data-type="color" data-name="b-bar-color" class="colorwell" value="#3E3E3E"/><br class="clear"/>
+							<label class="first">TEXT SHADOW</label><input title="Controls the horizontal offset of text shadow" data-type="text-shadow" data-name="b-bar-shadow-x" value="0px"/>&nbsp;<input title="Controls the vertical offset of text shadow" data-type="text-shadow" data-name="b-bar-shadow-y" value="1px"/>&nbsp;<input title="Controls the blur of text shadow" data-type="text-shadow" data-name="b-bar-shadow-radius" value="1px"/>&nbsp;<input data-name="b-bar-shadow-color" data-type="text-shadow" class="colorwell" value="#FFFFFF"/><br class="clear"/>
+							<div class="separator"></div>
+							<label class="first">BACKGROUND</label><input data-type="background" data-name="b-bar-background-color" class="colorwell" value="#EDEDED"/><div class="slider" data-type="background" data-name="b-bar-background-color"></div>&nbsp;&nbsp;<a class="more" data-name="b-bar-background" href="#">+</a>
+							<div class="start-end" data-name="b-bar-background"><label class="first">START</label><input data-type="start"  data-name="b-bar-background-start" class="colorwell" value="#F0F0F0"/>&nbsp;<span class="end-label">END</span>&nbsp;<input data-type="end" data-name="b-bar-background-end" class="colorwell" value="#E9EAEB"/></div>
+							<div class="separator"></div>
+							<label class="first">BORDER</label><input data-type="border" data-name="b-bar-border" class="colorwell" value="#B3B3B3"/><br class="clear"/>
+						</form>
+					</div>
+				</div>
+				<div class="accordion" data-form="ui-body-b">
+					<div>
+						<h3><a href="#">Content Body</a></h3>
+						<form>
+							<label class="first">LINK COLOR</label><input data-type="link" data-name="b-body-link-color" class="colorwell" value="#2489CE"/>&nbsp;&nbsp;<a class="more" data-name="b-body-link-color" href="#">+</a><br class="clear" />
+							<div class="start-end links" data-name="b-body-link-color">
+								<label class="first">LINK HOVER</label><input data-type="link" data-name="b-body-link-hover" class="colorwell" value="#2489CE"/><br class="clear" />
+								<label class="first">LINK ACTIVE</label><input data-type="link" data-name="b-body-link-active" class="colorwell" value="#2489CE"/><br class="clear" />
+								<label class="first">LINK VISITED</label><input data-type="link" data-name="b-body-link-visited" class="colorwell" value="#2489CE"/>
+							</div>
+							<label class="first">TEXT COLOR</label><input data-type="color" data-name="b-body-color" class="colorwell" value="#333333"/><br class="clear"/>
+							<label class="first">TEXT SHADOW</label><input title="Controls the horizontal offset of text shadow" data-type="text-shadow" data-name="b-body-shadow-x" value="0px"/>&nbsp;<input title="Controls the vertical offset of text shadow" data-type="text-shadow" data-name="b-body-shadow-y" value="1px"/>&nbsp;<input title="Controls the blur of text shadow" data-type="text-shadow" data-name="b-body-shadow-radius" value="0px"/>&nbsp;<input data-name="b-body-shadow-color" data-type="text-shadow" class="colorwell" value="#FFFFFF"/><br class="clear"/>
+							<div class="separator"></div>
+							<label class="first">BACKGROUND</label><input data-type="background" data-name="b-body-background-color" class="colorwell" value="#E5E5E5"/><div class="slider" data-type="background" data-name="b-body-background-color"></div>&nbsp;&nbsp;<a class="more" data-name="b-body-background" href="#">+</a>
+							<div class="start-end" data-name="b-body-background"><label class="first">START</label><input data-type="start"  data-name="b-body-background-start" class="colorwell" value="#EEEEEE"/>&nbsp;<span class="end-label">END</span>&nbsp;<input data-type="end" data-name="b-body-background-end" class="colorwell" value="#DDDDDD"/></div>
+							<div class="separator"></div>
+							<label class="first">BORDER</label><input data-type="border" data-name="b-body-border" class="colorwell" value="#B3B3B3"/><br class="clear"/>
+						</form>
+					</div>
+				</div>
+				<div class="accordion" data-form="ui-btn-up-b">
+					<div>
+						<h3><a href="#">Button: Normal</a></h3>
+						<form>
+							<label class="first">TEXT COLOR</label><input data-type="color" data-name="b-bup-color" class="colorwell" value="#444444"/><br class="clear"/>
+							<label class="first">TEXT SHADOW</label><input title="Controls the horizontal offset of text shadow" data-type="text-shadow" data-name="b-bup-shadow-x" value="0px"/>&nbsp;<input title="Controls the vertical offset of text shadow" data-type="text-shadow" data-name="b-bup-shadow-y" value="1px"/>&nbsp;<input title="Controls the blur of text shadow" data-type="text-shadow" data-name="b-bup-shadow-radius" value="1px"/>&nbsp;<input data-name="b-bup-shadow-color" data-type="text-shadow" class="colorwell" value="#F6F6F6"/><br class="clear"/>
+							<div class="separator"></div>
+							<label class="first">BACKGROUND</label><input data-type="background" data-name="b-bup-background-color" class="colorwell" value="#F6F6F6"/><div class="slider" data-type="background" data-name="b-bup-background-color"></div>&nbsp;&nbsp;<a class="more" data-name="b-bup-background" href="#">+</a>
+							<div class="start-end" data-name="b-bup-background"><label class="first">START</label><input data-type="start"  data-name="b-bup-background-start" class="colorwell" value="#FEFEFE"/>&nbsp;<span class="end-label">END</span>&nbsp;<input data-type="end" data-name="b-bup-background-end" class="colorwell" value="#EEEEEE"/></div>
+							<div class="separator"></div>
+							<label class="first">BORDER</label><input data-type="border" data-name="b-bup-border" class="colorwell" value="#CCCCCC"/><br class="clear"/>
+						</form>
+					</div>
+				</div>
+				<div class="accordion" data-form="ui-btn-hover-b">
+					<div>
+						<h3><a href="#">Button: Hover</a></h3>
+						<form>
+							<label class="first">TEXT COLOR</label><input data-type="color" data-name="b-bhover-color" class="colorwell" value="#101010"/><br class="clear"/>
+							<label class="first">TEXT SHADOW</label><input title="Controls the horizontal offset of text shadow" data-type="text-shadow" data-name="b-bhover-shadow-x" value="0px"/>&nbsp;<input title="Controls the vertical offset of text shadow" data-type="text-shadow" data-name="b-bhover-shadow-y" value="1px"/>&nbsp;<input title="Controls the blur of text shadow" data-type="text-shadow" data-name="b-bhover-shadow-radius" value="1px"/>&nbsp;<input data-name="b-bhover-shadow-color" data-type="text-shadow" class="colorwell" value="#FFFFFF"/><br class="clear"/>
+							<div class="separator"></div>
+							<label class="first">BACKGROUND</label><input data-type="background" data-name="b-bhover-background-color" class="colorwell" value="#E3E3E3"/><div class="slider" data-type="background" data-name="b-bhover-background-color"></div>&nbsp;&nbsp;<a class="more" data-name="b-bhover-background" href="#">+</a>
+							<div class="start-end" data-name="b-bhover-background"><label class="first">START</label><input data-type="start"  data-name="b-bhover-background-start" class="colorwell" value="#EDEDED"/>&nbsp;<span class="end-label">END</span>&nbsp;<input data-type="end" data-name="b-bhover-background-end" class="colorwell" value="#DADADA"/></div>
+							<div class="separator"></div>
+							<label class="first">BORDER</label><input data-type="border" data-name="b-bhover-border" class="colorwell" value="#BBBBBB"/><br class="clear"/>
+						</form>
+					</div>
+				</div>
+				<div class="accordion" data-form="ui-btn-down-b">
+					<div>
+						<h3><a href="#">Button: Pressed</a></h3>
+						<form>
+							<label class="first">TEXT COLOR</label><input data-type="color" data-name="b-bdown-color" class="colorwell"  value="#FFFFFF"/><br class="clear"/>
+							<label class="first">TEXT SHADOW</label><input title="Controls the horizontal offset of text shadow" data-type="text-shadow" data-name="b-bdown-shadow-x" value="0px"/>&nbsp;<input title="Controls the vertical offset of text shadow" data-type="text-shadow" data-name="b-bdown-shadow-y" value="1px"/>&nbsp;<input title="Controls the blur of text shadow" data-type="text-shadow" data-name="b-bdown-shadow-radius" value="1px"/>&nbsp;<input data-name="b-bdown-shadow-color" data-type="text-shadow" class="colorwell" value="#FFFFFF"/><br class="clear"/>
+							<div class="separator"></div>
+							<label class="first">BACKGROUND</label><input data-type="background" data-name="b-bdown-background-color" class="colorwell" value="#F5F5F5"/><div class="slider" data-type="background" data-name="b-bdown-background-color"></div>&nbsp;&nbsp;<a class="more" data-name="b-bdown-background" href="#">+</a>
+							<div class="start-end" data-name="b-bdown-background"><label class="first">START</label><input data-type="start"  data-name="b-bdown-background-start" class="colorwell" value="#EEEEEE"/>&nbsp;<span class="end-label">END</span>&nbsp;<input data-type="end" data-name="b-bdown-background-end" class="colorwell" value="#FDFDFD"/></div>
+							<div class="separator"></div>
+							<label class="first">BORDER</label><input data-type="border" data-name="b-bdown-border" class="colorwell" value="#808080"/><br class="clear"/>
+						</form>
+					</div>
+				</div>
+			</div>
+			<div id="tab4">
+				<h1>Swatch C<a class="delete-swatch-c" href="">Delete</a></h1>
+			
+				<div class="accordion" data-form="ui-bar-c">
+					<div>
+						<h3><a href="#">Header/Footer Bar</a></h3>
+						<form>
+							<label class="first">TEXT COLOR</label><input data-type="color" data-name="c-bar-color" class="colorwell" value="#3E3E3E"/><br class="clear"/>
+							<label class="first">TEXT SHADOW</label><input title="Controls the horizontal offset of text shadow" data-type="text-shadow" data-name="c-bar-shadow-x" value="0px"/>&nbsp;<input title="Controls the vertical offset of text shadow" data-type="text-shadow" data-name="c-bar-shadow-y" value="1px"/>&nbsp;<input title="Controls the blur of text shadow" data-type="text-shadow" data-name="c-bar-shadow-radius" value="1px"/>&nbsp;<input data-name="c-bar-shadow-color" data-type="text-shadow" class="colorwell" value="#FFFFFF"/><br class="clear"/>
+							<div class="separator"></div>
+							<label class="first">BACKGROUND</label><input data-type="background" data-name="c-bar-background-color" class="colorwell" value="#EDEDED"/><div class="slider" data-type="background" data-name="c-bar-background-color"></div>&nbsp;&nbsp;<a class="more" data-name="c-bar-background" href="#">+</a>
+							<div class="start-end" data-name="c-bar-background"><label class="first">START</label><input data-type="start"  data-name="c-bar-background-start" class="colorwell" value="#F0F0F0"/>&nbsp;<span class="end-label">END</span>&nbsp;<input data-type="end" data-name="c-bar-background-end" class="colorwell" value="#E9EAEB"/></div>
+							<div class="separator"></div>
+							<label class="first">BORDER</label><input data-type="border" data-name="c-bar-border" class="colorwell" value="#B3B3B3"/><br class="clear"/>
+						</form>
+					</div>
+				</div>
+				<div class="accordion" data-form="ui-body-c">
+					<div>
+						<h3><a href="#">Content Body</a></h3>
+						<form>
+							<label class="first">LINK COLOR</label><input data-type="link" data-name="c-body-link-color" class="colorwell" value="#2489CE"/>&nbsp;&nbsp;<a class="more" data-name="c-body-link-color" href="#">+</a><br class="clear" />
+							<div class="start-end links" data-name="c-body-link-color">
+								<label class="first">LINK HOVER</label><input data-type="link" data-name="c-body-link-hover" class="colorwell" value="#2489CE"/><br class="clear" />
+								<label class="first">LINK ACTIVE</label><input data-type="link" data-name="c-body-link-active" class="colorwell" value="#2489CE"/><br class="clear" />
+								<label class="first">LINK VISITED</label><input data-type="link" data-name="c-body-link-visited" class="colorwell" value="#2489CE"/>
+							</div>
+							<label class="first">TEXT COLOR</label><input data-type="color" data-name="c-body-color" class="colorwell" value="#333333"/><br class="clear"/>
+							<label class="first">TEXT SHADOW</label><input title="Controls the horizontal offset of text shadow" data-type="text-shadow" data-name="c-body-shadow-x" value="0px"/>&nbsp;<input title="Controls the vertical offset of text shadow" data-type="text-shadow" data-name="c-body-shadow-y" value="1px"/>&nbsp;<input title="Controls the blur of text shadow" data-type="text-shadow" data-name="c-body-shadow-radius" value="0px"/>&nbsp;<input data-name="c-body-shadow-color" data-type="text-shadow" class="colorwell" value="#FFFFFF"/><br class="clear"/>
+							<div class="separator"></div>
+							<label class="first">BACKGROUND</label><input data-type="background" data-name="c-body-background-color" class="colorwell" value="#E5E5E5"/><div class="slider" data-type="background" data-name="c-body-background-color"></div>&nbsp;&nbsp;<a class="more" data-name="c-body-background" href="#">+</a>
+							<div class="start-end" data-name="c-body-background"><label class="first">START</label><input data-type="start"  data-name="c-body-background-start" class="colorwell" value="#EEEEEE"/>&nbsp;<span class="end-label">END</span>&nbsp;<input data-type="end" data-name="c-body-background-end" class="colorwell" value="#DDDDDD"/></div>
+							<div class="separator"></div>
+							<label class="first">BORDER</label><input data-type="border" data-name="c-body-border" class="colorwell" value="#B3B3B3"/><br class="clear"/>
+						</form>
+					</div>
+				</div>
+				<div class="accordion" data-form="ui-btn-up-c">
+					<div>
+						<h3><a href="#">Button: Normal</a></h3>
+						<form>
+							<label class="first">TEXT COLOR</label><input data-type="color" data-name="c-bup-color" class="colorwell" value="#444444"/><br class="clear"/>
+							<label class="first">TEXT SHADOW</label><input title="Controls the horizontal offset of text shadow" data-type="text-shadow" data-name="c-bup-shadow-x" value="0px"/>&nbsp;<input title="Controls the vertical offset of text shadow" data-type="text-shadow" data-name="c-bup-shadow-y" value="1px"/>&nbsp;<input title="Controls the blur of text shadow" data-type="text-shadow" data-name="c-bup-shadow-radius" value="1px"/>&nbsp;<input data-name="c-bup-shadow-color" data-type="text-shadow" class="colorwell" value="#F6F6F6"/><br class="clear"/>
+							<div class="separator"></div>
+							<label class="first">BACKGROUND</label><input data-type="background" data-name="c-bup-background-color" class="colorwell" value="#F6F6F6"/><div class="slider" data-type="background" data-name="c-bup-background-color"></div>&nbsp;&nbsp;<a class="more" data-name="c-bup-background" href="#">+</a>
+							<div class="start-end" data-name="c-bup-background"><label class="first">START</label><input data-type="start"  data-name="c-bup-background-start" class="colorwell" value="#FEFEFE"/>&nbsp;<span class="end-label">END</span>&nbsp;<input data-type="end" data-name="c-bup-background-end" class="colorwell" value="#EEEEEE"/></div>
+							<div class="separator"></div>
+							<label class="first">BORDER</label><input data-type="border" data-name="c-bup-border" class="colorwell" value="#CCCCCC"/><br class="clear"/>
+						</form>
+					</div>
+				</div>
+				<div class="accordion" data-form="ui-btn-hover-c">
+					<div>
+						<h3><a href="#">Button: Hover</a></h3>
+						<form>
+							<label class="first">TEXT COLOR</label><input data-type="color" data-name="c-bhover-color" class="colorwell" value="#101010"/><br class="clear"/>
+							<label class="first">TEXT SHADOW</label><input title="Controls the horizontal offset of text shadow" data-type="text-shadow" data-name="c-bhover-shadow-x" value="0px"/>&nbsp;<input title="Controls the vertical offset of text shadow" data-type="text-shadow" data-name="c-bhover-shadow-y" value="1px"/>&nbsp;<input title="Controls the blur of text shadow" data-type="text-shadow" data-name="c-bhover-shadow-radius" value="1px"/>&nbsp;<input data-name="c-bhover-shadow-color" data-type="text-shadow" class="colorwell" value="#FFFFFF"/><br class="clear"/>
+							<div class="separator"></div>
+							<label class="first">BACKGROUND</label><input data-type="background" data-name="c-bhover-background-color" class="colorwell" value="#E3E3E3"/><div class="slider" data-type="background" data-name="c-bhover-background-color"></div>&nbsp;&nbsp;<a class="more" data-name="c-bhover-background" href="#">+</a>
+							<div class="start-end" data-name="c-bhover-background"><label class="first">START</label><input data-type="start"  data-name="c-bhover-background-start" class="colorwell" value="#EDEDED"/>&nbsp;<span class="end-label">END</span>&nbsp;<input data-type="end" data-name="c-bhover-background-end" class="colorwell" value="#DADADA"/></div>
+							<div class="separator"></div>
+							<label class="first">BORDER</label><input data-type="border" data-name="c-bhover-border" class="colorwell" value="#BBBBBB"/><br class="clear"/>
+						</form>
+					</div>
+				</div>
+				<div class="accordion" data-form="ui-btn-down-c">
+					<div>
+						<h3><a href="#">Button: Pressed</a></h3>
+						<form>
+							<label class="first">TEXT COLOR</label><input data-type="color" data-name="c-bdown-color" class="colorwell"  value="#FFFFFF"/><br class="clear"/>
+							<label class="first">TEXT SHADOW</label><input title="Controls the horizontal offset of text shadow" data-type="text-shadow" data-name="c-bdown-shadow-x" value="0px"/>&nbsp;<input title="Controls the vertical offset of text shadow" data-type="text-shadow" data-name="c-bdown-shadow-y" value="1px"/>&nbsp;<input title="Controls the blur of text shadow" data-type="text-shadow" data-name="c-bdown-shadow-radius" value="1px"/>&nbsp;<input data-name="c-bdown-shadow-color" data-type="text-shadow" class="colorwell" value="#FFFFFF"/><br class="clear"/>
+							<div class="separator"></div>
+							<label class="first">BACKGROUND</label><input data-type="background" data-name="c-bdown-background-color" class="colorwell" value="#F5F5F5"/><div class="slider" data-type="background" data-name="c-bdown-background-color"></div>&nbsp;&nbsp;<a class="more" data-name="c-bdown-background" href="#">+</a>
+							<div class="start-end" data-name="c-bdown-background"><label class="first">START</label><input data-type="start"  data-name="c-bdown-background-start" class="colorwell" value="#EEEEEE"/>&nbsp;<span class="end-label">END</span>&nbsp;<input data-type="end" data-name="c-bdown-background-end" class="colorwell" value="#FDFDFD"/></div>
+							<div class="separator"></div>
+							<label class="first">BORDER</label><input data-type="border" data-name="c-bdown-border" class="colorwell" value="#808080"/><br class="clear"/>
+						</form>
+					</div>
+				</div>
+			</div>
+			<div id="tab5">
+				<!--new swatch -->
 			</div>
 		
 		</div>
