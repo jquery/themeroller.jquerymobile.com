@@ -154,6 +154,17 @@ function initializeThemeRoller()
         }
     });
 	
+	function addInspectorAttributes( swatch ) {
+		var slider = frame.find( "[name=slider][data-theme=" + swatch + "]" ).siblings( "div" );
+		var select = frame.find( "select[data-theme=" + swatch + "]" );
+		var btn = select.siblings( "a" );
+		slider.attr( "data-form", "ui-btn-down-" + swatch ).attr( "data-theme", swatch );
+		slider.find( "a" ).attr( "data-form", "ui-btn-up-" + swatch ).attr( "data-theme", swatch );
+		btn.attr( "data-theme", swatch ).attr( "data-form", "ui-btn-up-" + swatch );
+		btn.find( ".ui-icon" ).attr( "data-form", "ui-icon" );
+		return;
+	}
+	
     //Binds add-swatch box to newSwatch and sets up the Inspector
     	//define global reference style_block to #styleblock in iframe
         frame = $( "#frame" ).contents();
@@ -165,12 +176,28 @@ function initializeThemeRoller()
         
         //adding attributes to elements in the preview to make them compatible
         //with the inspector
+		var starting_swatches = ["a", "b", "c"];
+		for( var i = 0; i < 3; i++ ) {
+			addInspectorAttributes( starting_swatches[i] );
+		}
+
+		/*
 		var swatch = frame.find( "[name=slider]:first" ).attr( "data-theme" );
 		frame.find( "[name=slider]:first" ).siblings( "div" ).attr( "data-form", "ui-btn-down-" + swatch ).attr( "data-theme", swatch );
 		frame.find( "[name=slider]:first" ).siblings( "div" ).find( "a" ).attr( "data-form", "ui-btn-up-" + swatch ).attr( "data-theme", swatch );
-		frame.find( ".ui-select .ui-btn" ).attr( "data-form", "ui-btn-up-" + swatch ).attr( "data-theme", swatch );
-		frame.find( ".ui-select .ui-btn .ui-icon" ).attr( "data-form", "ui-icon" );
+		//frame.find( ".ui-select .ui-btn" ).attr( "data-form", "ui-btn-up-" + swatch ).attr( "data-theme", swatch );
+		//frame.find( ".ui-select .ui-btn .ui-icon" ).attr( "data-form", "ui-icon" );
 		frame.find( ".ui-btn .ui-icon-star" ).attr( "data-form", "ui-icon" ).attr( "data-theme", swatch );
+		
+		frame.find( "select" ).each(function() {
+			var swatch = $( this ).attr( "data-theme" );
+			var btn = $( this ).siblings( "a" );
+			
+			btn.attr( "data-theme", swatch );
+			btn.attr( "data-form", "ui-btn-up-" + swatch );
+			$( ".ui-icon", btn ).attr( "data-form", "ui-icon" );
+		});
+		*/
     	
         //wait for iframe to load to add appropriate number of swatches and call init
         correctNumberOfSwatches();
@@ -835,11 +862,7 @@ function initializeThemeRoller()
 			//ideally we should be able to write iframe_window.$(".swatch:last").trigger("create");
 			iframe_window.$( ".ui-page" ).trigger( "pagecreate" );
             //special treatment for the slider - adding data-form dynamically after pagecreate
-			frame.find( "[name=slider]:last" ).siblings( "div" ).attr( "data-form", "ui-btn-down-" + lower ).attr( "data-theme", lower );
-			frame.find( "[name=slider]:last" ).siblings( "div" ).find( "a" ).attr( "data-form", "ui-btn-up-" + lower ).attr( "data-theme", lower );
-			frame.find( ".ui-select .ui-btn:last" ).attr( "data-form", "ui-btn-up-" + lower ).attr( "data-theme", lower );
-			frame.find( ".ui-select .ui-btn .ui-icon:last" ).attr( "data-form", "ui-icon" );
-			frame.find( ".ui-btn .ui-icon-star:last" ).attr( "data-form", "ui-icon" ).attr( "data-theme", lower );
+			addInspectorAttributes( lower );
 			
 			refreshFrame( alpha[tab_counter - 1] );
 		}
@@ -1119,11 +1142,7 @@ function initializeThemeRoller()
             iframe_window.$( ".ui-page" ).trigger( "pagecreate" );
             
             //adding data-form attribute to slider
-			frame.find( "[name=slider]:last" ).siblings( "div" ).attr( "data-form", "ui-btn-down-" + lower ).attr( "data-theme", lower );
-			frame.find( "[name=slider]:last" ).siblings( "div" ).find( "a" ).attr( "data-form", "ui-btn-up-" + lower ).attr( "data-theme", lower );
-			frame.find( ".ui-select .ui-btn:last" ).attr( "data-form", "ui-btn-up-" + lower ).attr( "data-theme", lower );
-			frame.find( ".ui-select .ui-btn .ui-icon:last" ).attr( "data-form", "ui-icon" );
-			frame.find( ".ui-btn .ui-icon-star:last" ).attr( "data-form", "ui-icon" ).attr( "data-theme", lower );
+			addInspectorAttributes( lower );
 				 
             //redefine the token array
             init( "refresh" );
@@ -1362,6 +1381,7 @@ function initializeThemeRoller()
     
 	//function to restyle and reconnect different input elements in the new swatch"s control panel
     function updateThemeRoller( tab ) {
+	
 	
         $( "#tab" + tab + " .accordion" ).accordion({
             header: "h3", 

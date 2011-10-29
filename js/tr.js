@@ -1,8 +1,13 @@
+$(function(){
+	
+	$( "#load-mask" ).height($(window).height()).width($(window).width() + 15);
+	
+});
+
 //this file is used to initialize the jquery-ui behaviors and the farbtastic colorpicker
 $(document).bind("themerollerready", function(){
 		
 	//size the load mask and show the rest of the content after 3000ms
-	$( "#load-mask" ).height($(window).height()).width($(window).width() + 15);
 	setTimeout(function() {
 		$( "#interface" ).css({
 			"position": "static",
