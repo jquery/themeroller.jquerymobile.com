@@ -44,7 +44,7 @@ h2{
 	padding: 10px;
 	font-size: 15px;
 	border: 1px solid #ddd;
-	font: 62.5% "Segoe UI", sans-serif;
+	font-family: 62.5% "Segoe UI", sans-serif;
 }
 
 .dialog .buttonpane{

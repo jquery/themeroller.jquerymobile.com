@@ -4,8 +4,20 @@ $(function(){
 	
 });
 
+
+
+$.tr.isDOMReady = false,
+$.tr.isIFrameReady = false;
+
 //this file is used to initialize the jquery-ui behaviors and the farbtastic colorpicker
-$(document).bind("themerollerready", function(){
+function initializeUI() {
+	
+	if ( !$.tr.isDOMReady || !$.tr.isIFrameReady ) {
+		return;
+	}
+		
+	
+	var hexDigits = new Array("0","1","2","3","4","5","6","7","8","9","a","b","c","d","e","f");
 		
 	//size the load mask and show the rest of the content after 3000ms
 	setTimeout(function() {
@@ -50,12 +62,12 @@ $(document).bind("themerollerready", function(){
 	
 	//global array of color values in quickswatch colors for lightness/saturation adjustments
 	$( "#quickswatch .color-drag:not(.disabled)" ).each(function() {
-		colors.push( $.tr.rgbtohex($(this).css("background-color")) );
+		colors.push( rgbtohex($(this).css("background-color")) );
 	});
 
 	//colorwell refers to the inputs with color values
 	$( ".colorwell" ).focus(function() {
-		$.tr.colorwell = $(this);
+		colorwell = $(this);
 		var pos = $( this ).offset();
 		var name = $( this ).attr( "data-name" );
 		if(name.indexOf( "shadow-color" ) == -1) {
@@ -74,7 +86,7 @@ $(document).bind("themerollerready", function(){
 		$( "#colorpicker" ).show();
 	}).blur(function(e) {
 		$( "#colorpicker" ).hide();
-		$.tr.colorwell = null;
+		colorwell = null;
 	});
 	
 	//Inspector Radio behavior
@@ -178,4 +190,28 @@ $(document).bind("themerollerready", function(){
 		}
 	});
 	
+	
+	
+	function rgbtohex(rgb) {
+		rgb = rgb.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
+		return "#" + hex(rgb[1]) + hex(rgb[2]) + hex(rgb[3]);
+	}
+	
+	function hex(x) {
+		return isNaN(x) ? "00" : hexDigits[(x - x % 16) / 16] + hexDigits[x % 16];
+	}
+	
+	$.tr.initializeThemeRoller();
+	
+}
+
+$.tr.iframeLoadCallback = function()
+{
+	$.tr.isIFrameReady = true;
+	initializeUI();
+}
+
+$(function() {
+	$.tr.isDOMReady = true;
+	initializeUI();
 });

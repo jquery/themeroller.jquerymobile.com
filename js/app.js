@@ -6,15 +6,8 @@
 //Object that can be used across multiple files to reference certain functions
 $.tr = {};
 
-var isDOMReady = false,
-isIFrameReady = false;
-
-function initializeThemeRoller()
+$.tr.initializeThemeRoller = function()
 {
-
-	if ( !isDOMReady || !isIFrameReady ) {
-		return;
-	}
 	
     //Style
     var style_block; //reference to #styleblock in iframe - defined on iframe load
@@ -200,6 +193,8 @@ function initializeThemeRoller()
 		*/
     	
         //wait for iframe to load to add appropriate number of swatches and call init
+	    //initial binding for newSwatch
+	    $( "[href=#tab" + tab_counter + "]" ).bind( "click", newSwatch );
         correctNumberOfSwatches();
     	init();
     	
@@ -611,8 +606,6 @@ function initializeThemeRoller()
         updateAllCSS();
     });
     
-    //initial binding for newSwatch
-    $( "[href=#tab5]" ).bind( "click", newSwatch );
 
     //removing the close button from ui-dialogs
     $( ".tr_widget .ui-dialog-titlebar-close" ).remove();
@@ -871,7 +864,7 @@ function initializeThemeRoller()
 		for( ; tab_counter > swatch_counter; tab_counter-- ) {
 			frame.find( ".swatch:last" ).remove();
 			
-			$( "#tabs .ui-tabs-panel:last" ).attr( "id", "tab" + tab_counter - 1 );
+			$( "#tabs .ui-tabs-panel:last" ).attr( "id", "tab" + (tab_counter - 1) );
 			$( "#tabs ul li a:contains(\"+\")" ).attr( "href", "#tab" + (tab_counter - 1) );
 			if( $("#tabs").tabs("option", "selected") == (tab_counter - 2) ) {
 				$( "#tabs" ).tabs( "select", 0 );
@@ -1587,6 +1580,7 @@ function initializeThemeRoller()
 
 	$.tr.updateAllCSS = updateAllCSS;
 	$.tr.computeGradient = computeGradient;
+	$.tr.correctNumberOfSwatches = correctNumberOfSwatches;
 	$.tr.dectohex = dectohex;
 	$.tr.hextodec = hextodec;
 	$.tr.rgbtohex = rgbtohex;
@@ -1596,15 +1590,6 @@ function initializeThemeRoller()
 	$(document).trigger("themerollerready");
 }
 
-$.tr.iframeLoadCallback = function()
-{
-	isIFrameReady = true;
-	initializeThemeRoller();
-}
 
-$(function() {
-	isDOMReady = true;
-	initializeThemeRoller();
-});
 
 })( jQuery, window );
