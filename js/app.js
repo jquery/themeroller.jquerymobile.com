@@ -229,7 +229,7 @@ $.tr.initializeThemeRoller = function()
         frame.find( "[data-form]" ).bind( "mouseover", function() {
 			var $this = $( this );
             if( $("[data-id=inspector-on]").hasClass("on") ) {
-                var left = $this.offset().left, top = $this.offset().top - frame.scrollTop(),
+                var left = $this.offset().left, top = $this.offset().top,
                 	width = $this.outerWidth(), height = $this.outerHeight();
 				
                 var parent = this;
@@ -253,7 +253,6 @@ $.tr.initializeThemeRoller = function()
                             }).show();
                         }
                     });
-					
                 });
 				
                 $( "iframe" ).contents().find( "#highlight" ).css({
