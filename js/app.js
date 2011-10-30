@@ -507,12 +507,21 @@ $.tr.initializeThemeRoller = function()
 			updateAllCSS();
 	});
 
-	$( "[data-type=radius]" ).bind("change slide keyup mouseup", function() {
+	$( "input[data-type=radius]" ).bind("change keyup mouseup", function() {
+		var $this = $( this );
+		var name = $this.attr( "data-name" );
+		var slider = $( ".slider[data-type=radius][data-name=" + name + "]" );
+		var val = parseFloat( $this.val().replace(/[^0-9\.]/g, "") );
+		slider.slider( "value", val );
+		$.tr.style_array[name] = $this.val();
+		updateAllCSS();
+	});
+
+	$( ".slider[data-type=radius]" ).bind("change slide mouseup", function() {
 		var $this = $( this );
 		var name = $this.attr( "data-name" );
 		var input = $( "input[data-type=radius][data-name=" + name + "]" );
-		var slider = $( ".slider[data-type=radius][data-name=" + name + "]" );
-		input.val( slider.slider("value") + "em" );
+		input.val( $this.slider("value") + "em" );
 		$.tr.style_array[name] = input.val();
 		updateAllCSS();
 	});
