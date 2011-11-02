@@ -85,3 +85,13 @@ img{border: none;}
 .highlight {
 	color: #FD9F24;
 }
+
+#dontShowMsg {
+	float: right;
+	text-align: right;
+}
+
+#dontShowMsg input, #dontShowMsg label {
+	cursor: pointer;
+}
+

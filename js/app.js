@@ -50,6 +50,7 @@ $.tr.initializeThemeRoller = function()
 		draggable: false,
 		buttons: {
 			"Get Rolling": function() {
+				$.post( "index.php", { show_welcome: $( "#show_welcome" ).prop('checked') } );
 				$( this ).dialog( "close" );
 			}
 		}
