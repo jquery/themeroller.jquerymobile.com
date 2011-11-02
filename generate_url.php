@@ -7,7 +7,7 @@
 	$today = date('Ymd', strtotime('today'));
 	$last_file_num = 0;
 	foreach($dir as $file) {
-		if($file != '.' && $file != '..' && $file != '.DS_Store') {
+		if ( substr($file, 0, 1) !== '.' ) {
 			$file_name = explode('.', $file);
 			if(isset($file_name[0])) {
 				$date = explode('-', $file_name[0]);
