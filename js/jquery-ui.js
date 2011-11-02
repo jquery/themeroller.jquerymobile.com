@@ -9516,6 +9516,7 @@ $.widget("ui.dialog", {
 			});
 			if(extra) {
 				$(extra).prependTo(uiDialogButtonPane);
+				self.uiDialog.find('.buttonpane').remove();
 			}
 			uiDialogButtonPane.appendTo(self.uiDialog);
 		}
