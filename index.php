@@ -71,6 +71,18 @@ if ( isset($_GET['style_id']) ) {
 		</div>
 	</div>
 	
+	<div id="importing" class="dialog" title=" ">
+		<h1><img src="images/ajax-loader-white.gif" alt=" " /><strong>Importing...</strong></h1>
+		<div class="buttonpane">
+
+			<img src="images/target_big.png" alt=" "/>
+			<p>
+				Please give us a moment to update the panel with
+				the appropriate values.
+			</p>
+		</div>
+	</div>
+	
 	
 	<div id="upload" class="dialog" title=" ">
 		<h1><strong>Import</strong> Theme</h1>

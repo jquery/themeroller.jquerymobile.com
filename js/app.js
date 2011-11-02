@@ -91,6 +91,14 @@ $.tr.initializeThemeRoller = function()
 		dialogClass: "tr_widget"
 	});
 		
+	$( ".dialog#importing" ).dialog({
+		autoOpen: false,
+		modal: true,
+		resizeable: false,
+		draggable: false,
+		height: 70
+	});
+		
     $( ".dialog#upload" ).dialog({
         autoOpen: false,
         modal: true,
@@ -108,7 +116,7 @@ $.tr.initializeThemeRoller = function()
 					init();
 					correctNumberOfSwatches();
                 }
-                $( ".dialog#upload" ).dialog( "close" ); 
+                $( ".dialog#upload" ).dialog( "close" );
             }
         }
     });
@@ -1392,7 +1400,7 @@ $.tr.initializeThemeRoller = function()
         style_block.text( new_style );
         $( ".dialog#download textarea" ).val( new_style );
     }
-    
+
 	//function to restyle and reconnect different input elements in the new swatch"s control panel
     function updateThemeRoller( tab ) {
 	

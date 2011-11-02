@@ -14,9 +14,21 @@ h2{
 	font-family: "Segoe UI", sans-serif;
 }
 
+#importing h1{
+	text-align: center;
+}
+
+#importing h1 img{
+	margin-right: 10px;
+	width: 20px;
+	position: relative;
+	top: 2px;
+}
+
 .ui-dialog a{
 	color:#336699;
 }
+
 .dialog h1{
 	margin: 0 0 15px;
 	font-weight: normal;
