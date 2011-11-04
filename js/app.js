@@ -1425,6 +1425,7 @@ $.tr.initializeThemeRoller = function()
     }
 
 	function updateFormFields() {
+		
 		var tab_array = {};
 		
 		for (var i in style_array ) {
