@@ -110,13 +110,16 @@ $.tr.initializeThemeRoller = function()
             "Cancel": function() { 
                 $( ".dialog#upload" ).dialog( "close" ); 
             },
-            "Import": function() { 
+            "Import": function() {
+                $( ".dialog#upload" ).dialog( "close" );
             	if( $( "#load-css" ).val() != "" ) {
 					style_block.text( $("#load-css").val() );
+					//$( ".dialog#importing" ).dialog( "open" );
 					init();
 					correctNumberOfSwatches();
+					updateFormFields();
                 }
-                $( ".dialog#upload" ).dialog( "close" );
+				
             }
         }
     });
@@ -216,8 +219,10 @@ $.tr.initializeThemeRoller = function()
         //wait for iframe to load to add appropriate number of swatches and call init
 	    //initial binding for newSwatch
 	    $( "[href=#tab" + tab_counter + "]" ).bind( "click", newSwatch );
-        correctNumberOfSwatches();
+        
     	init();
+		correctNumberOfSwatches();
+		updateFormFields();
     	
         //copy color in colorwells to corresponding sliders
     	$( "input[data-type=background]" ).each(function() {
@@ -1006,12 +1011,12 @@ $.tr.initializeThemeRoller = function()
 		return false;
     }
     
-	function grayValue( color ) {	
+	function grayValue( color ) {
 		var color_arr = color.split( "" );
-
-        var red = $.tr.hextodec( color_arr[1] + color_arr[2] );
-        var green = $.tr.hextodec( color_arr[3] + color_arr[4] );
-        var blue = $.tr.hextodec( color_arr[5] + color_arr[6] );
+		
+        var red = hextodec( color_arr[1] + color_arr[2] );
+        var green = hextodec( color_arr[3] + color_arr[4] );
+        var blue = hextodec( color_arr[5] + color_arr[6] );
 
 		return ( red + green + blue ) / 3;
 	}
@@ -1338,6 +1343,17 @@ $.tr.initializeThemeRoller = function()
         });
     }    
     
+	//Function to convert hex format to a rgba color
+	function rgbatohex(rgba) {
+		rgba = rgba.match(/^rgba\((\d+),\s*(\d+),\s*(\d+),\s*([\d.]+)\)$/);
+		return "#" + hex(rgba[1]) + hex(rgba[2]) + hex(rgba[3]);
+	}
+	
+	function rgbaOpacity(rgba) {
+		rgba = rgba.match(/^rgba\((\d+),\s*(\d+),\s*(\d+),\s*([\d.]+)\)$/);
+		return rgba[4];
+	}
+
 	//Function to convert hex format to a rgb color
 	function rgbtohex(rgb) {
 		rgb = rgb.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
@@ -1382,6 +1398,13 @@ $.tr.initializeThemeRoller = function()
 		}, 200);
 	}
     
+	String.prototype.ltrim = function() {
+		return this.replace(/^\s+/,"");
+	}
+	String.prototype.rtrim = function() {
+		return this.replace(/\s+$/,"");
+	}
+
     //work horse of the app
     //this function runs through the token array and pushes out any changes that may have been made
     function updateAllCSS() {
@@ -1400,6 +1423,82 @@ $.tr.initializeThemeRoller = function()
         style_block.text( new_style );
         $( ".dialog#download textarea" ).val( new_style );
     }
+
+	function updateFormFields() {
+		for ( var i in style_array ) {
+			var field = $( "input[data-name=" + i + "]" );
+			var slider = $( ".slider[data-name=" + i + "]" );
+			var value = style_array[i].trim();
+			var colorwell = field.hasClass("colorwell") ? 1 : 0;
+			
+			if( i.indexOf("font-family") != -1 ) {
+				field.val( style_array[i].replace(/font-family:\s*/, "") );
+			} else if( i.indexOf("global-icon") != -1 ) {
+				if( i == "global-icon-set" ) {
+					field = $( "select[data-name=global-icon-set]" );
+					if( value.indexOf("black") != -1 ) {
+						field.val( "black" );
+					} else {
+						field.val( "white" );
+					}
+				} else {
+					if( i != "global-icon-color" ) {
+						var with_disc = $( "#with_disc" );
+						var disc_color = $( ".colorwell[data-name=global-icon-disc]" );
+						var disc_opacity = $( "[data-name=global-icon-disc]:not(.colorwell)" );
+					
+						if( value.indexOf( "transparent" ) != -1 ) {
+							with_disc.val( "without_disc" );
+						} else {
+							var hex = rgbatohex( value );
+							var opac = rgbaOpacity( value );
+							disc_color.val( hex ).css( "background-color", hex );
+							disc_opacity.val( parseFloat(opac) * 100 );
+							with_disc.val( "with_disc" );
+							if( grayValue(hex) < 127 ) {
+								disc_color.css( "color", "#ffffff" );
+							} else {
+								disc_color.css( "color", "#000000" );
+							}
+						}
+					}
+				}
+			} else if( i.indexOf("box-shadow") != -1) {
+				if( i.indexOf( "-size" ) == -1 ) {
+					var shadow_color = $( ".colorwell[data-name=global-box-shadow-color]" );
+					var shadow_opacity = $( "[data-name=global-box-shadow-color]:not(.colorwell)" );
+					var hex = rgbatohex( value );
+					var opac = rgbaOpacity( value );
+					shadow_color.val( hex ).css( "background-color", hex );
+					shadow_opacity.val( parseFloat(opac) * 100 );
+					if( grayValue(hex) < 127 ) {
+						shadow_color.css( "color", "#ffffff" );
+					} else {
+						shadow_color.css( "color", "#000000" );
+					}
+				} else {
+					field.val( value );
+				}
+			} else {
+				field.val( value );
+				if( colorwell ) {
+					if( grayValue(value) < 127 ) {
+						field.css( "color", "#ffffff" );
+					} else {
+						field.css( "color", "#000000" );
+					}
+					field.css( "background-color", value );
+					if( slider.html() ) {
+						//if there is some property on slider object, then there exists a slider
+						slider.find( "a" ).css({
+							"background-color": value,
+							"border-color": value,
+						});
+					}
+				}
+			}
+		}
+	}
 
 	//function to restyle and reconnect different input elements in the new swatch"s control panel
     function updateThemeRoller( tab ) {
