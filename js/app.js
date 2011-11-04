@@ -1425,9 +1425,18 @@ $.tr.initializeThemeRoller = function()
     }
 
 	function updateFormFields() {
+		var tab_array = {};
+		
+		for (var i in style_array ) {
+			if( !(i.split("-")[0] in tab_array) ) {
+				tab_array[ i.split("-")[0] ] = $( "#tab" + (num[i.split("-")[0]] + 1) );
+			}
+		}
+		
 		for ( var i in style_array ) {
-			var field = $( "input[data-name=" + i + "]" );
-			var slider = $( ".slider[data-name=" + i + "]" );
+			var tab = tab_array[i.split("-")[0]];
+			var field = $( "input[data-name=" + i + "]", tab );
+			var slider = $( ".slider[data-name=" + i + "]", tab );
 			var value = style_array[i].trim();
 			var colorwell = field.hasClass("colorwell") ? 1 : 0;
 			
@@ -1435,7 +1444,7 @@ $.tr.initializeThemeRoller = function()
 				field.val( style_array[i].replace(/font-family:\s*/, "") );
 			} else if( i.indexOf("global-icon") != -1 ) {
 				if( i == "global-icon-set" ) {
-					field = $( "select[data-name=global-icon-set]" );
+					field = $( "select[data-name=global-icon-set]", tab );
 					if( value.indexOf("black") != -1 ) {
 						field.val( "black" );
 					} else {
@@ -1444,8 +1453,8 @@ $.tr.initializeThemeRoller = function()
 				} else {
 					if( i != "global-icon-color" ) {
 						var with_disc = $( "#with_disc" );
-						var disc_color = $( ".colorwell[data-name=global-icon-disc]" );
-						var disc_opacity = $( "[data-name=global-icon-disc]:not(.colorwell)" );
+						var disc_color = $( "[data-name=global-icon-disc].colorwell", tab );
+						var disc_opacity = $( "[data-name=global-icon-disc]:not(.colorwell)", tab );
 					
 						if( value.indexOf( "transparent" ) != -1 ) {
 							with_disc.val( "without_disc" );
@@ -1465,8 +1474,8 @@ $.tr.initializeThemeRoller = function()
 				}
 			} else if( i.indexOf("box-shadow") != -1) {
 				if( i.indexOf( "-size" ) == -1 ) {
-					var shadow_color = $( ".colorwell[data-name=global-box-shadow-color]" );
-					var shadow_opacity = $( "[data-name=global-box-shadow-color]:not(.colorwell)" );
+					var shadow_color = $( "[data-name=global-box-shadow-color].colorwell", tab );
+					var shadow_opacity = $( "[data-name=global-box-shadow-color]:not(.colorwell)", tab );
 					var hex = rgbatohex( value );
 					var opac = rgbaOpacity( value );
 					shadow_color.val( hex ).css( "background-color", hex );
