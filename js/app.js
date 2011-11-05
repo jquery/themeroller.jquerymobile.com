@@ -40,7 +40,7 @@ $.tr.initializeThemeRoller = function()
     var swatch_template = "<div class=\"preview ui-shadow swatch\">\n		<div class=\"ui-header ui-bar-a\" data-swatch=\"a\" data-theme=\"a\" data-form=\"ui-bar-a\" data-role=\"header\" role=\"banner\">\n			<a class=\"ui-btn-left ui-btn ui-btn-icon-notext ui-btn-corner-all ui-shadow ui-btn-up-a\" data-iconpos=\"notext\" data-theme=\"a\" data-role=\"button\" data-icon=\"home\" title=\" Home \">\n				<span class=\"ui-btn-inner ui-btn-corner-all\">\n					<span class=\"ui-btn-text\"> Home </span>\n					<span data-form=\"ui-icon\" class=\"ui-icon ui-icon-home ui-icon-shadow\"></span>\n				</span>\n			</a>\n			<h1 class=\"ui-title\" tabindex=\"0\" role=\"heading\" aria-level=\"1\">A</h1>\n			<a class=\"ui-btn-right ui-btn ui-btn-icon-notext ui-btn-corner-all ui-shadow ui-btn-up-a\" data-iconpos=\"notext\" data-theme=\"a\" data-role=\"button\" data-icon=\"grid\" title=\" Navigation \">\n				<span class=\"ui-btn-inner ui-btn-corner-all\">\n					<span class=\"ui-btn-text\"> Navigation </span>\n					<span data-form=\"ui-icon\" class=\"ui-icon ui-icon-grid ui-icon-shadow\"></span>\n				</span>\n			</a>\n		</div>\n\n		<div class=\"ui-content ui-body-a\" data-theme=\"a\" data-form=\"ui-body-a\" data-role=\"content\" role=\"main\">\n\n			<p>\n				Sample text and <a class=\"ui-link\" data-form=\"ui-body-a\" href=\"#\" data-theme=\"a\">links</a>.\n			</p>\n\n			<div data-role=\"fieldcontain\">\n			    <fieldset data-role=\"controlgroup\">\n						<li data-swatch=\"a\" class=\"ui-li ui-li-divider ui-btn ui-bar-a ui-corner-top\" data-role=\"list-divider\" role=\"\" data-form=\"ui-bar-a\">List Header</li>\n\n						<input type=\"radio\" name=\"radio-choice-a\" id=\"radio-choice-1-a\" value=\"choice-1\" checked=\"checked\" />\n				        <label for=\"radio-choice-1-a\" data-form=\"ui-btn-up-a\" class=\"ui-corner-none\">Radio 1</label>\n\n		         		<input type=\"radio\" name=\"radio-choice-a\" id=\"radio-choice-2-a\" value=\"choice-2\"  />\n			         	<label for=\"radio-choice-2-a\" data-form=\"ui-btn-up-a\">Radio 2</label>\n\n						<input type=\"checkbox\" name=\"checkbox-1\" id=\"checkbox-1\" class=\"custom\" checked=\"checked\" />\n						<label for=\"checkbox-1\" data-form=\"ui-btn-up-a\">Checkbox</label>\n\n\n			    </fieldset>\n			</div>\n\n			<div data-role=\"fieldcontain\"> \n				<fieldset data-role=\"controlgroup\" data-type=\"horizontal\">\n						<input type=\"radio\" name=\"radio-view-a\" id=\"radio-view-a-a\" value=\"list\" checked=\"checked\"/> \n						<label for=\"radio-view-a-a\" data-form=\"ui-btn-up-a\">On</label> \n						<input type=\"radio\" name=\"radio-view-a\" id=\"radio-view-b-a\" value=\"grid\"  /> \n						<label for=\"radio-view-b-a\" data-form=\"ui-btn-up-a\">Off</label> \n				</fieldset> \n			</div>\n\n			<div data-role=\"fieldcontain\">\n				<select name=\"select-choice-1\" id=\"select-choice-1\" data-native-menu=\"false\" data-theme=\"a\" data-form=\"ui-btn-up-a\">\n					<option value=\"standard\">Option 1</option>\n					<option value=\"rush\">Option 2</option>\n					<option value=\"express\">Option 3</option>\n					<option value=\"overnight\">Option 4</option>\n				</select>\n			</div>\n\n			<input type=\"text\" value=\"Text Input\" class=\"input\" data-form=\"ui-body-a\" />\n\n			<div data-role=\"fieldcontain\">\n				<input type=\"range\" name=\"slider\" value=\"0\" min=\"0\" max=\"100\" data-form=\"ui-body-a\" data-theme=\"a\" />\n			</div>\n\n			<button data-icon=\"star\" data-theme=\"a\" data-form=\"ui-btn-up-a\">Button</button>\n		</div>\n	</div>";
 	var panel_template = $( "#tab2" ).html();
 	//var panel_template = "<h1>Swatch A<a class=\"delete-swatch-a\" href=\"\">Delete</a></h1>\n			\n				<div class=\"accordion\" data-form=\"ui-bar-a\">\n					<div>\n						<h3><a href=\"#\">Header/Footer Bar</a></h3>\n						<form>\n							<label class=\"first\">FONT</label><input data-type=\"font-family\" data-name=\"a-bar-font\" value=\"Helvetica, Arial, Sans serif\"/><br class=\"clear\"/>\n							<label class=\"first\">TEXT COLOR</label><input data-type=\"color\" data-name=\"a-bar-color\" class=\"colorwell\" value=\"#3E3E3E\"/><br class=\"clear\"/>\n							<label class=\"first\">TEXT SHADOW</label><input title=\"Controls the horizontal offset of text shadow\" data-type=\"text-shadow\" data-name=\"a-bar-shadow-x\" value=\"0px\"/>&nbsp;<input title=\"Controls the vertical offset of text shadow\" data-type=\"text-shadow\" data-name=\"a-bar-shadow-y\" value=\"1px\"/>&nbsp;<input title=\"Controls the blur of text shadow\" data-type=\"text-shadow\" data-name=\"a-bar-shadow-radius\" value=\"1px\"/>&nbsp;<input data-name=\"a-bar-shadow-color\" data-type=\"text-shadow\" class=\"colorwell\" value=\"#FFFFFF\"/><br class=\"clear\"/>\n							<div class=\"separator\"></div>\n							<label class=\"first\">BACKGROUND</label><input data-type=\"background\" data-name=\"a-bar-background-color\" class=\"colorwell\" value=\"#EDEDED\"/><div class=\"slider\" data-type=\"background\" data-name=\"a-bar-background-color\"></div>&nbsp;&nbsp;<a class=\"more\" data-name=\"a-bar-background\" href=\"#\">+</a>\n							<div class=\"start-end\" data-name=\"a-bar-background\"><label class=\"first\">START</label><input data-type=\"start\"  data-name=\"a-bar-background-start\" class=\"colorwell\" value=\"#F0F0F0\"/>&nbsp;<span class=\"end-label\">END</span>&nbsp;<input data-type=\"end\" data-name=\"a-bar-background-end\" class=\"colorwell\" value=\"#E9EAEB\"/></div>\n							<div class=\"separator\"></div>\n							<label class=\"first\">BORDER</label><input data-type=\"border\" data-name=\"a-bar-border\" class=\"colorwell\" value=\"#B3B3B3\"/><br class=\"clear\"/>\n						</form>\n					</div>\n				</div>\n				<div class=\"accordion\" data-form=\"ui-body-a\">\n					<div>\n						<h3><a href=\"#\">Content Body</a></h3>\n						<form>\n							<label class=\"first\">FONT</label><input data-type=\"font-family\" data-name=\"a-body-font\" value=\"Helvetica, Arial, Sans serif\"/><br class=\"clear\"/>\n							<label class=\"first\">TEXT COLOR</label><input data-type=\"color\" data-name=\"a-body-color\" class=\"colorwell\" value=\"#333333\"/><br class=\"clear\"/>\n							<label class=\"first\">TEXT SHADOW</label><input title=\"Controls the horizontal offset of text shadow\" data-type=\"text-shadow\" data-name=\"a-body-shadow-x\" value=\"0px\"/>&nbsp;<input title=\"Controls the vertical offset of text shadow\" data-type=\"text-shadow\" data-name=\"a-body-shadow-y\" value=\"1px\"/>&nbsp;<input title=\"Controls the blur of text shadow\" data-type=\"text-shadow\" data-name=\"a-body-shadow-radius\" value=\"0px\"/>&nbsp;<input data-name=\"a-body-shadow-color\" data-type=\"text-shadow\" class=\"colorwell\" value=\"#FFFFFF\"/><br class=\"clear\"/>\n							<div class=\"separator\"></div>\n							<label class=\"first\">BACKGROUND</label><input data-type=\"background\" data-name=\"a-body-background-color\" class=\"colorwell\" value=\"#E5E5E5\"/><div class=\"slider\" data-type=\"background\" data-name=\"a-body-background-color\"></div>&nbsp;&nbsp;<a class=\"more\" data-name=\"a-body-background\" href=\"#\">+</a>\n							<div class=\"start-end\" data-name=\"a-body-background\"><label class=\"first\">START</label><input data-type=\"start\"  data-name=\"a-body-background-start\" class=\"colorwell\" value=\"#EEEEEE\"/>&nbsp;<span class=\"end-label\">END</span>&nbsp;<input data-type=\"end\" data-name=\"a-body-background-end\" class=\"colorwell\" value=\"#DDDDDD\"/></div>\n							<div class=\"separator\"></div>\n							<label class=\"first\">BORDER</label><input data-type=\"border\" data-name=\"a-body-border\" class=\"colorwell\" value=\"#B3B3B3\"/><br class=\"clear\"/>\n						</form>\n					</div>\n				</div>\n				<div class=\"accordion\" data-form=\"ui-btn-up-a\">\n					<div>\n						<h3><a href=\"#\">Button: Normal</a></h3>\n						<form>\n							<label class=\"first\">FONT</label><input data-type=\"font-family\" data-name=\"a-button-font\" value=\"Helvetica, Arial, Sans serif\"/><br class=\"clear\"/>\n							<label class=\"first\">TEXT COLOR</label><input data-type=\"color\" data-name=\"a-bup-color\" class=\"colorwell\" value=\"#444444\"/><br class=\"clear\"/>\n							<label class=\"first\">TEXT SHADOW</label><input title=\"Controls the horizontal offset of text shadow\" data-type=\"text-shadow\" data-name=\"a-bup-shadow-x\" value=\"0px\"/>&nbsp;<input title=\"Controls the vertical offset of text shadow\" data-type=\"text-shadow\" data-name=\"a-bup-shadow-y\" value=\"1px\"/>&nbsp;<input title=\"Controls the blur of text shadow\" data-type=\"text-shadow\" data-name=\"a-bup-shadow-radius\" value=\"1px\"/>&nbsp;<input data-name=\"a-bup-shadow-color\" data-type=\"text-shadow\" class=\"colorwell\" value=\"#F6F6F6\"/><br class=\"clear\"/>\n							<div class=\"separator\"></div>\n							<label class=\"first\">BACKGROUND</label><input data-type=\"background\" data-name=\"a-bup-background-color\" class=\"colorwell\" value=\"#F6F6F6\"/><div class=\"slider\" data-type=\"background\" data-name=\"a-bup-background-color\"></div>&nbsp;&nbsp;<a class=\"more\" data-name=\"a-bup-background\" href=\"#\">+</a>\n							<div class=\"start-end\" data-name=\"a-bup-background\"><label class=\"first\">START</label><input data-type=\"start\"  data-name=\"a-bup-background-start\" class=\"colorwell\" value=\"#FEFEFE\"/>&nbsp;<span class=\"end-label\">END</span>&nbsp;<input data-type=\"end\" data-name=\"a-bup-background-end\" class=\"colorwell\" value=\"#EEEEEE\"/></div>\n							<div class=\"separator\"></div>\n							<label class=\"first\">BORDER</label><input data-type=\"border\" data-name=\"a-bup-border\" class=\"colorwell\" value=\"#CCCCCC\"/><br class=\"clear\"/>\n						</form>\n					</div>\n				</div>\n				<div class=\"accordion\" data-form=\"ui-btn-hover-a\">\n					<div>\n						<h3><a href=\"#\">Button: Hover</a></h3>\n						<form>\n							<label class=\"first\">FONT</label><input data-type=\"font-family\" data-name=\"a-button-font\" value=\"Helvetica, Arial, Sans serif\"/><br class=\"clear\"/>\n							<label class=\"first\">TEXT COLOR</label><input data-type=\"color\" data-name=\"a-bhover-color\" class=\"colorwell\" value=\"#101010\"/><br class=\"clear\"/>\n							<label class=\"first\">TEXT SHADOW</label><input title=\"Controls the horizontal offset of text shadow\" data-type=\"text-shadow\" data-name=\"a-bhover-shadow-x\" value=\"0px\"/>&nbsp;<input title=\"Controls the vertical offset of text shadow\" data-type=\"text-shadow\" data-name=\"a-bhover-shadow-y\" value=\"1px\"/>&nbsp;<input title=\"Controls the blur of text shadow\" data-type=\"text-shadow\" data-name=\"a-bhover-shadow-radius\" value=\"1px\"/>&nbsp;<input data-name=\"a-bhover-shadow-color\" data-type=\"text-shadow\" class=\"colorwell\" value=\"#FFFFFF\"/><br class=\"clear\"/>\n							<div class=\"separator\"></div>\n							<label class=\"first\">BACKGROUND</label><input data-type=\"background\" data-name=\"a-bhover-background-color\" class=\"colorwell\" value=\"#E3E3E3\"/><div class=\"slider\" data-type=\"background\" data-name=\"a-bhover-background-color\"></div>&nbsp;&nbsp;<a class=\"more\" data-name=\"a-bhover-background\" href=\"#\">+</a>\n							<div class=\"start-end\" data-name=\"a-bhover-background\"><label class=\"first\">START</label><input data-type=\"start\"  data-name=\"a-bhover-background-start\" class=\"colorwell\" value=\"#EDEDED\"/>&nbsp;<span class=\"end-label\">END</span>&nbsp;<input data-type=\"end\" data-name=\"a-bhover-background-end\" class=\"colorwell\" value=\"#DADADA\"/></div>\n							<div class=\"separator\"></div>\n							<label class=\"first\">BORDER</label><input data-type=\"border\" data-name=\"a-bhover-border\" class=\"colorwell\" value=\"#BBBBBB\"/><br class=\"clear\"/>\n						</form>\n					</div>\n				</div>\n				<div class=\"accordion\" data-form=\"ui-btn-down-a\">\n					<div>\n						<h3><a href=\"#\">Button: Pressed</a></h3>\n						<form>\n							<label class=\"first\">FONT</label><input data-type=\"font-family\" data-name=\"a-button-font\" value=\"Helvetica, Arial, Sans serif\"/><br class=\"clear\"/>\n							<label class=\"first\">TEXT COLOR</label><input data-type=\"color\" data-name=\"a-bdown-color\" class=\"colorwell\"  value=\"#FFFFFF\"/><br class=\"clear\"/>\n							<label class=\"first\">TEXT SHADOW</label><input title=\"Controls the horizontal offset of text shadow\" data-type=\"text-shadow\" data-name=\"a-bdown-shadow-x\" value=\"0px\"/>&nbsp;<input title=\"Controls the vertical offset of text shadow\" data-type=\"text-shadow\" data-name=\"a-bdown-shadow-y\" value=\"1px\"/>&nbsp;<input title=\"Controls the blur of text shadow\" data-type=\"text-shadow\" data-name=\"a-bdown-shadow-radius\" value=\"1px\"/>&nbsp;<input data-name=\"a-bdown-shadow-color\" data-type=\"text-shadow\" class=\"colorwell\" value=\"#FFFFFF\"/><br class=\"clear\"/>\n							<div class=\"separator\"></div>\n							<label class=\"first\">BACKGROUND</label><input data-type=\"background\" data-name=\"a-bdown-background-color\" class=\"colorwell\" value=\"#F5F5F5\"/><div class=\"slider\" data-type=\"background\" data-name=\"a-bdown-background-color\"></div>&nbsp;&nbsp;<a class=\"more\" data-name=\"a-bdown-background\" href=\"#\">+</a>\n							<div class=\"start-end\" data-name=\"a-bdown-background\"><label class=\"first\">START</label><input data-type=\"start\"  data-name=\"a-bdown-background-start\" class=\"colorwell\" value=\"#EEEEEE\"/>&nbsp;<span class=\"end-label\">END</span>&nbsp;<input data-type=\"end\" data-name=\"a-bdown-background-end\" class=\"colorwell\" value=\"#FDFDFD\"/></div>\n							<div class=\"separator\"></div>\n							<label class=\"first\">BORDER</label><input data-type=\"border\" data-name=\"a-bdown-border\" class=\"colorwell\" value=\"#808080\"/><br class=\"clear\"/>\n						</form>\n					</div>\n				</div>";
-	
+	var tabs_up_to_date = {};
 
     //Timer ID
     var t = 0;
@@ -114,10 +114,9 @@ $.tr.initializeThemeRoller = function()
                 $( ".dialog#upload" ).dialog( "close" );
             	if( $( "#load-css" ).val() != "" ) {
 					style_block.text( $("#load-css").val() );
-					//$( ".dialog#importing" ).dialog( "open" );
 					init();
 					correctNumberOfSwatches();
-					updateFormFields();
+					tabs_up_to_date = {};
                 }
 				
             }
@@ -222,7 +221,6 @@ $.tr.initializeThemeRoller = function()
         
     	init();
 		correctNumberOfSwatches();
-		updateFormFields();
     	
         //copy color in colorwells to corresponding sliders
     	$( "input[data-type=background]" ).each(function() {
@@ -639,7 +637,103 @@ $.tr.initializeThemeRoller = function()
         }
         updateAllCSS();
     });
-    
+	
+	$( "#tabs" ).bind( "tabsshow", function() {
+		updateFormValues( $(this).find("#tab" + ($(this).tabs( "option", "selected") + 1)) );
+	});
+	
+		
+	// 	
+	// 	function() {
+	// 	//check to make sure form values are up to date
+	// 	var tab_num = parseInt($(this).attr("href").replace(/[^0-9]/g, ""));
+	// 	var swatch = alpha[ tab_num - 1 ];
+	// 	
+	// 	if( !(swatch in tabs_up_to_date) ) {
+	// 		tabs_up_to_date[ swatch ] = swatch;
+	// 		
+	// 		var panel = $( this ).parents( "ul" ).siblings( "#tab" + tab_num );
+	// 	
+	// 		for( var i in style_array ) {
+	// 			var key = i.split( "-" )[0];
+	// 			if ( key == swatch ) {
+	// 				var field = $( "input[data-name=" + i + "]", panel );
+	// 				var slider = $( ".slider[data-name=" + i + "]", panel );
+	// 				var value = style_array[i].trim();
+	// 				var colorwell = field.hasClass("colorwell") ? 1 : 0;
+	// 
+	// 				if( i.indexOf("font-family") != -1 ) {
+	// 					field.val( style_array[i].replace(/font-family:\s*/, "") );
+	// 				} else if( i.indexOf("global-icon") != -1 ) {
+	// 					if( i == "global-icon-set" ) {
+	// 						field = $( "select[data-name=global-icon-set]", tab );
+	// 						if( value.indexOf("black") != -1 ) {
+	// 							field.val( "black" );
+	// 						} else {
+	// 							field.val( "white" );
+	// 						}
+	// 					} else {
+	// 						if( i != "global-icon-color" ) {
+	// 							var with_disc = $( "#with_disc" );
+	// 							var disc_color = $( "[data-name=global-icon-disc].colorwell", panel );
+	// 							var disc_opacity = $( "[data-name=global-icon-disc]:not(.colorwell)", panel );
+	// 
+	// 							if( value.indexOf( "transparent" ) != -1 ) {
+	// 								with_disc.val( "without_disc" );
+	// 							} else {
+	// 								var hex = rgbatohex( value );
+	// 								var opac = rgbaOpacity( value );
+	// 								disc_color.val( hex ).css( "background-color", hex );
+	// 								disc_opacity.val( parseFloat(opac) * 100 );
+	// 								with_disc.val( "with_disc" );
+	// 								if( grayValue(hex) < 127 ) {
+	// 									disc_color.css( "color", "#ffffff" );
+	// 								} else {
+	// 									disc_color.css( "color", "#000000" );
+	// 								}
+	// 							}
+	// 						}
+	// 					}
+	// 				} else if( i.indexOf("box-shadow") != -1) {
+	// 					if( i.indexOf( "-size" ) == -1 ) {
+	// 						var shadow_color = $( "[data-name=global-box-shadow-color].colorwell", panel );
+	// 						var shadow_opacity = $( "[data-name=global-box-shadow-color]:not(.colorwell)", panel );
+	// 						var hex = rgbatohex( value );
+	// 						var opac = rgbaOpacity( value );
+	// 						shadow_color.val( hex ).css( "background-color", hex );
+	// 						shadow_opacity.val( parseFloat(opac) * 100 );
+	// 						if( grayValue(hex) < 127 ) {
+	// 							shadow_color.css( "color", "#ffffff" );
+	// 						} else {
+	// 							shadow_color.css( "color", "#000000" );
+	// 						}
+	// 					} else {
+	// 						field.val( value );
+	// 					}
+	// 				} else {
+	// 					field.val( value );
+	// 					if( colorwell ) {
+	// 						if( grayValue(value) < 127 ) {
+	// 							field.css( "color", "#ffffff" );
+	// 						} else {
+	// 							field.css( "color", "#000000" );
+	// 						}
+	// 						field.css( "background-color", value );
+	// 						if( slider.html() ) {
+	// 							//if there is some property on slider object, then there exists a slider
+	// 							slider.find( "a" ).css({
+	// 								"background-color": value,
+	// 								"border-color": value,
+	// 							});
+	// 						}
+	// 					}
+	// 				}
+	// 			}
+	// 		}
+	// 	}
+	// 	
+	// });
+
 
     //removing the close button from ui-dialogs
     $( ".tr_widget .ui-dialog-titlebar-close" ).remove();
@@ -1424,92 +1518,94 @@ $.tr.initializeThemeRoller = function()
         $( ".dialog#download textarea" ).val( new_style );
     }
 
-	function updateFormFields() {
-		
-		var tab_array = {};
-		
-		for (var i in style_array ) {
-			if( !(i.split("-")[0] in tab_array) ) {
-				tab_array[ i.split("-")[0] ] = $( "#tab" + (num[i.split("-")[0]] + 1) );
-			}
-		}
-		
-		for ( var i in style_array ) {
-			var tab = tab_array[i.split("-")[0]];
-			var field = $( "input[data-name=" + i + "]", tab );
-			var slider = $( ".slider[data-name=" + i + "]", tab );
-			var value = style_array[i].trim();
-			var colorwell = field.hasClass("colorwell") ? 1 : 0;
-			
-			if( i.indexOf("font-family") != -1 ) {
-				field.val( style_array[i].replace(/font-family:\s*/, "") );
-			} else if( i.indexOf("global-icon") != -1 ) {
-				if( i == "global-icon-set" ) {
-					field = $( "select[data-name=global-icon-set]", tab );
-					if( value.indexOf("black") != -1 ) {
-						field.val( "black" );
-					} else {
-						field.val( "white" );
-					}
-				} else {
-					if( i != "global-icon-color" ) {
-						var with_disc = $( "#with_disc" );
-						var disc_color = $( "[data-name=global-icon-disc].colorwell", tab );
-						var disc_opacity = $( "[data-name=global-icon-disc]:not(.colorwell)", tab );
-					
-						if( value.indexOf( "transparent" ) != -1 ) {
-							with_disc.val( "without_disc" );
+
+	function updateFormValues( $this ) {
+		//check to make sure form values are up to date
+		var tab_num = parseInt($this.attr("id").replace(/[^0-9]/g, ""));
+		var swatch = alpha[ tab_num - 1 ];
+
+		if( !(swatch in tabs_up_to_date) ) {
+			tabs_up_to_date[ swatch ] = swatch;
+
+			for( var i in style_array ) {
+				var key = i.split( "-" )[0];
+				if ( key == swatch ) {
+					var field = $( "input[data-name=" + i + "]", $this );
+					var slider = $( ".slider[data-name=" + i + "]", $this );
+					var value = style_array[i].trim();
+					var colorwell = field.hasClass("colorwell") ? 1 : 0;
+
+					if( i.indexOf("font-family") != -1 ) {
+						field.val( style_array[i].replace(/font-family:\s*/, "") );
+					} else if( i.indexOf("global-icon") != -1 ) {
+						if( i == "global-icon-set" ) {
+							field = $( "select[data-name=global-icon-set]", $this );
+							if( value.indexOf("black") != -1 ) {
+								field.val( "black" );
+							} else {
+								field.val( "white" );
+							}
 						} else {
+							if( i != "global-icon-color" ) {
+								var with_disc = $( "#with_disc" );
+								var disc_color = $( "[data-name=global-icon-disc].colorwell", $this );
+								var disc_opacity = $( "[data-name=global-icon-disc]:not(.colorwell)", $this );
+
+								if( value.indexOf( "transparent" ) != -1 ) {
+									with_disc.val( "without_disc" );
+								} else {
+									var hex = rgbatohex( value );
+									var opac = rgbaOpacity( value );
+									disc_color.val( hex ).css( "background-color", hex );
+									disc_opacity.val( parseFloat(opac) * 100 );
+									with_disc.val( "with_disc" );
+									if( grayValue(hex) < 127 ) {
+										disc_color.css( "color", "#ffffff" );
+									} else {
+										disc_color.css( "color", "#000000" );
+									}
+								}
+							}
+						}
+					} else if( i.indexOf("box-shadow") != -1) {
+						if( i.indexOf( "-size" ) == -1 ) {
+							var shadow_color = $( "[data-name=global-box-shadow-color].colorwell", $this );
+							var shadow_opacity = $( "[data-name=global-box-shadow-color]:not(.colorwell)", $this );
 							var hex = rgbatohex( value );
 							var opac = rgbaOpacity( value );
-							disc_color.val( hex ).css( "background-color", hex );
-							disc_opacity.val( parseFloat(opac) * 100 );
-							with_disc.val( "with_disc" );
+							shadow_color.val( hex ).css( "background-color", hex );
+							shadow_opacity.val( parseFloat(opac) * 100 );
 							if( grayValue(hex) < 127 ) {
-								disc_color.css( "color", "#ffffff" );
+								shadow_color.css( "color", "#ffffff" );
 							} else {
-								disc_color.css( "color", "#000000" );
+								shadow_color.css( "color", "#000000" );
+							}
+						} else {
+							field.val( value );
+						}
+					} else {
+						field.val( value );
+						if( colorwell ) {
+							if( grayValue(value) < 127 ) {
+								field.css( "color", "#ffffff" );
+							} else {
+								field.css( "color", "#000000" );
+							}
+							field.css( "background-color", value );
+							if( slider.html() ) {
+								//if there is some property on slider object, then there exists a slider
+								slider.find( "a" ).css({
+									"background-color": value,
+									"border-color": value,
+								});
 							}
 						}
 					}
 				}
-			} else if( i.indexOf("box-shadow") != -1) {
-				if( i.indexOf( "-size" ) == -1 ) {
-					var shadow_color = $( "[data-name=global-box-shadow-color].colorwell", tab );
-					var shadow_opacity = $( "[data-name=global-box-shadow-color]:not(.colorwell)", tab );
-					var hex = rgbatohex( value );
-					var opac = rgbaOpacity( value );
-					shadow_color.val( hex ).css( "background-color", hex );
-					shadow_opacity.val( parseFloat(opac) * 100 );
-					if( grayValue(hex) < 127 ) {
-						shadow_color.css( "color", "#ffffff" );
-					} else {
-						shadow_color.css( "color", "#000000" );
-					}
-				} else {
-					field.val( value );
-				}
-			} else {
-				field.val( value );
-				if( colorwell ) {
-					if( grayValue(value) < 127 ) {
-						field.css( "color", "#ffffff" );
-					} else {
-						field.css( "color", "#000000" );
-					}
-					field.css( "background-color", value );
-					if( slider.html() ) {
-						//if there is some property on slider object, then there exists a slider
-						slider.find( "a" ).css({
-							"background-color": value,
-							"border-color": value,
-						});
-					}
-				}
 			}
-		}
+		}	
 	}
-
+	
 	//function to restyle and reconnect different input elements in the new swatch"s control panel
     function updateThemeRoller( tab ) {
 	
