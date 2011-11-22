@@ -169,6 +169,41 @@ $.tr.initializeThemeRoller = function()
             }
         }
     });
+
+	$( ".dialog#newColor" ).dialog({
+		autoOpen: false,
+		width: 450,
+		height: 260,
+		resizable: false,
+		draggable: false,
+		buttons: {
+			"Cancel": function() { 
+				$( ".dialog#newColor" ).dialog( "close" ); 
+			},
+			"Submit": function() {
+				var color = $( "#newColorInput" ).val().toLowerCase();
+				color = /^{rgb|#}/.test( color ) ? color : "#" + color;
+				if ( color.length) {
+					$.tr.addMostRecent( color, $( this ).data( "swatch" ) );
+				}
+				$( ".dialog#newColor" ).dialog( "close" );
+			}
+		},
+		open: function( event, ui ) {
+			var currentColor = $.tr.rgbtohex( $( this ).data( "swatch" ).css( "background-color" ) );
+			$( "#newColorInput" )
+				.val( currentColor )
+				.next().css( "background-color", currentColor )
+				.end()
+				.keyup( function( event ) {
+					var input = $( this );
+					if ( event.keyCode === $.ui.keyCode.ENTER ) {
+						input.closest( ".ui-dialog" ).find( "button" ).eq( 1 ).click();
+					}
+					input.next().css( "background-color", input.val() );
+				});
+		}
+	});
 	
 	function addInspectorAttributes( swatch ) {
 		var slider = frame.find( "[name=slider][data-theme=" + swatch + "]" ).siblings( "div" );
@@ -355,6 +390,20 @@ $.tr.initializeThemeRoller = function()
 	$( ".color-drag" ).mousedown(function() {
 		var color = $(this).css("background-color");
 		$.tr.addMostRecent( color );
+	});
+
+	//Add custom colors via user entered value
+	var firstCustomIndex = $( ".color-drag.separator" ).index() - 1;
+	$( ".colors" ).delegate( ".color-drag:gt(" + firstCustomIndex + ")", "click", function( event ){
+		$( ".dialog#newColor" )
+		.data( "swatch", $( event.target ) )
+		.dialog( "open" )
+		.closest( ".ui-dialog" )
+		.position({
+			my: "right top",
+			at: "right bottom",
+			of: event.target
+		});
 	});
 	
 	//droppable for colorwell
@@ -738,14 +787,14 @@ $.tr.initializeThemeRoller = function()
     //removing the close button from ui-dialogs
     $( ".tr_widget .ui-dialog-titlebar-close" ).remove();
 
-	function addMostRecent(color) {
+	function addMostRecent(color, swatch) {
 		var found = 0;
-		$( "#quickswatch .color-drag:gt(31)" ).each(function() {
+		$( "#quickswatch .color-drag:gt(30)" ).each(function() {
 			if( color == $(this).css("background-color") ) {
 				found = 1;
 			}
 		});
-		if( !found ) {
+		if( !found && !swatch ) {
 			$( "#quickswatch .color-drag:last" ).remove();
 			$( "#quickswatch .colors .color-drag:eq(31)" ).removeClass( "separator" );
 			var new_color = $( "<div class=\"color-drag separator\" style=\"background-color: " + color + "\"></div>" );
@@ -776,6 +825,24 @@ $.tr.initializeThemeRoller = function()
 			});
 			$( "#picker-colors" ).append( new_picker_color );
 			*/
+		} else if ( swatch ) {
+			swatch.css( "background-color", color );
+			if ( !swatch.is( ".ui-draggable" ) ) {
+				swatch.draggable({
+					appendTo: "body",
+					revert: true,
+					revertDuration: 200,
+					opacity: 1,
+					containment: "document",
+					cursor: "move",
+					helper: "clone",
+					zIndex: 3000,
+					iframeFix: true,
+					drag: function() {
+						$.tr.moving_color = 1;
+					}
+				});
+			}
 		}
 	}
     
