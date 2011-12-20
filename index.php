@@ -104,7 +104,7 @@ if ( isset($_GET['style_id']) ) {
 			This will generate a Zip file that contains both a compressed (for production) and uncompressed (for editing) 
 			version of the theme.
 		</p>
-		<p><strong>To use your theme</strong>, add it to the head of your page after the jquery.mobile.structure file, like this:</p>
+		<p><strong>To use your theme</strong>, add it to the head of your page before the jquery.mobile.structure file, like this:</p>
 		<pre>
 			<code>
 &lt;!DOCTYPE html&gt;
