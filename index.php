@@ -190,6 +190,14 @@ if ( isset($_GET['style_id']) ) {
 		</div>
 	</div>
 	
+	<div id="newColor" class="dialog" title=" ">
+		<h1><strong>Add</strong> a Color</h1>
+		<p>You may use a hexadecimal or an RGB value.</p>
+		<input type="text" id="newColorInput" /><div class="newColorPreview"></div>
+		<div class="buttonpane">
+			<img src="images/target_big.png" alt=" "/>
+		</div>
+	</div>
 	
 	<div id="colorpicker"></div>
 	<div id="themeroller_mobile">
