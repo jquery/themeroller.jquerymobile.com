@@ -3,6 +3,12 @@ require_once( 'version.php' );
 if ( isset($_GET['style_id']) ) {
 	$style_id = $_GET['style_id'];
 }
+
+session_start();
+if ( isset($_POST['show_welcome']) && $_POST['show_welcome'] ) {
+	$_SESSION['show_welcome'] = 'yes';
+	exit;
+}
 ?>
 <!DOCTYPE html>
 <html>             
@@ -38,6 +44,7 @@ if ( isset($_GET['style_id']) ) {
 	</div>
 	
 	<div id="interface">
+	<?php if ( !isset($_SESSION['show_welcome']) || $_SESSION['show_welcome'] === 'yes' ) : ?>
 	<div id="welcome" class="dialog" title=" ">
 		<h1><strong>Welcome</strong> to ThemeRoller for jQuery Mobile</h1>
 		<p>
@@ -68,8 +75,15 @@ if ( isset($_GET['style_id']) ) {
 				<div class="color-drag disabled" style="background-color: #33CCCC"></div>
 				<div class="color-drag disabled" style="background-color: #33CCFF"></div>
 			</div>
+			<div id="dontShowMsg">
+				<label>
+					Show this dialog every visit
+					<input type="checkbox" id="show_welcome" value="true" /> 
+				</label>
+			</div>
 		</div>
 	</div>
+	<?php endif; ?>
 	
 	<div id="importing" class="dialog" title=" ">
 		<h1><img src="images/ajax-loader-white.gif" alt=" " /><strong>Importing...</strong></h1>
