@@ -58,7 +58,8 @@
 .ui-bar-a button {
 	font-family: Helvetica, Arial, sans-serif /*{global-font-family}*/;
 }
-.ui-body-a {
+.ui-body-a,
+.ui-dialog.ui-overlay-a {
 	border: 1px solid 		#B3B3B3 /*{a-body-border}*/;
 	color: 					#333333 /*{a-body-color}*/;
 	text-shadow: 0 /*{a-body-shadow-x}*/ 1px /*{a-body-shadow-y}*/ 0 /*{a-body-shadow-radius}*/ #fff /*{a-body-shadow-color}*/;
@@ -199,7 +200,8 @@
 .ui-bar-b button {
 	font-family: Helvetica, Arial, sans-serif /*{global-font-family}*/;
 }
-.ui-body-b {
+.ui-body-b,
+.ui-dialog.ui-overlay-b {
 	border: 1px solid 		#B3B3B3 /*{b-body-border}*/;
 	color: 					#333333 /*{b-body-color}*/;
 	text-shadow: 0 /*{b-body-shadow-x}*/ 1px /*{b-body-shadow-y}*/ 0 /*{b-body-shadow-radius}*/ #fff /*{b-body-shadow-color}*/;
@@ -341,7 +343,8 @@
 .ui-bar-c button {
 	font-family: Helvetica, Arial, sans-serif /*{global-font-family}*/;
 }
-.ui-body-c {
+.ui-body-c,
+.ui-dialog.ui-overlay-c {
 	border: 1px solid 		#B3B3B3 /*{c-body-border}*/;
 	color: 					#333333 /*{c-body-color}*/;
 	text-shadow: 0 /*{c-body-shadow-x}*/ 1px /*{c-body-shadow-y}*/ 0 /*{c-body-shadow-radius}*/ #fff /*{c-body-shadow-color}*/;
