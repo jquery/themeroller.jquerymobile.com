@@ -6,7 +6,7 @@ $(function(){
 
 
 
-$.tr.isDOMReady = false,
+$.tr.isDOMReady = false;
 $.tr.isIFrameReady = false;
 
 //this file is used to initialize the jquery-ui behaviors and the farbtastic colorpicker
@@ -209,7 +209,7 @@ $.tr.iframeLoadCallback = function()
 {
 	$.tr.isIFrameReady = true;
 	initializeUI();
-}
+};
 
 $(function() {
 	$.tr.isDOMReady = true;
