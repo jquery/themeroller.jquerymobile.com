@@ -320,11 +320,11 @@ iframe body{
 	color:  					#2F3E46;
 	text-shadow:  0 1px 1px #f6f6f6;
 	background-image: -webkit-gradient(linear, left top, left bottom,  from( #fdfdfd), to( #eee )); /* Saf4+, Chrome */
-	background-image: -webkit-linear-gradient(top,  #fdfdfd,  #eee); /* Chrome 10+, Saf5.1+ */
-	background-image:    -moz-linear-gradient(top,  #fdfdfd,  #eee); /* FF3.6 */
-	background-image:     -ms-linear-gradient(top,  #fdfdfd,  #eee); /* IE10 */
-	background-image:      -o-linear-gradient(top,  #fdfdfd,  #eee); /* Opera 11.10+ */
-	background-image:         linear-gradient(top,  #fdfdfd,  #eee);
+	background-image: -webkit-linear-gradient( #fdfdfd, #eee ); /* Chrome 10+, Saf5.1+ */
+	background-image:    -moz-linear-gradient( #fdfdfd, #eee ); /* FF3.6 */
+	background-image:     -ms-linear-gradient( #fdfdfd, #eee ); /* IE10 */
+	background-image:      -o-linear-gradient( #fdfdfd, #eee ); /* Opera 11.10+ */
+	background-image:         linear-gradient( #fdfdfd, #eee );
 }
 
 .radio:hover{
@@ -333,11 +333,11 @@ iframe body{
 	color:  					#2F3E46;
 	text-shadow:  0 1px 1px #fff;
 	background-image: -webkit-gradient(linear, left top, left bottom,  from( #ededed),  to( #dadada)); /* Saf4+, Chrome */
-	background-image: -webkit-linear-gradient(top,  #ededed,  #dadada); /* Chrome 10+, Saf5.1+ */
-	background-image:    -moz-linear-gradient(top,  #ededed,  #dadada); /* FF3.6 */
-	background-image:     -ms-linear-gradient(top,  #ededed,  #dadada); /* IE10 */
-	background-image:      -o-linear-gradient(top,  #ededed,  #dadada); /* Opera 11.10+ */
-	background-image:         linear-gradient(top,  #ededed,  #dadada);
+	background-image: -webkit-linear-gradient( #ededed, #dadada ); /* Chrome 10+, Saf5.1+ */
+	background-image:    -moz-linear-gradient( #ededed, #dadada ); /* FF3.6 */
+	background-image:     -ms-linear-gradient( #ededed, #dadada ); /* IE10 */
+	background-image:      -o-linear-gradient( #ededed, #dadada ); /* Opera 11.10+ */
+	background-image:         linear-gradient( #ededed, #dadada );
 }
 
 .radio:active{
@@ -346,11 +346,11 @@ iframe body{
 	color:  					#2F3E46;
 	text-shadow:  0 1px 1px #ffffff;
 	background-image: -webkit-gradient(linear, left top, left bottom,  from( #eee), to( #fdfdfd  /*{a-bdown-background-end}*/)); /* Saf4+, Chrome */
-	background-image: -webkit-linear-gradient(top,  #eee,  #fdfdfd); /* Chrome 10+, Saf5.1+ */
-	background-image:    -moz-linear-gradient(top,  #eee,  #fdfdfd); /* FF3.6 */
-	background-image:     -ms-linear-gradient(top,  #eee,  #fdfdfd); /* IE10 */
-	background-image:      -o-linear-gradient(top,  #eee,  #fdfdfd); /* Opera 11.10+ */
-	background-image:         linear-gradient(top,  #eee,  #fdfdfd);
+	background-image: -webkit-linear-gradient( #eee, #fdfdfd ); /* Chrome 10+, Saf5.1+ */
+	background-image:    -moz-linear-gradient( #eee, #fdfdfd ); /* FF3.6 */
+	background-image:     -ms-linear-gradient( #eee, #fdfdfd ); /* IE10 */
+	background-image:      -o-linear-gradient( #eee, #fdfdfd ); /* Opera 11.10+ */
+	background-image:         linear-gradient( #eee, #fdfdfd );
 }
 
 .radio.left{
@@ -378,11 +378,11 @@ iframe body{
 	color:  					#fff  ;
 	text-shadow:  0    -1px    1px   #969696 ;
 	background-image: -webkit-gradient(linear, left top, left bottom, from( #b4dd4b ), to( #9ec441 )); /* Saf4+, Chrome */
-	background-image: -webkit-linear-gradient(top, #b4dd4b , #9ec441 ); /* Chrome 10+, Saf5.1+ */
-	background-image:    -moz-linear-gradient(top, #b4dd4b , #9ec441 ); /* FF3.6 */
-	background-image:     -ms-linear-gradient(top, #b4dd4b , #9ec441 ); /* IE10 */
-	background-image:      -o-linear-gradient(top, #b4dd4b , #9ec441 ); /* Opera 11.10+ */
-	background-image:         linear-gradient(top, #b4dd4b , #9ec441 );
+	background-image: -webkit-linear-gradient( #b4dd4b, #9ec441 ); /* Chrome 10+, Saf5.1+ */
+	background-image:    -moz-linear-gradient( #b4dd4b, #9ec441 ); /* FF3.6 */
+	background-image:     -ms-linear-gradient( #b4dd4b, #9ec441 ); /* IE10 */
+	background-image:      -o-linear-gradient( #b4dd4b, #9ec441 ); /* Opera 11.10+ */
+	background-image:         linear-gradient( #b4dd4b, #9ec441 );
 }
 
 .radio.on:hover{
@@ -391,11 +391,11 @@ iframe body{
 	color:  					#fff  ;
 	text-shadow:  0    -1px    1px   #969696 ;
 	background-image: -webkit-gradient(linear, left top, left bottom, from( #b4dd4b ), to( #9ec441 )); /* Saf4+, Chrome */
-	background-image: -webkit-linear-gradient(top, #b4dd4b , #9ec441 ); /* Chrome 10+, Saf5.1+ */
-	background-image:    -moz-linear-gradient(top, #b4dd4b , #9ec441 ); /* FF3.6 */
-	background-image:     -ms-linear-gradient(top, #b4dd4b , #9ec441 ); /* IE10 */
-	background-image:      -o-linear-gradient(top, #b4dd4b , #9ec441 ); /* Opera 11.10+ */
-	background-image:         linear-gradient(top, #b4dd4b , #9ec441 );
+	background-image: -webkit-linear-gradient( #b4dd4b, #9ec441 ); /* Chrome 10+, Saf5.1+ */
+	background-image:    -moz-linear-gradient( #b4dd4b, #9ec441 ); /* FF3.6 */
+	background-image:     -ms-linear-gradient( #b4dd4b, #9ec441 ); /* IE10 */
+	background-image:      -o-linear-gradient( #b4dd4b, #9ec441 ); /* Opera 11.10+ */
+	background-image:         linear-gradient( #b4dd4b, #9ec441 );
 	}
 
 .radio.on:active{
@@ -404,11 +404,11 @@ iframe body{
 	color:  					#fff  ;
 	text-shadow:  0    -1px    1px   #969696 ;
 	background-image: -webkit-gradient(linear, left top, left bottom, from( #b4dd4b ), to( #9ec441 )); /* Saf4+, Chrome */
-	background-image: -webkit-linear-gradient(top, #b4dd4b , #9ec441 ); /* Chrome 10+, Saf5.1+ */
-	background-image:    -moz-linear-gradient(top, #b4dd4b , #9ec441 ); /* FF3.6 */
-	background-image:     -ms-linear-gradient(top, #b4dd4b , #9ec441 ); /* IE10 */
-	background-image:      -o-linear-gradient(top, #b4dd4b , #9ec441 ); /* Opera 11.10+ */
-	background-image:         linear-gradient(top, #b4dd4b , #9ec441 );
+	background-image: -webkit-linear-gradient( #b4dd4b, #9ec441 ); /* Chrome 10+, Saf5.1+ */
+	background-image:    -moz-linear-gradient( #b4dd4b, #9ec441 ); /* FF3.6 */
+	background-image:     -ms-linear-gradient( #b4dd4b, #9ec441 ); /* IE10 */
+	background-image:      -o-linear-gradient( #b4dd4b, #9ec441 ); /* Opera 11.10+ */
+	background-image:         linear-gradient( #b4dd4b, #9ec441 );
 }
 
 #load-mask{
