@@ -133,6 +133,13 @@ h2{
 	width: 200px;
 }
 
+#upload h1 #import-default{
+	float: right;
+	font-size: 15px;
+	text-decoration: underline;
+	cursor: pointer;
+}
+
 #colors{
 	margin: 7px 0px 0px 13px;
 	float: left;

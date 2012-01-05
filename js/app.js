@@ -170,6 +170,19 @@ $.tr.initializeThemeRoller = function()
         }
     });
 	
+	$( "#import-default" ).click(function(e) {
+		e.preventDefault();
+		
+		$.ajax({
+			url: "css/default_theme.css",
+			dataType: "text",
+			mimeType: "text/plain",
+			success: function( data ) {
+				$( "#load-css" ).val( data ); 
+			}
+		});
+	});
+	
 	function addInspectorAttributes( swatch ) {
 		var slider = frame.find( "[name=slider][data-theme=" + swatch + "]" ).siblings( "div" );
 		var select = frame.find( "select[data-theme=" + swatch + "]" );

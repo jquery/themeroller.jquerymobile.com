@@ -85,7 +85,7 @@ if ( isset($_GET['style_id']) ) {
 	
 	
 	<div id="upload" class="dialog" title=" ">
-		<h1><strong>Import</strong> Theme</h1>
+		<h1><strong>Import</strong> Theme<span href="#" id="import-default">Import Default Theme</span></h1>
 		<textarea id="load-css"></textarea>
 		<div class="buttonpane">
 			
