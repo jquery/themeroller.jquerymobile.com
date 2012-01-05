@@ -654,99 +654,6 @@ $.tr.initializeThemeRoller = function()
 	$( "#tabs" ).bind( "tabsshow", function() {
 		updateFormValues( $(this).find("#tab" + ($(this).tabs( "option", "selected") + 1)) );
 	});
-	
-		
-	// 	
-	// 	function() {
-	// 	//check to make sure form values are up to date
-	// 	var tab_num = parseInt($(this).attr("href").replace(/[^0-9]/g, ""));
-	// 	var swatch = alpha[ tab_num - 1 ];
-	// 	
-	// 	if( !(swatch in tabs_up_to_date) ) {
-	// 		tabs_up_to_date[ swatch ] = swatch;
-	// 		
-	// 		var panel = $( this ).parents( "ul" ).siblings( "#tab" + tab_num );
-	// 	
-	// 		for( var i in style_array ) {
-	// 			var key = i.split( "-" )[0];
-	// 			if ( key == swatch ) {
-	// 				var field = $( "input[data-name=" + i + "]", panel );
-	// 				var slider = $( ".slider[data-name=" + i + "]", panel );
-	// 				var value = style_array[i].trim();
-	// 				var colorwell = field.hasClass("colorwell") ? 1 : 0;
-	// 
-	// 				if( i.indexOf("font-family") != -1 ) {
-	// 					field.val( style_array[i].replace(/font-family:\s*/, "") );
-	// 				} else if( i.indexOf("global-icon") != -1 ) {
-	// 					if( i == "global-icon-set" ) {
-	// 						field = $( "select[data-name=global-icon-set]", tab );
-	// 						if( value.indexOf("black") != -1 ) {
-	// 							field.val( "black" );
-	// 						} else {
-	// 							field.val( "white" );
-	// 						}
-	// 					} else {
-	// 						if( i != "global-icon-color" ) {
-	// 							var with_disc = $( "#with_disc" );
-	// 							var disc_color = $( "[data-name=global-icon-disc].colorwell", panel );
-	// 							var disc_opacity = $( "[data-name=global-icon-disc]:not(.colorwell)", panel );
-	// 
-	// 							if( value.indexOf( "transparent" ) != -1 ) {
-	// 								with_disc.val( "without_disc" );
-	// 							} else {
-	// 								var hex = rgbatohex( value );
-	// 								var opac = rgbaOpacity( value );
-	// 								disc_color.val( hex ).css( "background-color", hex );
-	// 								disc_opacity.val( parseFloat(opac) * 100 );
-	// 								with_disc.val( "with_disc" );
-	// 								if( grayValue(hex) < 127 ) {
-	// 									disc_color.css( "color", "#ffffff" );
-	// 								} else {
-	// 									disc_color.css( "color", "#000000" );
-	// 								}
-	// 							}
-	// 						}
-	// 					}
-	// 				} else if( i.indexOf("box-shadow") != -1) {
-	// 					if( i.indexOf( "-size" ) == -1 ) {
-	// 						var shadow_color = $( "[data-name=global-box-shadow-color].colorwell", panel );
-	// 						var shadow_opacity = $( "[data-name=global-box-shadow-color]:not(.colorwell)", panel );
-	// 						var hex = rgbatohex( value );
-	// 						var opac = rgbaOpacity( value );
-	// 						shadow_color.val( hex ).css( "background-color", hex );
-	// 						shadow_opacity.val( parseFloat(opac) * 100 );
-	// 						if( grayValue(hex) < 127 ) {
-	// 							shadow_color.css( "color", "#ffffff" );
-	// 						} else {
-	// 							shadow_color.css( "color", "#000000" );
-	// 						}
-	// 					} else {
-	// 						field.val( value );
-	// 					}
-	// 				} else {
-	// 					field.val( value );
-	// 					if( colorwell ) {
-	// 						if( grayValue(value) < 127 ) {
-	// 							field.css( "color", "#ffffff" );
-	// 						} else {
-	// 							field.css( "color", "#000000" );
-	// 						}
-	// 						field.css( "background-color", value );
-	// 						if( slider.html() ) {
-	// 							//if there is some property on slider object, then there exists a slider
-	// 							slider.find( "a" ).css({
-	// 								"background-color": value,
-	// 								"border-color": value,
-	// 							});
-	// 						}
-	// 					}
-	// 				}
-	// 			}
-	// 		}
-	// 	}
-	// 	
-	// });
-
 
     //removing the close button from ui-dialogs
     $( ".tr_widget .ui-dialog-titlebar-close" ).remove();
@@ -1036,7 +943,7 @@ $.tr.initializeThemeRoller = function()
         var delete_class = $( this ).attr( "class" );
         var letter =  delete_class.substr( delete_class.length - 1, delete_class.length );
         var number = num[letter];	
-        
+
         //moving content of the tabs back one starting at the one we're deleting
         for( var i = number + 1; i <= tab_counter - 2; i++ ) {
             var current_letter = alpha[i];
@@ -1536,6 +1443,7 @@ $.tr.initializeThemeRoller = function()
 		//check to make sure form values are up to date
 		var tab_num = parseInt($this.attr("id").replace(/[^0-9]/g, ""));
 		var swatch = alpha[ tab_num - 1 ];
+		
 
 		if( !(swatch in tabs_up_to_date) ) {
 			tabs_up_to_date[ swatch ] = swatch;
