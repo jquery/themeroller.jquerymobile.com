@@ -61,7 +61,8 @@ function initializeUI() {
 	}
 	
 	//global array of color values in quickswatch colors for lightness/saturation adjustments
-	$( "#quickswatch .color-drag:not(.disabled)" ).each(function() {
+	var quickswatch = $( "#quickswatch" );
+    quickswatch.find( ".color-drag:not(.disabled)" ).each(function() {
 		colors.push( rgbtohex($(this).css("background-color")) );
 	});
 
@@ -90,7 +91,7 @@ function initializeUI() {
 	});
 	
 	//Inspector Radio behavior
-	$( "#inspector_form div" ).click(function() {
+	$( "#inspector_form" ).find( "div" ).click(function() {
 		var other = $(this).siblings( "div" );
 		$(this).addClass( "on" );
 		other.removeClass( "on" );
@@ -159,7 +160,7 @@ function initializeUI() {
 		
 		for( var i = 1; i< colors.length; i++ ) {
 			var orig = $.Color( colors[i] );
-			$( "#quickswatch .color-drag:nth-child(" + (i + 1) + ")" )
+			quickswatch.find( ".color-drag:nth-child(" + (i + 1) + ")" )
 				.css("background-color", orig.saturation(sat_str + sat_percent).lightness(lit_str + lit_percent) );
 		}
 	});
@@ -185,7 +186,7 @@ function initializeUI() {
 		
 		for( var i = 1; i < colors.length; i++ ) {
 			var orig = $.Color( colors[i] );
-			$( "#quickswatch .color-drag:nth-child(" + (i + 1) + ")" )
+			quickswatch.find( ".color-drag:nth-child(" + (i + 1) + ")" )
 				.css("background-color", orig.saturation(sat_str + sat_percent).lightness(lit_str + lit_percent) );
 		}
 	});

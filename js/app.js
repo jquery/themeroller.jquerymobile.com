@@ -91,7 +91,7 @@ $.tr.initializeThemeRoller = function()
 		dialogClass: "tr_widget"
 	});
 		
-	$( ".dialog#importing" ).dialog({
+	$( "#importing" ).dialog({
 		autoOpen: false,
 		modal: true,
 		resizeable: false,
@@ -99,7 +99,7 @@ $.tr.initializeThemeRoller = function()
 		height: 70
 	});
 		
-    $( ".dialog#upload" ).dialog({
+    $( "#upload" ).dialog({
         autoOpen: false,
         modal: true,
         width: 800,
@@ -108,10 +108,10 @@ $.tr.initializeThemeRoller = function()
 		draggable: false,
         buttons: {
             "Cancel": function() { 
-                $( ".dialog#upload" ).dialog( "close" ); 
+                $( "#upload" ).dialog( "close" ); 
             },
             "Import": function() {
-                $( ".dialog#upload" ).dialog( "close" );
+                $( "#upload" ).dialog( "close" );
             	if( $( "#load-css" ).val() != "" ) {
 					style_block.text( $("#load-css").val() );
 					init();
@@ -137,7 +137,7 @@ $.tr.initializeThemeRoller = function()
 		}
 	});
 	
-    $( ".dialog#download" ).dialog({
+    $( "#download" ).dialog({
         autoOpen: false,
         modal: true,
         width: 850,
@@ -274,8 +274,9 @@ $.tr.initializeThemeRoller = function()
                 frame.find( "#highlight" ).mousemove(function(e) { 
                     var highlight = $( this );
                     $( "[data-form]", parent ).each(function() {
-                        var left = $( this ).offset().left, top = $( this ).offset().top,
-                        	width = $( this ).outerWidth(), height = $( this ).outerHeight(),
+                        var $form = $( this ),
+                            left = $form.offset().left, top = $form.offset().top,
+                        	width = $form.outerWidth(), height = $form.outerHeight(),
                         	right = left + width, bottom = top + height;
 
                         if( e.pageX <= right && e.pageX >= left && e.pageY <= bottom && e.pageY >= top ) {
@@ -475,20 +476,21 @@ $.tr.initializeThemeRoller = function()
 
     //change colorwell -> change bg color of its corresponding slider
     $( ".colorwell" ).bind( "change" , function() {
-        $( ".slider[data-name=" + $(this).attr("data-name") + "][data-type=" + $(this).attr("data-type") + "] a").css({
-            "background": $( this ).val(), 
-            "border-color": $( this ).val()
+        var $this = $( this );
+        $( ".slider[data-name=" + $this.attr("data-name") + "][data-type=" + $this.attr("data-type") + "] a").css({
+            "background": $this.val(), 
+            "border-color": $this.val()
         });
     });
 
     //initiating download/upload dialogs
     $( "#themeroller_upload" ).click(function() {
-        $( ".dialog#upload" ).dialog( "open" );
+        $( "#upload" ).dialog( "open" );
         return false;
     });
 
     $( "#themeroller_download" ).click(function() {
-        $( ".dialog#download" ).dialog( "open" );			
+        $( "#download" ).dialog( "open" );			
         return false;
     });
     
@@ -659,15 +661,15 @@ $.tr.initializeThemeRoller = function()
     $( ".tr_widget .ui-dialog-titlebar-close" ).remove();
 
 	function addMostRecent(color) {
-		var found = 0;
-		$( "#quickswatch .color-drag:gt(31)" ).each(function() {
+		var found = 0, quickswatch = $( "#quickswatch" );
+		quickswatch.find( ".color-drag:gt(31)" ).each(function() {
 			if( color == $(this).css("background-color") ) {
 				found = 1;
 			}
 		});
 		if( !found ) {
-			$( "#quickswatch .color-drag:last" ).remove();
-			$( "#quickswatch .colors .color-drag:eq(31)" ).removeClass( "separator" );
+			quickswatch.find( ".color-drag:last" ).remove();
+			quickswatch.find( ".colors .color-drag:eq(31)" ).removeClass( "separator" );
 			var new_color = $( "<div class=\"color-drag separator\" style=\"background-color: " + color + "\"></div>" );
 			new_color.draggable({
 				appendTo: "body",
@@ -683,7 +685,7 @@ $.tr.initializeThemeRoller = function()
 					$.tr.moving_color = 1;
 				}
 			});
-			$( "#quickswatch .colors .color-drag:eq(30)" ).after( new_color );
+			quickswatch.find( ".colors .color-drag:eq(30)" ).after( new_color );
 			
 			/*
 			$( "#picker-colors .color-drag:first" ).remove();
@@ -863,8 +865,8 @@ $.tr.initializeThemeRoller = function()
 			var next_tab = tab_counter + 1;
 			
 			//swap text in the tabs
-            $( "#tabs" ).tabs( "add", "#tab" + next_tab, "+" );
-            $( "#tabs ul li a[href=#tab" + tab_counter + "]" ).text( upper );
+            $( "#tabs" ).tabs( "add", "#tab" + next_tab, "+" )
+                .find( "ul li a[href=#tab" + tab_counter + "]" ).text( upper );
             
             //reconfigure binding of newSwatch event
             $( "[href=#tab" + tab_counter + "]" ).unbind( "click", newSwatch );
@@ -874,7 +876,7 @@ $.tr.initializeThemeRoller = function()
 			var temp_panel_template = panel_template.replace( /Swatch A/, "Swatch " + upper );
 			temp_panel_template = temp_panel_template.replace( /"a\-/g, "\"" + lower + "-" );
 			temp_panel_template = temp_panel_template.replace( /\-a"/g, "-" + lower + "\"" );
-			$( "#tabs #tab" + tab_counter ).html( temp_panel_template );
+			$( "#tab" + tab_counter ).html( temp_panel_template );
 				
 			//add swatch to preview	
 			temp_swatch_template = swatch_template.replace( /="a"/g, "=\"" + lower + "\"" );
@@ -971,9 +973,9 @@ $.tr.initializeThemeRoller = function()
                 }
                 var suffix = $( this ).attr( "data-name" ).substr( 1, $(this).attr("data-name").length - 1 );
                 if( $(this).hasClass("slider") ){
-                    $( "#tab" + current_number + " div.slider[data-name=" + alpha[current_number - 1] + suffix + "]" ).slider( "value", value );
+                    $( "#tab" + current_number ).find( "div.slider[data-name=" + alpha[current_number - 1] + suffix + "]" ).slider( "value", value );
                 } else {
-                    $( "#tab" + current_number + " input[data-name=" + alpha[current_number - 1] + suffix + "]" ).val( value );
+                    $( "#tab" + current_number ).find( "input[data-name=" + alpha[current_number - 1] + suffix + "]" ).val( value );
                 }
             });
         }
@@ -1000,11 +1002,11 @@ $.tr.initializeThemeRoller = function()
 		var part1 = css.substring(0, start);
 		var part2 = css.substring(end, css.length);
 		style_block.text( part1 + part2 );
-		$( ".dialog#download textarea" ).val( part1 + part2 );
+		$( "#download" ).find( "textarea" ).val( part1 + part2 );
 		
         tab_counter--;
-        $( "#tabs .ui-tabs-panel:last" ).attr( "id", "tab" + tab_counter );
-        $( "#tabs ul li a:contains(\"+\")" ).attr( "href", "#tab" + tab_counter );
+        $( "#tabs" ).find( ".ui-tabs-panel:last" ).attr( "id", "tab" + tab_counter ).end()
+            .find( "ul li a:contains(\"+\")" ).attr( "href", "#tab" + tab_counter );
         frame.find( ".swatch:last" ).remove();
         if( $("#tabs").tabs("option", "selected") == tab_counter - 1 ) {
 			$( "#tabs" ).tabs( "select", tab_counter - 2 );
@@ -1066,7 +1068,7 @@ $.tr.initializeThemeRoller = function()
         var style = style_block.text();
         escaped_style = style.replace( /\n/g, "%0A" );
         escaped_style = escaped_style.replace( /\t/g, "%09" );
-        $( ".dialog#download textarea" ).val( style );
+        $( "#download" ).find( "textarea" ).val( style );
 		
 		
         var reg = new RegExp( "(?:font-family:)[^/\\*]+/\\*{[^\\*/]*}\\*/|\\s*\\S*\\s*/\\*{[^\\*/]*}\\*/" );
@@ -1121,8 +1123,8 @@ $.tr.initializeThemeRoller = function()
             var next_tab = tab_counter+1;
             var lower = alpha[tab_counter - 1] + "";
             var upper = lower.toUpperCase();
-            $( "#tabs" ).tabs( "add", "#tab" + next_tab, "+" );
-            $( "#tabs ul li a[href=#tab" + tab_counter + "]" ).text( upper );
+            $( "#tabs" ).tabs( "add", "#tab" + next_tab, "+" )
+                .find( "ul li a[href=#tab" + tab_counter + "]" ).text( upper );
             
             //reconfigure binding of newSwatch event
             $( "[href=#tab" + tab_counter + "]" ).unbind( "click", newSwatch );
@@ -1146,7 +1148,7 @@ $.tr.initializeThemeRoller = function()
             var temp_panel_template = panel_template.replace( /Swatch A/, "Swatch " + upper );
             temp_panel_template = temp_panel_template.replace( /"a\-/g, "\"" + lower + "-" );
             temp_panel_template = temp_panel_template.replace( /\-a"/g, "-" + lower + "\"" );
-            $( "#tabs #tab" + tab_counter ).html( temp_panel_template );
+            $( "#tab" + tab_counter ).html( temp_panel_template );
 			
             //adding swatch to CSS		
             reg = new RegExp( "\\/\\* " + upper + "\\s*\\n-*\\*\\/" );
@@ -1399,7 +1401,7 @@ $.tr.initializeThemeRoller = function()
 		$( "#tabs" ).tabs( "select", num[data_theme] );	
 		
 		setTimeout(function() {
-			$( "#tab" + (num[data_theme]+1) + " .accordion" ).each(function() {
+			$( "#tab" + (num[data_theme]+1) ).find( ".accordion" ).each(function() {
 				if( $(this).attr("data-form") == form ) {
 					if( $(this).accordion("option", "active" ) === false) {
 						$( this ).accordion( "activate", 0 );
@@ -1434,7 +1436,7 @@ $.tr.initializeThemeRoller = function()
         new_style = new_style.join( "" );
         
         style_block.text( new_style );
-        $( ".dialog#download textarea" ).val( new_style );
+        $( "#download textarea" ).val( new_style );
     }
 
 	function updateFormValues( $this ) {
@@ -1528,15 +1530,15 @@ $.tr.initializeThemeRoller = function()
 	//function to restyle and reconnect different input elements in the new swatch"s control panel
     function updateThemeRoller( tab ) {
 	
-	
-        $( "#tab" + tab + " .accordion" ).accordion({
+		var $tab = $( "#tab" + tab );
+		$tab.find( ".accordion" ).accordion({
             header: "h3", 
             active: false, 
             clearStyle: true, 
             collapsible: true
         });
 		
-        $( "#tab" + tab + " .colorwell" ).focus(function() {
+        $tab.find( ".colorwell" ).focus(function() {
             var pos = $( this ).offset();
             var name = $( this ).attr( "data-name" );
             if( name.indexOf("shadow-color") == -1 ) {
@@ -1556,7 +1558,7 @@ $.tr.initializeThemeRoller = function()
         }).blur(function() {
             $( "#colorpicker" ).css( "position", "static" );
             $( "#colorpicker" ).hide();
-            $( "#tab" + tab + " .slider[data-name=" + $(this).attr("data-name") + "][data-type=" + $(this).attr("data-type") + "] a" ).css({
+            $tab.find( ".slider[data-name=" + $(this).attr("data-name") + "][data-type=" + $(this).attr("data-type") + "] a" ).css({
                 "background": $( this ).val(), 
                 "border-color": $( this ).val()
             });
@@ -1565,7 +1567,7 @@ $.tr.initializeThemeRoller = function()
         var f = $.farbtastic( "#colorpicker" );
         var p = $( "#colorpicker" ).css( "opacity", 1 );
         var selected;
-        $( "#tab" + tab + " .colorwell" )
+        $tab.find( ".colorwell" )
         .each(function() {
             f.linkTo( this );
             $( this ).css( "opacity", 0.75 );
@@ -1578,13 +1580,13 @@ $.tr.initializeThemeRoller = function()
             p.css("opacity", 1);
             $( selected = this ).css( "opacity", 1 ).addClass( "colorwell-selected" );
         });
-        $( "#tab" + tab + " .slider" ).slider({
+        $tab.find( ".slider" ).slider({
             max : 80, 
             value: 40
         });
 
 		//droppable for colorwell
-		$( "#tab" + tab + " .colorwell" ).droppable({
+		$tab.find( ".colorwell" ).droppable({
 			accept: ".color-drag",
 			hoverClass: "hover",
 			drop: function() {
@@ -1596,38 +1598,38 @@ $.tr.initializeThemeRoller = function()
 			}
 		});
 		
-        $( "#tab" + tab + " input[data-type=background]" ).each(function() {
-            $( "#tab" + tab + " .slider[data-type=background][data-name=" + $(this).attr("data-name") + "] a" ).css({
+        $tab.find( "input[data-type=background]" ).each(function() {
+            $tab.find( ".slider[data-type=background][data-name=" + $(this).attr("data-name") + "] a" ).css({
                 "background": $( this ).val(), 
                 "border-color": $( this ).val()
             });
         });
 
-        $( "#tab" + tab + " .colorwell" ).bind( "change", function() {
-            $( "#tab" + tab + " .slider[data-name=" + $(this).attr("data-name") + "][data-type=" + $(this).attr("data-type") + "] a" ).css({
+        $tab.find( ".colorwell" ).bind( "change", function() {
+            $tab.find( ".slider[data-name=" + $(this).attr("data-name") + "][data-type=" + $(this).attr("data-type") + "] a" ).css({
                 "background": $( this ).val(), 
                 "border-color": $( this ).val()
             });
         });
 		
-        $( "#tab" + tab + " .more" ).click(function() {
+        $tab.find( ".more" ).click(function() {
             var index = $( this ).attr( "data-name" );
             if( more[index] ) {
                 if( more[index] == "showing" ) {
-                    $( "#tab" + tab + " .start-end[data-name=" + index + "]" ).hide( "slide", {
+                    $tab.find( ".start-end[data-name=" + index + "]" ).hide( "slide", {
                         direction: "up"
                     }, 300);
                     $( this ).text( "+" );
                     more[index] = "hiding";
                 } else {
-                    $( "#tab" + tab + " .start-end[data-name=" + index + "]" ).show( "slide", {
+                    $tab.find( ".start-end[data-name=" + index + "]" ).show( "slide", {
                         direction: "up"
                     }, 300);
                     $( this ).text( "-" );
                     more[index] = "showing";
                 }
             } else {
-                $( "#tab" + tab + " .start-end[data-name=" + index + "]" ).show( "slide", {
+                $tab.find( ".start-end[data-name=" + index + "]" ).show( "slide", {
                     direction: "up"
                 }, 300);
                 $( this ).text( "-" );
@@ -1635,7 +1637,7 @@ $.tr.initializeThemeRoller = function()
             }
         });
 		
-        $( "#tab" + tab + " [data-type=font-family]" ).bind( "blur change keyup", function() {
+        $tab.find( "[data-type=font-family]" ).bind( "blur change keyup", function() {
             $.tr.style_array[$( this ).attr( "data-name" )] = "font-family: " + this.value;
             updateAllCSS();
         });
@@ -1646,7 +1648,7 @@ $.tr.initializeThemeRoller = function()
 			updateAllCSS();
 		});
 		
-        $( "#tab" + tab + " [data-type=background]" ).bind("blur slide mouseup change keyup", function(event, slider) {
+        $tab.find( "[data-type=background]" ).bind("blur slide mouseup change keyup", function(event, slider) {
             if(!t) {
                 t = setTimeout(function() {
                     t = 0;
@@ -1655,8 +1657,8 @@ $.tr.initializeThemeRoller = function()
                 var index = $( this ).attr( "data-name" ) + "";
                 index = index.split( "-" );
                 var prefix = index[0] + "-" + index[1];
-                var color = $( "#tab" + tab + " input[data-type=background][data-name|=" + prefix + "]" ).val();
-                var slider_value = $( "#tab" + tab + " .slider[data-type=background][data-name|=" + prefix + "]" ).slider( "value" );
+                var color = $tab.find( "input[data-type=background][data-name|=" + prefix + "]" ).val();
+                var slider_value = $tab.find( ".slider[data-type=background][data-name|=" + prefix + "]" ).slider( "value" );
 				
                 var color_arr = color.split( "" );
 				
@@ -1707,8 +1709,8 @@ $.tr.initializeThemeRoller = function()
                     start = "#" + red_end + "" + green_end + "" + blue_end + "";
                     end = "#" + red_start + "" + green_start + "" + blue_start + "";
                 }
-                $( "#tab" + tab + " [data-type=start][data-name=" + prefix + "-background-start]" ).val( start ).css( "background-color", start );
-                $( "#tab" + tab + " [data-type=end][data-name=" + prefix + "-background-end]" ).val( end ).css( "background-color", end );
+                $tab.find( "[data-type=start][data-name=" + prefix + "-background-start]" ).val( start ).css( "background-color", start );
+                $tab.find( "[data-type=end][data-name=" + prefix + "-background-end]" ).val( end ).css( "background-color", end );
                 $.tr.style_array[prefix + "-background-color"] = color;
                 $.tr.style_array[prefix + "-background-start"] = start;
                 $.tr.style_array[prefix + "-background-end"] = end;
@@ -1716,12 +1718,12 @@ $.tr.initializeThemeRoller = function()
             }
         });
 		
-        $( "#tab" + tab + " [data-type=start] , #tab" + tab + " [data-type=end]" ).bind("blur mouseup change keyup", function() {
+        $tab.find( "[data-type=start]" ).add( $tab.find( "[data-type=end]" ) ).bind("blur mouseup change keyup", function() {
             var index = $( this ).attr( "data-name" ) + "";
             index = index.split( "-" );
             var prefix = index[0] + "-" + index[1];
-            var start = $( "#tab" + tab + " [data-type=start][data-name=" + prefix + "-background-start]" ).val();
-            var end = $( "#tab" + tab + " [data-type=end][data-name=" + prefix + "-background-end]" ).val();
+            var start = $tab.find( "[data-type=start][data-name=" + prefix + "-background-start]" ).val();
+            var end = $tab.find( "[data-type=end][data-name=" + prefix + "-background-end]" ).val();
 
             $.tr.style_array[prefix + "-background-start"] = start;
             $.tr.style_array[prefix + "-background-end"] = end;
