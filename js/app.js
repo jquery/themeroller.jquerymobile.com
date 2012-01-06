@@ -935,7 +935,6 @@ $.tr.initializeThemeRoller = function()
         return first + "" + second + "";
     }
     
-    
     //using the $.tr.style_array to successfully copy over data to appropriate swatches
     //and then deleting last swatch so the one clicked appears to be deleted
     function deleteSwatch( e ) {
@@ -1437,7 +1436,6 @@ $.tr.initializeThemeRoller = function()
         style_block.text( new_style );
         $( ".dialog#download textarea" ).val( new_style );
     }
-
 
 	function updateFormValues( $this ) {
 		//check to make sure form values are up to date
