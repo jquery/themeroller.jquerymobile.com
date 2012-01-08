@@ -215,7 +215,36 @@ if ( isset($_GET['style_id']) ) {
 					<div>
 						<h3><a href="#">Font Family</a></h3>
 						<form>
-							<label class="first">FONT</label><input data-type="font-family" data-name="global-font-family" value="Helvetica, Arial, sans-serif"/><br class="clear"/>
+							<label class="first">FONT</label>
+							<select data-type="font-family" data-name="global-font-family">
+								<optgroup labe="Serif">
+									<option value="Baskerville, 'Times New Roman', Times, serif">Baskerville, 'Times New Roman', Times, serif</option>
+									<option value="Baskerville, Times, 'Times New Roman', serif">Baskerville, Times, 'Times New Roman', serif</option>
+									<option value="Cambria, Georgia, Times, 'Times New Roman', serif">Cambria, Georgia, Times, 'Times New Roman', serif</option>
+									<option value="Garamond, Palatino, serif">Garamond, Palatino, serif</option>
+									<option value="Garamond, 'Times New Roman', Times, serif">Garamond, 'Times New Roman', Times, serif</option>
+									<option value="Georgia, Palatino,Times, 'Times New Roman', serif">Georgia, Palatino,Times, 'Times New Roman', serif</option>
+									<option value="Georgia, Times, 'Times New Roman', serif">Georgia, Times, 'Times New Roman', serif</option>
+									<option value="Palatino, Georgia, Times, 'Times New Roman', serif">Palatino, Georgia, Times, 'Times New Roman', serif</option>
+									<option value="Palatino, Times, 'Times New Roman', serif">Palatino, Times, 'Times New Roman', serif</option>
+									<option value="Times, 'Times New Roman', Georgia, serif">Times, 'Times New Roman', Georgia, serif</option>
+								</optgroup>
+								<optgroup labe="Sans-serif">
+									<option value="Arial, Helvetica, sans-serif">Arial, Helvetica, sans-serif</option>
+									<option value="'Franklin Gothic Medium', 'Arial Narrow Bold', Arial, sans-serif">'Franklin Gothic Medium', 'Arial Narrow Bold', Arial, sans-serif</option>
+									<option value="Futura, 'Century Gothic', AppleGothic, sans-serif">Futura, 'Century Gothic', AppleGothic, sans-serif</option>
+									<option value="'Gill Sans', 'Trebuchet MS', Calibri, sans-serif">'Gill Sans', 'Trebuchet MS', Calibri, sans-serif</option>
+									<option value="Helvetica, Arial, sans-serif" selected="selected">Helvetica, Arial, sans-serif</option>
+									<option value="Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif">Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif</option>
+									<option value="Tahoma, Geneva, Verdana">Tahoma, Geneva, Verdana</option>
+									<option value="Tahoma, Verdana, Geneva">Tahoma, Verdana, Geneva</option>
+									<option value="'Trebuchet MS', 'Lucida Grande',' Lucida Sans', Arial, sans-serif">'Trebuchet MS', 'Lucida Grande',' Lucida Sans', Arial, sans-serif</option>
+									<option value="'Trebuchet MS', Tahoma, Arial, sans-serif">'Trebuchet MS', Tahoma, Arial, sans-serif</option>
+									<option value="Verdana, Geneva, Tahoma, sans-serif">Verdana, Geneva, Tahoma, sans-serif</option>
+									<option value="Verdana, Tahoma, Geneva, sans-serif">Verdana, Tahoma, Geneva, sans-serif</option>
+								</optgroup>
+							</select>
+							<br class="clear"/>
 						</form>
 					</div>
 				</div>
