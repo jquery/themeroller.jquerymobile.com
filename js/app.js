@@ -51,6 +51,9 @@ $.tr.initializeThemeRoller = function()
 	//Global for draggable colors
 	var moving_color = 0;
     
+	//Flag for initial load
+	var first_load = 1;
+
 	//for rgbtohex
 	var hexDigits = new Array("0","1","2","3","4","5","6","7","8","9","a","b","c","d","e","f"); 
 		
@@ -855,6 +858,31 @@ $.tr.initializeThemeRoller = function()
     {
     	var style = style_block.text();
     	var matches = style.match( /\/\*\s[A-Z]\s*-*\*\//g );
+		if( !matches ) {
+			if(first_load) {
+				first_load = 0;
+				//initial load - the theme specified cannot be found on the server
+				var error_message = $( "<h3>Invalid Theme</h3><p>Reminder: We can only store this theme URL on the server for 30 days, then it will be deleted. \
+				Download a theme to keep a copy safe that you can import later.</p>" ).css( "color", "#f00" );
+				$( "#welcome h1" ).after( error_message );
+			
+				//import default theme
+				$.ajax({
+					url: "css/default.css",
+					dataType: "text",
+					mimeType: "text/plain",
+					success: function( data ) {
+						$( "#upload textarea" ).val( data );
+						style_block.text( data ); 
+						correctNumberOfSwatches();
+					}
+				});
+			} else {
+				alert( "Invalid theme file. Please import unminified files only with all original CSS comments in place." );
+			}
+			//return early because the file is of the incorrect format
+			return;
+		}
     	var swatch_counter = matches.length + 2;
     	
         //add appropriate number of tabs to TR and swatches to preview
