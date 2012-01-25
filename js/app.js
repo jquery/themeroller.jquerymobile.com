@@ -605,10 +605,10 @@ $.tr.initializeThemeRoller = function()
 
     $( "[data-type=icon_set]" ).bind( "blur mouseup", function() {
         if( this.value == "white" ) {
-            $.tr.style_array[$( this ).attr( "data-name" )] = "url(http://code.jquery.com/mobile/latest/images/icons-18-white.png)";
+            $.tr.style_array[$( this ).attr( "data-name" )] = "url(images/icons-18-white.png)";
 
         } else if(this.value == "black") {
-            $.tr.style_array[$( this ).attr( "data-name" )] = "url(http://code.jquery.com/mobile/latest/images/icons-18-black.png)";
+            $.tr.style_array[$( this ).attr( "data-name" )] = "url(images/icons-18-black.png)";
         }
         updateAllCSS();
     });
