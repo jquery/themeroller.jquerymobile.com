@@ -1,7 +1,5 @@
 $(function(){
-	
 	$( "#load-mask" ).height($(window).height()).width($(window).width() + 15);
-	
 });
 
 
@@ -27,6 +25,7 @@ function initializeUI() {
 		});
 		$( "#load-mask" ).hide();
 		$( "#welcome" ).dialog( "open" );
+		resize();
 	}, 3000);
 			
 	var colors = [];
@@ -49,7 +48,6 @@ function initializeUI() {
 			$( selected = this ).css( "opacity", 1 ).addClass( "colorwell-selected" );
 	  	});
 	
-	resize();
 	
 	$(window).resize( resize );
 	
