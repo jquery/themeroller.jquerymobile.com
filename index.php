@@ -48,7 +48,7 @@ if ( isset($_GET['style_id']) ) {
 		<p>
 			<strong>To start,</strong> either drag a QuickSwatch color onto an element in the preview 
 			or use the inspector panel on the left to get crafty. 
-			We recommend building themes with at least 3 swatches (A-C). 
+			We <strong>strongly</strong> recommend building themes with at least 3 swatches (A-C). 
 		</p>
 				
 		<div class="buttonpane">
