@@ -513,7 +513,7 @@ if ( isset($_GET['style_id']) ) {
 	<div id="wrapper">
 		<div id="header-wrapper">
 			<div id="header">
-				<div id="inspector_form">
+				<div id="inspector_form" title="Shift+Ctrl+I">
 					<h2>Inspector:</h2>
 					<div class="radio left" data-id="inspector-on">
 						On

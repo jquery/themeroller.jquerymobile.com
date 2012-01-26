@@ -96,6 +96,21 @@ function initializeUI() {
 		$(this).addClass( "on" );
 		other.removeClass( "on" );
 	});
+	
+	//Keyboard shortcut for inspector radio
+	$(document).keypress(function(e) {
+		if(e.ctrlKey && e.shiftKey && e.which == 73 || e.metaKey && e.shiftKey && e.which == 73) {
+			e.preventDefault();
+			if( $("#inspector_form .left").hasClass("on") ) {
+				$( "iframe" ).contents().find( "#highlight" ).hide();
+				$( "#inspector_form .left" ).removeClass( "on" );
+				$( "#inspector_form .right" ).addClass( "on" );
+			} else {
+				$( "#inspector_form .left" ).addClass( "on" );
+				$( "#inspector_form .right" ).removeClass( "on" );
+			}
+		}
+	})
 
 	// Accordion
 	$( ".accordion" ).accordion({ 
