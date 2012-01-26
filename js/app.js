@@ -372,11 +372,6 @@ $.tr.initializeThemeRoller = function()
 		}
 	});
 	
-	$( ".color-drag" ).mousedown(function() {
-		var color = $(this).css("background-color");
-		$.tr.addMostRecent( color );
-	});
-	
 	//droppable for colorwell
 	$( ".colorwell" ).droppable({
 		accept: ".color-drag",
@@ -472,8 +467,12 @@ $.tr.initializeThemeRoller = function()
 						break;
 					}
 				}
-				
+								
 	            selectElement(element);
+	
+				//store color in most recent colors
+				var color = element.css("background-color");
+				$.tr.addMostRecent( color );
 			}
 		}
 		
@@ -1090,7 +1089,6 @@ $.tr.initializeThemeRoller = function()
         return ( 16*first ) + second;
     }
     
-    
     //init is used to initialize the array of tokens and the $.tr.style_array
     //if the refresh flag is passed it refreshes the token array and does not initialize the $.tr.style_array
     function init( refresh ) {
@@ -1408,11 +1406,15 @@ $.tr.initializeThemeRoller = function()
 
     //function used to open a specific accordion
     //the element passed in is one selected by the incpector or when dropping a color
-	function selectElement(element) {
+	function selectElement( element ) {
 		var data_theme = element.attr( "data-theme" );
 		var form = element.attr( "data-form" );
 		
-		if(!data_theme) {
+		if( !form ) {
+			return;
+		}
+		
+		if( !data_theme ) {
 			data_theme = form.split( "-" );
 			data_theme = data_theme[data_theme.length - 1];
 		}
