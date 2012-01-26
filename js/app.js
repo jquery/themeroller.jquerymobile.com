@@ -190,6 +190,9 @@ $.tr.initializeThemeRoller = function()
 		var slider = frame.find( "[name=slider][data-theme=" + swatch + "]" ).siblings( "div" );
 		var select = frame.find( "select[data-theme=" + swatch + "]" );
 		var btn = select.siblings( "a" );
+		var radio = frame.find( ".ui-content" ).each(function() {
+			$( this ).find( ".ui-radio:first span:first" ).removeClass( "ui-corner-top" );
+		})
 		slider.attr( "data-form", "ui-btn-down-" + swatch ).attr( "data-theme", swatch );
 		slider.find( "a" ).attr( "data-form", "ui-btn-up-" + swatch ).attr( "data-theme", swatch );
 		btn.attr( "data-theme", swatch ).attr( "data-form", "ui-btn-up-" + swatch );
