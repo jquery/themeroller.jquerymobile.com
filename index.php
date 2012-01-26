@@ -581,7 +581,16 @@ if ( isset($_GET['style_id']) ) {
 			</iframe>
 		</div>
 	
-		<div id="style"><?php	echo file_get_contents( 'css/' . ( isset($style_id) ? 'user_themes/' . $style_id : 'default' ) . '.css');?></div>
+		<div id="style">
+			<?php
+				$file_path = "css/" . ( isset($style_id) ? "user_themes/" . $style_id : "default" ) . ".css";
+				if( is_file($file_path) ) {
+					echo file_get_contents( $file_path );
+				} else {
+					echo file_get_contents( "css/default.css" );
+				}
+			?>
+		</div>
 	
 	</div>
 	</div>
