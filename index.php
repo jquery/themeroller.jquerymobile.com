@@ -583,11 +583,10 @@ if ( isset($_GET['style_id']) ) {
 	
 		<div id="style">
 			<?php
+				//If the file exists we add the CSS here, if not, we leave it blank for the JS to find on load
 				$file_path = "css/" . ( isset($style_id) ? "user_themes/" . $style_id : "default" ) . ".css";
 				if( is_file($file_path) ) {
 					echo file_get_contents( $file_path );
-				} else {
-					echo file_get_contents( "css/default.css" );
 				}
 			?>
 		</div>
