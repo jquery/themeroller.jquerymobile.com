@@ -99,7 +99,7 @@ function initializeUI() {
 	
 	//Keyboard shortcut for inspector radio
 	$(document).keypress(function(e) {
-		if(e.ctrlKey && e.shiftKey && e.which == 73 || e.metaKey && e.shiftKey && e.which == 73) {
+		if( (e.ctrlKey || e.metaKey) && e.shiftKey && (e.which == 73 || e.which == 9) ) {
 			e.preventDefault();
 			if( $("#inspector_form .left").hasClass("on") ) {
 				$( "iframe" ).contents().find( "#highlight" ).hide();
