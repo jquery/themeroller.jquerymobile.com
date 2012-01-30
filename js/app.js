@@ -1101,7 +1101,7 @@ $.tr.initializeThemeRoller = function()
 	//This function adds a new tab and makes the previous "addSwatch tab" into a Swatch
 	//So we unbind that one and bind the new one as the "addSwatch tab"
 	function addSwatch( new_style ) {
-		$( ".delete-a-swatch" ).show();
+		$( ".delete-swatch-a" ).show();
 		if( tab_counter < 28 ) {
 			var next_tab = tab_counter + 1;
             var lower = alpha[tab_counter - 1] + "";
