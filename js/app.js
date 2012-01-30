@@ -28,7 +28,7 @@ $.tr.initializeThemeRoller = function()
     var style_array = []; //global array of CSS rules
     var tokens = new Array(); //global array of tokens in the css file 
                                //used to write out placeholder tokens and string tokens
-	$.tr.style_array = style_array;
+	style_array = style_array;
 	
     //New Swatch
     var first_add = 1;//used to initialize the paging of the tabs
@@ -366,7 +366,7 @@ $.tr.initializeThemeRoller = function()
 		zIndex: 3000,
 		iframeFix: true,
 		drag: function() {
-			$.tr.moving_color = 1;
+			moving_color = 1;
 		}
 	});
 	
@@ -376,7 +376,7 @@ $.tr.initializeThemeRoller = function()
 		hoverClass: "hover",
 		drop: function() {
 			var $this = $( this );
-			var color = $.tr.rgbtohex( $(".ui-draggable-dragging").css("background-color") );
+			var color = rgbtohex( $(".ui-draggable-dragging").css("background-color") );
 			$( ".ui-draggable .ui-draggable-dragging" ).trigger( "drop" );
 			$this.val( color ).css( "background-color", color );
 			$this.trigger( "change" );
@@ -400,8 +400,8 @@ $.tr.initializeThemeRoller = function()
 
 		var droppables = [ ".ui-btn-up-", ".ui-bar-", ".ui-body-" ];
 		
-		if($.tr.moving_color) {
-			$.tr.moving_color = 0;
+		if(moving_color) {
+			moving_color = 0;
 			var frame_offset = $( "#frame" ).offset();
 			var el_offset = $( "#frame" ).contents().find( ".ui-bar-a" ).offset();
 			
@@ -457,7 +457,7 @@ $.tr.initializeThemeRoller = function()
 					swatch = element.attr( "data-swatch" );
 				}
 				var color = $( ".color-drag.ui-draggable-dragging" ).css( "background-color" ) || $( ".kuler-color.ui-draggable-dragging" ).css( "background-color" );
-				color = $.tr.rgbtohex( color );
+				color = rgbtohex( color );
 			
 				for( var i in classtokey ) {
 					if( el_class.indexOf(i) != -1 ) {
@@ -470,7 +470,7 @@ $.tr.initializeThemeRoller = function()
 	
 				//store color in most recent colors
 				var color = element.css("background-color");
-				$.tr.addMostRecent( color );
+				addMostRecent( color );
 			}
 		}
 		
@@ -538,14 +538,14 @@ $.tr.initializeThemeRoller = function()
 
     $( "[data-type=font-family]" ).bind( "blur change keyup", function() {
 		var name = $( this ).attr( "data-name" );
-        $.tr.style_array[name] = "font-family: " + this.value;
+        style_array[name] = "font-family: " + this.value;
         updateAllCSS();
     });
 
 
 	$( "[data-type=link], [data-type=color], [data-type=text-shadow], [data-type=border]" )
 		.bind( "blur change keyup", function(){
-			$.tr.style_array[$( this ).attr( "data-name" )] = this.value;
+			style_array[$( this ).attr( "data-name" )] = this.value;
 			updateAllCSS();
 	});
 
@@ -555,7 +555,7 @@ $.tr.initializeThemeRoller = function()
 		var slider = $( ".slider[data-type=radius][data-name=" + name + "]" );
 		var val = parseFloat( $this.val().replace(/[^0-9\.]/g, "") );
 		slider.slider( "value", val );
-		$.tr.style_array[name] = $this.val();
+		style_array[name] = $this.val();
 		updateAllCSS();
 	});
 
@@ -564,7 +564,7 @@ $.tr.initializeThemeRoller = function()
 		var name = $this.attr( "data-name" );
 		var input = $( "input[data-type=radius][data-name=" + name + "]" );
 		input.val( $this.slider("value") + "em" );
-		$.tr.style_array[name] = input.val();
+		style_array[name] = input.val();
 		updateAllCSS();
 	});
 
@@ -586,9 +586,9 @@ $.tr.initializeThemeRoller = function()
 
             $( "[data-type=start][data-name=" + prefix + "-background-start]" ).val( start ).css( "background-color", start );
             $( "[data-type=end][data-name=" + prefix + "-background-end]" ).val( end ).css( "background-color", end );
-            $.tr.style_array[prefix + "-background-color"] = color;
-            $.tr.style_array[prefix + "-background-start"] = start;
-            $.tr.style_array[prefix + "-background-end"] = end;
+            style_array[prefix + "-background-color"] = color;
+            style_array[prefix + "-background-start"] = start;
+            style_array[prefix + "-background-end"] = end;
             updateAllCSS();
         }
     });
@@ -601,17 +601,17 @@ $.tr.initializeThemeRoller = function()
         var start = $( "[data-type=start][data-name=" + prefix + "-background-start]" ).val();
         var end = $( "[data-type=end][data-name=" + prefix + "-background-end]" ).val();
 
-        $.tr.style_array[prefix + "-background-start"] = start;
-        $.tr.style_array[prefix + "-background-end"] = end;
+        style_array[prefix + "-background-start"] = start;
+        style_array[prefix + "-background-end"] = end;
         updateAllCSS();
     });
 
     $( "[data-type=icon_set]" ).bind( "blur mouseup", function() {
         if( this.value == "white" ) {
-            $.tr.style_array[$( this ).attr( "data-name" )] = "url(images/icons-18-white.png)";
+            style_array[$( this ).attr( "data-name" )] = "url(images/icons-18-white.png)";
 
         } else if(this.value == "black") {
-            $.tr.style_array[$( this ).attr( "data-name" )] = "url(images/icons-18-black.png)";
+            style_array[$( this ).attr( "data-name" )] = "url(images/icons-18-black.png)";
         }
         updateAllCSS();
     });
@@ -625,12 +625,12 @@ $.tr.initializeThemeRoller = function()
         var green = hextodec( color_arr[3] + color_arr[4] );
         var blue = hextodec( color_arr[5] + color_arr[6] );
 		
-		$.tr.style_array["global-box-shadow-color"] = "rgba(" + red + "," + green + "," + blue + "," + ( parseFloat(opac_el.val()) / 100 ) + ")";	
+		style_array["global-box-shadow-color"] = "rgba(" + red + "," + green + "," + blue + "," + ( parseFloat(opac_el.val()) / 100 ) + ")";	
         updateAllCSS();
 	});
 	
 	$( "[data-type=box_shadow][data-name=global-box-shadow-size]" ).bind( "blur change keyup", function() {
-		$.tr.style_array["global-box-shadow-size"] = $(this).val();
+		style_array["global-box-shadow-size"] = $(this).val();
 		updateAllCSS();
 	});
 
@@ -646,12 +646,12 @@ $.tr.initializeThemeRoller = function()
         var blue = hextodec( color_arr[5] + color_arr[6] );
 
         if( elements[0] == "with_disc" ) {
-            $.tr.style_array["global-icon-color"] = "#FFFFFF";
-            $.tr.style_array["global-icon-disc"] = "rgba(" + red + "," + green + "," + blue + "," + ( parseFloat(elements[2]) / 100 ) + ")";	
-            $.tr.style_array["global-icon-shadow"] = "#fff";
+            style_array["global-icon-color"] = "#FFFFFF";
+            style_array["global-icon-disc"] = "rgba(" + red + "," + green + "," + blue + "," + ( parseFloat(elements[2]) / 100 ) + ")";	
+            style_array["global-icon-shadow"] = "#fff";
         } else {
-            $.tr.style_array["global-icon-disc"] = "transparent";
-            $.tr.style_array["global-icon-shadow"] = "none";
+            style_array["global-icon-disc"] = "transparent";
+            style_array["global-icon-shadow"] = "none";
         }
         updateAllCSS();
     });
@@ -681,7 +681,7 @@ $.tr.initializeThemeRoller = function()
 				zIndex: 3000,
 				iframeFix: true,
 				drag: function() {
-					$.tr.moving_color = 1;
+					moving_color = 1;
 				}
 			});
 			quickswatch.find( ".colors .color-drag:eq(30)" ).after( new_color );
@@ -692,8 +692,8 @@ $.tr.initializeThemeRoller = function()
 			new_picker_color.click(function(e) {
 				e.preventDefault();
 				e.stopPropagation();
-				$.tr.colorwell.focus();
-				$( ".colorwell:focus" ).val( $.tr.rgbtohex($(this).css("background-color")) ).trigger( "change" );
+				colorwell.focus();
+				$( ".colorwell:focus" ).val( rgbtohex($(this).css("background-color")) ).trigger( "change" );
 			});
 			$( "#picker-colors" ).append( new_picker_color );
 			*/
@@ -705,9 +705,9 @@ $.tr.initializeThemeRoller = function()
 	function applyColor( color, prefix ) {
 		var color_arr = color.split( "" );
 
-        var red = $.tr.hextodec( color_arr[1] + color_arr[2] );
-        var green = $.tr.hextodec( color_arr[3] + color_arr[4] );
-        var blue = $.tr.hextodec( color_arr[5] + color_arr[6] );
+        var red = hextodec( color_arr[1] + color_arr[2] );
+        var green = hextodec( color_arr[3] + color_arr[4] );
+        var blue = hextodec( color_arr[5] + color_arr[6] );
 		var gray = grayValue( color );
 		
 		//swatch is the letter of the swatch or it is global
@@ -730,11 +730,11 @@ $.tr.initializeThemeRoller = function()
 		//if we're on button down then the gradient gets flipped
 		var start, end;
 		if( element != "bdown" ) {
-			start = $.tr.computeGradient(color, 50)[0];
-			end = $.tr.computeGradient(color, 50)[1];
+			start = computeGradient(color, 50)[0];
+			end = computeGradient(color, 50)[1];
 		} else {
-			start = $.tr.computeGradient(color, 50)[1];
-			end = $.tr.computeGradient(color, 50)[0];
+			start = computeGradient(color, 50)[1];
+			end = computeGradient(color, 50)[0];
 		}
 		if( element != "link" ) {
 			//anything but a link has gradients and text color
@@ -743,14 +743,14 @@ $.tr.initializeThemeRoller = function()
 			$( "input[data-name=" + prefix + "-background-end]" ).val( end ).css( "background-color", start );
 			$( ".slider[data-name=" + prefix + "-background-color]" ).slider( {value: 50} )
 				.find( "a" ).css({"background-color": color, "border-color": color});
-			$.tr.style_array[prefix + "-background-start"] = start;
-			$.tr.style_array[prefix + "-background-end"] = end;
-			$.tr.style_array[prefix + "-background-color"] = color;
+			style_array[prefix + "-background-start"] = start;
+			style_array[prefix + "-background-end"] = end;
+			style_array[prefix + "-background-color"] = color;
 
 			//special border for content body elements
 			if( element != "body" ) {
 				$( "input[data-name=" + prefix + "-border]" ).val( color ).css( "background-color", color );
-				$.tr.style_array[prefix + "-border"] = color;
+				style_array[prefix + "-border"] = color;
 			} else {
 				var border;
 				if( gray > 90 ) {
@@ -759,29 +759,29 @@ $.tr.initializeThemeRoller = function()
 					border = percentColor( color, 1.4 );
 				}
 				$( "input[data-name=" + prefix + "-border]" ).val( border ).css( "background-color", border );
-				$.tr.style_array[prefix + "-border"] = border;
+				style_array[prefix + "-border"] = border;
 			}
 
 			//contrast calculation for text color
 			if( gray > (150) ) {
 				$( "input[data-name=" + prefix + "-color]" ).val( "#000000" ).css( "background-color", "#000000" );
 				$( "input[data-name=" + prefix + "-shadow-color]" ).val( "#eeeeee" ).css( "background-color", "#eeeeee" );
-				$.tr.style_array[prefix + "-color"] = "#000000";
-				$.tr.style_array[prefix + "-shadow-color"] = "#eeeeee";
+				style_array[prefix + "-color"] = "#000000";
+				style_array[prefix + "-shadow-color"] = "#eeeeee";
 			} else {	
 				$( "input[data-name=" + prefix + "-color]" ).val( "#ffffff" ).css( "background-color", "#ffffff" );
 				$( "input[data-name=" + prefix + "-shadow-color]" ).val( "#444444" ).css( "background-color", "#444444" );
-				$.tr.style_array[prefix + "-color"] = "#ffffff";
-				$.tr.style_array[prefix + "-shadow-color"] = "#444444";
+				style_array[prefix + "-color"] = "#ffffff";
+				style_array[prefix + "-shadow-color"] = "#444444";
 			}
 		} else {
 			//links are lighter on hover and darker once visited
 			var lighter = percentColor( color, 1.15 );
 			var darker = percentColor( color, 0.65 );
-			$.tr.style_array[swatch + "-body-link-color"] = color;
-			$.tr.style_array[swatch + "-body-link-active"] = color;
-			$.tr.style_array[swatch + "-body-link-hover"] = lighter;
-			$.tr.style_array[swatch + "-body-link-visited"] = darker;
+			style_array[swatch + "-body-link-color"] = color;
+			style_array[swatch + "-body-link-active"] = color;
+			style_array[swatch + "-body-link-hover"] = lighter;
+			style_array[swatch + "-body-link-visited"] = darker;
 			$( "input[data-name=" + swatch + "-body-link-color]" ).val( color ).css( "background-color", color );
 			$( "input[data-name=" + swatch + "-body-link-active]" ).val( color ).css( "background-color", color );
 			$( "input[data-name=" + swatch + "-body-link-hover]" ).val( darker ).css( "background-color", lighter );
@@ -789,7 +789,7 @@ $.tr.initializeThemeRoller = function()
 		}
 
 		//we've updated style_array now update the CSS
-		$.tr.updateAllCSS();
+		updateAllCSS();
 	}
 	
 	function computeGradient(color, slider_value) {
@@ -918,7 +918,7 @@ $.tr.initializeThemeRoller = function()
         return first + "" + second + "";
     }
     
-    //using the $.tr.style_array to successfully copy over data to appropriate swatches
+    //using the style_array to successfully copy over data to appropriate swatches
     //and then deleting last swatch so the one clicked appears to be deleted
     function deleteSwatch( e ) {
     	e.preventDefault();
@@ -931,7 +931,7 @@ $.tr.initializeThemeRoller = function()
             var current_letter = alpha[i];
             var current_number = num[current_letter];
             var indices = [];
-            for( var j in $.tr.style_array ) {
+            for( var j in style_array ) {
                 var reg = new RegExp( "^" + current_letter + "-.*" );
                 if( j.match(reg) ) {
                     indices.push( j.match(reg) );
@@ -940,11 +940,14 @@ $.tr.initializeThemeRoller = function()
             for( var k in indices ) {
                 var index = indices[k] + "";
                 var suffix = index.substr( 1, index.length - 1 );
-                $.tr.style_array[alpha[current_number - 1] + suffix] = $.tr.style_array[index];
+                style_array[alpha[current_number - 1] + suffix] = style_array[index];
                 if( (current_number + 2) == tab_counter ) {
-                    delete( $.tr.style_array[index] );
+                    delete( style_array[index] );
                 }
             }
+
+			updateFormValues( $("#tab" + i) );
+			/*
             $( "#tab" + (current_number+1) + " input[data-name], #tab" + (current_number+1) + " .slider[data-name]" ).each(function() {
                 var value;
                 if( $(this).hasClass("slider") ) {
@@ -956,21 +959,23 @@ $.tr.initializeThemeRoller = function()
                 if( $(this).hasClass("slider") ){
                     $( "#tab" + current_number ).find( "div.slider[data-name=" + alpha[current_number - 1] + suffix + "]" ).slider( "value", value );
                 } else {
-                    $( "#tab" + current_number ).find( "input[data-name=" + alpha[current_number - 1] + suffix + "]" ).val( value );
+                    $( "#tab" + current_number ).find( "input[data-name=" + alpha[current_number - 1] + suffix + "]" ).val( value )
+						.css( "background-color", value );
                 }
             });
+			*/
         }
         
-        //deleting the last swatch's rules in the $.tr.style_array
+        //deleting the last swatch's rules in the style_array
         var last_letter = alpha[tab_counter - 2];
         var prefix = last_letter + "-";
         var new_style_array = {};
-        for( var i in $.tr.style_array ) {
+        for( var i in style_array ) {
         	if( i.indexOf(prefix) != 0 ) {
-        		new_style_array[i] = $.tr.style_array[i];
+        		new_style_array[i] = style_array[i];
         	}
         }
-        $.tr.style_array = new_style_array;
+        style_array = new_style_array;
         
         //delete the swatch's CSS from the file
         var css = style_block.text();
@@ -1039,8 +1044,8 @@ $.tr.initializeThemeRoller = function()
         return ( 16*first ) + second;
     }
     
-    //init is used to initialize the array of tokens and the $.tr.style_array
-    //if the refresh flag is passed it refreshes the token array and does not initialize the $.tr.style_array
+    //init is used to initialize the array of tokens and the style_array
+    //if the refresh flag is passed it refreshes the token array and does not initialize the style_array
     function init( refresh ) {
     	refresh = refresh || "fresh";
 	
@@ -1074,11 +1079,11 @@ $.tr.initializeThemeRoller = function()
                     type: "placeholder", 
                     ref: reference
                 };
-                //update $.tr.style_array
+                //update style_array
                 var prefix_end = reference.indexOf( "-" );
                 var prefix = reference.substring( 0, prefix_end );
                 if( refresh != "refresh" ) {
-					$.tr.style_array[reference] = tokens[i-1].value.replace( /\/\*.*\*\//, "" );
+					style_array[reference] = tokens[i-1].value.replace( /\/\*.*\*\//, "" );
 				}
 				//cut off string and continue
                 style = style.substring( index+length ); 
@@ -1111,10 +1116,10 @@ $.tr.initializeThemeRoller = function()
 			//or CSS yet. correctNumberOfSwatches calles addSwatch with new_style=false
 			//so this block is skipped
 			if( new_style ) {
-				//defining $.tr.style_array indices
+				//defining style_array indices
 	            var indices = [];
 				var reg = new RegExp( "a-.*" );
-	            for( var j in $.tr.style_array ) {
+	            for( var j in style_array ) {
 	                if( j.search(reg) != -1 ) {
 	                    indices.push( j );
 	                }
@@ -1122,7 +1127,7 @@ $.tr.initializeThemeRoller = function()
 	            for( var k in indices ) {
 	                var index = indices[k] + "";
 	                var suffix = index.substr( 1, index.length - 1 );
-	                $.tr.style_array[lower + suffix] = $.tr.style_array[index];
+	                style_array[lower + suffix] = style_array[index];
 	            }
 	
 				//adding swatch to CSS		
@@ -1208,9 +1213,9 @@ $.tr.initializeThemeRoller = function()
 	function percentColor( color, percent ) {
 		var color_arr = color.split( "" );
 
-        var red = $.tr.hextodec( color_arr[1] + color_arr[2] );
-        var green = $.tr.hextodec( color_arr[3] + color_arr[4] );
-        var blue = $.tr.hextodec( color_arr[5] + color_arr[6] );
+        var red = hextodec( color_arr[1] + color_arr[2] );
+        var green = hextodec( color_arr[3] + color_arr[4] );
+        var blue = hextodec( color_arr[5] + color_arr[6] );
 		if( percent > 1 ) {
 			if( red == 0 ) {
 				red = 60;
@@ -1223,7 +1228,7 @@ $.tr.initializeThemeRoller = function()
 			}
 		}
 		if( red * percent < 255 && red * percent > 0 ) {
-			red = $.tr.dectohex( red * percent );
+			red = dectohex( red * percent );
 		} else {
 			if( red * percent >= 255 ) {
 				red = "FF";
@@ -1232,7 +1237,7 @@ $.tr.initializeThemeRoller = function()
 			}
 		}
 		if( green * percent < 255 && green * percent > 0 ) {
-			green = $.tr.dectohex( green * percent );
+			green = dectohex( green * percent );
 		} else {
 			if( green * percent >= 255 ) {
 				green = "FF";
@@ -1241,7 +1246,7 @@ $.tr.initializeThemeRoller = function()
 			}
 		}
 		if( blue * percent < 255 && blue * percent > 0 ) {
-			blue = $.tr.dectohex( blue * percent );
+			blue = dectohex( blue * percent );
 		} else {
 			if( blue * percent >= 255 ) {
 				blue = "FF";
@@ -1424,7 +1429,7 @@ $.tr.initializeThemeRoller = function()
         for( var i in tokens ) {
         	var t = tokens[i];
             if( t.type == "placeholder" ) {
-				new_style.push( " " + $.tr.style_array[t.ref] + " " + "/*{" + t.ref + "}*/" );
+				new_style.push( " " + style_array[t.ref] + " " + "/*{" + t.ref + "}*/" );
             } else {
             	new_style.push( t.value );
             }
@@ -1583,7 +1588,7 @@ $.tr.initializeThemeRoller = function()
 			hoverClass: "hover",
 			drop: function() {
 				var $this = $( this );
-				var color = $.tr.rgbtohex( $(".ui-draggable-dragging").css("background-color") );
+				var color = rgbtohex( $(".ui-draggable-dragging").css("background-color") );
 				$( ".ui-draggable .ui-draggable-dragging" ).trigger( "drop" );
 				$this.val( color ).css( "background-color", color );
 				$this.trigger( "change" );
@@ -1630,13 +1635,13 @@ $.tr.initializeThemeRoller = function()
         });
 		
         $tab.find( "[data-type=font-family]" ).bind( "blur change keyup", function() {
-            $.tr.style_array[$( this ).attr( "data-name" )] = "font-family: " + this.value;
+            style_array[$( this ).attr( "data-name" )] = "font-family: " + this.value;
             updateAllCSS();
         });
         
         $( "[data-type=color], [data-type=text-shadow], [data-type=border], [data-type=link]", "#tab" + tab )
 		.bind( "blur change keyup", function(){
-			$.tr.style_array[$( this ).attr( "data-name" )] = this.value;
+			style_array[$( this ).attr( "data-name" )] = this.value;
 			updateAllCSS();
 		});
 		
@@ -1703,9 +1708,9 @@ $.tr.initializeThemeRoller = function()
                 }
                 $tab.find( "[data-type=start][data-name=" + prefix + "-background-start]" ).val( start ).css( "background-color", start );
                 $tab.find( "[data-type=end][data-name=" + prefix + "-background-end]" ).val( end ).css( "background-color", end );
-                $.tr.style_array[prefix + "-background-color"] = color;
-                $.tr.style_array[prefix + "-background-start"] = start;
-                $.tr.style_array[prefix + "-background-end"] = end;
+                style_array[prefix + "-background-color"] = color;
+                style_array[prefix + "-background-start"] = start;
+                style_array[prefix + "-background-end"] = end;
                 updateAllCSS();
             }
         });
@@ -1717,23 +1722,13 @@ $.tr.initializeThemeRoller = function()
             var start = $tab.find( "[data-type=start][data-name=" + prefix + "-background-start]" ).val();
             var end = $tab.find( "[data-type=end][data-name=" + prefix + "-background-end]" ).val();
 
-            $.tr.style_array[prefix + "-background-start"] = start;
-            $.tr.style_array[prefix + "-background-end"] = end;
+            style_array[prefix + "-background-start"] = start;
+            style_array[prefix + "-background-end"] = end;
             updateAllCSS();
         });
 
 		$( ".delete-swatch-" + alpha[tab - 1] ).click( deleteSwatch );
     }
-
-	$.tr.updateAllCSS = updateAllCSS;
-	$.tr.computeGradient = computeGradient;
-	$.tr.correctNumberOfSwatches = correctNumberOfSwatches;
-	$.tr.dectohex = dectohex;
-	$.tr.hextodec = hextodec;
-	$.tr.rgbtohex = rgbtohex;
-	$.tr.addMostRecent = addMostRecent;
-	$.tr.moving_color = moving_color;
-	$.tr.updateFormValues = updateFormValues;
 
 	$(document).trigger("themerollerready");
 }
