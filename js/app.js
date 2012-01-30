@@ -947,23 +947,6 @@ $.tr.initializeThemeRoller = function()
             }
 
 			updateFormValues( $("#tab" + i) );
-			/*
-            $( "#tab" + (current_number+1) + " input[data-name], #tab" + (current_number+1) + " .slider[data-name]" ).each(function() {
-                var value;
-                if( $(this).hasClass("slider") ) {
-                    value = $( this ).slider( "value" );
-                } else {
-                    value = $( this ).val();
-                }
-                var suffix = $( this ).attr( "data-name" ).substr( 1, $(this).attr("data-name").length - 1 );
-                if( $(this).hasClass("slider") ){
-                    $( "#tab" + current_number ).find( "div.slider[data-name=" + alpha[current_number - 1] + suffix + "]" ).slider( "value", value );
-                } else {
-                    $( "#tab" + current_number ).find( "input[data-name=" + alpha[current_number - 1] + suffix + "]" ).val( value )
-						.css( "background-color", value );
-                }
-            });
-			*/
         }
         
         //deleting the last swatch's rules in the style_array
