@@ -648,10 +648,10 @@ $.tr.initializeThemeRoller = function()
         if( elements[0] == "with_disc" ) {
             style_array["global-icon-color"] = "#FFFFFF";
             style_array["global-icon-disc"] = "rgba(" + red + "," + green + "," + blue + "," + ( parseFloat(elements[2]) / 100 ) + ")";	
-            style_array["global-icon-shadow"] = "#fff";
+            style_array["global-icon-shadow"] = "rgba(255,255,255,.4)";
         } else {
             style_array["global-icon-disc"] = "transparent";
-            style_array["global-icon-shadow"] = "none";
+            style_array["global-icon-shadow"] = "transparent";
         }
         updateAllCSS();
     });
