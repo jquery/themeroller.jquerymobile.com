@@ -366,7 +366,7 @@ $.tr.initializeThemeRoller = function()
 		zIndex: 3000,
 		iframeFix: true,
 		drag: function() {
-			moving_color = 1;
+			$.tr.moving_color = 1;
 		}
 	});
 	
@@ -400,8 +400,8 @@ $.tr.initializeThemeRoller = function()
 
 		var droppables = [ ".ui-btn-up-", ".ui-bar-", ".ui-body-" ];
 		
-		if(moving_color) {
-			moving_color = 0;
+		if($.tr.moving_color) {
+			$.tr.moving_color = 0;
 			var frame_offset = $( "#frame" ).offset();
 			var el_offset = $( "#frame" ).contents().find( ".ui-bar-a" ).offset();
 			
@@ -681,7 +681,7 @@ $.tr.initializeThemeRoller = function()
 				zIndex: 3000,
 				iframeFix: true,
 				drag: function() {
-					moving_color = 1;
+					$.tr.moving_color = 1;
 				}
 			});
 			quickswatch.find( ".colors .color-drag:eq(30)" ).after( new_color );
@@ -1712,6 +1712,9 @@ $.tr.initializeThemeRoller = function()
 
 		$( ".delete-swatch-" + alpha[tab - 1] ).click( deleteSwatch );
     }
+
+	$.tr.addMostRecent = addMostRecent;
+	$.tr.moving_color = $.tr.moving_color;
 
 	$(document).trigger("themerollerready");
 }
