@@ -964,7 +964,7 @@ $.tr.initializeThemeRoller = function()
         var css = style_block.text();
         var start_reg = new RegExp ("\\/\\* " + alpha[tab_counter - 2].toUpperCase() + "\\s*\\n-*\\*\\/" );
         
-		var end_reg = new RegExp( "\\/\\* Structure \\*\\/" );
+		var end_reg = new RegExp( "\\/\\* Global \\*\\/" );
 		var start = css.search( start_reg );
 		var end = css.search( end_reg );         
         
@@ -1122,7 +1122,7 @@ $.tr.initializeThemeRoller = function()
 	            if(tab_counter > 3) {
 	                end = css.search( /\/\* B.*\n-*\*\// );
 	            } else {
-	                end = css.search( /\/\* Structure /);
+	                end = css.search( /\/\* Global /);
 	            }
 				var swatch_a = css.substring( start, end );
 
@@ -1131,7 +1131,7 @@ $.tr.initializeThemeRoller = function()
 				temp_css_template = temp_css_template.replace( /{a-/g, "{" + lower + "-" );
 				temp_css_template = temp_css_template.replace( /\/\*\sA/, "/* " + upper );
 				var current_css = style_block.text();
-				current_css = current_css.replace( /\/\*\sStructure\s/, temp_css_template + "\n\n/* Structure " );
+				current_css = current_css.replace( /\/\*\sGlobal\s/, temp_css_template + "\n\n/* Global " );
 				style_block.text( current_css );
 			}
 			
