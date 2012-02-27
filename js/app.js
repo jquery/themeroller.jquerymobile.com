@@ -1131,7 +1131,7 @@ $.tr.initializeThemeRoller = function()
 				temp_css_template = temp_css_template.replace( /{a-/g, "{" + lower + "-" );
 				temp_css_template = temp_css_template.replace( /\/\*\sA/, "/* " + upper );
 				var current_css = style_block.text();
-				current_css = current_css.replace( /\/\*\sGlobal\s/, temp_css_template + "\n\n/* Global " );
+				current_css = current_css.replace( /\/\*\sStructure\s/, temp_css_template + "\n\n/* Structure " );
 				style_block.text( current_css );
 			}
 			
