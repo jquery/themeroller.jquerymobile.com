@@ -964,7 +964,7 @@ $.tr.initializeThemeRoller = function()
         var css = style_block.text();
         var start_reg = new RegExp ("\\/\\* " + alpha[tab_counter - 2].toUpperCase() + "\\s*\\n-*\\*\\/" );
         
-		var end_reg = new RegExp( "\\/\\* Global \\*\\/" );
+		var end_reg = new RegExp( "\\/\\* Structure \\*\\/" );
 		var start = css.search( start_reg );
 		var end = css.search( end_reg );         
         
@@ -1122,7 +1122,7 @@ $.tr.initializeThemeRoller = function()
 	            if(tab_counter > 3) {
 	                end = css.search( /\/\* B.*\n-*\*\// );
 	            } else {
-	                end = css.search( /\/\* Global /);
+	                end = css.search( /\/\* Structure /);
 	            }
 				var swatch_a = css.substring( start, end );
 
