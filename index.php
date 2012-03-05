@@ -11,6 +11,7 @@ if ( isset($_GET['style_id']) ) {
 
 	<title>ThemeRoller | jQuery Mobile</title>
 
+	<link rel="canonical" href="index.php" />
 	<link rel="shortcut icon" type="image/x-icon" href="images/favicon.png" />
 
 	<link rel="stylesheet" type="text/css" href="css/layout.css" media="all" />
