@@ -879,12 +879,8 @@ TR.initControls = function() {
 
 	//Icon Set
     $( "[data-type=icon_set]" ).bind( "blur mouseup", function() {
-        if( this.value == "white" ) {
-            TR.styleArray[$( this ).attr( "data-name" )] = "url(images/icons-18-white.png)";
-
-        } else if(this.value == "black") {
-            TR.styleArray[$( this ).attr( "data-name" )] = "url(images/icons-18-black.png)";
-        }
+        TR.styleArray[$( this ).attr( "data-name" )] = "url(../jqm/" + TR.version + "/images/icons-18-" + this.value + ".png)";
+		TR.styleArray["global-large-icon-set"] = "url(../jqm/" + TR.version + "images/icons-36-" + this.value + ".png)";
         TR.updateAllCSS();
     });
 
