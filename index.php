@@ -574,14 +574,19 @@ if ( isset($_GET['style_id']) ) {
 			</div>
 
 			<div id="content">
-				<iframe id="frame" src="preview.html" onload="TR.iframeLoadCallback();">
+				<iframe id="frame" src="previews/<?php echo $JQM_VERSION; ?>.html" onload="TR.iframeLoadCallback();">
 				</iframe>
 			</div>
 
+			<div id="version"><?php echo $JQM_VERSION; ?></div>
+			
 			<div id="style">
 				<?php
 					//If the file exists we add the CSS here, if not, we leave it blank for the JS to find on load
-					$file_path = "css/" . ( isset($style_id) ? "user_themes/" . $style_id : "default" ) . ".css";
+					$file_path = "jqm/" . $JQM_VERSION . "/default.css";
+					if( isset($style_id) ) {
+						$file_path = "css/user_themes/" . $style_id . ".css";
+					}
 					if( is_file($file_path) ) {
 						echo file_get_contents( $file_path );
 					}

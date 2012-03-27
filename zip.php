@@ -5,6 +5,13 @@
 	$theme_name = $_POST["theme_name"];
 	$uncompressed = $_POST["file"];
 	
+	//replace image paths with appropriate ones
+	$uncompressed = preg_replace_callback('/url\(\.\.\/jqm\/[^\/]*\//sim', 
+		create_function(
+			'$matches',
+			'return "url(";'
+		), $uncompressed);
+	
 	//minifying CSS file
 	$comment_pos = strpos($uncompressed, "\n/* Swatches");
 	$comment = substr($uncompressed, 0, $comment_pos);

@@ -236,13 +236,13 @@ $(function(){
 					zIndex: 3000,
 					iframeFix: true,
 					drag: function() {
-						$.tr.moving_color = 1;
+						TR.movingColor = 1;
 					}
 				});
 				
 				$( "#kuler .color-drag" ).mousedown(function() {
 					var color = $( this ).css( "background-color" );
-					$.tr.addMostRecent( color );
+					TR.addMostRecent( color );
 				});
 				
 				$( ".kuler-title" ).mouseover(function() {

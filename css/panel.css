@@ -8,6 +8,7 @@ img{border: none;}
 #picker-colors .color-drag{width: 18px;height: 18px;float: none;margin: 6px 0;}
 
 /*ThemeRoller Mobile*/
+#version{display: none;}
 #style{display: none;}
 .sub #page h2{text-align: left; width: 100%; margin: auto; margin-top: 20px}
 

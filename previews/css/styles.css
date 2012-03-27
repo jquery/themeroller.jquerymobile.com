@@ -1,0 +1,69 @@
+.ui-page{
+	background: #fff !important;
+	padding: 30px !important;
+}
+
+.preview{
+	width: 280px;
+	float: left;
+	border: none;
+	margin: 4px 0 4px 8px;
+}
+
+.wrapper{
+	padding: 30px;
+	background: #fff;
+	min-height: 500px;
+}
+
+.add-swatch{
+	border: 1px dashed; 
+	height: 227px; 
+	width: 278px; 
+	background: #eee; 
+	overflow: hidden;
+	cursor: pointer;
+}
+
+#add-swatch h5{
+	text-align: center; 
+	margin-top: 70px;
+}
+
+#add-swatch h5 a{
+	font-family: Helvetica, Arial, sans-serif;
+	text-decoration: none; 
+	color: #000;
+}
+
+#highlight{
+	display: none; 
+	z-index: 20
+}
+
+.preview fieldset [data-role=list-divider]{
+	border-right-width: 1px;
+	border-left-width: 1px;
+}
+
+.ui-slider{
+	width: 62% !important;
+}
+
+.ui-select{
+	width: 100% !important;
+}
+
+.input{
+	width: 92% !important;
+}
+
+[for=radio-choice-1]>span{
+	-moz-border-radius: 				   0 !important;
+	-webkit-border-radius: 				   0 !important;
+	border-radius: 						   0 !important;
+}
+
+.preview .ui-content{
+	overflow-y: hidden !important;
+}

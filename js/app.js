@@ -14,8 +14,6 @@
  */
 
 (function( $, window, undefined ) {
-//this file holds the main functionality of ThemeRoller
-
 //Object that can be used across multiple files to reference certain functions
 TR = {};
 window.TR = TR;
@@ -23,8 +21,11 @@ window.TR = TR;
 TR.styleArray = [];
 TR.tokens = {};
 
+TR.version = "";
+
 TR.showStartEnd = [];
 TR.firstAdd = 1;
+TR.welcomed = 0;
 TR.tabCount = 5;
 
 TR.alpha = [ "global", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z" ];
@@ -76,7 +77,7 @@ TR.addMostRecent = function( color ) {
 			zIndex: 3000,
 			iframeFix: true,
 			drag: function() {
-				TR.moving_color = 1;
+				TR.movingColor = 1;
 			}
 		});
 		quickswatch.find( ".colors .color-drag:eq(30)" ).after( new_color );
@@ -87,20 +88,17 @@ TR.addMostRecent = function( color ) {
 TR.addSwatch = function( new_style ) {
 	$( ".delete-swatch-a" ).show();
 	if( TR.tabCount < 28 ) {
-		var next_tab = TR.tabCount + 1;
-		
-		//console.log( String.fromCharCode(TR.tabCount - 1 + 96) );
-		
-        var lower = String.fromCharCode(TR.tabCount + 95);
-        var upper = lower.toUpperCase();
+		var next_tab = TR.tabCount + 1,
+			lower = TR.alpha[TR.tabCount - 1],
+			upper = lower.toUpperCase();
 		
 		//new_style flag is only set if styles have not been added to TR.styleArray
 		//or CSS yet. correctNumberOfSwatches calles addSwatch with new_style=false
 		//so this block is skipped
 		if( new_style ) {
 			//defining TR.styleArray indices
-            var indices = [];
-			var reg = new RegExp( "a-.*" );
+            var indices = [],
+				reg = new RegExp( "a-.*" );
             for( var j in TR.styleArray ) {
                 if( j.search(reg) != -1 ) {
                     indices.push( j );
@@ -114,30 +112,25 @@ TR.addSwatch = function( new_style ) {
 
 			//adding swatch to CSS		
             reg = new RegExp( "\\/\\* " + upper + "\\s*\\n-*\\*\\/" );
-			var css = TR.styleBlock.text();
-
-			var start = css.search( /\/\* A.*\n-*\*\// ),
+			var css = TR.styleBlock.text(),
+				start = css.search( /\/\* A.*\n-*\*\// ),
 				end;
             if(TR.tabCount > 3) {
                 end = css.search( /\/\* B.*\n-*\*\// );
             } else {
                 end = css.search( /\/\* Structure /);
             }
-			var swatch_a = css.substring( start, end );
-
-			var temp_css_template = swatch_a.replace( /-a,/g, "-" + lower + "," );
-			temp_css_template = temp_css_template.replace( /-a\s/g, "-" + lower + " " );
-			temp_css_template = temp_css_template.replace( /{a-/g, "{" + lower + "-" );
-			temp_css_template = temp_css_template.replace( /\/\*\sA/, "/* " + upper );
-			var current_css = TR.styleBlock.text();
+			var swatch_a = css.substring( start, end ),
+				temp_css_template = swatch_a.replace( /-a,/g, "-" + lower + "," ).replace( /-a\s/g, "-" + lower + " " )
+					.replace( /{a-/g, "{" + lower + "-" ).replace( /\/\*\sA/, "/* " + upper ),
+				current_css = TR.styleBlock.text();
 			current_css = current_css.replace( /\/\*\sStructure\s/, temp_css_template + "\n\n/* Structure " );
 			TR.styleBlock.text( current_css );
 		}
 		
 		//giving the contents of the new tab
-        var temp_panel_template = TR.panel_template.replace( /Swatch A/, "Swatch " + upper );
-        temp_panel_template = temp_panel_template.replace( /"a\-/g, "\"" + lower + "-" );
-        temp_panel_template = temp_panel_template.replace( /\-a"/g, "-" + lower + "\"" );
+        var temp_panel_template = TR.panel_template.replace( /Swatch A/, "Swatch " + upper )
+			.replace( /"a\-/g, "\"" + lower + "-" ).replace( /\-a"/g, "-" + lower + "\"" );
 		
 		$( "#tabs" ).tabs( "add", "#tab" + (TR.tabCount + 1), "+" )
             .find( "ul li a[href=#tab" + TR.tabCount + "]" ).text( upper );
@@ -147,10 +140,8 @@ TR.addSwatch = function( new_style ) {
 		TR.updateFormValues( $("#tab" + TR.tabCount) );
 		
         //adding swatch to preview document
-        var temp_swatch_template = TR.swatch_template.replace( /"a"/g, "\"" + lower + "\"" );
-        temp_swatch_template = temp_swatch_template.replace( />A<\/h1>/g, ">" + upper + "</h1>" );
-        temp_swatch_template = temp_swatch_template.replace( /-a\s/g, "-" + lower + " " );
-        temp_swatch_template = temp_swatch_template.replace( /-a\"/g, "-" + lower + "\"" );
+        var temp_swatch_template = TR.swatch_template.replace( /"a"/g, "\"" + lower + "\"" ).replace( />A<\/h1>/g, ">" + upper + "</h1>" )
+        	.replace( /-a\s/g, "-" + lower + " " ).replace( /-a\"/g, "-" + lower + "\"" );
         $( temp_swatch_template ).insertAfter( TR.iframe.find(".swatch:last") );
 		
 		var iframe_window = $( "iframe" )[0].contentWindow;
@@ -166,8 +157,9 @@ TR.addSwatch = function( new_style ) {
         //binds all appropriate events for accordions and new tab
         TR.updateThemeRoller( TR.tabCount );
 		
+		//adjust the height of the add-swatch box
 		var swatch_height = TR.iframe.find( ".swatch:last" ).outerHeight();
-        TR.iframe.find( ".add-swatch" ).height(swatch_height);
+        TR.iframe.find( ".add-swatch" ).height( swatch_height );
         
 		if( TR.firstAdd ) {
 			//apply paging of the tabs
@@ -260,7 +252,7 @@ TR.applyColor = function( color, prefix ) {
 		}
 
 		//contrast calculation for text color
-		if( gray > (150) ) {
+		if( gray > 150 ) {
 			$( "input[data-name=" + prefix + "-color]" ).val( "#000000" ).css( "background-color", "#000000" );
 			$( "input[data-name=" + prefix + "-shadow-color]" ).val( "#eeeeee" ).css( "background-color", "#eeeeee" );
 			TR.styleArray[prefix + "-color"] = "#000000";
@@ -351,7 +343,7 @@ TR.correctNumberOfSwatches = function() {
 	var style = TR.styleBlock.text();
 	var matches = style.match( /\/\*\s[A-Z]\s*-*\*\//g );
 	if( !matches ) {
-		if(TR.fristLoad) {
+		if(TR.firstLoad) {
 			TR.firstLoad = 0;
 			//initial load - the theme specified cannot be found on the server
 			var error_message = $( "<h3>Invalid Theme</h3><p>Reminder: We can only store this theme URL on the server for 30 days, then it will be deleted. \
@@ -360,7 +352,7 @@ TR.correctNumberOfSwatches = function() {
 		
 			//import default theme
 			$.ajax({
-				url: "css/default.css",
+				url: "jqm/" + TR.version + "/default.css",
 				dataType: "text",
 				mimeType: "text/plain",
 				success: function( data ) {
@@ -374,6 +366,10 @@ TR.correctNumberOfSwatches = function() {
 		}
 		//return early because the file is of the incorrect format
 		return;
+	} else {
+		if(TR.firstLoad) {
+			TR.firstLoad = 0;
+		}
 	}
 	var swatch_counter = matches.length + 2;
 	
@@ -453,7 +449,6 @@ TR.deleteSwatch = function( e, ele ) {
 	var part1 = css.substring(0, start);
 	var part2 = css.substring(end, css.length);
 	TR.styleBlock.text( part1 + part2 );
-	$( "#download" ).find( "textarea" ).val( part1 + part2 );
 	
     TR.tabCount--;
     $( "#tabs" ).find( ".ui-tabs-panel:last" ).attr( "id", "tab" + TR.tabCount ).end()
@@ -537,9 +532,9 @@ TR.dialogs = function() {
             "Import": function() {
                 $( "#upload" ).dialog( "close" );
             	if( $( "#load-css" ).val() != "" ) {
-					style_block.text( $("#load-css").val() );
-					init();
-					correctNumberOfSwatches();
+					TR.styleBlock.text( $("#load-css").val() );
+					TR.initStyleArray();
+					TR.correctNumberOfSwatches();
                 }
 				
             }
@@ -570,13 +565,14 @@ TR.dialogs = function() {
 			"Close": function() { 
                 $( this ).dialog( "close" ); 
             },
- 			"Download Zip": function() { 
+ 			"Download Zip": function() {
 				var theme_name = $( "input", this ).val();
 				if( theme_name && theme_name.indexOf(" ") == -1 ) {
+					
 					$.ajax({
 						url: "./zip.php",
 						type: "POST",
-						data: "theme_name=" + $( "input", this ).val() + "&file=" + encodeURIComponent(style_block.text()),
+						data: "theme_name=" + $( "input", this ).val() + "&file=" + encodeURIComponent(TR.styleBlock.text()),
 						dataType: "text",
 						mimeType: "text/plain",
 						beforeSend: function() {
@@ -586,6 +582,7 @@ TR.dialogs = function() {
 							window.location = response;
 						}
 					});
+					
 				} else {
 					alert( "Invalid theme name" );
 				}
@@ -597,7 +594,7 @@ TR.dialogs = function() {
 		e.preventDefault();
 		
 		$.ajax({
-			url: "css/default_theme.css",
+			url: "jqm/" + TR.version + "/default_theme.css",
 			dataType: "text",
 			mimeType: "text/plain",
 			success: function( data ) {
@@ -612,7 +609,7 @@ TR.dialogs = function() {
 		
 		$( "#share" ).dialog( "open" );
 		
-		var post_data = "file=" + style_block.text();
+		var post_data = "file=" + TR.styleBlock.text();
 		
 		$.ajax({
 			type: "post",
@@ -663,7 +660,7 @@ TR.draggableColors = function() {
 		zIndex: 3000,
 		iframeFix: true,
 		drag: function() {
-			TR.moving_color = 1;
+			TR.movingColor = 1;
 		}
 	});
 	
@@ -697,8 +694,8 @@ TR.draggableColors = function() {
 
 		var droppables = [ ".ui-btn-up-", ".ui-bar-", ".ui-body-" ];
 		
-		if(TR.moving_color) {
-			TR.moving_color = 0;
+		if(TR.movingColor) {
+			TR.movingColor = 0;
 			var frame_offset = $( "iframe" ).offset();
 			var el_offset = TR.iframe.find( ".ui-bar-a" ).offset();
 			
@@ -806,9 +803,6 @@ TR.initAddSwatch = function() {
 //binds TR controls to updateAllCSS
 //also takes care of things like slider handle color, etc.
 TR.initControls = function() {
-	//All of the following bind different fields in TR
-    //to functions that change CSS rules and call TR.updateAllCSS()
-
 	//Font Family
     $( "[data-type=font-family]" ).bind( "blur change keyup", function() {
 		var name = $( this ).attr( "data-name" );
@@ -1050,7 +1044,8 @@ TR.initInspector = function() {
     });
 	
     TR.iframe.bind( "mouseleave", function() {
-        $( "iframe" ).contents().find( "#highlight" ).hide();
+        TR.iframe.find( "#highlight" ).hide();
+		TR.iframe.find( "#highlight" ).unbind( "mousemove" );
     });
 }
 
@@ -1062,7 +1057,6 @@ TR.initStyleArray = function( refresh ) {
     var style = TR.styleBlock.text();
     escaped_style = style.replace( /\n/g, "%0A" );
     escaped_style = escaped_style.replace( /\t/g, "%09" );
-    $( "#download" ).find( "textarea" ).val( style );
 	
     var reg = new RegExp( "(?:font-family:)[^/\\*]+/\\*{[^\\*/]*}\\*/|\\s*\\S*\\s*/\\*{[^\\*/]*}\\*/" ),
 		reference = "",
@@ -1106,8 +1100,12 @@ TR.initStyleArray = function( refresh ) {
 }
 
 //first initialization method called when the DOM and the iframe are both loaded
+//defines globals like TR.styleArray, TR.version, and TR.iframe - also calls other initialization methods
 TR.initThemeRoller = function() {
 	TR.iframe = $( "iframe" ).contents();
+
+	//#version is where the version number is put
+	TR.version = $( "#version" ).text();
 
     //#style is where the initial CSS file is put
     //copy it to #styleblock so its in the scope of the iframe
@@ -1148,7 +1146,6 @@ TR.padNumber = function( n, len ) {
     while (str.length < len) {
         str = '0' + str;
     }
-
     return str;
 }
 
@@ -1201,7 +1198,7 @@ TR.percentColor = function( color, percent ) {
 	return "#" + red + "" + green + "" + blue + "";
 }
 
-//updates Inspector behaviors in the iframe
+//updates Inspector behaviors in the iframe for a newly added swatch
 TR.refreshIframe = function( swatch )
 {	
     //click behavior for inspector
@@ -1303,6 +1300,7 @@ TR.rgbatohex = function(rgba) {
 	return "#" + TR.hex(rgba[1]) + TR.hex(rgba[2]) + TR.hex(rgba[3]);
 }
 
+//Function to get opacity from rgba
 TR.rgbaOpacity = function(rgba) {
 	rgba = rgba.match(/^rgba\((\d+),\s*(\d+),\s*(\d+),\s*([\d.]+)\)$/);
 	return rgba[4];
@@ -1370,7 +1368,6 @@ TR.updateAllCSS = function() {
     new_style = new_style.join( "" );
     
     TR.styleBlock.text( new_style );
-    $( "#download textarea" ).val( new_style );
 }
 
 //updates all form values from the style array
@@ -1399,15 +1396,15 @@ TR.updateFormValues = function( $this ) {
 					}
 				} else {
 					if( i != "global-icon-color" && i != "global-icon-shadow" ) {
-						var with_disc = $( "#with_disc" );
-						var disc_color = $( "[data-name=global-icon-disc].colorwell", $this );
-						var disc_opacity = $( "[data-name=global-icon-disc]:not(.colorwell)", $this );
+						var with_disc = $( "#with_disc" ),
+							disc_color = $( "[data-name=global-icon-disc].colorwell", $this ),
+							disc_opacity = $( "[data-name=global-icon-disc]:not(.colorwell)", $this );
 
 						if( value.indexOf( "transparent" ) != -1 ) {
 							with_disc.val( "without_disc" );
 						} else {
-							var hex = TR.rgbatohex( value );
-							var opac = TR.rgbaOpacity( value );
+							var hex = TR.rgbatohex( value ),
+								opac = TR.rgbaOpacity( value );
 							disc_color.val( hex ).css( "background-color", hex );
 							disc_opacity.val( parseFloat(opac) * 100 );
 							with_disc.val( "with_disc" );
@@ -1421,10 +1418,10 @@ TR.updateFormValues = function( $this ) {
 				}
 			} else if( i.indexOf("box-shadow") != -1) {
 				if( i.indexOf( "-size" ) == -1 ) {
-					var shadow_color = $( "[data-name=global-box-shadow-color].colorwell", $this );
-					var shadow_opacity = $( "[data-name=global-box-shadow-color]:not(.colorwell)", $this );
-					var hex = TR.rgbatohex( value );
-					var opac = TR.rgbaOpacity( value );
+					var shadow_color = $( "[data-name=global-box-shadow-color].colorwell", $this ),
+						shadow_opacity = $( "[data-name=global-box-shadow-color]:not(.colorwell)", $this ),
+						hex = TR.rgbatohex( value ),
+						opac = TR.rgbaOpacity( value );
 					shadow_color.val( hex ).css( "background-color", hex );
 					shadow_opacity.val( parseFloat(opac) * 100 );
 					if( TR.grayValue(hex) < 127 ) {
@@ -1457,7 +1454,7 @@ TR.updateFormValues = function( $this ) {
 	}
 }
 
-//function to restyle and reconnect different input elements in the new swatch"s control panel
+//function to restyle and reconnect different input elements in the new swatch's control panel
 TR.updateThemeRoller = function( tab ) {
 
 	var $tab = $( "#tab" + tab );
@@ -1579,7 +1576,7 @@ TR.updateThemeRoller = function( tab ) {
 		});
 	
     $tab.find( "[data-type=background]" ).bind("blur slide mouseup change keyup", function(event, slider) {
-        if(!TR.timerID) {
+        if( !TR.timerID ) {
             TR.timerID = setTimeout(function() {
                 TR.timerID = 0;
             }, 100);
@@ -1587,60 +1584,15 @@ TR.updateThemeRoller = function( tab ) {
             var index = $( this ).attr( "data-name" ) + "";
             index = index.split( "-" );
             var prefix = index[0] + "-" + index[1];
-            var color = $tab.find( "input[data-type=background][data-name|=" + prefix + "]" ).val();
-            var slider_value = $tab.find( ".slider[data-type=background][data-name|=" + prefix + "]" ).slider( "value" );
-			
-            var color_arr = color.split( "" );
-			
-            var red = hextodec( color_arr[1] + color_arr[2] );
-            var green = hextodec( color_arr[3] + color_arr[4] );
-            var blue = hextodec( color_arr[5] + color_arr[6] );
-			
-            var convex, red_start, green_start, blue_start, percent;
-            
-            if( slider_value >= 40 ) {
-                convex = 1;
-                percent = 1 + ( slider_value - 40 ) / 100;
-            } else {
-                convex = 0;
-                percent = 1 + ( 40 - slider_value ) / 100;
-            }
-            if( percent * red > 255 ) {
-                red_start = "FF";
-            } else {
-                red_start = dectohex( Math.floor(percent * red) );
-            }
-            if( percent * green > 255 ) {
-                green_start = "FF";
-            } else {
-                green_start = dectohex( Math.floor(percent * green) );
-            }
-            if( percent * blue > 255 ) {
-                blue_start = "FF";
-            } else {
-                blue_start = dectohex( Math.floor(percent * blue) );
-            }
-			
-            if( convex ) {
-                percent = ( 100 - (slider_value - 40) ) / 100;
-            } else {
-                percent = ( 100 - (40 - slider_value) ) / 100;
-            }
-			
-            var red_end = dectohex( Math.floor(percent * red) );
-            var green_end = dectohex( Math.floor(percent * green) );
-            var blue_end = dectohex( Math.floor(percent * blue) );
-			
-            var start, end;
-            if( convex ) {
-                start = "#" + red_start + "" + green_start + "" + blue_start + "";
-                end = "#" + red_end + "" + green_end + "" + blue_end + "";
-            } else {
-                start = "#" + red_end + "" + green_end + "" + blue_end + "";
-                end = "#" + red_start + "" + green_start + "" + blue_start + "";
-            }
-            $tab.find( "[data-type=start][data-name=" + prefix + "-background-start]" ).val( start ).css( "background-color", start );
-            $tab.find( "[data-type=end][data-name=" + prefix + "-background-end]" ).val( end ).css( "background-color", end );
+            var color = $( "input[data-type=background][data-name|=" + prefix + "]" ).val();
+            var slider_value = $( ".slider[data-type=background][data-name|=" + prefix + "]" ).slider( "value" );
+
+			var start_end = TR.computeGradient(color, slider_value);
+			var start = start_end[0];
+			var end = start_end[1];
+
+            $( "[data-type=start][data-name=" + prefix + "-background-start]" ).val( start ).css( "background-color", start );
+            $( "[data-type=end][data-name=" + prefix + "-background-end]" ).val( end ).css( "background-color", end );
             TR.styleArray[prefix + "-background-color"] = color;
             TR.styleArray[prefix + "-background-start"] = start;
             TR.styleArray[prefix + "-background-end"] = end;

@@ -1,4 +1,4 @@
 .DS_Store
 css/user_themes/*.css
-generated_zips/*.zip
+zips/*.zip
 .htaccess

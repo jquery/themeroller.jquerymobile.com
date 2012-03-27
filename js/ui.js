@@ -24,7 +24,10 @@ TR.initializeUI = function() {
 			"left": ""
 		});
 		$( "#load-mask" ).hide();
-		$( "#welcome" ).dialog( "open" );
+		if(!TR.welcomed) {
+			$( "#welcome" ).dialog( "open" );
+			TR.welcomed = 1;
+		}
 		resize();
 	}, 2500);
 			
