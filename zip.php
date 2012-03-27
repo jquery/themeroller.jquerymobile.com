@@ -50,7 +50,7 @@
 			}
 		}
 	}
-	$filename = "./generated_zips/jquery-mobile-theme-" .  $today . "-" . $last_file_num . ".zip";
+	$filename = "./zips/jquery-mobile-theme-" .  $today . "-" . $last_file_num . ".zip";
 
 	if ($zip->open($filename, ZIPARCHIVE::CREATE)!==TRUE) {
 	    exit("cannot open <$filename>\n");

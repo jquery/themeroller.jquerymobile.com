@@ -1,20 +1,20 @@
+/*
+ThemeRoller's various jQuery UI elements and other plugins are initialized here. 
+*/
+
 $(function(){
 	$( "#load-mask" ).height($(window).height()).width($(window).width() + 15);
 });
 
+TR.isDOMReady = false;
+TR.isIFrameReady = false;
 
-
-$.tr.isDOMReady = false;
-$.tr.isIFrameReady = false;
-
-//this file is used to initialize the jquery-ui behaviors and the farbtastic colorpicker
-function initializeUI() {
+TR.initializeUI = function() {
 	
-	if ( !$.tr.isDOMReady || !$.tr.isIFrameReady ) {
+	if ( !TR.isDOMReady || !TR.isIFrameReady ) {
 		return;
 	}
-		
-	
+
 	var hexDigits = new Array("0","1","2","3","4","5","6","7","8","9","a","b","c","d","e","f");
 		
 	//size the load mask and show the rest of the content after 3000ms
@@ -26,7 +26,7 @@ function initializeUI() {
 		$( "#load-mask" ).hide();
 		$( "#welcome" ).dialog( "open" );
 		resize();
-	}, 3000);
+	}, 2500);
 			
 	var colors = [];
 
@@ -53,8 +53,8 @@ function initializeUI() {
 	
 	//sizing content to the right of the TR panel
 	function resize() {
-		var top_border = $( "#themeroller_mobile" ).css( "border-top-width" ).substring( 0, 1 );
-		$( "#themeroller_mobile" ).height( $(window).height() - top_border );
+		var top_border = $( "#tr_panel" ).css( "border-top-width" ).substring( 0, 1 );
+		$( "#tr_panel" ).height( $(window).height() - top_border );
 		$( "#content" ).height( $(window).height() - $("#header-wrapper").outerHeight() - 3 );
 	}
 	
@@ -204,8 +204,6 @@ function initializeUI() {
 		}
 	});
 	
-	
-	
 	function rgbtohex(rgb) {
 		rgb = rgb.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
 		return "#" + hex(rgb[1]) + hex(rgb[2]) + hex(rgb[3]);
@@ -215,17 +213,16 @@ function initializeUI() {
 		return isNaN(x) ? "00" : hexDigits[(x - x % 16) / 16] + hexDigits[x % 16];
 	}
 	
-	$.tr.initializeThemeRoller();
-	
+	TR.initThemeRoller();
 }
 
-$.tr.iframeLoadCallback = function()
+TR.iframeLoadCallback = function()
 {
-	$.tr.isIFrameReady = true;
-	initializeUI();
+	TR.isIFrameReady = true;
+	TR.initializeUI();
 };
 
 $(function() {
-	$.tr.isDOMReady = true;
-	initializeUI();
+	TR.isDOMReady = true;
+	TR.initializeUI();
 });

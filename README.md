@@ -1,3 +1,5 @@
+##README
+
 This is the new repo for the jQuery Mobile ThemeRoller tool.
 
 Notes on PHP configs for hosted version of jQm ThemeRoller:
@@ -10,8 +12,7 @@ Notes on PHP configs for hosted version of jQm ThemeRoller:
 
 
 
-License
-==================
+##License
 
 ThemeRoller code may used under the terms of either the MIT License or the GNU General Public License (GPL) Version 2. The MIT License is recommended for most projects. It is simple and easy to understand and it places almost no restrictions on what you can do with a jQuery project.
 

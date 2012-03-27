@@ -17,46 +17,468 @@
 //this file holds the main functionality of ThemeRoller
 
 //Object that can be used across multiple files to reference certain functions
-$.tr = {};
+TR = {};
+window.TR = TR;
 
-$.tr.initializeThemeRoller = function()
-{
-	
-    //Style
-    var style_block; //reference to #styleblock in iframe - defined on iframe load
-    var frame; //reference to contents of the iframe - deinfed on iframe load
-    var style_array = []; //global array of CSS rules
-    var tokens = new Array(); //global array of tokens in the css file 
-                               //used to write out placeholder tokens and string tokens
-	style_array = style_array;
-	
-    //New Swatch
-    var first_add = 1;//used to initialize the paging of the tabs
-    var tab_counter = 5;//initially we have a global tab an A tab and an add swatch taba
-    //global lookup objects to convert number to alpha and visa versa
-    var num = { "global": 0, "a": 1, "b": 2, "c": 3, "d": 4, "e": 5, "f": 6, "g": 7, "h": 8, "i": 9, "j": 10, "k": 11, "l": 12, "m": 13, "n": 14, "o": 15, "p": 16, "q": 17, "r": 18, "s": 19, "t": 20, "u": 21, "v": 22, "w": 23, "x": 24, "y": 25, "z": 26 };
-    var alpha = [ "global", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z" ];
-    //strings that contain templates of the contents of a TR tab and a swatch in the preview
-    var swatch_template = "<div class=\"preview ui-shadow swatch\">\n		<div class=\"ui-header ui-bar-a\" data-swatch=\"a\" data-theme=\"a\" data-form=\"ui-bar-a\" data-role=\"header\" role=\"banner\">\n			<a class=\"ui-btn-left ui-btn ui-btn-icon-notext ui-btn-corner-all ui-shadow ui-btn-up-a\" data-iconpos=\"notext\" data-theme=\"a\" data-role=\"button\" data-icon=\"home\" title=\" Home \">\n				<span class=\"ui-btn-inner ui-btn-corner-all\">\n					<span class=\"ui-btn-text\"> Home </span>\n					<span data-form=\"ui-icon\" class=\"ui-icon ui-icon-home ui-icon-shadow\"></span>\n				</span>\n			</a>\n			<h1 class=\"ui-title\" tabindex=\"0\" role=\"heading\" aria-level=\"1\">A</h1>\n			<a class=\"ui-btn-right ui-btn ui-btn-icon-notext ui-btn-corner-all ui-shadow ui-btn-up-a\" data-iconpos=\"notext\" data-theme=\"a\" data-role=\"button\" data-icon=\"grid\" title=\" Navigation \">\n				<span class=\"ui-btn-inner ui-btn-corner-all\">\n					<span class=\"ui-btn-text\"> Navigation </span>\n					<span data-form=\"ui-icon\" class=\"ui-icon ui-icon-grid ui-icon-shadow\"></span>\n				</span>\n			</a>\n		</div>\n\n		<div class=\"ui-content ui-body-a\" data-theme=\"a\" data-form=\"ui-body-a\" data-role=\"content\" role=\"main\">\n\n			<p>\n				Sample text and <a class=\"ui-link\" data-form=\"ui-body-a\" href=\"#\" data-theme=\"a\">links</a>.\n			</p>\n\n			<div data-role=\"fieldcontain\">\n			    <fieldset data-role=\"controlgroup\">\n						<li data-swatch=\"a\" class=\"ui-li ui-li-divider ui-btn ui-bar-a ui-corner-top\" data-role=\"list-divider\" role=\"\" data-form=\"ui-bar-a\">List Header</li>\n\n						<input type=\"radio\" name=\"radio-choice-a\" id=\"radio-choice-1-a\" value=\"choice-1\" checked=\"checked\" />\n				        <label for=\"radio-choice-1-a\" data-form=\"ui-btn-up-a\" class=\"ui-corner-none\">Radio 1</label>\n\n		         		<input type=\"radio\" name=\"radio-choice-a\" id=\"radio-choice-2-a\" value=\"choice-2\"  />\n			         	<label for=\"radio-choice-2-a\" data-form=\"ui-btn-up-a\">Radio 2</label>\n\n						<input type=\"checkbox\" name=\"checkbox-1\" id=\"checkbox-1\" class=\"custom\" checked=\"checked\" />\n						<label for=\"checkbox-1\" data-form=\"ui-btn-up-a\">Checkbox</label>\n\n\n			    </fieldset>\n			</div>\n\n			<div data-role=\"fieldcontain\"> \n				<fieldset data-role=\"controlgroup\" data-type=\"horizontal\">\n						<input type=\"radio\" name=\"radio-view-a\" id=\"radio-view-a-a\" value=\"list\" checked=\"checked\"/> \n						<label for=\"radio-view-a-a\" data-form=\"ui-btn-up-a\">On</label> \n						<input type=\"radio\" name=\"radio-view-a\" id=\"radio-view-b-a\" value=\"grid\"  /> \n						<label for=\"radio-view-b-a\" data-form=\"ui-btn-up-a\">Off</label> \n				</fieldset> \n			</div>\n\n			<div data-role=\"fieldcontain\">\n				<select name=\"select-choice-1\" id=\"select-choice-1\" data-native-menu=\"false\" data-theme=\"a\" data-form=\"ui-btn-up-a\">\n					<option value=\"standard\">Option 1</option>\n					<option value=\"rush\">Option 2</option>\n					<option value=\"express\">Option 3</option>\n					<option value=\"overnight\">Option 4</option>\n				</select>\n			</div>\n\n			<input type=\"text\" value=\"Text Input\" class=\"input\" data-form=\"ui-body-a\" />\n\n			<div data-role=\"fieldcontain\">\n				<input type=\"range\" name=\"slider\" value=\"0\" min=\"0\" max=\"100\" data-form=\"ui-body-a\" data-theme=\"a\" />\n			</div>\n\n			<button data-icon=\"star\" data-theme=\"a\" data-form=\"ui-btn-up-a\">Button</button>\n		</div>\n	</div>";
-	var panel_template = $( "#tab2" ).html();
-	//var panel_template = "<h1>Swatch A<a class=\"delete-swatch-a\" href=\"\">Delete</a></h1>\n			\n				<div class=\"accordion\" data-form=\"ui-bar-a\">\n					<div>\n						<h3><a href=\"#\">Header/Footer Bar</a></h3>\n						<form>\n							<label class=\"first\">FONT</label><input data-type=\"font-family\" data-name=\"a-bar-font\" value=\"Helvetica, Arial, Sans serif\"/><br class=\"clear\"/>\n							<label class=\"first\">TEXT COLOR</label><input data-type=\"color\" data-name=\"a-bar-color\" class=\"colorwell\" value=\"#3E3E3E\"/><br class=\"clear\"/>\n							<label class=\"first\">TEXT SHADOW</label><input title=\"Controls the horizontal offset of text shadow\" data-type=\"text-shadow\" data-name=\"a-bar-shadow-x\" value=\"0px\"/>&nbsp;<input title=\"Controls the vertical offset of text shadow\" data-type=\"text-shadow\" data-name=\"a-bar-shadow-y\" value=\"1px\"/>&nbsp;<input title=\"Controls the blur of text shadow\" data-type=\"text-shadow\" data-name=\"a-bar-shadow-radius\" value=\"1px\"/>&nbsp;<input data-name=\"a-bar-shadow-color\" data-type=\"text-shadow\" class=\"colorwell\" value=\"#FFFFFF\"/><br class=\"clear\"/>\n							<div class=\"separator\"></div>\n							<label class=\"first\">BACKGROUND</label><input data-type=\"background\" data-name=\"a-bar-background-color\" class=\"colorwell\" value=\"#EDEDED\"/><div class=\"slider\" data-type=\"background\" data-name=\"a-bar-background-color\"></div>&nbsp;&nbsp;<a class=\"more\" data-name=\"a-bar-background\" href=\"#\">+</a>\n							<div class=\"start-end\" data-name=\"a-bar-background\"><label class=\"first\">START</label><input data-type=\"start\"  data-name=\"a-bar-background-start\" class=\"colorwell\" value=\"#F0F0F0\"/>&nbsp;<span class=\"end-label\">END</span>&nbsp;<input data-type=\"end\" data-name=\"a-bar-background-end\" class=\"colorwell\" value=\"#E9EAEB\"/></div>\n							<div class=\"separator\"></div>\n							<label class=\"first\">BORDER</label><input data-type=\"border\" data-name=\"a-bar-border\" class=\"colorwell\" value=\"#B3B3B3\"/><br class=\"clear\"/>\n						</form>\n					</div>\n				</div>\n				<div class=\"accordion\" data-form=\"ui-body-a\">\n					<div>\n						<h3><a href=\"#\">Content Body</a></h3>\n						<form>\n							<label class=\"first\">FONT</label><input data-type=\"font-family\" data-name=\"a-body-font\" value=\"Helvetica, Arial, Sans serif\"/><br class=\"clear\"/>\n							<label class=\"first\">TEXT COLOR</label><input data-type=\"color\" data-name=\"a-body-color\" class=\"colorwell\" value=\"#333333\"/><br class=\"clear\"/>\n							<label class=\"first\">TEXT SHADOW</label><input title=\"Controls the horizontal offset of text shadow\" data-type=\"text-shadow\" data-name=\"a-body-shadow-x\" value=\"0px\"/>&nbsp;<input title=\"Controls the vertical offset of text shadow\" data-type=\"text-shadow\" data-name=\"a-body-shadow-y\" value=\"1px\"/>&nbsp;<input title=\"Controls the blur of text shadow\" data-type=\"text-shadow\" data-name=\"a-body-shadow-radius\" value=\"0px\"/>&nbsp;<input data-name=\"a-body-shadow-color\" data-type=\"text-shadow\" class=\"colorwell\" value=\"#FFFFFF\"/><br class=\"clear\"/>\n							<div class=\"separator\"></div>\n							<label class=\"first\">BACKGROUND</label><input data-type=\"background\" data-name=\"a-body-background-color\" class=\"colorwell\" value=\"#E5E5E5\"/><div class=\"slider\" data-type=\"background\" data-name=\"a-body-background-color\"></div>&nbsp;&nbsp;<a class=\"more\" data-name=\"a-body-background\" href=\"#\">+</a>\n							<div class=\"start-end\" data-name=\"a-body-background\"><label class=\"first\">START</label><input data-type=\"start\"  data-name=\"a-body-background-start\" class=\"colorwell\" value=\"#EEEEEE\"/>&nbsp;<span class=\"end-label\">END</span>&nbsp;<input data-type=\"end\" data-name=\"a-body-background-end\" class=\"colorwell\" value=\"#DDDDDD\"/></div>\n							<div class=\"separator\"></div>\n							<label class=\"first\">BORDER</label><input data-type=\"border\" data-name=\"a-body-border\" class=\"colorwell\" value=\"#B3B3B3\"/><br class=\"clear\"/>\n						</form>\n					</div>\n				</div>\n				<div class=\"accordion\" data-form=\"ui-btn-up-a\">\n					<div>\n						<h3><a href=\"#\">Button: Normal</a></h3>\n						<form>\n							<label class=\"first\">FONT</label><input data-type=\"font-family\" data-name=\"a-button-font\" value=\"Helvetica, Arial, Sans serif\"/><br class=\"clear\"/>\n							<label class=\"first\">TEXT COLOR</label><input data-type=\"color\" data-name=\"a-bup-color\" class=\"colorwell\" value=\"#444444\"/><br class=\"clear\"/>\n							<label class=\"first\">TEXT SHADOW</label><input title=\"Controls the horizontal offset of text shadow\" data-type=\"text-shadow\" data-name=\"a-bup-shadow-x\" value=\"0px\"/>&nbsp;<input title=\"Controls the vertical offset of text shadow\" data-type=\"text-shadow\" data-name=\"a-bup-shadow-y\" value=\"1px\"/>&nbsp;<input title=\"Controls the blur of text shadow\" data-type=\"text-shadow\" data-name=\"a-bup-shadow-radius\" value=\"1px\"/>&nbsp;<input data-name=\"a-bup-shadow-color\" data-type=\"text-shadow\" class=\"colorwell\" value=\"#F6F6F6\"/><br class=\"clear\"/>\n							<div class=\"separator\"></div>\n							<label class=\"first\">BACKGROUND</label><input data-type=\"background\" data-name=\"a-bup-background-color\" class=\"colorwell\" value=\"#F6F6F6\"/><div class=\"slider\" data-type=\"background\" data-name=\"a-bup-background-color\"></div>&nbsp;&nbsp;<a class=\"more\" data-name=\"a-bup-background\" href=\"#\">+</a>\n							<div class=\"start-end\" data-name=\"a-bup-background\"><label class=\"first\">START</label><input data-type=\"start\"  data-name=\"a-bup-background-start\" class=\"colorwell\" value=\"#FEFEFE\"/>&nbsp;<span class=\"end-label\">END</span>&nbsp;<input data-type=\"end\" data-name=\"a-bup-background-end\" class=\"colorwell\" value=\"#EEEEEE\"/></div>\n							<div class=\"separator\"></div>\n							<label class=\"first\">BORDER</label><input data-type=\"border\" data-name=\"a-bup-border\" class=\"colorwell\" value=\"#CCCCCC\"/><br class=\"clear\"/>\n						</form>\n					</div>\n				</div>\n				<div class=\"accordion\" data-form=\"ui-btn-hover-a\">\n					<div>\n						<h3><a href=\"#\">Button: Hover</a></h3>\n						<form>\n							<label class=\"first\">FONT</label><input data-type=\"font-family\" data-name=\"a-button-font\" value=\"Helvetica, Arial, Sans serif\"/><br class=\"clear\"/>\n							<label class=\"first\">TEXT COLOR</label><input data-type=\"color\" data-name=\"a-bhover-color\" class=\"colorwell\" value=\"#101010\"/><br class=\"clear\"/>\n							<label class=\"first\">TEXT SHADOW</label><input title=\"Controls the horizontal offset of text shadow\" data-type=\"text-shadow\" data-name=\"a-bhover-shadow-x\" value=\"0px\"/>&nbsp;<input title=\"Controls the vertical offset of text shadow\" data-type=\"text-shadow\" data-name=\"a-bhover-shadow-y\" value=\"1px\"/>&nbsp;<input title=\"Controls the blur of text shadow\" data-type=\"text-shadow\" data-name=\"a-bhover-shadow-radius\" value=\"1px\"/>&nbsp;<input data-name=\"a-bhover-shadow-color\" data-type=\"text-shadow\" class=\"colorwell\" value=\"#FFFFFF\"/><br class=\"clear\"/>\n							<div class=\"separator\"></div>\n							<label class=\"first\">BACKGROUND</label><input data-type=\"background\" data-name=\"a-bhover-background-color\" class=\"colorwell\" value=\"#E3E3E3\"/><div class=\"slider\" data-type=\"background\" data-name=\"a-bhover-background-color\"></div>&nbsp;&nbsp;<a class=\"more\" data-name=\"a-bhover-background\" href=\"#\">+</a>\n							<div class=\"start-end\" data-name=\"a-bhover-background\"><label class=\"first\">START</label><input data-type=\"start\"  data-name=\"a-bhover-background-start\" class=\"colorwell\" value=\"#EDEDED\"/>&nbsp;<span class=\"end-label\">END</span>&nbsp;<input data-type=\"end\" data-name=\"a-bhover-background-end\" class=\"colorwell\" value=\"#DADADA\"/></div>\n							<div class=\"separator\"></div>\n							<label class=\"first\">BORDER</label><input data-type=\"border\" data-name=\"a-bhover-border\" class=\"colorwell\" value=\"#BBBBBB\"/><br class=\"clear\"/>\n						</form>\n					</div>\n				</div>\n				<div class=\"accordion\" data-form=\"ui-btn-down-a\">\n					<div>\n						<h3><a href=\"#\">Button: Pressed</a></h3>\n						<form>\n							<label class=\"first\">FONT</label><input data-type=\"font-family\" data-name=\"a-button-font\" value=\"Helvetica, Arial, Sans serif\"/><br class=\"clear\"/>\n							<label class=\"first\">TEXT COLOR</label><input data-type=\"color\" data-name=\"a-bdown-color\" class=\"colorwell\"  value=\"#FFFFFF\"/><br class=\"clear\"/>\n							<label class=\"first\">TEXT SHADOW</label><input title=\"Controls the horizontal offset of text shadow\" data-type=\"text-shadow\" data-name=\"a-bdown-shadow-x\" value=\"0px\"/>&nbsp;<input title=\"Controls the vertical offset of text shadow\" data-type=\"text-shadow\" data-name=\"a-bdown-shadow-y\" value=\"1px\"/>&nbsp;<input title=\"Controls the blur of text shadow\" data-type=\"text-shadow\" data-name=\"a-bdown-shadow-radius\" value=\"1px\"/>&nbsp;<input data-name=\"a-bdown-shadow-color\" data-type=\"text-shadow\" class=\"colorwell\" value=\"#FFFFFF\"/><br class=\"clear\"/>\n							<div class=\"separator\"></div>\n							<label class=\"first\">BACKGROUND</label><input data-type=\"background\" data-name=\"a-bdown-background-color\" class=\"colorwell\" value=\"#F5F5F5\"/><div class=\"slider\" data-type=\"background\" data-name=\"a-bdown-background-color\"></div>&nbsp;&nbsp;<a class=\"more\" data-name=\"a-bdown-background\" href=\"#\">+</a>\n							<div class=\"start-end\" data-name=\"a-bdown-background\"><label class=\"first\">START</label><input data-type=\"start\"  data-name=\"a-bdown-background-start\" class=\"colorwell\" value=\"#EEEEEE\"/>&nbsp;<span class=\"end-label\">END</span>&nbsp;<input data-type=\"end\" data-name=\"a-bdown-background-end\" class=\"colorwell\" value=\"#FDFDFD\"/></div>\n							<div class=\"separator\"></div>\n							<label class=\"first\">BORDER</label><input data-type=\"border\" data-name=\"a-bdown-border\" class=\"colorwell\" value=\"#808080\"/><br class=\"clear\"/>\n						</form>\n					</div>\n				</div>";
+TR.styleArray = [];
+TR.tokens = {};
 
-    //Timer ID
-    var t = 0;
-	
-    //Gradient Start-End Showing/Not showing
-    var more = {};
+TR.showStartEnd = [];
+TR.firstAdd = 1;
+TR.tabCount = 5;
 
-	//Global for draggable colors
-	var moving_color = 0;
-    
-	//Flag for initial load
-	var first_load = 1;
+TR.alpha = [ "global", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z" ];
+TR.num = { "global": 0, "a": 1, "b": 2, "c": 3, "d": 4, "e": 5, "f": 6, "g": 7, "h": 8, "i": 9, "j": 10, "k": 11, "l": 12, "m": 13, "n": 14, "o": 15, "p": 16, "q": 17, "r": 18, "s": 19, "t": 20, "u": 21, "v": 22, "w": 23, "x": 24, "y": 25, "z": 26 };
 
-	//for rgbtohex
-	var hexDigits = new Array("0","1","2","3","4","5","6","7","8","9","a","b","c","d","e","f"); 
+TR.timerID = 0;
+TR.movingColor = 0;
+TR.firstLoad = 1;
+
+TR.hexDigits = new Array("0","1","2","3","4","5","6","7","8","9","a","b","c","d","e","f");
+
+//cleaning up a few classes and adding a few attributes so the 
+//inspector works properly after jQuery Mobile has done its markup injection
+TR.addInspectorAttributes = function( swatch ) {
+	var slider = TR.iframe.find( "[name=slider][data-theme=" + swatch + "]" ).siblings( "div" ),
+		select = TR.iframe.find( "select[data-theme=" + swatch + "]" ),
+		btn = select.siblings( "a" ),
+		radio = TR.iframe.find( ".ui-content" ).each(function() {
+			$( this ).find( ".ui-radio:first span:first" ).removeClass( "ui-corner-top" );
+		});
 		
-	//Dialogs
+	slider.attr( "data-form", "ui-btn-down-" + swatch ).attr( "data-theme", swatch );
+	slider.find( "a" ).attr( "data-form", "ui-btn-up-" + swatch ).attr( "data-theme", swatch );
+	btn.attr( "data-theme", swatch ).attr( "data-form", "ui-btn-up-" + swatch );
+	btn.find( ".ui-icon" ).attr( "data-form", "ui-icon" );
+}
+
+//adds a most-recent-color to the five right-most draggables in the quickswatch panel
+TR.addMostRecent = function( color ) {
+	var found = 0, quickswatch = $( "#quickswatch" );
+	quickswatch.find( ".color-drag:gt(31)" ).each(function() {
+		if( color == $(this).css("background-color") ) {
+			found = 1;
+		}
+	});
+	if( !found ) {
+		quickswatch.find( ".color-drag:last" ).remove();
+		quickswatch.find( ".colors .color-drag:eq(31)" ).removeClass( "separator" );
+		
+		var new_color = $( "<div class=\"color-drag separator\" style=\"background-color: " + color + "\"></div>" );
+		new_color.draggable({
+			appendTo: "body",
+			revert: true,
+			revertDuration: 200,
+			opacity: 1,
+			containment: "document",
+			cursor: "move",
+			helper: "clone",
+			zIndex: 3000,
+			iframeFix: true,
+			drag: function() {
+				TR.moving_color = 1;
+			}
+		});
+		quickswatch.find( ".colors .color-drag:eq(30)" ).after( new_color );
+	}
+}
+
+//adds some CSS, a tab panel, and a preview for the new swatch 
+TR.addSwatch = function( new_style ) {
+	$( ".delete-swatch-a" ).show();
+	if( TR.tabCount < 28 ) {
+		var next_tab = TR.tabCount + 1;
+		
+		//console.log( String.fromCharCode(TR.tabCount - 1 + 96) );
+		
+        var lower = String.fromCharCode(TR.tabCount + 95);
+        var upper = lower.toUpperCase();
+		
+		//new_style flag is only set if styles have not been added to TR.styleArray
+		//or CSS yet. correctNumberOfSwatches calles addSwatch with new_style=false
+		//so this block is skipped
+		if( new_style ) {
+			//defining TR.styleArray indices
+            var indices = [];
+			var reg = new RegExp( "a-.*" );
+            for( var j in TR.styleArray ) {
+                if( j.search(reg) != -1 ) {
+                    indices.push( j );
+                }
+            }
+            for( var k in indices ) {
+                var index = indices[k] + "",
+					suffix = index.substr( 1, index.length - 1 );
+                TR.styleArray[lower + suffix] = TR.styleArray[index];
+            }
+
+			//adding swatch to CSS		
+            reg = new RegExp( "\\/\\* " + upper + "\\s*\\n-*\\*\\/" );
+			var css = TR.styleBlock.text();
+
+			var start = css.search( /\/\* A.*\n-*\*\// ),
+				end;
+            if(TR.tabCount > 3) {
+                end = css.search( /\/\* B.*\n-*\*\// );
+            } else {
+                end = css.search( /\/\* Structure /);
+            }
+			var swatch_a = css.substring( start, end );
+
+			var temp_css_template = swatch_a.replace( /-a,/g, "-" + lower + "," );
+			temp_css_template = temp_css_template.replace( /-a\s/g, "-" + lower + " " );
+			temp_css_template = temp_css_template.replace( /{a-/g, "{" + lower + "-" );
+			temp_css_template = temp_css_template.replace( /\/\*\sA/, "/* " + upper );
+			var current_css = TR.styleBlock.text();
+			current_css = current_css.replace( /\/\*\sStructure\s/, temp_css_template + "\n\n/* Structure " );
+			TR.styleBlock.text( current_css );
+		}
+		
+		//giving the contents of the new tab
+        var temp_panel_template = TR.panel_template.replace( /Swatch A/, "Swatch " + upper );
+        temp_panel_template = temp_panel_template.replace( /"a\-/g, "\"" + lower + "-" );
+        temp_panel_template = temp_panel_template.replace( /\-a"/g, "-" + lower + "\"" );
+		
+		$( "#tabs" ).tabs( "add", "#tab" + (TR.tabCount + 1), "+" )
+            .find( "ul li a[href=#tab" + TR.tabCount + "]" ).text( upper );
+
+		$( "#tab" + TR.tabCount ).html( temp_panel_template );
+		
+		TR.updateFormValues( $("#tab" + TR.tabCount) );
+		
+        //adding swatch to preview document
+        var temp_swatch_template = TR.swatch_template.replace( /"a"/g, "\"" + lower + "\"" );
+        temp_swatch_template = temp_swatch_template.replace( />A<\/h1>/g, ">" + upper + "</h1>" );
+        temp_swatch_template = temp_swatch_template.replace( /-a\s/g, "-" + lower + " " );
+        temp_swatch_template = temp_swatch_template.replace( /-a\"/g, "-" + lower + "\"" );
+        $( temp_swatch_template ).insertAfter( TR.iframe.find(".swatch:last") );
+		
+		var iframe_window = $( "iframe" )[0].contentWindow;
+        //This is a bug in JQM. Header initialization is using a live pagecreate handler on the page
+        //ideally we should be able to write iframe_window.$(".swatch:last").trigger("create");
+        iframe_window.$( ".ui-page" ).trigger( "pagecreate" );
+        
+        //adding data-form attribute to slider
+		TR.addInspectorAttributes( lower );
+			 
+        //redefine the token array
+        TR.initStyleArray( "refresh" );
+        //binds all appropriate events for accordions and new tab
+        TR.updateThemeRoller( TR.tabCount );
+		
+		var swatch_height = TR.iframe.find( ".swatch:last" ).outerHeight();
+        TR.iframe.find( ".add-swatch" ).height(swatch_height);
+        
+		if( TR.firstAdd ) {
+			//apply paging of the tabs
+			$( "#tabs" ).tabs("paging", {
+				cycle: true, 
+				follow: true, 
+				tabsPerPage: 0, 
+				followOnSelect: true, 
+				selectOnAdd: false
+			});
+        	TR.firstAdd = 0;
+        }
+        
+        TR.refreshIframe( TR.alpha[TR.tabCount - 1] );
+        TR.iframe.find( "[data-role=dialog]" ).remove();
+		
+        //reconfigure binding of addSwatch event
+        $( "[href=#tab" + TR.tabCount + "]" ).unbind( "click", TR.addSwatchEvent );
+		
+        $( "[href=#tab" + next_tab + "]" ).bind( "click", TR.addSwatchEvent );
+
+		TR.tabCount++;
+	}
+}
+
+//used for binding and unbinding to addSwatch
+TR.addSwatchEvent = function(e) {
+	e.preventDefault();
+	TR.addSwatch( true );
+}
+
+//When a color is dropped this function applies a color to the element
+//automatically detecting things like 
+TR.applyColor = function( color, prefix ) {
+	var color_arr = color.split( "" ),
+		red = parseInt( (color_arr[1] + color_arr[2]), 16 ),
+		green = parseInt( (color_arr[3] + color_arr[4]), 16 ),
+		blue = parseInt( (color_arr[5] + color_arr[6]), 16 ),
+		gray = TR.grayValue( color ),
+		swatch = prefix.substr( 0, 1 ),
+		element = prefix.substr( 2, prefix.length - 2 );
+		
+	element = prefix.split( "-" );
+	element[0] = "";
+	element = element.join( "" );
+	
+	//if we're on a button hover we call this same function with button down as element
+	if( element == "bhover" ) {
+		color = TR.percentColor( color, 1.15 );
+		TR.applyColor( color, swatch + "-bdown");
+	}
+	//if we're on a button up we call same function with button hover
+	//which then calls it with button down
+	if( element == "bup" ) {
+		TR.applyColor( color, swatch + "-bhover" );
+	}
+	//if we're on button down then the gradient gets flipped
+	var start, end;
+	if( element != "bdown" ) {
+		start = TR.computeGradient(color, 50)[0];
+		end = TR.computeGradient(color, 50)[1];
+	} else {
+		start = TR.computeGradient(color, 50)[1];
+		end = TR.computeGradient(color, 50)[0];
+	}
+	if( element != "link" ) {
+		//anything but a link has gradients and text color
+		$( "input[data-name=" + prefix + "-background-color]" ).val( color ).css( "background-color", color );
+		$( "input[data-name=" + prefix + "-background-start]" ).val( start ).css( "background-color", start );
+		$( "input[data-name=" + prefix + "-background-end]" ).val( end ).css( "background-color", start );
+		$( ".slider[data-name=" + prefix + "-background-color]" ).slider( {value: 50} )
+			.find( "a" ).css({"background-color": color, "border-color": color});
+		TR.styleArray[prefix + "-background-start"] = start;
+		TR.styleArray[prefix + "-background-end"] = end;
+		TR.styleArray[prefix + "-background-color"] = color;
+
+		//special border for content body elements
+		if( element != "body" ) {
+			$( "input[data-name=" + prefix + "-border]" ).val( color ).css( "background-color", color );
+			TR.styleArray[prefix + "-border"] = color;
+		} else {
+			var border;
+			if( gray > 90 ) {
+				border = TR.percentColor( color, 0.55 );
+			} else {
+				border = TR.percentColor( color, 1.4 );
+			}
+			$( "input[data-name=" + prefix + "-border]" ).val( border ).css( "background-color", border );
+			TR.styleArray[prefix + "-border"] = border;
+		}
+
+		//contrast calculation for text color
+		if( gray > (150) ) {
+			$( "input[data-name=" + prefix + "-color]" ).val( "#000000" ).css( "background-color", "#000000" );
+			$( "input[data-name=" + prefix + "-shadow-color]" ).val( "#eeeeee" ).css( "background-color", "#eeeeee" );
+			TR.styleArray[prefix + "-color"] = "#000000";
+			TR.styleArray[prefix + "-shadow-color"] = "#eeeeee";
+		} else {	
+			$( "input[data-name=" + prefix + "-color]" ).val( "#ffffff" ).css( "background-color", "#ffffff" );
+			$( "input[data-name=" + prefix + "-shadow-color]" ).val( "#444444" ).css( "background-color", "#444444" );
+			TR.styleArray[prefix + "-color"] = "#ffffff";
+			TR.styleArray[prefix + "-shadow-color"] = "#444444";
+		}
+	} else {
+		//links are lighter on hover and darker once visited
+		var lighter = TR.percentColor( color, 1.15 );
+		var darker = TR.percentColor( color, 0.65 );
+		TR.styleArray[swatch + "-body-link-color"] = color;
+		TR.styleArray[swatch + "-body-link-active"] = color;
+		TR.styleArray[swatch + "-body-link-hover"] = lighter;
+		TR.styleArray[swatch + "-body-link-visited"] = darker;
+		$( "input[data-name=" + swatch + "-body-link-color]" ).val( color ).css( "background-color", color );
+		$( "input[data-name=" + swatch + "-body-link-active]" ).val( color ).css( "background-color", color );
+		$( "input[data-name=" + swatch + "-body-link-hover]" ).val( darker ).css( "background-color", lighter );
+		$( "input[data-name=" + swatch + "-body-link-visited]" ).val( lighter ).css( "background-color", darker );
+	}
+
+	//we've updated TR.styleArray now update the CSS
+	TR.updateAllCSS();
+}
+
+//pass in a color and a slider value and get back a tuple with start and end colors
+//of a gradient - the slider value is a number between 0 and 100
+//greater than 50 -> convex gradient, less than 50 -> concave
+TR.computeGradient = function( color, slider_value ) {
+	var color_arr = color.split( "" );
+
+    var red = parseInt( (color_arr[1] + color_arr[2]), 16 );
+    var green = parseInt( (color_arr[3] + color_arr[4]), 16 );
+    var blue = parseInt( (color_arr[5] + color_arr[6]), 16 );
+
+    var convex, red_start, green_start, blue_start, percent;
+        
+    if( slider_value >= 40 ) {
+        convex = 1;
+        percent = 1 + ( slider_value - 40 ) / 100;
+    } else {
+        convex = 0;
+        percent = 1 + ( 40 - slider_value ) / 100;
+    }
+    if( percent * red > 255 ) {
+        red_start = "FF";
+    } else {
+        red_start = TR.padNumber( Math.floor(percent * red).toString( 16 ), 2 );
+    }
+    if( percent * green > 255 ) {
+        green_start = "FF";
+    } else {
+        green_start = TR.padNumber( Math.floor(percent * green).toString( 16 ), 2 );
+    }
+    if( percent * blue > 255 ) {
+        blue_start = "FF";
+    } else {
+        blue_start = TR.padNumber( Math.floor(percent * blue).toString( 16 ), 2 );
+    }
+
+    if( convex ) {
+        percent = ( 100 - (slider_value - 40) ) / 100;
+    } else {
+        percent = ( 100 - (40 - slider_value) ) / 100;
+    }
+
+    var red_end = TR.padNumber( Math.floor(percent * red).toString( 16 ), 2 );
+    var green_end = TR.padNumber( Math.floor(percent * green).toString( 16 ), 2 );
+    var blue_end = TR.padNumber( Math.floor(percent * blue).toString( 16 ), 2 );
+
+    var start, end;
+    if( convex ) {
+        start = "#" + red_start + "" + green_start + "" + blue_start + "";
+        end = "#" + red_end + "" + green_end + "" + blue_end + "";
+    } else {
+        start = "#" + red_end + "" + green_end + "" + blue_end + "";
+        end = "#" + red_start + "" + green_start + "" + blue_start + "";
+    }
+	return [start, end];
+}
+
+//method used to calculate the number of swatches in the CSS and adjusts
+//the number of tab panels in TR and the number of swatches in the preview
+TR.correctNumberOfSwatches = function() {
+	var style = TR.styleBlock.text();
+	var matches = style.match( /\/\*\s[A-Z]\s*-*\*\//g );
+	if( !matches ) {
+		if(TR.fristLoad) {
+			TR.firstLoad = 0;
+			//initial load - the theme specified cannot be found on the server
+			var error_message = $( "<h3>Invalid Theme</h3><p>Reminder: We can only store this theme URL on the server for 30 days, then it will be deleted. \
+			Download a theme to keep a copy safe that you can import later.</p>" ).css( "color", "#f00" );
+			$( "#welcome h1" ).after( error_message );
+		
+			//import default theme
+			$.ajax({
+				url: "css/default.css",
+				dataType: "text",
+				mimeType: "text/plain",
+				success: function( data ) {
+					$( "#upload textarea" ).val( data );
+					TR.styleBlock.text( data ); 
+					correctNumberOfSwatches();
+				}
+			});
+		} else {
+			//alert( "Invalid theme file. Please import unminified files only with all original CSS comments in place." );
+		}
+		//return early because the file is of the incorrect format
+		return;
+	}
+	var swatch_counter = matches.length + 2;
+	
+	//start at A and go over current tabs and update form values
+	for( var i = 1; i < TR.tabCount; i++ ) {
+		TR.updateFormValues( $("#tab" + i) );
+	}
+
+    //add appropriate number of tabs to TR and swatches to preview
+	for( ; TR.tabCount < swatch_counter && TR.tabCount < 28;  ) {
+		TR.addSwatch( false );
+	}
+	
+    //remove swatches from preview if necessary and tabs
+	for( ; TR.tabCount > swatch_counter; TR.tabCount-- ) {
+		TR.iframe.find( ".swatch:last" ).remove();
+		
+		$( "#tabs .ui-tabs-panel:last" ).attr( "id", "tab" + (TR.tabCount - 1) );
+		$( "#tabs ul li a:contains(\"+\")" ).attr( "href", "#tab" + (TR.tabCount - 1) );
+		if( $("#tabs").tabs("option", "selected") == (TR.tabCount - 2) ) {
+			$( "#tabs" ).tabs( "select", 0 );
+		}
+		$( "#tabs" ).tabs( "remove", TR.tabCount - 2 );
+	}
+}
+
+//using the TR.styleArray to successfully copy over data to appropriate swatches
+//and then deleting last swatch so the one clicked appears to be deleted
+TR.deleteSwatch = function( e, ele ) {
+   	e.preventDefault();
+       var delete_class = ele.attr( "class" );
+    var letter =  delete_class.substr( delete_class.length - 1, delete_class.length );
+    var number = TR.num[letter];	
+
+    //moving content of the tabs back one starting at the one we're deleting
+    for( var i = number + 1; i <= TR.tabCount - 2; i++ ) {
+        var current_letter = TR.alpha[i];
+        var current_number = TR.num[current_letter];
+        var indices = [];
+        for( var j in TR.styleArray ) {
+            var reg = new RegExp( "^" + current_letter + "-.*" );
+            if( j.match(reg) ) {
+                indices.push( j.match(reg) );
+            }
+        }
+        for( var k in indices ) {
+            var index = indices[k] + "";
+            var suffix = index.substr( 1, index.length - 1 );
+            TR.styleArray[TR.alpha[current_number - 1] + suffix] = TR.styleArray[index];
+            if( (current_number + 2) == TR.tabCount ) {
+                delete( TR.styleArray[index] );
+            }
+        }
+
+		TR.updateFormValues( $("#tab" + i) );
+    }
+    
+    //deleting the last swatch's rules in the TR.styleArray
+    var last_letter = TR.alpha[TR.tabCount - 2];
+    var prefix = last_letter + "-";
+    var newStyleArray = {};
+    for( var i in TR.styleArray ) {
+    	if( i.indexOf(prefix) != 0 ) {
+    		newStyleArray[i] = TR.styleArray[i];
+    	}
+    }
+    TR.styleArray = newStyleArray;
+    
+    //delete the swatch's CSS from the file
+    var css = TR.styleBlock.text();
+    var start_reg = new RegExp ("\\/\\* " + TR.alpha[TR.tabCount - 2].toUpperCase() + "\\s*\\n-*\\*\\/" );
+       
+	var end_reg = new RegExp( "\\/\\* Structure \\*\\/" );
+	var start = css.search( start_reg );
+	var end = css.search( end_reg );         
+       
+	var part1 = css.substring(0, start);
+	var part2 = css.substring(end, css.length);
+	TR.styleBlock.text( part1 + part2 );
+	$( "#download" ).find( "textarea" ).val( part1 + part2 );
+	
+    TR.tabCount--;
+    $( "#tabs" ).find( ".ui-tabs-panel:last" ).attr( "id", "tab" + TR.tabCount ).end()
+        .find( "ul li a:contains(\"+\")" ).attr( "href", "#tab" + TR.tabCount );
+    TR.iframe.find( ".swatch:last" ).remove();
+    if( $("#tabs").tabs("option", "selected") == TR.tabCount - 1 ) {
+		$( "#tabs" ).tabs( "select", TR.tabCount - 2 );
+    }
+	$( "#tabs" ).tabs( "remove", TR.tabCount - 1 );
+	
+	if( TR.tabCount == 3 ) {
+		$( ".delete-swatch-a" ).hide();
+	}
+	
+    var swatch_height = TR.iframe.find( ".swatch:last" ).outerHeight();
+    TR.iframe.find( ".add-swatch" ).height(swatch_height);
+        
+    TR.initStyleArray( "refresh" );
+    TR.updateAllCSS();
+	
+	return false;
+}
+
+//initializes the dialogs
+TR.dialogs = function() {
 	$( "#welcome" ).dialog({
 		autoOpen: false,
 		width: 560,
@@ -152,7 +574,7 @@ $.tr.initializeThemeRoller = function()
 				var theme_name = $( "input", this ).val();
 				if( theme_name && theme_name.indexOf(" ") == -1 ) {
 					$.ajax({
-						url: "./generate_zip.php",
+						url: "./zip.php",
 						type: "POST",
 						data: "theme_name=" + $( "input", this ).val() + "&file=" + encodeURIComponent(style_block.text()),
 						dataType: "text",
@@ -170,7 +592,7 @@ $.tr.initializeThemeRoller = function()
             }
         }
     });
-	
+
 	$( "#import-default" ).click(function(e) {
 		e.preventDefault();
 		
@@ -184,144 +606,6 @@ $.tr.initializeThemeRoller = function()
 		});
 	});
 	
-	function addInspectorAttributes( swatch ) {
-		var slider = frame.find( "[name=slider][data-theme=" + swatch + "]" ).siblings( "div" );
-		var select = frame.find( "select[data-theme=" + swatch + "]" );
-		var btn = select.siblings( "a" );
-		var radio = frame.find( ".ui-content" ).each(function() {
-			$( this ).find( ".ui-radio:first span:first" ).removeClass( "ui-corner-top" );
-		})
-		slider.attr( "data-form", "ui-btn-down-" + swatch ).attr( "data-theme", swatch );
-		slider.find( "a" ).attr( "data-form", "ui-btn-up-" + swatch ).attr( "data-theme", swatch );
-		btn.attr( "data-theme", swatch ).attr( "data-form", "ui-btn-up-" + swatch );
-		btn.find( ".ui-icon" ).attr( "data-form", "ui-icon" );
-		return;
-	}
-	
-    //Binds add-swatch box to addSwatch and sets up the Inspector
-    	//define global reference style_block to #styleblock in iframe
-        frame = $( "#frame" ).contents();
-
-        //#style is where the initial CSS file is put
-        //copy it to #styleblock so its in the scope of the iframe
-    	style_block = frame.find( "#styleblock" );
-    	style_block.text( $("#style").text() );
-        
-        //adding attributes to elements in the preview to make them compatible
-        //with the inspector
-		var starting_swatches = ["a", "b", "c"];
-		for( var i = 0; i < 3; i++ ) {
-			addInspectorAttributes( starting_swatches[i] );
-		}
-
-		/*
-		var swatch = frame.find( "[name=slider]:first" ).attr( "data-theme" );
-		frame.find( "[name=slider]:first" ).siblings( "div" ).attr( "data-form", "ui-btn-down-" + swatch ).attr( "data-theme", swatch );
-		frame.find( "[name=slider]:first" ).siblings( "div" ).find( "a" ).attr( "data-form", "ui-btn-up-" + swatch ).attr( "data-theme", swatch );
-		//frame.find( ".ui-select .ui-btn" ).attr( "data-form", "ui-btn-up-" + swatch ).attr( "data-theme", swatch );
-		//frame.find( ".ui-select .ui-btn .ui-icon" ).attr( "data-form", "ui-icon" );
-		frame.find( ".ui-btn .ui-icon-star" ).attr( "data-form", "ui-icon" ).attr( "data-theme", swatch );
-		
-		frame.find( "select" ).each(function() {
-			var swatch = $( this ).attr( "data-theme" );
-			var btn = $( this ).siblings( "a" );
-			
-			btn.attr( "data-theme", swatch );
-			btn.attr( "data-form", "ui-btn-up-" + swatch );
-			$( ".ui-icon", btn ).attr( "data-form", "ui-icon" );
-		});
-		*/
-    	
-        //wait for iframe to load to add appropriate number of swatches and call init
-	    //initial binding for addSwatch
-	    $( "[href=#tab" + tab_counter + "]" ).bind( "click", addSwatchEvent );
-        
-    	init();
-		correctNumberOfSwatches();
-    	
-        //copy color in colorwells to corresponding sliders
-    	$( "input[data-type=background]" ).each(function() {
-			var $this = $( this )
-			$( ".slider[data-type=background][data-name=" + $this.attr("data-name") + "] a" ).css({
-				"background": $this.val(), 
-				"border-color": $this.val()
-			});
-		});
-    	
-    	var swatch_height = frame.find( ".swatch:last" ).outerHeight();
-		frame.find( ".add-swatch" ).height(swatch_height);
-    	
-        frame.find( "[data-role=page]" ).removeClass( "ui-body-c" );
-		frame.find( "[data-role=dialog]" ).remove();
-        frame.find( "#add-swatch" ).bind( "click", addSwatchEvent );
-	
-        var css = style_block.text();
-
-        //click on an element with inspector-on and select element in panel
-        frame.find( "[data-form]" ).mouseup(function(e) {
-            if( $("[data-id=inspector-on]").hasClass("on") ) {
-                e.stopPropagation();
-				selectElement( $(this) );  		
-                frame.find( "#highlight" ).show();
-            }
-        });
-		
-        //highlight moves as you mouseover things
-        frame.find( "[data-form]" ).bind( "mouseover", function() {
-			var $this = $( this );
-            if( $("[data-id=inspector-on]").hasClass("on") ) {
-                var left = $this.offset().left, top = $this.offset().top,
-                	width = $this.outerWidth(), height = $this.outerHeight();
-				
-                var parent = this;
-				
-                frame.find( "#highlight" ).mousemove(function(e) { 
-                    var highlight = $( this );
-                    $( "[data-form]", parent ).each(function() {
-                        var $form = $( this ),
-                            left = $form.offset().left, top = $form.offset().top,
-                        	width = $form.outerWidth(), height = $form.outerHeight(),
-                        	right = left + width, bottom = top + height;
-
-                        if( e.pageX <= right && e.pageX >= left && e.pageY <= bottom && e.pageY >= top ) {
-                            highlight.css({
-                                "z-index": 20, 
-                                "position": "absolute", 
-                                "top": ( top - 3 ) + "px", 
-                                "left": ( left - 3 ) + "px", 
-                                "width": width + "px", 
-                                "height": height + "px", 
-                                "border": "3px solid #0cc"
-                            }).show();
-                        }
-                    });
-                });
-				
-                $( "iframe" ).contents().find( "#highlight" ).css({
-                    "z-index": 20, 
-                    "position": "absolute", 
-                    "top": (top-3) + "px", 
-                    "left": (left-3) + "px", 
-                    "width": width + "px", 
-                    "height": + height + "px", 
-                    "border": "3px solid #0cc"
-                }).show();
-            }
-        });
-		
-        frame.find( "#highlight" ).mousedown(function() {
-            if( $("[data-id=inspector-on]").hasClass("on") ) {
-                $( this ).css( "z-index", -1 );
-            }
-        });
-		
-        frame.bind( "mouseleave", function() {
-            $( "iframe" ).contents().find( "#highlight" ).hide();
-        });
-		
-        frame.find( "#styleblock" ).text( css );
-        frame.find( "body" ).show().delay( 600 );
-    		
 	//ajax call performed when share link is clicked
 	$( "#generate_url" ).click(function(e) {
 		e.preventDefault();
@@ -332,7 +616,7 @@ $.tr.initializeThemeRoller = function()
 		
 		$.ajax({
 			type: "post",
-			url: "generate_url.php",
+			url: "share.php",
 			data: post_data,
 			beforeSend: function() {
 				$( "#share" ).dialog("open" );
@@ -341,19 +625,32 @@ $.tr.initializeThemeRoller = function()
 				$( "#share input" ).val( data );
 			}
 		});
-		
 	});
 	
 	//help dialog
 	$( "#tr_help" ).click(function(e) {
 		e.preventDefault();
-		
 		$( "#help" ).dialog( "open" );
-		
 	});
 	
-    $( "[class|=\"delete-swatch\"]" ).click( deleteSwatch );
+	//upload dialog
+    $( "#tr_upload" ).click(function() {
+        $( "#upload" ).dialog( "open" );
+        return false;
+    });
+
+	//download dialog
+    $( "#tr_download" ).click(function() {
+        $( "#download" ).dialog( "open" );			
+        return false;
+    });
 	
+    //removing the close button from ui-dialogs
+    $( ".tr_widget .ui-dialog-titlebar-close" ).remove();
+}
+
+//initializes the draggable colors and the drop method
+TR.draggableColors = function() {
 	//draggable colors
 	$( ".color-drag:not(.disabled)" ).draggable({
 		appendTo: "body",
@@ -366,7 +663,7 @@ $.tr.initializeThemeRoller = function()
 		zIndex: 3000,
 		iframeFix: true,
 		drag: function() {
-			$.tr.moving_color = 1;
+			TR.moving_color = 1;
 		}
 	});
 	
@@ -376,7 +673,7 @@ $.tr.initializeThemeRoller = function()
 		hoverClass: "hover",
 		drop: function() {
 			var $this = $( this );
-			var color = rgbtohex( $(".ui-draggable-dragging").css("background-color") );
+			var color = TR.rgbtohex( $(".ui-draggable-dragging").css("background-color") );
 			$( ".ui-draggable .ui-draggable-dragging" ).trigger( "drop" );
 			$this.val( color ).css( "background-color", color );
 			$this.trigger( "change" );
@@ -400,10 +697,10 @@ $.tr.initializeThemeRoller = function()
 
 		var droppables = [ ".ui-btn-up-", ".ui-bar-", ".ui-body-" ];
 		
-		if($.tr.moving_color) {
-			$.tr.moving_color = 0;
-			var frame_offset = $( "#frame" ).offset();
-			var el_offset = $( "#frame" ).contents().find( ".ui-bar-a" ).offset();
+		if(TR.moving_color) {
+			TR.moving_color = 0;
+			var frame_offset = $( "iframe" ).offset();
+			var el_offset = TR.iframe.find( ".ui-bar-a" ).offset();
 			
 			var element = null;
 			var el_class = "";
@@ -411,9 +708,9 @@ $.tr.initializeThemeRoller = function()
 			//end the loop (order is based on precedence)
 			for( var i = 0; i < droppables.length; i++ ) {
 				for( var j = 0; j < alphabet.length; j++ ) {
-					frame.find( droppables[i] + alphabet[j] ).each(function() {
+					TR.iframe.find( droppables[i] + alphabet[j] ).each(function() {
 						var $this = $( this );
-						var top = frame_offset.top + $this.offset().top - frame.scrollTop(), bottom = top + $this.outerHeight(),
+						var top = frame_offset.top + $this.offset().top - TR.iframe.scrollTop(), bottom = top + $this.outerHeight(),
 							left = frame_offset.left + $this.offset().left, right = left + $this.outerWidth();
 						if( e.pageX <= right && e.pageX >= left && e.pageY <= bottom && e.pageY >= top ) {
 							el_class = droppables[i] + alphabet[j];
@@ -430,9 +727,9 @@ $.tr.initializeThemeRoller = function()
 				}
 			}
 			//another loop to check if over a link or the active state
-			$( "#frame" ).contents().find( ".ui-link, .ui-btn-active" ).each(function() {
+			TR.iframe.find( ".ui-link, .ui-btn-active" ).each(function() {
 				var $this = $( this );
-				var top = frame_offset.top + $this.offset().top - frame.scrollTop(), bottom = top + $this.outerHeight(),
+				var top = frame_offset.top + $this.offset().top - TR.iframe.scrollTop(), bottom = top + $this.outerHeight(),
 					left = frame_offset.left + $this.offset().left, right = left + $this.outerWidth();
 				if( e.pageX <= right && e.pageX >= left && e.pageY <= bottom && e.pageY >= top ) {
 					if( $this.hasClass("ui-btn-active") ) {
@@ -457,25 +754,217 @@ $.tr.initializeThemeRoller = function()
 					swatch = element.attr( "data-swatch" );
 				}
 				var color = $( ".color-drag.ui-draggable-dragging" ).css( "background-color" ) || $( ".kuler-color.ui-draggable-dragging" ).css( "background-color" );
-				color = rgbtohex( color );
+				color = TR.rgbtohex( color );
 			
 				for( var i in classtokey ) {
 					if( el_class.indexOf(i) != -1 ) {
-						applyColor( color, swatch + classtokey[i] );
+						TR.applyColor( color, swatch + classtokey[i] );
 						break;
 					}
 				}
 								
-	            selectElement(element);
+	            TR.selectElement(element);
 	
 				//store color in most recent colors
 				var color = element.css("background-color");
-				addMostRecent( color );
+				TR.addMostRecent( color );
 			}
 		}
 		
 	});
+
+	//triggering change on current colorwell forces the update of the css as well as
+	//the change in background of the slider
+    $( "#colorpicker" ).bind( "mousemove", function() {
+        $( ".colorwell[data-name=" + $("*:focus").attr("data-name") + "]" ).trigger( "change" );
+    });
+}
+
+//takes a hex color and computes the grayscale value
+TR.grayValue = function( color ) {
+	var color_arr = color.split( "" );
 	
+    var red = parseInt( ( color_arr[1] + color_arr[2] ), 16 );
+    var green = parseInt( ( color_arr[3] + color_arr[4] ), 16 );
+    var blue = parseInt( ( color_arr[5] + color_arr[6] ), 16 );
+
+	return ( red + green + blue ) / 3;
+}
+
+TR.hex = function(x) {
+	return isNaN(x) ? "00" : TR.hexDigits[(x - x % 16) / 16] + TR.hexDigits[x % 16];
+}
+
+//sets up bindings for the addSwatch method
+TR.initAddSwatch = function() {
+	var swatch_height = TR.iframe.find( ".swatch:last" ).outerHeight();
+	TR.iframe.find( ".add-swatch" ).height(swatch_height);
+	TR.iframe.find( "#add-swatch" ).bind( "click", TR.addSwatchEvent );
+	$( "[href=#tab" + TR.tabCount + "]" ).bind( "click", TR.addSwatchEvent );
+}
+
+//binds TR controls to updateAllCSS
+//also takes care of things like slider handle color, etc.
+TR.initControls = function() {
+	//All of the following bind different fields in TR
+    //to functions that change CSS rules and call TR.updateAllCSS()
+
+	//Font Family
+    $( "[data-type=font-family]" ).bind( "blur change keyup", function() {
+		var name = $( this ).attr( "data-name" );
+        TR.styleArray[name] = "font-family: " + this.value;
+        TR.updateAllCSS();
+    });
+
+	//Link, Text Color, Text Shadow, Border Color
+	$( "[data-type=link], [data-type=color], [data-type=text-shadow], [data-type=border]" )
+		.bind( "blur change keyup", function(){
+			TR.styleArray[$( this ).attr( "data-name" )] = this.value;
+			TR.updateAllCSS();
+	});
+
+	//Corner Radius
+	$( "input[data-type=radius]" ).bind("change keyup mouseup", function() {
+		var $this = $( this );
+		var name = $this.attr( "data-name" );
+		var slider = $( ".slider[data-type=radius][data-name=" + name + "]" );
+		var val = parseFloat( $this.val().replace(/[^0-9\.]/g, "") );
+		slider.slider( "value", val );
+		TR.styleArray[name] = $this.val();
+		TR.updateAllCSS();
+	});
+
+	//Corner Radius
+	$( ".slider[data-type=radius]" ).bind("change slide mouseup", function() {
+		var $this = $( this );
+		var name = $this.attr( "data-name" );
+		var input = $( "input[data-type=radius][data-name=" + name + "]" );
+		input.val( $this.slider("value") + "em" );
+		TR.styleArray[name] = input.val();
+		TR.updateAllCSS();
+	});
+
+	//Background Colors
+    $( "[data-type=background]" ).bind( "blur slide mouseup change keyup", function(event, slider) {
+        if( !TR.timerID ) {
+            TR.timerID = setTimeout(function() {
+                TR.timerID = 0;
+            }, 100);
+
+            var index = $( this ).attr( "data-name" ) + "";
+            index = index.split( "-" );
+            var prefix = index[0] + "-" + index[1];
+            var color = $( "input[data-type=background][data-name|=" + prefix + "]" ).val();
+            var slider_value = $( ".slider[data-type=background][data-name|=" + prefix + "]" ).slider( "value" );
+
+			var start_end = TR.computeGradient(color, slider_value);
+			var start = start_end[0];
+			var end = start_end[1];
+
+            $( "[data-type=start][data-name=" + prefix + "-background-start]" ).val( start ).css( "background-color", start );
+            $( "[data-type=end][data-name=" + prefix + "-background-end]" ).val( end ).css( "background-color", end );
+            TR.styleArray[prefix + "-background-color"] = color;
+            TR.styleArray[prefix + "-background-start"] = start;
+            TR.styleArray[prefix + "-background-end"] = end;
+            TR.updateAllCSS();
+        }
+    });
+	
+	//Start and End colors
+    $( "[data-type=start] , [data-type=end]" ).bind( "blur mouseup change keyup", function() {
+        var index = $( this ).attr( "data-name" ) + "";
+        index = index.split( "-" );
+        var prefix = index[0] + "-" + index[1];
+        var start = $( "[data-type=start][data-name=" + prefix + "-background-start]" ).val();
+        var end = $( "[data-type=end][data-name=" + prefix + "-background-end]" ).val();
+
+        TR.styleArray[prefix + "-background-start"] = start;
+        TR.styleArray[prefix + "-background-end"] = end;
+        TR.updateAllCSS();
+    });
+
+	//Icon Set
+    $( "[data-type=icon_set]" ).bind( "blur mouseup", function() {
+        if( this.value == "white" ) {
+            TR.styleArray[$( this ).attr( "data-name" )] = "url(images/icons-18-white.png)";
+
+        } else if(this.value == "black") {
+            TR.styleArray[$( this ).attr( "data-name" )] = "url(images/icons-18-black.png)";
+        }
+        TR.updateAllCSS();
+    });
+
+	//Box Shadow
+	$( "[data-type=box_shadow]" ).bind( "blur change keyup", function() {
+		var color_el = $( "[data-type=box_shadow]:first" );
+		var opac_el = $( "[data-type=box_shadow]:eq(1)" );
+		
+		var color_arr = color_el.val().split( "" );
+        var red = parseInt( (color_arr[1] + color_arr[2]), 16 );
+        var green = parseInt( (color_arr[3] + color_arr[4]), 16 );
+        var blue = parseInt( (color_arr[5] + color_arr[6]), 16 );
+		
+		TR.styleArray["global-box-shadow-color"] = "rgba(" + red + "," + green + "," + blue + "," + ( parseFloat(opac_el.val()) / 100 ) + ")";	
+        TR.updateAllCSS();
+	});
+	
+	//Box Shadow
+	$( "[data-type=box_shadow][data-name=global-box-shadow-size]" ).bind( "blur change keyup", function() {
+		TR.styleArray["global-box-shadow-size"] = $(this).val();
+		TR.updateAllCSS();
+	});
+
+	//Icon Disc
+    $( "[data-type=icon_disc]" ).bind( "blur change keyup", function() {
+        var elements = [];
+        $( "[data-name=global-icon-disc]" ).each(function() {
+            elements.push( this.value );
+        });
+
+        color_arr = elements[1].split( "" );
+        var red = parseInt( (color_arr[1] + color_arr[2]), 16 );
+        var green = parseInt( (color_arr[3] + color_arr[4]), 16 );
+        var blue = parseInt( (color_arr[5] + color_arr[6]), 16 );
+
+        if( elements[0] == "with_disc" ) {
+            TR.styleArray["global-icon-color"] = "#FFFFFF";
+            TR.styleArray["global-icon-disc"] = "rgba(" + red + "," + green + "," + blue + "," + ( parseFloat(elements[2]) / 100 ) + ")";	
+            TR.styleArray["global-icon-shadow"] = "rgba(255,255,255,.4)";
+        } else {
+            TR.styleArray["global-icon-disc"] = "transparent";
+            TR.styleArray["global-icon-shadow"] = "transparent";
+        }
+        TR.updateAllCSS();
+    });
+
+	//global more dictionary keeps track of which start-end fields are showing
+    //i.e. more["a-bar-background"] = "showing" means that the next click of that .more should
+    //hide that set of start-end fields
+    $( ".more" ).click(function() {
+        var index = $( this ).attr( "data-name" );
+        if( TR.showStartEnd[index] ) {
+            if( TR.showStartEnd[index] == "showing" ) {
+                $( ".start-end[data-name=" + index + "]" ).hide( "slide", {
+                    direction: "up"
+                }, 300);
+                $( this ).text( "+" );
+                TR.showStartEnd[index] = "hiding";
+            } else {
+                $( ".start-end[data-name=" + index + "]" ).show( "slide", {
+                    direction: "up"
+                }, 300);
+                $( this ).text( "-" );
+                TR.showStartEnd[index] = "showing";
+            }
+        } else {
+            $( ".start-end[data-name=" + index + "]" ).show( "slide", {
+                direction: "up"
+            }, 300 );
+            $( this ).text( "-" );
+            TR.showStartEnd[index] = "showing";
+        }
+    	return false;
+    });
 
     //change colorwell -> change bg color of its corresponding slider
     $( ".colorwell" ).bind( "change" , function() {
@@ -486,1239 +975,694 @@ $.tr.initializeThemeRoller = function()
         });
     });
 
-    //initiating download/upload dialogs
-    $( "#themeroller_upload" ).click(function() {
-        $( "#upload" ).dialog( "open" );
-        return false;
-    });
-
-    $( "#themeroller_download" ).click(function() {
-        $( "#download" ).dialog( "open" );			
-        return false;
-    });
-    
-    //global more dictionary keeps track of which start-end fields are showing
-    //i.e. more["a-bar-background"] = "showing" means that the next click of that .more should
-    //hide that set of start-end fields
-    $( ".more" ).click(function() {
-        var index = $( this ).attr( "data-name" );
-        if( more[index] ) {
-            if( more[index] == "showing" ) {
-                $( ".start-end[data-name=" + index + "]" ).hide( "slide", {
-                    direction: "up"
-                }, 300);
-                $( this ).text( "+" );
-                more[index] = "hiding";
-            } else {
-                $( ".start-end[data-name=" + index + "]" ).show( "slide", {
-                    direction: "up"
-                }, 300);
-                $( this ).text( "-" );
-                more[index] = "showing";
-            }
-        } else {
-            $( ".start-end[data-name=" + index + "]" ).show( "slide", {
-                direction: "up"
-            }, 300 );
-            $( this ).text( "-" );
-            more[index] = "showing";
-        }
-    	return false;
-    });
-
-	//triggering change on current colorwell forces the update of the css as well as
-	//the change in background of the slider
-    $( "#colorpicker" ).bind( "mousemove", function() {
-        $( ".colorwell[data-name=" + $("*:focus").attr("data-name") + "]" ).trigger( "change" );
-    });
-
-
-    //All of the following bind different fields in TR
-    //to functions that change CSS rules and call updateAllCSS()
-
-    $( "[data-type=font-family]" ).bind( "blur change keyup", function() {
-		var name = $( this ).attr( "data-name" );
-        style_array[name] = "font-family: " + this.value;
-        updateAllCSS();
-    });
-
-
-	$( "[data-type=link], [data-type=color], [data-type=text-shadow], [data-type=border]" )
-		.bind( "blur change keyup", function(){
-			style_array[$( this ).attr( "data-name" )] = this.value;
-			updateAllCSS();
-	});
-
-	$( "input[data-type=radius]" ).bind("change keyup mouseup", function() {
-		var $this = $( this );
-		var name = $this.attr( "data-name" );
-		var slider = $( ".slider[data-type=radius][data-name=" + name + "]" );
-		var val = parseFloat( $this.val().replace(/[^0-9\.]/g, "") );
-		slider.slider( "value", val );
-		style_array[name] = $this.val();
-		updateAllCSS();
-	});
-
-	$( ".slider[data-type=radius]" ).bind("change slide mouseup", function() {
-		var $this = $( this );
-		var name = $this.attr( "data-name" );
-		var input = $( "input[data-type=radius][data-name=" + name + "]" );
-		input.val( $this.slider("value") + "em" );
-		style_array[name] = input.val();
-		updateAllCSS();
-	});
-
-    $( "[data-type=background]" ).bind( "blur slide mouseup change keyup", function(event, slider) {
-        if( !t ) {
-            t = setTimeout(function() {
-                t = 0;
-            }, 100);
-
-            var index = $( this ).attr( "data-name" ) + "";
-            index = index.split( "-" );
-            var prefix = index[0] + "-" + index[1];
-            var color = $( "input[data-type=background][data-name|=" + prefix + "]" ).val();
-            var slider_value = $( ".slider[data-type=background][data-name|=" + prefix + "]" ).slider( "value" );
-
-			var start_end = computeGradient(color, slider_value);
-			var start = start_end[0];
-			var end = start_end[1];
-
-            $( "[data-type=start][data-name=" + prefix + "-background-start]" ).val( start ).css( "background-color", start );
-            $( "[data-type=end][data-name=" + prefix + "-background-end]" ).val( end ).css( "background-color", end );
-            style_array[prefix + "-background-color"] = color;
-            style_array[prefix + "-background-start"] = start;
-            style_array[prefix + "-background-end"] = end;
-            updateAllCSS();
-        }
-    });
-	
-
-    $( "[data-type=start] , [data-type=end]" ).bind( "blur mouseup change keyup", function() {
-        var index = $( this ).attr( "data-name" ) + "";
-        index = index.split( "-" );
-        var prefix = index[0] + "-" + index[1];
-        var start = $( "[data-type=start][data-name=" + prefix + "-background-start]" ).val();
-        var end = $( "[data-type=end][data-name=" + prefix + "-background-end]" ).val();
-
-        style_array[prefix + "-background-start"] = start;
-        style_array[prefix + "-background-end"] = end;
-        updateAllCSS();
-    });
-
-    $( "[data-type=icon_set]" ).bind( "blur mouseup", function() {
-        if( this.value == "white" ) {
-            style_array[$( this ).attr( "data-name" )] = "url(images/icons-18-white.png)";
-
-        } else if(this.value == "black") {
-            style_array[$( this ).attr( "data-name" )] = "url(images/icons-18-black.png)";
-        }
-        updateAllCSS();
-    });
-
-	$( "[data-type=box_shadow]" ).bind( "blur change keyup", function() {
-		var color_el = $( "[data-type=box_shadow]:first" );
-		var opac_el = $( "[data-type=box_shadow]:eq(1)" );
-		
-		var color_arr = color_el.val().split( "" );
-        var red = hextodec( color_arr[1] + color_arr[2]);
-        var green = hextodec( color_arr[3] + color_arr[4] );
-        var blue = hextodec( color_arr[5] + color_arr[6] );
-		
-		style_array["global-box-shadow-color"] = "rgba(" + red + "," + green + "," + blue + "," + ( parseFloat(opac_el.val()) / 100 ) + ")";	
-        updateAllCSS();
-	});
-	
-	$( "[data-type=box_shadow][data-name=global-box-shadow-size]" ).bind( "blur change keyup", function() {
-		style_array["global-box-shadow-size"] = $(this).val();
-		updateAllCSS();
-	});
-
-    $( "[data-type=icon_disc]" ).bind( "blur change keyup", function() {
-        var elements = [];
-        $( "[data-name=global-icon-disc]" ).each(function() {
-            elements.push( this.value );
-        });
-
-        color_arr = elements[1].split( "" );
-        var red = hextodec( color_arr[1] + color_arr[2]);
-        var green = hextodec( color_arr[3] + color_arr[4] );
-        var blue = hextodec( color_arr[5] + color_arr[6] );
-
-        if( elements[0] == "with_disc" ) {
-            style_array["global-icon-color"] = "#FFFFFF";
-            style_array["global-icon-disc"] = "rgba(" + red + "," + green + "," + blue + "," + ( parseFloat(elements[2]) / 100 ) + ")";	
-            style_array["global-icon-shadow"] = "rgba(255,255,255,.4)";
-        } else {
-            style_array["global-icon-disc"] = "transparent";
-            style_array["global-icon-shadow"] = "transparent";
-        }
-        updateAllCSS();
-    });
-	
-    //removing the close button from ui-dialogs
-    $( ".tr_widget .ui-dialog-titlebar-close" ).remove();
-
-	function addMostRecent(color) {
-		var found = 0, quickswatch = $( "#quickswatch" );
-		quickswatch.find( ".color-drag:gt(31)" ).each(function() {
-			if( color == $(this).css("background-color") ) {
-				found = 1;
-			}
+	//initialize colors of sliders
+	$( "input[data-type=background]" ).each(function() {
+		var $this = $( this )
+		$( ".slider[data-type=background][data-name=" + $this.attr("data-name") + "] a" ).css({
+			"background": $this.val(), 
+			"border-color": $this.val()
 		});
-		if( !found ) {
-			quickswatch.find( ".color-drag:last" ).remove();
-			quickswatch.find( ".colors .color-drag:eq(31)" ).removeClass( "separator" );
-			var new_color = $( "<div class=\"color-drag separator\" style=\"background-color: " + color + "\"></div>" );
-			new_color.draggable({
-				appendTo: "body",
-				revert: true,
-				revertDuration: 200,
-				opacity: 1,
-				containment: "document",
-				cursor: "move",
-				helper: "clone",
-				zIndex: 3000,
-				iframeFix: true,
-				drag: function() {
-					$.tr.moving_color = 1;
-				}
-			});
-			quickswatch.find( ".colors .color-drag:eq(30)" ).after( new_color );
+	});
+
+	$( "[class|=\"delete-swatch\"]" ).click( function(e) {
+		TR.deleteSwatch( e, $(this) );
+	});
+}
+
+//intialize mouseover and click events for Inspector
+TR.initInspector = function() {
+	//click on an element with inspector-on and select element in panel
+    TR.iframe.find( "[data-form]" ).mouseup(function(e) {
+        if( $("[data-id=inspector-on]").hasClass("on") ) {
+            e.stopPropagation();
+			TR.selectElement( $(this) );  		
+            frame.find( "#highlight" ).show();
+        }
+    });
+	
+    //highlight moves as you mouseover things
+    TR.iframe.find( "[data-form]" ).bind( "mouseover", function() {
+		var $this = $( this );
+        if( $("[data-id=inspector-on]").hasClass("on") ) {
+            var left = $this.offset().left, top = $this.offset().top,
+            	width = $this.outerWidth(), height = $this.outerHeight();
 			
-			/*
-			$( "#picker-colors .color-drag:first" ).remove();
-			var new_picker_color = $( "<div class=\"color-drag\" style=\"background-color: " + color + "\"></div>" );
-			new_picker_color.click(function(e) {
-				e.preventDefault();
-				e.stopPropagation();
-				colorwell.focus();
-				$( ".colorwell:focus" ).val( rgbtohex($(this).css("background-color")) ).trigger( "change" );
-			});
-			$( "#picker-colors" ).append( new_picker_color );
-			*/
-		}
-	}
+            var parent = this;
+			
+            TR.iframe.find( "#highlight" ).mousemove(function(e) { 
+                var highlight = $( this );
+                $( "[data-form]", parent ).each(function() {
+                    var $form = $( this ),
+                        left = $form.offset().left, top = $form.offset().top,
+                    	width = $form.outerWidth(), height = $form.outerHeight(),
+                    	right = left + width, bottom = top + height;
+
+                    if( e.pageX <= right && e.pageX >= left && e.pageY <= bottom && e.pageY >= top ) {
+                        highlight.css({
+                            "z-index": 20, 
+                            "position": "absolute", 
+                            "top": ( top - 3 ) + "px", 
+                            "left": ( left - 3 ) + "px", 
+                            "width": width + "px", 
+                            "height": height + "px", 
+                            "border": "3px solid #0cc"
+                        }).show();
+                    }
+                });
+            });
+			
+            $( "iframe" ).contents().find( "#highlight" ).css({
+                "z-index": 20, 
+                "position": "absolute", 
+                "top": (top-3) + "px", 
+                "left": (left-3) + "px", 
+                "width": width + "px", 
+                "height": + height + "px", 
+                "border": "3px solid #0cc"
+            }).show();
+        }
+    });
+	
+    TR.iframe.find( "#highlight" ).mousedown(function() {
+        if( $("[data-id=inspector-on]").hasClass("on") ) {
+            $( this ).css( "z-index", -1 );
+        }
+    });
+	
+    TR.iframe.bind( "mouseleave", function() {
+        $( "iframe" ).contents().find( "#highlight" ).hide();
+    });
+}
+
+//initStyleArray is used to initialize the array of tokens and the TR.styleArray
+//if the refresh flag is passed it refreshes the token array and does not initialize the TR.styleArray
+TR.initStyleArray = function( refresh ) {
+	refresh = refresh || "fresh";
+
+    var style = TR.styleBlock.text();
+    escaped_style = style.replace( /\n/g, "%0A" );
+    escaped_style = escaped_style.replace( /\t/g, "%09" );
+    $( "#download" ).find( "textarea" ).val( style );
+	
+    var reg = new RegExp( "(?:font-family:)[^/\\*]+/\\*{[^\\*/]*}\\*/|\\s*\\S*\\s*/\\*{[^\\*/]*}\\*/" ),
+		reference = "",
+		length = 0,
+		index = -1,
+		i = 0;
+	
+    while( style.length > 0 ) {
+        var temp = reg.exec( style ) + "";
+        length = temp.length;
+        reference = /{.*}/.exec( temp ) + "";
+        reference = reference.substr( 1,reference.length-2 );
+        index = style.search( reg );
+        if( index != -1 ) {
+            TR.tokens[i++] = {
+                value: style.substr( 0, index ), 
+                type: "string"
+            };
+            TR.tokens[i++] = {
+                value: style.substr( index, length ), 
+                type: "placeholder", 
+                ref: reference
+            };
+            //update TR.styleArray
+            var prefix_end = reference.indexOf( "-" );
+            var prefix = reference.substring( 0, prefix_end );
+            if( refresh != "refresh" ) {
+				TR.styleArray[reference] = TR.tokens[i-1].value.replace( /\/\*.*\*\//, "" );
+			}
+			//cut off string and continue
+            style = style.substring( index+length ); 
+        } else {
+            TR.tokens[i++] = {
+                value: style,
+                type: "string"
+            };
+            style = "";
+        }
+		
+    }
+}
+
+//first initialization method called when the DOM and the iframe are both loaded
+TR.initThemeRoller = function() {
+	TR.iframe = $( "iframe" ).contents();
+
+    //#style is where the initial CSS file is put
+    //copy it to #styleblock so its in the scope of the iframe
+	TR.styleBlock = TR.iframe.find( "#styleblock" );
+	TR.styleBlock.text( $("#style").text() );
     
-    //When a color is dropped this function applies a color to the element
-	//automatically detecting things like 
-	function applyColor( color, prefix ) {
-		var color_arr = color.split( "" );
-
-        var red = hextodec( color_arr[1] + color_arr[2] );
-        var green = hextodec( color_arr[3] + color_arr[4] );
-        var blue = hextodec( color_arr[5] + color_arr[6] );
-		var gray = grayValue( color );
-		
-		//swatch is the letter of the swatch or it is global
-		var swatch = prefix.substr( 0, 1 );
-		var element = prefix.substr( 2, prefix.length - 2 );
-		var element = prefix.split( "-" );
-		element[0] = "";
-		element = element.join( "" );
-		
-		//if we're on a button hover we call this same function with button down as element
-		if( element == "bhover" ) {
-			color = percentColor( color, 1.15 );
-			applyColor( color, swatch + "-bdown");
-		}
-		//if we're on a button up we call same function with button hover
-		//which then calls it with button down
-		if( element == "bup" ) {
-			applyColor( color, swatch + "-bhover" );
-		}
-		//if we're on button down then the gradient gets flipped
-		var start, end;
-		if( element != "bdown" ) {
-			start = computeGradient(color, 50)[0];
-			end = computeGradient(color, 50)[1];
-		} else {
-			start = computeGradient(color, 50)[1];
-			end = computeGradient(color, 50)[0];
-		}
-		if( element != "link" ) {
-			//anything but a link has gradients and text color
-			$( "input[data-name=" + prefix + "-background-color]" ).val( color ).css( "background-color", color );
-			$( "input[data-name=" + prefix + "-background-start]" ).val( start ).css( "background-color", start );
-			$( "input[data-name=" + prefix + "-background-end]" ).val( end ).css( "background-color", start );
-			$( ".slider[data-name=" + prefix + "-background-color]" ).slider( {value: 50} )
-				.find( "a" ).css({"background-color": color, "border-color": color});
-			style_array[prefix + "-background-start"] = start;
-			style_array[prefix + "-background-end"] = end;
-			style_array[prefix + "-background-color"] = color;
-
-			//special border for content body elements
-			if( element != "body" ) {
-				$( "input[data-name=" + prefix + "-border]" ).val( color ).css( "background-color", color );
-				style_array[prefix + "-border"] = color;
-			} else {
-				var border;
-				if( gray > 90 ) {
-					border = percentColor( color, 0.55 );
-				} else {
-					border = percentColor( color, 1.4 );
-				}
-				$( "input[data-name=" + prefix + "-border]" ).val( border ).css( "background-color", border );
-				style_array[prefix + "-border"] = border;
-			}
-
-			//contrast calculation for text color
-			if( gray > (150) ) {
-				$( "input[data-name=" + prefix + "-color]" ).val( "#000000" ).css( "background-color", "#000000" );
-				$( "input[data-name=" + prefix + "-shadow-color]" ).val( "#eeeeee" ).css( "background-color", "#eeeeee" );
-				style_array[prefix + "-color"] = "#000000";
-				style_array[prefix + "-shadow-color"] = "#eeeeee";
-			} else {	
-				$( "input[data-name=" + prefix + "-color]" ).val( "#ffffff" ).css( "background-color", "#ffffff" );
-				$( "input[data-name=" + prefix + "-shadow-color]" ).val( "#444444" ).css( "background-color", "#444444" );
-				style_array[prefix + "-color"] = "#ffffff";
-				style_array[prefix + "-shadow-color"] = "#444444";
-			}
-		} else {
-			//links are lighter on hover and darker once visited
-			var lighter = percentColor( color, 1.15 );
-			var darker = percentColor( color, 0.65 );
-			style_array[swatch + "-body-link-color"] = color;
-			style_array[swatch + "-body-link-active"] = color;
-			style_array[swatch + "-body-link-hover"] = lighter;
-			style_array[swatch + "-body-link-visited"] = darker;
-			$( "input[data-name=" + swatch + "-body-link-color]" ).val( color ).css( "background-color", color );
-			$( "input[data-name=" + swatch + "-body-link-active]" ).val( color ).css( "background-color", color );
-			$( "input[data-name=" + swatch + "-body-link-hover]" ).val( darker ).css( "background-color", lighter );
-			$( "input[data-name=" + swatch + "-body-link-visited]" ).val( lighter ).css( "background-color", darker );
-		}
-
-		//we've updated style_array now update the CSS
-		updateAllCSS();
+    //adding attributes to elements in the preview to make them compatible
+    //with the inspector
+	var starting_swatches = ["a", "b", "c"];
+	for( var i = 0; i < 3; i++ ) {
+		TR.addInspectorAttributes( starting_swatches[i] );
 	}
 	
-	function computeGradient(color, slider_value) {
-		var color_arr = color.split( "" );
-
-        var red = hextodec( color_arr[1] + color_arr[2] );
-        var green = hextodec( color_arr[3] + color_arr[4] );
-        var blue = hextodec( color_arr[5] + color_arr[6] );
-
-
-        var convex, red_start, green_start, blue_start, percent;
-            
-        if( slider_value >= 40 ) {
-            convex = 1;
-            percent = 1 + ( slider_value - 40 ) / 100;
-        } else {
-            convex = 0;
-            percent = 1 + ( 40 - slider_value ) / 100;
-        }
-        if( percent * red > 255 ) {
-            red_start = "FF";
-        } else {
-            red_start = dectohex( Math.floor(percent * red) );
-        }
-        if( percent * green > 255 ) {
-            green_start = "FF";
-        } else {
-            green_start = dectohex( Math.floor(percent * green) );
-        }
-        if( percent * blue > 255 ) {
-            blue_start = "FF";
-        } else {
-            blue_start = dectohex( Math.floor(percent * blue) );
-        }
-
-        if( convex ) {
-            percent = ( 100 - (slider_value - 40) ) / 100;
-        } else {
-            percent = ( 100 - (40 - slider_value) ) / 100;
-        }
-
-        var red_end = dectohex( Math.floor(percent * red) );
-        var green_end = dectohex( Math.floor(percent * green) );
-        var blue_end = dectohex( Math.floor(percent * blue) );
-
-        var start, end;
-        if( convex ) {
-            start = "#" + red_start + "" + green_start + "" + blue_start + "";
-            end = "#" + red_end + "" + green_end + "" + blue_end + "";
-        } else {
-            start = "#" + red_end + "" + green_end + "" + blue_end + "";
-            end = "#" + red_start + "" + green_start + "" + blue_start + "";
-        }
-		return [start, end];
-	}
-    
-    
-    //this function is used when a theme is loaded
-    //it counts the number of swatches in the current stylesheet
-    //and adds or subtracts the correct number of swatches in the preview
-    function correctNumberOfSwatches()
-    {
-    	var style = style_block.text();
-    	var matches = style.match( /\/\*\s[A-Z]\s*-*\*\//g );
-		if( !matches ) {
-			if(first_load) {
-				first_load = 0;
-				//initial load - the theme specified cannot be found on the server
-				var error_message = $( "<h3>Invalid Theme</h3><p>Reminder: We can only store this theme URL on the server for 30 days, then it will be deleted. \
-				Download a theme to keep a copy safe that you can import later.</p>" ).css( "color", "#f00" );
-				$( "#welcome h1" ).after( error_message );
-			
-				//import default theme
-				$.ajax({
-					url: "css/default.css",
-					dataType: "text",
-					mimeType: "text/plain",
-					success: function( data ) {
-						$( "#upload textarea" ).val( data );
-						style_block.text( data ); 
-						correctNumberOfSwatches();
-					}
-				});
-			} else {
-				alert( "Invalid theme file. Please import unminified files only with all original CSS comments in place." );
-			}
-			//return early because the file is of the incorrect format
-			return;
-		}
-    	var swatch_counter = matches.length + 2;
-    	
-		//start at A and go over current tabs and update form values
-		for( var i = 1; i < tab_counter; i++ ) {
-			updateFormValues( $("#tab" + i) );
-		}
-
-        //add appropriate number of tabs to TR and swatches to preview
-    	for( ; tab_counter < swatch_counter && tab_counter < 28;  ) {
-			addSwatch( false );
-		}
-		
-        //remove swatches from preview if necessary and tabs
-		for( ; tab_counter > swatch_counter; tab_counter-- ) {
-			frame.find( ".swatch:last" ).remove();
-			
-			$( "#tabs .ui-tabs-panel:last" ).attr( "id", "tab" + (tab_counter - 1) );
-			$( "#tabs ul li a:contains(\"+\")" ).attr( "href", "#tab" + (tab_counter - 1) );
-			if( $("#tabs").tabs("option", "selected") == (tab_counter - 2) ) {
-				$( "#tabs" ).tabs( "select", 0 );
-			}
-			$( "#tabs" ).tabs( "remove", tab_counter - 2 );
-		}
-    }
-    
-    // Function to convert decimal to hexidecimal
-    function dectohex( dec ) {
-        var dec_arr = { 10: "A", 11: "B", 12: "C", 13: "D", 14: "E", 15: "F" };
-        var first = Math.floor( dec / 16 );
-        var second = Math.floor( dec % 16 );
-        if( first >= 10 ) {
-            first = dec_arr[first];
-        }
-        if( second >= 10 ) {
-            second = dec_arr[second];
-        }
-        return first + "" + second + "";
-    }
-    
-    //using the style_array to successfully copy over data to appropriate swatches
-    //and then deleting last swatch so the one clicked appears to be deleted
-    function deleteSwatch( e ) {
-    	e.preventDefault();
-        var delete_class = $( this ).attr( "class" );
-        var letter =  delete_class.substr( delete_class.length - 1, delete_class.length );
-        var number = num[letter];	
-
-        //moving content of the tabs back one starting at the one we're deleting
-        for( var i = number + 1; i <= tab_counter - 2; i++ ) {
-            var current_letter = alpha[i];
-            var current_number = num[current_letter];
-            var indices = [];
-            for( var j in style_array ) {
-                var reg = new RegExp( "^" + current_letter + "-.*" );
-                if( j.match(reg) ) {
-                    indices.push( j.match(reg) );
-                }
-            }
-            for( var k in indices ) {
-                var index = indices[k] + "";
-                var suffix = index.substr( 1, index.length - 1 );
-                style_array[alpha[current_number - 1] + suffix] = style_array[index];
-                if( (current_number + 2) == tab_counter ) {
-                    delete( style_array[index] );
-                }
-            }
-
-			updateFormValues( $("#tab" + i) );
-        }
-        
-        //deleting the last swatch's rules in the style_array
-        var last_letter = alpha[tab_counter - 2];
-        var prefix = last_letter + "-";
-        var new_style_array = {};
-        for( var i in style_array ) {
-        	if( i.indexOf(prefix) != 0 ) {
-        		new_style_array[i] = style_array[i];
-        	}
-        }
-        style_array = new_style_array;
-        
-        //delete the swatch's CSS from the file
-        var css = style_block.text();
-        var start_reg = new RegExp ("\\/\\* " + alpha[tab_counter - 2].toUpperCase() + "\\s*\\n-*\\*\\/" );
-        
-		var end_reg = new RegExp( "\\/\\* Structure \\*\\/" );
-		var start = css.search( start_reg );
-		var end = css.search( end_reg );         
-        
-		var part1 = css.substring(0, start);
-		var part2 = css.substring(end, css.length);
-		style_block.text( part1 + part2 );
-		$( "#download" ).find( "textarea" ).val( part1 + part2 );
-		
-        tab_counter--;
-        $( "#tabs" ).find( ".ui-tabs-panel:last" ).attr( "id", "tab" + tab_counter ).end()
-            .find( "ul li a:contains(\"+\")" ).attr( "href", "#tab" + tab_counter );
-        frame.find( ".swatch:last" ).remove();
-        if( $("#tabs").tabs("option", "selected") == tab_counter - 1 ) {
-			$( "#tabs" ).tabs( "select", tab_counter - 2 );
-        }
-		$( "#tabs" ).tabs( "remove", tab_counter - 1 );
-		
-		if( tab_counter == 3 ) {
-			$( ".delete-swatch-a" ).hide();
-		}
-			
-        var swatch_height = frame.find( ".swatch:last" ).outerHeight();
-        frame.find( ".add-swatch" ).height(swatch_height);
-            
-        init( "refresh" );
-        updateAllCSS();
-		
-		return false;
-    }
-    
-	function grayValue( color ) {
-		var color_arr = color.split( "" );
-		
-        var red = hextodec( color_arr[1] + color_arr[2] );
-        var green = hextodec( color_arr[3] + color_arr[4] );
-        var blue = hextodec( color_arr[5] + color_arr[6] );
-
-		return ( red + green + blue ) / 3;
-	}
-    
-	function hex(x) {
-		return isNaN(x) ? "00" : hexDigits[(x - x % 16) / 16] + hexDigits[x % 16];
-	}
-    
-    //Function to convert hexidecimal to demical
-    function hextodec( hex ){
-        var hex_arr = { "A": 10, "B": 11, "C": 12, "D": 13, "E": 14, "F": 15, "a": 10, "b": 11, "c": 12, "d": 13, "e": 14, "f": 15 };
-        if( hex[0] in hex_arr ){
-            var first = hex_arr[hex[0]];
-        } else {
-            var first = hex[0];
-        }
-        first = parseInt( first );
-        if( hex[1] in hex_arr ){
-            var second = hex_arr[hex[1]];
-        } else {
-            var second = hex[1];
-        }
-        second = parseInt( second );
-        return ( 16*first ) + second;
-    }
-    
-    //init is used to initialize the array of tokens and the style_array
-    //if the refresh flag is passed it refreshes the token array and does not initialize the style_array
-    function init( refresh ) {
-    	refresh = refresh || "fresh";
+	//remove ui-body-c class so iframe looks ok
+    TR.iframe.find( "[data-role=page]" ).removeClass( "ui-body-c" );
+	TR.iframe.find( "[data-role=dialog]" ).remove();
 	
-        var style = style_block.text();
-        escaped_style = style.replace( /\n/g, "%0A" );
-        escaped_style = escaped_style.replace( /\t/g, "%09" );
-        $( "#download" ).find( "textarea" ).val( style );
-		
-		
-        var reg = new RegExp( "(?:font-family:)[^/\\*]+/\\*{[^\\*/]*}\\*/|\\s*\\S*\\s*/\\*{[^\\*/]*}\\*/" );
-		
-        tokens = [];
-        var reference = "";
-        var length = 0;
-        var index = -1;
-        var i = 0;
-		
-        while( style.length > 0 ) {
-            var temp = reg.exec( style ) + "";
-            length = temp.length;
-            reference = /{.*}/.exec( temp ) + "";
-            reference = reference.substr( 1,reference.length-2 );
-            index = style.search( reg );
-            if( index != -1 ) {
-                tokens[i++] = {
-                    value: style.substr( 0, index ), 
-                    type: "string"
-                };
-                tokens[i++] = {
-                    value: style.substr( index, length ), 
-                    type: "placeholder", 
-                    ref: reference
-                };
-                //update style_array
-                var prefix_end = reference.indexOf( "-" );
-                var prefix = reference.substring( 0, prefix_end );
-                if( refresh != "refresh" ) {
-					style_array[reference] = tokens[i-1].value.replace( /\/\*.*\*\//, "" );
-				}
-				//cut off string and continue
-                style = style.substring( index+length ); 
-            } else {
-                tokens[i++] = {
-                    value: style,
-                    type: "string"
-                };
-                style = "";
-            }
-			
-        }
-    }
-        
-	function addSwatchEvent( e ) {
-		e.preventDefault();
-		addSwatch( true );
-	}
-
-	//This function adds a new tab and makes the previous "addSwatch tab" into a Swatch
-	//So we unbind that one and bind the new one as the "addSwatch tab"
-	function addSwatch( new_style ) {
-		$( ".delete-swatch-a" ).show();
-		if( tab_counter < 28 ) {
-			var next_tab = tab_counter + 1;
-            var lower = alpha[tab_counter - 1] + "";
-            var upper = lower.toUpperCase();
-			
-			//new_style flag is only set if styles have not been added to style_array
-			//or CSS yet. correctNumberOfSwatches calles addSwatch with new_style=false
-			//so this block is skipped
-			if( new_style ) {
-				//defining style_array indices
-	            var indices = [];
-				var reg = new RegExp( "a-.*" );
-	            for( var j in style_array ) {
-	                if( j.search(reg) != -1 ) {
-	                    indices.push( j );
-	                }
-	            }
-	            for( var k in indices ) {
-	                var index = indices[k] + "";
-	                var suffix = index.substr( 1, index.length - 1 );
-	                style_array[lower + suffix] = style_array[index];
-	            }
+	//initialize templates for adding swatches later
+	TR.panelTemplate = $( "#tab2" ).html();
+	TR.swatchTemplate = "<div class=\"preview ui-shadow swatch\">\n		<div class=\"ui-header ui-bar-a\" data-swatch=\"a\" data-theme=\"a\" data-form=\"ui-bar-a\" data-role=\"header\" role=\"banner\">\n			<a class=\"ui-btn-left ui-btn ui-btn-icon-notext ui-btn-corner-all ui-shadow ui-btn-up-a\" data-iconpos=\"notext\" data-theme=\"a\" data-role=\"button\" data-icon=\"home\" title=\" Home \">\n				<span class=\"ui-btn-inner ui-btn-corner-all\">\n					<span class=\"ui-btn-text\"> Home </span>\n					<span data-form=\"ui-icon\" class=\"ui-icon ui-icon-home ui-icon-shadow\"></span>\n				</span>\n			</a>\n			<h1 class=\"ui-title\" tabindex=\"0\" role=\"heading\" aria-level=\"1\">A</h1>\n			<a class=\"ui-btn-right ui-btn ui-btn-icon-notext ui-btn-corner-all ui-shadow ui-btn-up-a\" data-iconpos=\"notext\" data-theme=\"a\" data-role=\"button\" data-icon=\"grid\" title=\" Navigation \">\n				<span class=\"ui-btn-inner ui-btn-corner-all\">\n					<span class=\"ui-btn-text\"> Navigation </span>\n					<span data-form=\"ui-icon\" class=\"ui-icon ui-icon-grid ui-icon-shadow\"></span>\n				</span>\n			</a>\n		</div>\n\n		<div class=\"ui-content ui-body-a\" data-theme=\"a\" data-form=\"ui-body-a\" data-role=\"content\" role=\"main\">\n\n			<p>\n				Sample text and <a class=\"ui-link\" data-form=\"ui-body-a\" href=\"#\" data-theme=\"a\">links</a>.\n			</p>\n\n			<div data-role=\"fieldcontain\">\n			    <fieldset data-role=\"controlgroup\">\n						<li data-swatch=\"a\" class=\"ui-li ui-li-divider ui-btn ui-bar-a ui-corner-top\" data-role=\"list-divider\" role=\"\" data-form=\"ui-bar-a\">List Header</li>\n\n						<input type=\"radio\" name=\"radio-choice-a\" id=\"radio-choice-1-a\" value=\"choice-1\" checked=\"checked\" />\n				        <label for=\"radio-choice-1-a\" data-form=\"ui-btn-up-a\" class=\"ui-corner-none\">Radio 1</label>\n\n		         		<input type=\"radio\" name=\"radio-choice-a\" id=\"radio-choice-2-a\" value=\"choice-2\"  />\n			         	<label for=\"radio-choice-2-a\" data-form=\"ui-btn-up-a\">Radio 2</label>\n\n						<input type=\"checkbox\" name=\"checkbox-1\" id=\"checkbox-1\" class=\"custom\" checked=\"checked\" />\n						<label for=\"checkbox-1\" data-form=\"ui-btn-up-a\">Checkbox</label>\n\n\n			    </fieldset>\n			</div>\n\n			<div data-role=\"fieldcontain\"> \n				<fieldset data-role=\"controlgroup\" data-type=\"horizontal\">\n						<input type=\"radio\" name=\"radio-view-a\" id=\"radio-view-a-a\" value=\"list\" checked=\"checked\"/> \n						<label for=\"radio-view-a-a\" data-form=\"ui-btn-up-a\">On</label> \n						<input type=\"radio\" name=\"radio-view-a\" id=\"radio-view-b-a\" value=\"grid\"  /> \n						<label for=\"radio-view-b-a\" data-form=\"ui-btn-up-a\">Off</label> \n				</fieldset> \n			</div>\n\n			<div data-role=\"fieldcontain\">\n				<select name=\"select-choice-1\" id=\"select-choice-1\" data-native-menu=\"false\" data-theme=\"a\" data-form=\"ui-btn-up-a\">\n					<option value=\"standard\">Option 1</option>\n					<option value=\"rush\">Option 2</option>\n					<option value=\"express\">Option 3</option>\n					<option value=\"overnight\">Option 4</option>\n				</select>\n			</div>\n\n			<input type=\"text\" value=\"Text Input\" class=\"input\" data-form=\"ui-body-a\" />\n\n			<div data-role=\"fieldcontain\">\n				<input type=\"range\" name=\"slider\" value=\"0\" min=\"0\" max=\"100\" data-form=\"ui-body-a\" data-theme=\"a\" />\n			</div>\n\n			<button data-icon=\"star\" data-theme=\"a\" data-form=\"ui-btn-up-a\">Button</button>\n		</div>\n	</div>";
 	
-				//adding swatch to CSS		
-	            reg = new RegExp( "\\/\\* " + upper + "\\s*\\n-*\\*\\/" );
-				var css = style_block.text();
+	//call initialization methods
+	TR.initStyleArray();
+	TR.initAddSwatch();
+	TR.initInspector();
+	TR.initControls();
+	TR.dialogs();
+	TR.draggableColors();
+	TR.correctNumberOfSwatches();
+	
+	TR.swatch_template = "<div class=\"preview ui-shadow swatch\">\n		<div class=\"ui-header ui-bar-a\" data-swatch=\"a\" data-theme=\"a\" data-form=\"ui-bar-a\" data-role=\"header\" role=\"banner\">\n			<a class=\"ui-btn-left ui-btn ui-btn-icon-notext ui-btn-corner-all ui-shadow ui-btn-up-a\" data-iconpos=\"notext\" data-theme=\"a\" data-role=\"button\" data-icon=\"home\" title=\" Home \">\n				<span class=\"ui-btn-inner ui-btn-corner-all\">\n					<span class=\"ui-btn-text\"> Home </span>\n					<span data-form=\"ui-icon\" class=\"ui-icon ui-icon-home ui-icon-shadow\"></span>\n				</span>\n			</a>\n			<h1 class=\"ui-title\" tabindex=\"0\" role=\"heading\" aria-level=\"1\">A</h1>\n			<a class=\"ui-btn-right ui-btn ui-btn-icon-notext ui-btn-corner-all ui-shadow ui-btn-up-a\" data-iconpos=\"notext\" data-theme=\"a\" data-role=\"button\" data-icon=\"grid\" title=\" Navigation \">\n				<span class=\"ui-btn-inner ui-btn-corner-all\">\n					<span class=\"ui-btn-text\"> Navigation </span>\n					<span data-form=\"ui-icon\" class=\"ui-icon ui-icon-grid ui-icon-shadow\"></span>\n				</span>\n			</a>\n		</div>\n\n		<div class=\"ui-content ui-body-a\" data-theme=\"a\" data-form=\"ui-body-a\" data-role=\"content\" role=\"main\">\n\n			<p>\n				Sample text and <a class=\"ui-link\" data-form=\"ui-body-a\" href=\"#\" data-theme=\"a\">links</a>.\n			</p>\n\n			<div data-role=\"fieldcontain\">\n			    <fieldset data-role=\"controlgroup\">\n						<li data-swatch=\"a\" class=\"ui-li ui-li-divider ui-btn ui-bar-a ui-corner-top\" data-role=\"list-divider\" role=\"\" data-form=\"ui-bar-a\">List Header</li>\n\n						<input type=\"radio\" name=\"radio-choice-a\" id=\"radio-choice-1-a\" value=\"choice-1\" checked=\"checked\" />\n				        <label for=\"radio-choice-1-a\" data-form=\"ui-btn-up-a\" class=\"ui-corner-none\">Radio 1</label>\n\n		         		<input type=\"radio\" name=\"radio-choice-a\" id=\"radio-choice-2-a\" value=\"choice-2\"  />\n			         	<label for=\"radio-choice-2-a\" data-form=\"ui-btn-up-a\">Radio 2</label>\n\n						<input type=\"checkbox\" name=\"checkbox-1\" id=\"checkbox-1\" class=\"custom\" checked=\"checked\" />\n						<label for=\"checkbox-1\" data-form=\"ui-btn-up-a\">Checkbox</label>\n\n\n			    </fieldset>\n			</div>\n\n			<div data-role=\"fieldcontain\"> \n				<fieldset data-role=\"controlgroup\" data-type=\"horizontal\">\n						<input type=\"radio\" name=\"radio-view-a\" id=\"radio-view-a-a\" value=\"list\" checked=\"checked\"/> \n						<label for=\"radio-view-a-a\" data-form=\"ui-btn-up-a\">On</label> \n						<input type=\"radio\" name=\"radio-view-a\" id=\"radio-view-b-a\" value=\"grid\"  /> \n						<label for=\"radio-view-b-a\" data-form=\"ui-btn-up-a\">Off</label> \n				</fieldset> \n			</div>\n\n			<div data-role=\"fieldcontain\">\n				<select name=\"select-choice-1\" id=\"select-choice-1\" data-native-menu=\"false\" data-theme=\"a\" data-form=\"ui-btn-up-a\">\n					<option value=\"standard\">Option 1</option>\n					<option value=\"rush\">Option 2</option>\n					<option value=\"express\">Option 3</option>\n					<option value=\"overnight\">Option 4</option>\n				</select>\n			</div>\n\n			<input type=\"text\" value=\"Text Input\" class=\"input\" data-form=\"ui-body-a\" />\n\n			<div data-role=\"fieldcontain\">\n				<input type=\"range\" name=\"slider\" value=\"0\" min=\"0\" max=\"100\" data-form=\"ui-body-a\" data-theme=\"a\" />\n			</div>\n\n			<button data-icon=\"star\" data-theme=\"a\" data-form=\"ui-btn-up-a\">Button</button>\n		</div>\n	</div>";
+	TR.panel_template = $( "#tab2" ).html();
+}
 
-				var start = css.search( /\/\* A.*\n-*\*\// );
-	            var end;
-	            if(tab_counter > 3) {
-	                end = css.search( /\/\* B.*\n-*\*\// );
-	            } else {
-	                end = css.search( /\/\* Structure /);
-	            }
-				var swatch_a = css.substring( start, end );
+//pad a string with zeroes to a certain length
+TR.padNumber = function( n, len ) {
+	var str = '' + n;
+    while (str.length < len) {
+        str = '0' + str;
+    }
 
-				var temp_css_template = swatch_a.replace( /-a,/g, "-" + lower + "," );
-				temp_css_template = temp_css_template.replace( /-a\s/g, "-" + lower + " " );
-				temp_css_template = temp_css_template.replace( /{a-/g, "{" + lower + "-" );
-				temp_css_template = temp_css_template.replace( /\/\*\sA/, "/* " + upper );
-				var current_css = style_block.text();
-				current_css = current_css.replace( /\/\*\sStructure\s/, temp_css_template + "\n\n/* Structure " );
-				style_block.text( current_css );
+    return str;
+}
+
+//takes in a hex color and a percentage and returns a lighter or darker shade of the color
+TR.percentColor = function( color, percent ) {
+	var color_arr = color.split( "" );
+
+    var red = parseInt( ( color_arr[1] + color_arr[2] ), 16 );
+    var green = parseInt( ( color_arr[3] + color_arr[4] ), 16 );
+    var blue = parseInt( ( color_arr[5] + color_arr[6] ), 16 );
+	if( percent > 1 ) {
+		if( red == 0 ) {
+			red = 60;
+		}
+		if( green == 0 ) {
+			green = 60;
+		}
+		if( blue == 0 ) {
+			blue = 60;
+		}
+	}
+	if( red * percent < 255 && red * percent > 0 ) {
+		red = TR.padNumber( Math.floor( red * percent ).toString( 16 ), 2 );
+	} else {
+		if( red * percent >= 255 ) {
+			red = "FF";
+		} else {
+			red = "00";
+		}
+	}
+	if( green * percent < 255 && green * percent > 0 ) {
+		green = TR.padNumber( Math.floor( green * percent ).toString( 16 ), 2 );
+	} else {
+		if( green * percent >= 255 ) {
+			green = "FF";
+		} else {
+			green = "00";
+		}
+	}
+	if( blue * percent < 255 && blue * percent > 0 ) {
+		blue = TR.padNumber( Math.floor( blue * percent ).toString( 16 ), 2 );
+	} else {
+		if( blue * percent >= 255 ) {
+			blue = "FF";
+		} else {
+			blue = "00";
+		}
+	}
+	
+	return "#" + red + "" + green + "" + blue + "";
+}
+
+//updates Inspector behaviors in the iframe
+TR.refreshIframe = function( swatch )
+{	
+    //click behavior for inspector
+	TR.iframe.find( ".ui-bar-" + swatch + ", " + ".ui-body-" + swatch + ", .ui-bar-" + swatch + " [data-form], .ui-body-" + swatch + " [data-form]" ).mouseup(function(e) {
+        if( $("[data-id=inspector-on]").hasClass("on") ) {
+            e.stopPropagation();
+            //apply attributes to slider of the new swatch
+            		
+            var data_theme = $( this ).attr( "data-theme" );
+            var form = $( this ).attr( "data-form" );
+			
+			if(!data_theme) {
+				data_theme = form.split( "-" );
+				data_theme = data_theme[data_theme.length - 1];
 			}
 			
-			//giving the contents of the new tab
-            var temp_panel_template = panel_template.replace( /Swatch A/, "Swatch " + upper );
-            temp_panel_template = temp_panel_template.replace( /"a\-/g, "\"" + lower + "-" );
-            temp_panel_template = temp_panel_template.replace( /\-a"/g, "-" + lower + "\"" );
-			
-			$( "#tabs" ).tabs( "add", "#tab" + (tab_counter + 1), "+" )
-                .find( "ul li a[href=#tab" + tab_counter + "]" ).text( upper );
-
-			$( "#tab" + tab_counter ).html( temp_panel_template );
-			
-			updateFormValues( $("#tab" + tab_counter) );
-			
-            //adding swatch to preview document
-            var temp_swatch_template = swatch_template.replace( /"a"/g, "\"" + lower + "\"" );
-            temp_swatch_template = temp_swatch_template.replace( />A<\/h1>/g, ">" + upper + "</h1>" );
-            temp_swatch_template = temp_swatch_template.replace( /-a\s/g, "-" + lower + " " );
-            temp_swatch_template = temp_swatch_template.replace( /-a\"/g, "-" + lower + "\"" );
-            $( temp_swatch_template ).insertAfter( $("#frame").contents().find(".swatch:last") );
-			
-			var iframe_window = $( "#frame" )[0].contentWindow;
-            //This is a bug in JQM. Header initialization is using a live pagecreate handler on the page
-            //ideally we should be able to write iframe_window.$(".swatch:last").trigger("create");
-            iframe_window.$( ".ui-page" ).trigger( "pagecreate" );
-            
-            //adding data-form attribute to slider
-			addInspectorAttributes( lower );
-				 
-            //redefine the token array
-            init( "refresh" );
-            //binds all appropriate events for accordions and new tab
-            updateThemeRoller( tab_counter );
-			
-			var swatch_height = frame.find( ".swatch:last" ).outerHeight();
-            frame.find( ".add-swatch" ).height(swatch_height);
-            
-			if( first_add ) {
-				//apply paging of the tabs
-				$( "#tabs" ).tabs("paging", {
-					cycle: true, 
-					follow: true, 
-					tabsPerPage: 0, 
-					followOnSelect: true, 
-					selectOnAdd: false
-				});
-            	first_add = 0;
+            if( $(this).hasClass("ui-radio-on") ) {
+                data_theme = "global";
+                form = "ui-btn-active";
             }
-            
-            refreshFrame( alpha[tab_counter - 1] );
-            frame.find( "[data-role=dialog]" ).remove();
+            if( form == "ui-link" ) {
+            	data_theme = "global";
+            }
+            if( form == "ui-icon" ) {
+            	data_theme = "global";
+            }
 			
-            //reconfigure binding of addSwatch event
-            $( "[href=#tab" + tab_counter + "]" ).unbind( "click", addSwatchEvent );
-            $( "[href=#tab" + next_tab + "]" ).bind( "click", addSwatchEvent );
-
-			tab_counter++;
-		}
-	}
-
-	function percentColor( color, percent ) {
-		var color_arr = color.split( "" );
-
-        var red = hextodec( color_arr[1] + color_arr[2] );
-        var green = hextodec( color_arr[3] + color_arr[4] );
-        var blue = hextodec( color_arr[5] + color_arr[6] );
-		if( percent > 1 ) {
-			if( red == 0 ) {
-				red = 60;
-			}
-			if( green == 0 ) {
-				green = 60;
-			}
-			if( blue == 0 ) {
-				blue = 60;
-			}
-		}
-		if( red * percent < 255 && red * percent > 0 ) {
-			red = dectohex( red * percent );
-		} else {
-			if( red * percent >= 255 ) {
-				red = "FF";
-			} else {
-				red = "00";
-			}
-		}
-		if( green * percent < 255 && green * percent > 0 ) {
-			green = dectohex( green * percent );
-		} else {
-			if( green * percent >= 255 ) {
-				green = "FF";
-			} else {
-				green = "00";
-			}
-		}
-		if( blue * percent < 255 && blue * percent > 0 ) {
-			blue = dectohex( blue * percent );
-		} else {
-			if( blue * percent >= 255 ) {
-				blue = "FF";
-			} else {
-				blue = "00";
-			}
-		}
-		
-		return "#" + red + "" + green + "" + blue + "";
-	}
-    
-    //refreshes the inspector behaviors on the preview frame
-    function refreshFrame( swatch )
-    {	
-        //click behavior for inspector
-    	$( "#frame").contents().find( ".ui-bar-" + swatch + ", " + ".ui-body-" + swatch + ", .ui-bar-" + swatch + " [data-form], .ui-body-" + swatch + " [data-form]" ).mouseup(function(e) {
-            if( $("[data-id=inspector-on]").hasClass("on") ) {
-                e.stopPropagation();
-                //apply attributes to slider of the new swatch
-                		
-                var data_theme = $( this ).attr( "data-theme" );
-                var form = $( this ).attr( "data-form" );
-				
-				if(!data_theme) {
-					data_theme = form.split( "-" );
-					data_theme = data_theme[data_theme.length - 1];
-				}
-				
-                if( $(this).hasClass("ui-radio-on") ) {
-                    data_theme = "global";
-                    form = "ui-btn-active";
-                }
-                if( form == "ui-link" ) {
-                	data_theme = "global";
-                }
-                if( form == "ui-icon" ) {
-                	data_theme = "global";
-                }
-				
-				
-                $( "#tabs" ).tabs( "select", num[data_theme] );	
-				
-                setTimeout(function() {
-					$( "#tab" + (num[data_theme] + 1) + " .accordion" ).each(function() {
-						if( $(this).attr("data-form") == form ) {
-							if( $(this).accordion("option", "active") === false ) {
-								$( this ).accordion( "activate", 0 );
-							}
-						} else {
-							if( $(this).accordion("option", "active") !== false ) {
-								$( this ).accordion( "activate", false );
-							}
+			
+            $( "#tabs" ).tabs( "select", TR.num[data_theme] );	
+			
+            setTimeout(function() {
+				$( "#tab" + (TR.num[data_theme] + 1) + " .accordion" ).each(function() {
+					if( $(this).attr("data-form") == form ) {
+						if( $(this).accordion("option", "active") === false ) {
+							$( this ).accordion( "activate", 0 );
 						}
-                	});
-                }, 200);
-						
-	
-                $( this ).contents().find( "#highlight" ).show();
-            }
-        });
-		
-        //bind hover behavior for inspector
-        frame.find( "[data-form$=-" + swatch + "]" ).bind( "mouseover", function() {
-            if( $("[data-id=inspector-on]").hasClass("on") ) {
-                var left = $( this ).offset().left;
-                var top = $( this ).offset().top;
-                var width = $( this ).outerWidth();
-                var height = $( this ).outerHeight();
-				
-                var parent = this;
-				
-                frame.find( "#highlight" ).mousemove(function(e) {
-                    var highlight = this;
-                    $( "[data-form]", parent ).each(function() {
-                        var left = $( this ).offset().left;
-                        var top = $( this ).offset().top;
-                        var width = $( this ).outerWidth();
-                        var height = $( this ).outerHeight();
-                        var right = left + width;
-                        var bottom = top + height;
-                        if( e.pageX <= right && e.pageX >= left && e.pageY <= bottom && e.pageY >= top ) {
-                            $( highlight ).css({
-                                "z-index": 20, 
-                                "position": "absolute", 
-                                "top": (top - 3) + "px", 
-                                "left": (left - 3) + "px", 
-                                "width": width + "px", 
-                                "height": height + "px", 
-                                "border": "3px solid #0cc"
-                            }).show();
-                        }
-                    });
+					} else {
+						if( $(this).accordion("option", "active") !== false ) {
+							$( this ).accordion( "activate", false );
+						}
+					}
+            	});
+            }, 200);
 					
+            TR.iframe.find( "#highlight" ).show();
+        }
+    });
+	
+    //bind hover behavior for inspector
+    TR.iframe.find( "[data-form$=-" + swatch + "]" ).bind( "mouseover", function() {
+        if( $("[data-id=inspector-on]").hasClass("on") ) {
+            var left = $( this ).offset().left;
+            var top = $( this ).offset().top;
+            var width = $( this ).outerWidth();
+            var height = $( this ).outerHeight();
+			
+            var parent = this;
+			
+            TR.iframe.find( "#highlight" ).mousemove(function(e) {
+                var highlight = this;
+                $( "[data-form]", parent ).each(function() {
+                    var left = $( this ).offset().left;
+                    var top = $( this ).offset().top;
+                    var width = $( this ).outerWidth();
+                    var height = $( this ).outerHeight();
+                    var right = left + width;
+                    var bottom = top + height;
+                    if( e.pageX <= right && e.pageX >= left && e.pageY <= bottom && e.pageY >= top ) {
+                        $( highlight ).css({
+                            "z-index": 20, 
+                            "position": "absolute", 
+                            "top": (top - 3) + "px", 
+                            "left": (left - 3) + "px", 
+                            "width": width + "px", 
+                            "height": height + "px", 
+                            "border": "3px solid #0cc"
+                        }).show();
+                    }
                 });
 				
-                $( "iframe" ).contents().find( "#highlight" ).css({
-                    "z-index": 20, 
-                    "position": "absolute", 
-                    "top": (top - 3) + "px", 
-                    "left": (left - 3) + "px", 
-                    "width": width + "px", 
-                    "height": height + "px", 
-                    "border": "3px solid #0cc"
-                }).show();
-            }
-        });
-    }    
-    
-	//Function to convert hex format to a rgba color
-	function rgbatohex(rgba) {
-		rgba = rgba.match(/^rgba\((\d+),\s*(\d+),\s*(\d+),\s*([\d.]+)\)$/);
-		return "#" + hex(rgba[1]) + hex(rgba[2]) + hex(rgba[3]);
+            });
+			
+            TR.iframe.find( "#highlight" ).css({
+                "z-index": 20, 
+                "position": "absolute", 
+                "top": (top - 3) + "px", 
+                "left": (left - 3) + "px", 
+                "width": width + "px", 
+                "height": height + "px", 
+                "border": "3px solid #0cc"
+            }).show();
+        }
+    });
+}
+
+//Function to convert hex format to a rgba color
+TR.rgbatohex = function(rgba) {
+	rgba = rgba.match(/^rgba\((\d+),\s*(\d+),\s*(\d+),\s*([\d.]+)\)$/);
+	return "#" + TR.hex(rgba[1]) + TR.hex(rgba[2]) + TR.hex(rgba[3]);
+}
+
+TR.rgbaOpacity = function(rgba) {
+	rgba = rgba.match(/^rgba\((\d+),\s*(\d+),\s*(\d+),\s*([\d.]+)\)$/);
+	return rgba[4];
+}
+
+//Function to convert hex format to a rgb color
+TR.rgbtohex = function(rgb) {
+	rgb = rgb.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
+	return "#" + TR.hex(rgb[1]) + TR.hex(rgb[2]) + TR.hex(rgb[3]);
+}
+
+//function used to open a specific accordion
+//the element passed in is one selected by the incpector or when dropping a color
+TR.selectElement = function( element ) {
+	var data_theme = element.attr( "data-theme" );
+	var form = element.attr( "data-form" );
+	
+	if( !form ) {
+		return;
 	}
 	
-	function rgbaOpacity(rgba) {
-		rgba = rgba.match(/^rgba\((\d+),\s*(\d+),\s*(\d+),\s*([\d.]+)\)$/);
-		return rgba[4];
+	if( !data_theme ) {
+		data_theme = form.split( "-" );
+		data_theme = data_theme[data_theme.length - 1];
 	}
 
-	//Function to convert hex format to a rgb color
-	function rgbtohex(rgb) {
-		rgb = rgb.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
-		return "#" + hex(rgb[1]) + hex(rgb[2]) + hex(rgb[3]);
+	if( element.hasClass("ui-radio-on") ) {
+		data_theme = "global";
+		form = "ui-btn-active";
+	}
+	if( form == "ui-link" ) {
+		data_theme = "global";
+	}
+	if( form == "ui-icon" ) {
+		data_theme = "global";
 	}
 
-    //function used to open a specific accordion
-    //the element passed in is one selected by the incpector or when dropping a color
-	function selectElement( element ) {
-		var data_theme = element.attr( "data-theme" );
-		var form = element.attr( "data-form" );
-		
-		if( !form ) {
-			return;
-		}
-		
-		if( !data_theme ) {
-			data_theme = form.split( "-" );
-			data_theme = data_theme[data_theme.length - 1];
-		}
-
-		if( element.hasClass("ui-radio-on") ) {
-			data_theme = "global";
-			form = "ui-btn-active";
-		}
-		if( form == "ui-link" ) {
-			data_theme = "global";
-		}
-		if( form == "ui-icon" ) {
-			data_theme = "global";
-		}
-
-
-		$( "#tabs" ).tabs( "select", num[data_theme] );	
-		
-		setTimeout(function() {
-			$( "#tab" + (num[data_theme]+1) ).find( ".accordion" ).each(function() {
-				if( $(this).attr("data-form") == form ) {
-					if( $(this).accordion("option", "active" ) === false) {
-						$( this ).accordion( "activate", 0 );
-					}
-				} else if( $(this).accordion("option", "active") !== false ) {
-					$( this ).accordion( "activate", false );
+	$( "#tabs" ).tabs( "select", TR.num[data_theme] );	
+	
+	setTimeout(function() {
+		$( "#tab" + (TR.num[data_theme]+1) ).find( ".accordion" ).each(function() {
+			if( $(this).attr("data-form") == form ) {
+				if( $(this).accordion("option", "active" ) === false) {
+					$( this ).accordion( "activate", 0 );
 				}
-			});
-		}, 200);
-	}
-    
-	String.prototype.ltrim = function() {
-		return this.replace(/^\s+/,"");
-	}
-	String.prototype.rtrim = function() {
-		return this.replace(/\s+$/,"");
-	}
+			} else if( $(this).accordion("option", "active") !== false ) {
+				$( this ).accordion( "activate", false );
+			}
+		});
+	}, 200);
+}
 
-    //work horse of the app
-    //this function runs through the token array and pushes out any changes that may have been made
-    function updateAllCSS() {
-    
-        var new_style = [];
-        for( var i in tokens ) {
-        	var t = tokens[i];
-            if( t.type == "placeholder" ) {
-				new_style.push( " " + style_array[t.ref] + " " + "/*{" + t.ref + "}*/" );
-            } else {
-            	new_style.push( t.value );
-            }
+//work horse of the app
+//this function runs through the token array and pushes out any changes that may have been made
+TR.updateAllCSS = function() {
+    var new_style = [];
+    for( var i in TR.tokens ) {
+    	var t = TR.tokens[i];
+        if( t.type == "placeholder" ) {
+			new_style.push( " " + TR.styleArray[t.ref] + " " + "/*{" + t.ref + "}*/" );
+        } else {
+        	new_style.push( t.value );
         }
-        new_style = new_style.join( "" );
-        
-        style_block.text( new_style );
-        $( "#download textarea" ).val( new_style );
     }
+    new_style = new_style.join( "" );
+    
+    TR.styleBlock.text( new_style );
+    $( "#download textarea" ).val( new_style );
+}
 
-	function updateFormValues( $this ) {
-		//check to make sure form values are up to date
-		var tab_num = parseInt($this.attr("id").replace(/[^0-9]/g, ""));
-		var swatch = alpha[ tab_num - 1 ];
+//updates all form values from the style array
+TR.updateFormValues = function( $this ) {
+	//check to make sure form values are up to date
+	var tab_num = parseInt($this.attr("id").replace(/[^0-9]/g, ""));
+	var swatch = TR.alpha[ tab_num - 1 ];
 
-		for( var i in style_array ) {
-			var key = i.split( "-" )[0];
-			if ( key == swatch ) {
-				var field = $( "input[data-name=" + i + "]", $this );
-				var slider = $( ".slider[data-name=" + i + "]", $this );
-				var value = style_array[i].trim();
-				var colorwell = field.hasClass("colorwell") ? 1 : 0;
+	for( var i in TR.styleArray ) {
+		var key = i.split( "-" )[0];
+		if ( key == swatch ) {
+			var field = $( "input[data-name=" + i + "]", $this ),
+				slider = $( ".slider[data-name=" + i + "]", $this ),
+				value = TR.styleArray[i].trim(),
+				colorwell = field.hasClass("colorwell") ? 1 : 0;
 
-				if( i.indexOf("font-family") != -1 ) {
-					field.val( style_array[i].replace(/font-family:\s*/, "") );
-				} else if( i.indexOf("global-icon") != -1 ) {
-					if( i == "global-icon-set" ) {
-						field = $( "select[data-name=global-icon-set]", $this );
-						if( value.indexOf("black") != -1 ) {
-							field.val( "black" );
-						} else {
-							field.val( "white" );
-						}
+			if( i.indexOf("font-family") != -1 ) {
+				field.val( TR.styleArray[i].replace(/font-family:\s*/, "") );
+			} else if( i.indexOf("global-icon") != -1 ) {
+				if( i == "global-icon-set" ) {
+					field = $( "select[data-name=global-icon-set]", $this );
+					if( value.indexOf("black") != -1 ) {
+						field.val( "black" );
 					} else {
-						if( i != "global-icon-color" && i != "global-icon-shadow" ) {
-							var with_disc = $( "#with_disc" );
-							var disc_color = $( "[data-name=global-icon-disc].colorwell", $this );
-							var disc_opacity = $( "[data-name=global-icon-disc]:not(.colorwell)", $this );
+						field.val( "white" );
+					}
+				} else {
+					if( i != "global-icon-color" && i != "global-icon-shadow" ) {
+						var with_disc = $( "#with_disc" );
+						var disc_color = $( "[data-name=global-icon-disc].colorwell", $this );
+						var disc_opacity = $( "[data-name=global-icon-disc]:not(.colorwell)", $this );
 
-							if( value.indexOf( "transparent" ) != -1 ) {
-								with_disc.val( "without_disc" );
+						if( value.indexOf( "transparent" ) != -1 ) {
+							with_disc.val( "without_disc" );
+						} else {
+							var hex = TR.rgbatohex( value );
+							var opac = TR.rgbaOpacity( value );
+							disc_color.val( hex ).css( "background-color", hex );
+							disc_opacity.val( parseFloat(opac) * 100 );
+							with_disc.val( "with_disc" );
+							if( TR.grayValue(hex) < 127 ) {
+								disc_color.css( "color", "#ffffff" );
 							} else {
-								var hex = rgbatohex( value );
-								var opac = rgbaOpacity( value );
-								disc_color.val( hex ).css( "background-color", hex );
-								disc_opacity.val( parseFloat(opac) * 100 );
-								with_disc.val( "with_disc" );
-								if( grayValue(hex) < 127 ) {
-									disc_color.css( "color", "#ffffff" );
-								} else {
-									disc_color.css( "color", "#000000" );
-								}
+								disc_color.css( "color", "#000000" );
 							}
 						}
 					}
-				} else if( i.indexOf("box-shadow") != -1) {
-					if( i.indexOf( "-size" ) == -1 ) {
-						var shadow_color = $( "[data-name=global-box-shadow-color].colorwell", $this );
-						var shadow_opacity = $( "[data-name=global-box-shadow-color]:not(.colorwell)", $this );
-						var hex = rgbatohex( value );
-						var opac = rgbaOpacity( value );
-						shadow_color.val( hex ).css( "background-color", hex );
-						shadow_opacity.val( parseFloat(opac) * 100 );
-						if( grayValue(hex) < 127 ) {
-							shadow_color.css( "color", "#ffffff" );
-						} else {
-							shadow_color.css( "color", "#000000" );
-						}
+				}
+			} else if( i.indexOf("box-shadow") != -1) {
+				if( i.indexOf( "-size" ) == -1 ) {
+					var shadow_color = $( "[data-name=global-box-shadow-color].colorwell", $this );
+					var shadow_opacity = $( "[data-name=global-box-shadow-color]:not(.colorwell)", $this );
+					var hex = TR.rgbatohex( value );
+					var opac = TR.rgbaOpacity( value );
+					shadow_color.val( hex ).css( "background-color", hex );
+					shadow_opacity.val( parseFloat(opac) * 100 );
+					if( TR.grayValue(hex) < 127 ) {
+						shadow_color.css( "color", "#ffffff" );
 					} else {
-						field.val( value );
+						shadow_color.css( "color", "#000000" );
 					}
 				} else {
 					field.val( value );
-					if( colorwell ) {
-						if( grayValue(value) < 127 ) {
-							field.css( "color", "#ffffff" );
-						} else {
-							field.css( "color", "#000000" );
-						}
-						field.css( "background-color", value );
-						if( slider.html() ) {
-							//if there is some property on slider object, then there exists a slider
-							slider.find( "a" ).css({
-								"background-color": value,
-								"border-color": value,
-							});
-						}
+				}
+			} else {
+				field.val( value );
+				if( colorwell ) {
+					if( TR.grayValue(value) < 127 ) {
+						field.css( "color", "#ffffff" );
+					} else {
+						field.css( "color", "#000000" );
+					}
+					field.css( "background-color", value );
+					if( slider.html() ) {
+						//if there is some property on slider object, then there exists a slider
+						slider.find( "a" ).css({
+							"background-color": value,
+							"border-color": value,
+						});
 					}
 				}
 			}
 		}
 	}
+}
 
+//function to restyle and reconnect different input elements in the new swatch"s control panel
+TR.updateThemeRoller = function( tab ) {
+
+	var $tab = $( "#tab" + tab );
+	$tab.find( ".accordion" ).accordion({
+        header: "h3", 
+        active: false, 
+        clearStyle: true, 
+        collapsible: true
+    });
 	
-	//function to restyle and reconnect different input elements in the new swatch"s control panel
-    function updateThemeRoller( tab ) {
+    $tab.find( ".colorwell" ).focus(function() {
+        var pos = $( this ).offset();
+        var name = $( this ).attr( "data-name" );
+        if( name.indexOf("shadow-color") == -1 ) {
+			$( "#colorpicker" ).css({
+				"position": "absolute", 
+				"left": 40, 
+				"top": pos.top + 21
+			});
+		} else {
+			$( "#colorpicker" ).css({
+				"position": "absolute", 
+				"left": 100, 
+				"top": pos.top + 21
+			});
+		}
+        $( "#colorpicker" ).show();
+    }).blur(function() {
+        $( "#colorpicker" ).css( "position", "static" );
+        $( "#colorpicker" ).hide();
+        $tab.find( ".slider[data-name=" + $(this).attr("data-name") + "][data-type=" + $(this).attr("data-type") + "] a" ).css({
+            "background": $( this ).val(), 
+            "border-color": $( this ).val()
+        });
+    });
 	
-		var $tab = $( "#tab" + tab );
-		$tab.find( ".accordion" ).accordion({
-            header: "h3", 
-            active: false, 
-            clearStyle: true, 
-            collapsible: true
-        });
-		
-        $tab.find( ".colorwell" ).focus(function() {
-            var pos = $( this ).offset();
-            var name = $( this ).attr( "data-name" );
-            if( name.indexOf("shadow-color") == -1 ) {
-				$( "#colorpicker" ).css({
-					"position": "absolute", 
-					"left": 40, 
-					"top": pos.top + 21
-				});
-			} else {
-				$( "#colorpicker" ).css({
-					"position": "absolute", 
-					"left": 100, 
-					"top": pos.top + 21
-				});
-			}
-            $( "#colorpicker" ).show();
-        }).blur(function() {
-            $( "#colorpicker" ).css( "position", "static" );
-            $( "#colorpicker" ).hide();
-            $tab.find( ".slider[data-name=" + $(this).attr("data-name") + "][data-type=" + $(this).attr("data-type") + "] a" ).css({
-                "background": $( this ).val(), 
-                "border-color": $( this ).val()
-            });
-        });
-		
-        var f = $.farbtastic( "#colorpicker" );
-        var p = $( "#colorpicker" ).css( "opacity", 1 );
-        var selected;
-        $tab.find( ".colorwell" )
-        .each(function() {
-            f.linkTo( this );
-            $( this ).css( "opacity", 0.75 );
-        })
-        .focus(function() {
-            if (selected) {
-                $(selected).css( "opacity", 1 ).removeClass( "colorwell-selected" );
-            }
-            f.linkTo(this);
-            p.css("opacity", 1);
-            $( selected = this ).css( "opacity", 1 ).addClass( "colorwell-selected" );
-        });
-        $tab.find( ".slider" ).slider({
-            max : 80, 
-            value: 40
-        });
+    var f = $.farbtastic( "#colorpicker" );
+    var p = $( "#colorpicker" ).css( "opacity", 1 );
+    var selected;
+    $tab.find( ".colorwell" )
+    .each(function() {
+        f.linkTo( this );
+        $( this ).css( "opacity", 0.75 );
+    })
+    .focus(function() {
+        if (selected) {
+            $(selected).css( "opacity", 1 ).removeClass( "colorwell-selected" );
+        }
+        f.linkTo(this);
+        p.css("opacity", 1);
+        $( selected = this ).css( "opacity", 1 ).addClass( "colorwell-selected" );
+    });
+    $tab.find( ".slider" ).slider({
+        max : 80, 
+        value: 40
+    });
 
-		//droppable for colorwell
-		$tab.find( ".colorwell" ).droppable({
-			accept: ".color-drag",
-			hoverClass: "hover",
-			drop: function() {
-				var $this = $( this );
-				var color = rgbtohex( $(".ui-draggable-dragging").css("background-color") );
-				$( ".ui-draggable .ui-draggable-dragging" ).trigger( "drop" );
-				$this.val( color ).css( "background-color", color );
-				$this.trigger( "change" );
-			}
-		});
-		
-        $tab.find( "input[data-type=background]" ).each(function() {
-            $tab.find( ".slider[data-type=background][data-name=" + $(this).attr("data-name") + "] a" ).css({
-                "background": $( this ).val(), 
-                "border-color": $( this ).val()
-            });
+	//droppable for colorwell
+	$tab.find( ".colorwell" ).droppable({
+		accept: ".color-drag",
+		hoverClass: "hover",
+		drop: function() {
+			var $this = $( this );
+			var color = rgbtohex( $(".ui-draggable-dragging").css("background-color") );
+			$( ".ui-draggable .ui-draggable-dragging" ).trigger( "drop" );
+			$this.val( color ).css( "background-color", color );
+			$this.trigger( "change" );
+		}
+	});
+	
+    $tab.find( "input[data-type=background]" ).each(function() {
+        $tab.find( ".slider[data-type=background][data-name=" + $(this).attr("data-name") + "] a" ).css({
+            "background": $( this ).val(), 
+            "border-color": $( this ).val()
         });
+    });
 
-        $tab.find( ".colorwell" ).bind( "change", function() {
-            $tab.find( ".slider[data-name=" + $(this).attr("data-name") + "][data-type=" + $(this).attr("data-type") + "] a" ).css({
-                "background": $( this ).val(), 
-                "border-color": $( this ).val()
-            });
+    $tab.find( ".colorwell" ).bind( "change", function() {
+        $tab.find( ".slider[data-name=" + $(this).attr("data-name") + "][data-type=" + $(this).attr("data-type") + "] a" ).css({
+            "background": $( this ).val(), 
+            "border-color": $( this ).val()
         });
-		
-        $tab.find( ".more" ).click(function() {
-            var index = $( this ).attr( "data-name" );
-            if( more[index] ) {
-                if( more[index] == "showing" ) {
-                    $tab.find( ".start-end[data-name=" + index + "]" ).hide( "slide", {
-                        direction: "up"
-                    }, 300);
-                    $( this ).text( "+" );
-                    more[index] = "hiding";
-                } else {
-                    $tab.find( ".start-end[data-name=" + index + "]" ).show( "slide", {
-                        direction: "up"
-                    }, 300);
-                    $( this ).text( "-" );
-                    more[index] = "showing";
-                }
+    });
+	
+    $tab.find( ".more" ).click(function() {
+        var index = $( this ).attr( "data-name" );
+        if( TR.showStartEnd[index] ) {
+            if( TR.showStartEnd[index] == "showing" ) {
+                $tab.find( ".start-end[data-name=" + index + "]" ).hide( "slide", {
+                    direction: "up"
+                }, 300);
+                $( this ).text( "+" );
+                TR.showStartEnd[index] = "hiding";
             } else {
                 $tab.find( ".start-end[data-name=" + index + "]" ).show( "slide", {
                     direction: "up"
                 }, 300);
                 $( this ).text( "-" );
-                more[index] = "showing";
+                TR.showStartEnd[index] = "showing";
             }
-        });
-		
-        $tab.find( "[data-type=font-family]" ).bind( "blur change keyup", function() {
-            style_array[$( this ).attr( "data-name" )] = "font-family: " + this.value;
-            updateAllCSS();
-        });
-        
-        $( "[data-type=color], [data-type=text-shadow], [data-type=border], [data-type=link]", "#tab" + tab )
+        } else {
+            $tab.find( ".start-end[data-name=" + index + "]" ).show( "slide", {
+                direction: "up"
+            }, 300);
+            $( this ).text( "-" );
+            TR.showStartEnd[index] = "showing";
+        }
+    });
+	
+    $tab.find( "[data-type=font-family]" ).bind( "blur change keyup", function() {
+        TR.styleArray[$( this ).attr( "data-name" )] = "font-family: " + this.value;
+        TR.updateAllCSS();
+    });
+    
+    $( "[data-type=color], [data-type=text-shadow], [data-type=border], [data-type=link]", "#tab" + tab )
 		.bind( "blur change keyup", function(){
-			style_array[$( this ).attr( "data-name" )] = this.value;
-			updateAllCSS();
+			TR.styleArray[$( this ).attr( "data-name" )] = this.value;
+			TR.updateAllCSS();
 		});
-		
-        $tab.find( "[data-type=background]" ).bind("blur slide mouseup change keyup", function(event, slider) {
-            if(!t) {
-                t = setTimeout(function() {
-                    t = 0;
-                }, 100);
+	
+    $tab.find( "[data-type=background]" ).bind("blur slide mouseup change keyup", function(event, slider) {
+        if(!TR.timerID) {
+            TR.timerID = setTimeout(function() {
+                TR.timerID = 0;
+            }, 100);
 
-                var index = $( this ).attr( "data-name" ) + "";
-                index = index.split( "-" );
-                var prefix = index[0] + "-" + index[1];
-                var color = $tab.find( "input[data-type=background][data-name|=" + prefix + "]" ).val();
-                var slider_value = $tab.find( ".slider[data-type=background][data-name|=" + prefix + "]" ).slider( "value" );
-				
-                var color_arr = color.split( "" );
-				
-                var red = hextodec( color_arr[1] + color_arr[2] );
-                var green = hextodec( color_arr[3] + color_arr[4] );
-                var blue = hextodec( color_arr[5] + color_arr[6] );
-				
-                var convex, red_start, green_start, blue_start, percent;
-                
-                if( slider_value >= 40 ) {
-                    convex = 1;
-                    percent = 1 + ( slider_value - 40 ) / 100;
-                } else {
-                    convex = 0;
-                    percent = 1 + ( 40 - slider_value ) / 100;
-                }
-                if( percent * red > 255 ) {
-                    red_start = "FF";
-                } else {
-                    red_start = dectohex( Math.floor(percent * red) );
-                }
-                if( percent * green > 255 ) {
-                    green_start = "FF";
-                } else {
-                    green_start = dectohex( Math.floor(percent * green) );
-                }
-                if( percent * blue > 255 ) {
-                    blue_start = "FF";
-                } else {
-                    blue_start = dectohex( Math.floor(percent * blue) );
-                }
-				
-                if( convex ) {
-                    percent = ( 100 - (slider_value - 40) ) / 100;
-                } else {
-                    percent = ( 100 - (40 - slider_value) ) / 100;
-                }
-				
-                var red_end = dectohex( Math.floor(percent * red) );
-                var green_end = dectohex( Math.floor(percent * green) );
-                var blue_end = dectohex( Math.floor(percent * blue) );
-				
-                var start, end;
-                if( convex ) {
-                    start = "#" + red_start + "" + green_start + "" + blue_start + "";
-                    end = "#" + red_end + "" + green_end + "" + blue_end + "";
-                } else {
-                    start = "#" + red_end + "" + green_end + "" + blue_end + "";
-                    end = "#" + red_start + "" + green_start + "" + blue_start + "";
-                }
-                $tab.find( "[data-type=start][data-name=" + prefix + "-background-start]" ).val( start ).css( "background-color", start );
-                $tab.find( "[data-type=end][data-name=" + prefix + "-background-end]" ).val( end ).css( "background-color", end );
-                style_array[prefix + "-background-color"] = color;
-                style_array[prefix + "-background-start"] = start;
-                style_array[prefix + "-background-end"] = end;
-                updateAllCSS();
-            }
-        });
-		
-        $tab.find( "[data-type=start]" ).add( $tab.find( "[data-type=end]" ) ).bind("blur mouseup change keyup", function() {
             var index = $( this ).attr( "data-name" ) + "";
             index = index.split( "-" );
             var prefix = index[0] + "-" + index[1];
-            var start = $tab.find( "[data-type=start][data-name=" + prefix + "-background-start]" ).val();
-            var end = $tab.find( "[data-type=end][data-name=" + prefix + "-background-end]" ).val();
+            var color = $tab.find( "input[data-type=background][data-name|=" + prefix + "]" ).val();
+            var slider_value = $tab.find( ".slider[data-type=background][data-name|=" + prefix + "]" ).slider( "value" );
+			
+            var color_arr = color.split( "" );
+			
+            var red = hextodec( color_arr[1] + color_arr[2] );
+            var green = hextodec( color_arr[3] + color_arr[4] );
+            var blue = hextodec( color_arr[5] + color_arr[6] );
+			
+            var convex, red_start, green_start, blue_start, percent;
+            
+            if( slider_value >= 40 ) {
+                convex = 1;
+                percent = 1 + ( slider_value - 40 ) / 100;
+            } else {
+                convex = 0;
+                percent = 1 + ( 40 - slider_value ) / 100;
+            }
+            if( percent * red > 255 ) {
+                red_start = "FF";
+            } else {
+                red_start = dectohex( Math.floor(percent * red) );
+            }
+            if( percent * green > 255 ) {
+                green_start = "FF";
+            } else {
+                green_start = dectohex( Math.floor(percent * green) );
+            }
+            if( percent * blue > 255 ) {
+                blue_start = "FF";
+            } else {
+                blue_start = dectohex( Math.floor(percent * blue) );
+            }
+			
+            if( convex ) {
+                percent = ( 100 - (slider_value - 40) ) / 100;
+            } else {
+                percent = ( 100 - (40 - slider_value) ) / 100;
+            }
+			
+            var red_end = dectohex( Math.floor(percent * red) );
+            var green_end = dectohex( Math.floor(percent * green) );
+            var blue_end = dectohex( Math.floor(percent * blue) );
+			
+            var start, end;
+            if( convex ) {
+                start = "#" + red_start + "" + green_start + "" + blue_start + "";
+                end = "#" + red_end + "" + green_end + "" + blue_end + "";
+            } else {
+                start = "#" + red_end + "" + green_end + "" + blue_end + "";
+                end = "#" + red_start + "" + green_start + "" + blue_start + "";
+            }
+            $tab.find( "[data-type=start][data-name=" + prefix + "-background-start]" ).val( start ).css( "background-color", start );
+            $tab.find( "[data-type=end][data-name=" + prefix + "-background-end]" ).val( end ).css( "background-color", end );
+            TR.styleArray[prefix + "-background-color"] = color;
+            TR.styleArray[prefix + "-background-start"] = start;
+            TR.styleArray[prefix + "-background-end"] = end;
+            TR.updateAllCSS();
+        }
+    });
+	
+    $tab.find( "[data-type=start]" ).add( $tab.find( "[data-type=end]" ) ).bind("blur mouseup change keyup", function() {
+        var index = $( this ).attr( "data-name" ) + "";
+        index = index.split( "-" );
+        var prefix = index[0] + "-" + index[1];
+        var start = $tab.find( "[data-type=start][data-name=" + prefix + "-background-start]" ).val();
+        var end = $tab.find( "[data-type=end][data-name=" + prefix + "-background-end]" ).val();
 
-            style_array[prefix + "-background-start"] = start;
-            style_array[prefix + "-background-end"] = end;
-            updateAllCSS();
-        });
+        TR.styleArray[prefix + "-background-start"] = start;
+        TR.styleArray[prefix + "-background-end"] = end;
+        TR.updateAllCSS();
+    });
 
-		$( ".delete-swatch-" + alpha[tab - 1] ).click( deleteSwatch );
-    }
-
-	$.tr.addMostRecent = addMostRecent;
-	$.tr.moving_color = $.tr.moving_color;
-
-	$(document).trigger("themerollerready");
+	$( ".delete-swatch-" + TR.alpha[tab - 1] ).click( function(e){
+		TR.deleteSwatch( e, $(this) );
+	});
 }
 
-
-
-})( jQuery, window );
+}) ( jQuery, window );

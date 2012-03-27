@@ -1,0 +1,59 @@
+#interface{position: relative;left: -9999px;}
+
+img{border: none;}
+
+/*Colorpicker*/
+#colorpicker{z-index: 3; display: none; position: relative; background-color: #333; width: 196px; height: 197px; border-radius: 5px; border: 1px solid white;}
+#colorpicker #picker-colors{position: relative;top: -170px;left: 200px;width: 20px;height: 140px;background-color: #444; padding: 5px;}
+#picker-colors .color-drag{width: 18px;height: 18px;float: none;margin: 6px 0;}
+
+/*ThemeRoller Mobile*/
+#style{display: none;}
+.sub #page h2{text-align: left; width: 100%; margin: auto; margin-top: 20px}
+
+#tr_panel .more{color: #000; margin-left: 5px; font-family: courier, mono-space; border: 1px solid #000; padding: 2px 5px 0 5px; font-weight: bold; text-decoration: none;}
+#tr_panel .start-end{margin-top: 5px; display: none;}
+#tr_panel{float: left; width: 320px; height: 600px; background: #DDD; border-right: 1px solid #777;}
+#tr_panel #tr_header{ height: 40px; background: #333; padding: 16px 10px 10px;} 
+#tr_panel #tr_logo{width: 165px; color: #7f7}
+#tr_panel #tr_logo img{width: inherit;}
+#tr_panel #tr_download{height: 16px; position: relative; left: 179px; bottom: 35px;}
+#tr_panel #tr_download img{height: inherit;}
+#tr_panel #tr_header #separator{height: 1px; width: 123px; background-color: #777; position: relative; left: 178px; bottom: 37px}
+#tr_panel #tr_links{position: relative; left: 184px; bottom: 33px;}
+#tr_panel #tr_links a{text-decoration: none; color: #ccc; font-size: 11px; margin: 0 5px}
+#tr_panel label{margin: 0 5px; position: relative; padding-top: 2px;}
+#tr_panel label.first{width: 85px; margin: 0 5px; text-align: right; float: left; display: block; position: static;}
+#tr_panel .clear{clear: both;}
+#tr_panel .ui-accordion .ui-accordion-content{padding: 7px;}
+#tr_panel .ui-accordion .ui-accordion-header a{color: #000; font-weight: normal}
+#tr_panel input[data-type=text-shadow]{width: 30px; float: left; margin-right: 5px;}
+#tr_panel input[data-type=text-shadow].colorwell{width: 53px;}
+#tr_panel input[data-type=radius]{width: 35px;}
+#tr_panel .colorwell{width: 53px;}
+#tr_panel .colorwell.hover{border: 2px solid #0dd}
+#tr_panel .slider{display: inline-block; zoom: 1; *display: inline; width: 80px; position: relative; top: 1px; margin-left: 10px;}
+#tr_panel .separator{margin: 5px; border-bottom: 2px solid #EEEEEE;}
+#tr_panel input[data-type=font-family]{width: 170px;}
+#tr_panel input[data-type=icon_set]{width: 80px}
+#tr_panel input#with_disc{width: 90px}
+#tr_panel input#icon_opacity{width: 25px}
+#tr_panel input#box-shadow-opacity{width: 30px;}
+#tr_panel input#box-shadow-size{width: 30px;}
+#tr_panel .end-label{position: relative; top: -3px;}
+#tr_panel .start-end.links{margin-top: 0}
+
+#tr_panel h1 a{float: right; font-size: 10px;}
+
+#tr_panel .ui-tabs {font-family:"Segoe ui", verdana, arial, sans-serif; font-weight: normal; position: relative; padding: .2em; zoom: 1; padding: 0; margin: 0; border: 0;} /* position: relative prevents IE scroll bug (element with position: relative inside container with overflow: auto appear as "fixed") */
+#tr_panel .ui-tabs .ui-widget-header{background: #777; padding: 0; border: 0;}
+#tr_panel .ui-tabs h1{color: #F1A704; background: white; height: 20px; font-size: 12px; margin: 0; padding: 5px;}
+#tr_panel .ui-tabs .ui-tabs-nav { margin: 0; padding: 0; border: 0px 0px 0px 0px; padding-bottom: 1px}
+#tr_panel .ui-tabs .ui-tabs-nav li {line-height: inherit; background: #666; border: 1px solid #333; list-style: none; float: left; margin: 0 1px 0 0; position: relative; top: 1px; border-bottom: 0 !important; padding: 0; white-space: nowrap; }
+#tr_panel .ui-tabs .ui-tabs-nav li a { font-weight: normal; color: #fff; font-size: 11px; float: left; padding: .5em 1em; text-decoration: none; text-shadow: 0px 1px 1px #000}
+#tr_panel .ui-tabs .ui-tabs-nav li.ui-tabs-selected { background: #FFFFFF; margin-bottom: 0; padding-bottom: 1px; }
+#tr_panel .ui-tabs .ui-tabs-nav li.ui-tabs-selected>a{text-shadow: none;}
+#tr_panel .ui-tabs .ui-tabs-nav li.ui-tabs-selected a, .ui-tabs .ui-tabs-nav li.ui-state-disabled a, .ui-tabs .ui-tabs-nav li.ui-state-processing a { cursor: text; color: #000;  }
+#tr_panel .ui-tabs .ui-tabs-nav li a, .ui-tabs.ui-tabs-collapsible .ui-tabs-nav li.ui-tabs-selected a { cursor: pointer; } /* first selector in group seems obsolete, but required to overcome bug in Opera applying cursor: text overall if defined elsewhere... */
+#tr_panel div.ui-tabs .ui-tabs-panel { display: block; border-width: 0; padding: 0; background: none;}
+#tr_panel .ui-tabs .ui-tabs-hide { display: none !important; }
