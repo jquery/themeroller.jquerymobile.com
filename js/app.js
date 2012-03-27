@@ -930,7 +930,8 @@ TR.initControls = function() {
 	//global more dictionary keeps track of which start-end fields are showing
     //i.e. more["a-bar-background"] = "showing" means that the next click of that .more should
     //hide that set of start-end fields
-    $( ".more" ).click(function() {
+    $( ".more" ).click(function(e) {
+		e.preventDefault();
         var index = $( this ).attr( "data-name" );
         if( TR.showStartEnd[index] ) {
             if( TR.showStartEnd[index] == "showing" ) {
@@ -1133,7 +1134,7 @@ TR.initThemeRoller = function() {
 	TR.correctNumberOfSwatches();
 	
 	TR.swatch_template = "<div class=\"preview ui-shadow swatch\">\n		<div class=\"ui-header ui-bar-a\" data-swatch=\"a\" data-theme=\"a\" data-form=\"ui-bar-a\" data-role=\"header\" role=\"banner\">\n			<a class=\"ui-btn-left ui-btn ui-btn-icon-notext ui-btn-corner-all ui-shadow ui-btn-up-a\" data-iconpos=\"notext\" data-theme=\"a\" data-role=\"button\" data-icon=\"home\" title=\" Home \">\n				<span class=\"ui-btn-inner ui-btn-corner-all\">\n					<span class=\"ui-btn-text\"> Home </span>\n					<span data-form=\"ui-icon\" class=\"ui-icon ui-icon-home ui-icon-shadow\"></span>\n				</span>\n			</a>\n			<h1 class=\"ui-title\" tabindex=\"0\" role=\"heading\" aria-level=\"1\">A</h1>\n			<a class=\"ui-btn-right ui-btn ui-btn-icon-notext ui-btn-corner-all ui-shadow ui-btn-up-a\" data-iconpos=\"notext\" data-theme=\"a\" data-role=\"button\" data-icon=\"grid\" title=\" Navigation \">\n				<span class=\"ui-btn-inner ui-btn-corner-all\">\n					<span class=\"ui-btn-text\"> Navigation </span>\n					<span data-form=\"ui-icon\" class=\"ui-icon ui-icon-grid ui-icon-shadow\"></span>\n				</span>\n			</a>\n		</div>\n\n		<div class=\"ui-content ui-body-a\" data-theme=\"a\" data-form=\"ui-body-a\" data-role=\"content\" role=\"main\">\n\n			<p>\n				Sample text and <a class=\"ui-link\" data-form=\"ui-body-a\" href=\"#\" data-theme=\"a\">links</a>.\n			</p>\n\n			<div data-role=\"fieldcontain\">\n			    <fieldset data-role=\"controlgroup\">\n						<li data-swatch=\"a\" class=\"ui-li ui-li-divider ui-btn ui-bar-a ui-corner-top\" data-role=\"list-divider\" role=\"\" data-form=\"ui-bar-a\">List Header</li>\n\n						<input type=\"radio\" name=\"radio-choice-a\" id=\"radio-choice-1-a\" value=\"choice-1\" checked=\"checked\" />\n				        <label for=\"radio-choice-1-a\" data-form=\"ui-btn-up-a\" class=\"ui-corner-none\">Radio 1</label>\n\n		         		<input type=\"radio\" name=\"radio-choice-a\" id=\"radio-choice-2-a\" value=\"choice-2\"  />\n			         	<label for=\"radio-choice-2-a\" data-form=\"ui-btn-up-a\">Radio 2</label>\n\n						<input type=\"checkbox\" name=\"checkbox-1\" id=\"checkbox-1\" class=\"custom\" checked=\"checked\" />\n						<label for=\"checkbox-1\" data-form=\"ui-btn-up-a\">Checkbox</label>\n\n\n			    </fieldset>\n			</div>\n\n			<div data-role=\"fieldcontain\"> \n				<fieldset data-role=\"controlgroup\" data-type=\"horizontal\">\n						<input type=\"radio\" name=\"radio-view-a\" id=\"radio-view-a-a\" value=\"list\" checked=\"checked\"/> \n						<label for=\"radio-view-a-a\" data-form=\"ui-btn-up-a\">On</label> \n						<input type=\"radio\" name=\"radio-view-a\" id=\"radio-view-b-a\" value=\"grid\"  /> \n						<label for=\"radio-view-b-a\" data-form=\"ui-btn-up-a\">Off</label> \n				</fieldset> \n			</div>\n\n			<div data-role=\"fieldcontain\">\n				<select name=\"select-choice-1\" id=\"select-choice-1\" data-native-menu=\"false\" data-theme=\"a\" data-form=\"ui-btn-up-a\">\n					<option value=\"standard\">Option 1</option>\n					<option value=\"rush\">Option 2</option>\n					<option value=\"express\">Option 3</option>\n					<option value=\"overnight\">Option 4</option>\n				</select>\n			</div>\n\n			<input type=\"text\" value=\"Text Input\" class=\"input\" data-form=\"ui-body-a\" />\n\n			<div data-role=\"fieldcontain\">\n				<input type=\"range\" name=\"slider\" value=\"0\" min=\"0\" max=\"100\" data-form=\"ui-body-a\" data-theme=\"a\" />\n			</div>\n\n			<button data-icon=\"star\" data-theme=\"a\" data-form=\"ui-btn-up-a\">Button</button>\n		</div>\n	</div>";
-	TR.panel_template = $( "#tab2" ).html();
+	TR.panelTemplate = $( "#tab2" ).html();
 }
 
 //pad a string with zeroes to a certain length
@@ -1535,7 +1536,8 @@ TR.updateThemeRoller = function( tab ) {
         });
     });
 	
-    $tab.find( ".more" ).click(function() {
+    $tab.find( ".more" ).click(function( e ) {
+		e.preventDefault();
         var index = $( this ).attr( "data-name" );
         if( TR.showStartEnd[index] ) {
             if( TR.showStartEnd[index] == "showing" ) {
