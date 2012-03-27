@@ -21,8 +21,6 @@ window.TR = TR;
 TR.styleArray = [];
 TR.tokens = {};
 
-TR.version = "";
-
 TR.showStartEnd = [];
 TR.firstAdd = 1;
 TR.welcomed = 0;
@@ -129,7 +127,7 @@ TR.addSwatch = function( new_style ) {
 		}
 		
 		//giving the contents of the new tab
-        var temp_panel_template = TR.panel_template.replace( /Swatch A/, "Swatch " + upper )
+        var temp_panel_template = TR.panelTemplate.replace( /Swatch A/, "Swatch " + upper )
 			.replace( /"a\-/g, "\"" + lower + "-" ).replace( /\-a"/g, "-" + lower + "\"" );
 		
 		$( "#tabs" ).tabs( "add", "#tab" + (TR.tabCount + 1), "+" )
@@ -352,7 +350,7 @@ TR.correctNumberOfSwatches = function() {
 		
 			//import default theme
 			$.ajax({
-				url: "jqm/" + TR.version + "/default.css",
+				url: "css/jqm.starter.theme.css",
 				dataType: "text",
 				mimeType: "text/plain",
 				success: function( data ) {
@@ -594,7 +592,7 @@ TR.dialogs = function() {
 		e.preventDefault();
 		
 		$.ajax({
-			url: "jqm/" + TR.version + "/default_theme.css",
+			url: "css/jqm.default.theme.css",
 			dataType: "text",
 			mimeType: "text/plain",
 			success: function( data ) {
@@ -879,8 +877,8 @@ TR.initControls = function() {
 
 	//Icon Set
     $( "[data-type=icon_set]" ).bind( "blur mouseup", function() {
-        TR.styleArray[$( this ).attr( "data-name" )] = "url(../jqm/" + TR.version + "/images/icons-18-" + this.value + ".png)";
-		TR.styleArray["global-large-icon-set"] = "url(../jqm/" + TR.version + "images/icons-36-" + this.value + ".png)";
+        TR.styleArray[$( this ).attr( "data-name" )] = "url(/images/icons-18-" + this.value + ".png)";
+		TR.styleArray["global-large-icon-set"] = "url(images/icons-36-" + this.value + ".png)";
         TR.updateAllCSS();
     });
 
@@ -1097,12 +1095,9 @@ TR.initStyleArray = function( refresh ) {
 }
 
 //first initialization method called when the DOM and the iframe are both loaded
-//defines globals like TR.styleArray, TR.version, and TR.iframe - also calls other initialization methods
+//defines globals like TR.styleArray and TR.iframe - also calls other initialization methods
 TR.initThemeRoller = function() {
 	TR.iframe = $( "iframe" ).contents();
-
-	//#version is where the version number is put
-	TR.version = $( "#version" ).text();
 
     //#style is where the initial CSS file is put
     //copy it to #styleblock so its in the scope of the iframe

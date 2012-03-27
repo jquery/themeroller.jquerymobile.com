@@ -14,15 +14,15 @@ if ( isset($_GET['style_id']) ) {
 	<link rel="canonical" href="index.php" />
 	<link rel="shortcut icon" type="image/x-icon" href="images/favicon.png" />
 
-	<link rel="stylesheet" type="text/css" href="css/layout.css" media="all" />
-	<link rel="stylesheet" type="text/css" href="css/jquery-ui.css" />
+	<link rel="stylesheet" type="text/css" href="css/tr.layout.css" media="all" />
+	<link rel="stylesheet" type="text/css" href="css/jquery.ui.css" />
 	<link rel="stylesheet" type="text/css" href="css/farbtastic.css" />
-	<link rel="stylesheet" type="text/css" href="css/panel.css" />
+	<link rel="stylesheet" type="text/css" href="css/tr.panel.css" />
 
 	<script src="js/jquery.js"></script>
-	<script src="js/jquery-ui.js"></script>
-	<script src="js/jquery-ui-tabs-paging.js"></script>
-	<script src="js/jquery-color.js"></script>
+	<script src="js/jquery.ui.js"></script>
+	<script src="js/jquery.ui.tabs.paging.js"></script>
+	<script src="js/jquery.color.js"></script>
 	<script src="js/farbtastic.js"></script>
 	<script src="js/app.js"></script>
 	<script src="js/ui.js"></script>
@@ -574,16 +574,13 @@ if ( isset($_GET['style_id']) ) {
 			</div>
 
 			<div id="content">
-				<iframe id="frame" src="previews/<?php echo $JQM_VERSION; ?>.html" onload="TR.iframeLoadCallback();">
+				<iframe id="frame" src="preview.html" onload="TR.iframeLoadCallback();">
 				</iframe>
 			</div>
-
-			<div id="version"><?php echo $JQM_VERSION; ?></div>
 			
-			<div id="style">
-				<?php
+			<div id="style"><?php
 					//If the file exists we add the CSS here, if not, we leave it blank for the JS to find on load
-					$file_path = "jqm/" . $JQM_VERSION . "/default.css";
+					$file_path = "css/jqm.starter.theme.css";
 					if( isset($style_id) ) {
 						$file_path = "css/user_themes/" . $style_id . ".css";
 					}
