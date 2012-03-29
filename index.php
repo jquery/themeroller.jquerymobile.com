@@ -1,5 +1,6 @@
 <?php
 require_once( 'version.php' );
+require_once( 'upgrade/upgrade.php' );
 if ( isset($_GET['style_id']) ) {
 	$style_id = $_GET['style_id'];
 }
@@ -27,6 +28,7 @@ if ( isset($_GET['style_id']) ) {
 	<script src="js/app.js"></script>
 	<script src="js/ui.js"></script>
 	<script src="js/kuler.js"></script>
+	<script src="upgrade/upgrade.js"></script>
 </head>
 <body>
 	
@@ -71,20 +73,17 @@ if ( isset($_GET['style_id']) ) {
 			</div>
 		</div>
 
-		<div id="importing" class="dialog" title=" ">
-			<h1><img src="images/ajax-loader-white.gif" alt=" " /><strong>Importing...</strong></h1>
-			<div class="buttonpane">
-
-				<img src="images/target_big.png" alt=" "/>
-				<p>
-					Please give us a moment to update the panel with
-					the appropriate values.
-				</p>
-			</div>
-		</div>
-
 		<div id="upload" class="dialog" title=" ">
 			<h1><strong>Import</strong> Theme<span href="#" id="import-default">Import Default Theme</span></h1>
+			<?php
+				if (isset($VERSION_LIST)) {
+					echo '<label>Upgrade to version:</label><select id="upgrade-to-version">';
+					foreach($VERSION_LIST as $key => $l) {
+						echo '<option value="' . $key . '">' . $l . '</option>';
+					}
+					echo '</select>';
+				}
+			?>
 			<textarea id="load-css"></textarea>
 			<div class="buttonpane">
 

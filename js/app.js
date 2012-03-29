@@ -138,7 +138,7 @@ TR.addSwatch = function( new_style ) {
 		TR.updateFormValues( $("#tab" + TR.tabCount) );
 		
         //adding swatch to preview document
-        var temp_swatch_template = TR.swatch_template.replace( /"a"/g, "\"" + lower + "\"" ).replace( />A<\/h1>/g, ">" + upper + "</h1>" )
+        var temp_swatch_template = TR.swatchTemplate.replace( /"a"/g, "\"" + lower + "\"" ).replace( />A<\/h1>/g, ">" + upper + "</h1>" )
         	.replace( /-a\s/g, "-" + lower + " " ).replace( /-a\"/g, "-" + lower + "\"" );
         $( temp_swatch_template ).insertAfter( TR.iframe.find(".swatch:last") );
 		
@@ -356,7 +356,7 @@ TR.correctNumberOfSwatches = function() {
 				success: function( data ) {
 					$( "#upload textarea" ).val( data );
 					TR.styleBlock.text( data ); 
-					correctNumberOfSwatches();
+					TR.correctNumberOfSwatches();
 				}
 			});
 		} else {
@@ -468,311 +468,6 @@ TR.deleteSwatch = function( e, ele ) {
     TR.updateAllCSS();
 	
 	return false;
-}
-
-//initializes the dialogs
-TR.dialogs = function() {
-	$( "#welcome" ).dialog({
-		autoOpen: false,
-		width: 560,
-		modal: true,
-		resizable: false,
-		draggable: false,
-		buttons: {
-			"Get Rolling": function() {
-				$( this ).dialog( "close" );
-			}
-		}
-	});
-	
-	$( "#share" ).dialog({
-		autoOpen: false,
-		modal: true,
-		width: 800,
-		resizable: false,
-		draggable: false,
-		buttons: {
-			"Done": function() {
-				$( this ).dialog( "close" );
-			}
-		}
-	});
-		
-	$( "#tr_window" ).dialog({
-		autoOpen: false,
-		modal: false,
-		width: 320,
-		height: "auto",
-		position: [0, 116],
-		maxWidth: 320,
-		dialogClass: "tr_widget"
-	});
-		
-	$( "#importing" ).dialog({
-		autoOpen: false,
-		modal: true,
-		resizeable: false,
-		draggable: false,
-		height: 70
-	});
-		
-    $( "#upload" ).dialog({
-        autoOpen: false,
-        modal: true,
-        width: 800,
-        height: 430,
-		resizable: false,
-		draggable: false,
-        buttons: {
-            "Cancel": function() { 
-                $( "#upload" ).dialog( "close" ); 
-            },
-            "Import": function() {
-                $( "#upload" ).dialog( "close" );
-            	if( $( "#load-css" ).val() != "" ) {
-					TR.styleBlock.text( $("#load-css").val() );
-					TR.initStyleArray();
-					TR.correctNumberOfSwatches();
-                }
-				
-            }
-        }
-    });
-
-	$( "#help" ).dialog({
-		autoOpen: false,
-		width: 700,
-		height: 400,
-		modal: true,
-		resizable: false,
-		draggable: false,
-		buttons: {
-			"Close": function() {
-				$( this ).dialog( "close" );
-			}
-		}
-	});
-	
-    $( "#download" ).dialog({
-        autoOpen: false,
-        modal: true,
-        width: 850,
-		resizable: false,
-		draggable: false,
-        buttons: {
-			"Close": function() { 
-                $( this ).dialog( "close" ); 
-            },
- 			"Download Zip": function() {
-				var theme_name = $( "input", this ).val();
-				if( theme_name && theme_name.indexOf(" ") == -1 ) {
-					
-					$.ajax({
-						url: "./zip.php",
-						type: "POST",
-						data: "theme_name=" + $( "input", this ).val() + "&file=" + encodeURIComponent(TR.styleBlock.text()),
-						dataType: "text",
-						mimeType: "text/plain",
-						beforeSend: function() {
-							//loading gif here
-						},
-						success: function(response) {
-							window.location = response;
-						}
-					});
-					
-				} else {
-					alert( "Invalid theme name" );
-				}
-            }
-        }
-    });
-
-	$( "#import-default" ).click(function(e) {
-		e.preventDefault();
-		
-		$.ajax({
-			url: "css/jqm.default.theme.css",
-			dataType: "text",
-			mimeType: "text/plain",
-			success: function( data ) {
-				$( "#load-css" ).val( data ); 
-			}
-		});
-	});
-	
-	//ajax call performed when share link is clicked
-	$( "#generate_url" ).click(function(e) {
-		e.preventDefault();
-		
-		$( "#share" ).dialog( "open" );
-		
-		var post_data = "file=" + TR.styleBlock.text();
-		
-		$.ajax({
-			type: "post",
-			url: "share.php",
-			data: post_data,
-			beforeSend: function() {
-				$( "#share" ).dialog("open" );
-			},
-			success: function( data ) {
-				$( "#share input" ).val( data );
-			}
-		});
-	});
-	
-	//help dialog
-	$( "#tr_help" ).click(function(e) {
-		e.preventDefault();
-		$( "#help" ).dialog( "open" );
-	});
-	
-	//upload dialog
-    $( "#tr_upload" ).click(function() {
-        $( "#upload" ).dialog( "open" );
-        return false;
-    });
-
-	//download dialog
-    $( "#tr_download" ).click(function() {
-        $( "#download" ).dialog( "open" );			
-        return false;
-    });
-	
-    //removing the close button from ui-dialogs
-    $( ".tr_widget .ui-dialog-titlebar-close" ).remove();
-}
-
-//initializes the draggable colors and the drop method
-TR.draggableColors = function() {
-	//draggable colors
-	$( ".color-drag:not(.disabled)" ).draggable({
-		appendTo: "body",
-		revert: true,
-		revertDuration: 200,
-		opacity: 1,
-		containment: "document",
-		cursor: "move",
-		helper: "clone",
-		zIndex: 3000,
-		iframeFix: true,
-		drag: function() {
-			TR.movingColor = 1;
-		}
-	});
-	
-	//droppable for colorwell
-	$( ".colorwell" ).droppable({
-		accept: ".color-drag",
-		hoverClass: "hover",
-		drop: function() {
-			var $this = $( this );
-			var color = TR.rgbtohex( $(".ui-draggable-dragging").css("background-color") );
-			$( ".ui-draggable .ui-draggable-dragging" ).trigger( "drop" );
-			$this.val( color ).css( "background-color", color );
-			$this.trigger( "change" );
-		}
-	});
-	
-	//large mouseup event detects if the user is dragging a color
-	//if so it runs throught the dom to see if the mouse position is above
-	//an acceptable element, if so it calls applyColor on that element
-	$(document).mouseup(function(e) {
-		var classtokey = {
-			".ui-bar-" : "-bar",
-			".ui-body-" : "-body",
-			".ui-btn-up-": "-bup",
-			".ui-link": "-link",
-			".ui-btn-active": "-active"
-		}
-
-		//different alpha array - no global
-		var alphabet = [ "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z" ];
-
-		var droppables = [ ".ui-btn-up-", ".ui-bar-", ".ui-body-" ];
-		
-		if(TR.movingColor) {
-			TR.movingColor = 0;
-			var frame_offset = $( "iframe" ).offset();
-			var el_offset = TR.iframe.find( ".ui-bar-a" ).offset();
-			
-			var element = null;
-			var el_class = "";
-			//loop through possible classes and if mouse is above one,
-			//end the loop (order is based on precedence)
-			for( var i = 0; i < droppables.length; i++ ) {
-				for( var j = 0; j < alphabet.length; j++ ) {
-					TR.iframe.find( droppables[i] + alphabet[j] ).each(function() {
-						var $this = $( this );
-						var top = frame_offset.top + $this.offset().top - TR.iframe.scrollTop(), bottom = top + $this.outerHeight(),
-							left = frame_offset.left + $this.offset().left, right = left + $this.outerWidth();
-						if( e.pageX <= right && e.pageX >= left && e.pageY <= bottom && e.pageY >= top ) {
-							el_class = droppables[i] + alphabet[j];
-							element = $this;
-							return false;
-						}
-					});
-					if( element ) {
-						break;
-					}
-				}
-				if( element ) {
-					break;
-				}
-			}
-			//another loop to check if over a link or the active state
-			TR.iframe.find( ".ui-link, .ui-btn-active" ).each(function() {
-				var $this = $( this );
-				var top = frame_offset.top + $this.offset().top - TR.iframe.scrollTop(), bottom = top + $this.outerHeight(),
-					left = frame_offset.left + $this.offset().left, right = left + $this.outerWidth();
-				if( e.pageX <= right && e.pageX >= left && e.pageY <= bottom && e.pageY >= top ) {
-					if( $this.hasClass("ui-btn-active") ) {
-						el_class = ".ui-btn-active";
-					} else {
-						el_class = ".ui-link";
-					}
-					element = $this;
-					return false;
-				}
-			});
-			if( !element ) {
-				//if no acceptable element was found, drop the color
-				$( ".ui-draggable .ui-draggable-dragging" ).trigger( "drop" );
-			} else {
-				//else apply the color and select the element in the panel
-				var swatch = element.attr( "data-theme" );
-				if( el_class == ".ui-btn-active" ) {
-					swatch = "global";
-				}
-				if( el_class.indexOf(".ui-bar") != -1 ) {
-					swatch = element.attr( "data-swatch" );
-				}
-				var color = $( ".color-drag.ui-draggable-dragging" ).css( "background-color" ) || $( ".kuler-color.ui-draggable-dragging" ).css( "background-color" );
-				color = TR.rgbtohex( color );
-			
-				for( var i in classtokey ) {
-					if( el_class.indexOf(i) != -1 ) {
-						TR.applyColor( color, swatch + classtokey[i] );
-						break;
-					}
-				}
-								
-	            TR.selectElement(element);
-	
-				//store color in most recent colors
-				var color = element.css("background-color");
-				TR.addMostRecent( color );
-			}
-		}
-		
-	});
-
-	//triggering change on current colorwell forces the update of the css as well as
-	//the change in background of the slider
-    $( "#colorpicker" ).bind( "mousemove", function() {
-        $( ".colorwell[data-name=" + $("*:focus").attr("data-name") + "]" ).trigger( "change" );
-    });
 }
 
 //takes a hex color and computes the grayscale value
@@ -978,6 +673,286 @@ TR.initControls = function() {
 	});
 }
 
+//initializes the dialogs
+TR.initDialogs = function() {
+	var dialogObj = {
+		autoOpen: false,
+		modal: true,
+		resizable: false,
+		draggable: false,
+	};
+	
+	$( "#welcome" ).dialog( $.extend( {}, dialogObj, {
+		width: 560,
+		buttons: {
+			"Get Rolling": function() {
+				$( this ).dialog( "close" );
+			}
+		}
+	}));
+	
+	$( "#share" ).dialog( $.extend( {}, dialogObj, {
+		width: 800,
+		buttons: {
+			"Done": function() {
+				$( this ).dialog( "close" );
+			}
+		}
+	}));
+		
+	$( "#importing" ).dialog( $.extend( {}, dialogObj, {
+		height: 70
+	}));
+	
+	if ( !TR.initUpgrade ) {
+    	$( "#upload" ).dialog( $.extend( {}, dialogObj, {
+	        width: 800,
+	        height: 430,
+	        buttons: {
+	            "Cancel": function() { 
+	                $( "#upload" ).dialog( "close" ); 
+	            },
+	            "Import": function() {
+	                $( "#upload" ).dialog( "close" );
+	            	if( $( "#load-css" ).val() != "" ) {
+						TR.styleBlock.text( $("#load-css").val() );
+						TR.initStyleArray();
+						TR.correctNumberOfSwatches();
+	                }
+				
+	            }
+	        }
+	    }));
+	
+		$( "#import-default" ).click(function(e) {
+			e.preventDefault();
+
+			$.ajax({
+				url: "css/jqm.default.theme.css",
+				dataType: "text",
+				mimeType: "text/plain",
+				success: function( data ) {
+					$( "#load-css" ).val( data ); 
+				}
+			});
+		});
+	}
+
+	$( "#help" ).dialog( $.extend( {}, dialogObj, {
+		width: 700,
+		height: 400,
+		buttons: {
+			"Close": function() {
+				$( this ).dialog( "close" );
+			}
+		}
+	}));
+	
+    $( "#download" ).dialog( $.extend( {}, dialogObj, {
+        width: 850,
+        buttons: {
+			"Close": function() { 
+                $( this ).dialog( "close" ); 
+            },
+ 			"Download Zip": function() {
+				var theme_name = $( "input", this ).val();
+				if( theme_name && theme_name.indexOf(" ") == -1 ) {
+					
+					$.ajax({
+						url: "./zip.php",
+						type: "POST",
+						data: "theme_name=" + $( "input", this ).val() + "&file=" + encodeURIComponent(TR.styleBlock.text()),
+						dataType: "text",
+						mimeType: "text/plain",
+						beforeSend: function() {
+							//loading gif here
+						},
+						success: function(response) {
+							window.location = response;
+						}
+					});
+					
+				} else {
+					alert( "Invalid theme name" );
+				}
+            }
+        }
+    }));
+	
+	//ajax call performed when share link is clicked
+	$( "#generate_url" ).click(function(e) {
+		e.preventDefault();
+		
+		$( "#share" ).dialog( "open" );
+		
+		var post_data = "file=" + TR.styleBlock.text();
+		
+		$.ajax({
+			type: "post",
+			url: "share.php",
+			data: post_data,
+			beforeSend: function() {
+				$( "#share" ).dialog("open" );
+			},
+			success: function( data ) {
+				$( "#share input" ).val( data );
+			}
+		});
+	});
+	
+	//help dialog
+	$( "#tr_help" ).click(function(e) {
+		e.preventDefault();
+		$( "#help" ).dialog( "open" );
+	});
+	
+	//upload dialog
+    $( "#tr_upload" ).click(function() {
+        $( "#upload" ).dialog( "open" );
+        return false;
+    });
+
+	//download dialog
+    $( "#tr_download" ).click(function() {
+        $( "#download" ).dialog( "open" );			
+        return false;
+    });
+	
+    //removing the close button from ui-dialogs
+    $( ".tr_widget .ui-dialog-titlebar-close" ).remove();
+}
+
+//initializes the draggable colors and the drop method
+TR.initDraggableColors = function() {
+	//draggable colors
+	$( ".color-drag:not(.disabled)" ).draggable({
+		appendTo: "body",
+		revert: true,
+		revertDuration: 200,
+		opacity: 1,
+		containment: "document",
+		cursor: "move",
+		helper: "clone",
+		zIndex: 3000,
+		iframeFix: true,
+		drag: function() {
+			TR.movingColor = 1;
+		}
+	});
+	
+	//droppable for colorwell
+	$( ".colorwell" ).droppable({
+		accept: ".color-drag",
+		hoverClass: "hover",
+		drop: function() {
+			var $this = $( this );
+			var color = TR.rgbtohex( $(".ui-draggable-dragging").css("background-color") );
+			$( ".ui-draggable .ui-draggable-dragging" ).trigger( "drop" );
+			$this.val( color ).css( "background-color", color );
+			$this.trigger( "change" );
+		}
+	});
+	
+	//large mouseup event detects if the user is dragging a color
+	//if so it runs throught the dom to see if the mouse position is above
+	//an acceptable element, if so it calls applyColor on that element
+	$(document).mouseup(function(e) {
+		var classtokey = {
+			".ui-bar-" : "-bar",
+			".ui-body-" : "-body",
+			".ui-btn-up-": "-bup",
+			".ui-link": "-link",
+			".ui-btn-active": "-active"
+		}
+
+		//different alpha array - no global
+		var alphabet = [ "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z" ];
+
+		var droppables = [ ".ui-btn-up-", ".ui-bar-", ".ui-body-" ];
+		
+		if(TR.movingColor) {
+			TR.movingColor = 0;
+			var frame_offset = $( "iframe" ).offset();
+			var el_offset = TR.iframe.find( ".ui-bar-a" ).offset();
+			
+			var element = null;
+			var el_class = "";
+			//loop through possible classes and if mouse is above one,
+			//end the loop (order is based on precedence)
+			for( var i = 0; i < droppables.length; i++ ) {
+				for( var j = 0; j < alphabet.length; j++ ) {
+					TR.iframe.find( droppables[i] + alphabet[j] ).each(function() {
+						var $this = $( this );
+						var top = frame_offset.top + $this.offset().top - TR.iframe.scrollTop(), bottom = top + $this.outerHeight(),
+							left = frame_offset.left + $this.offset().left, right = left + $this.outerWidth();
+						if( e.pageX <= right && e.pageX >= left && e.pageY <= bottom && e.pageY >= top ) {
+							el_class = droppables[i] + alphabet[j];
+							element = $this;
+							return false;
+						}
+					});
+					if( element ) {
+						break;
+					}
+				}
+				if( element ) {
+					break;
+				}
+			}
+			//another loop to check if over a link or the active state
+			TR.iframe.find( ".ui-link, .ui-btn-active" ).each(function() {
+				var $this = $( this );
+				var top = frame_offset.top + $this.offset().top - TR.iframe.scrollTop(), bottom = top + $this.outerHeight(),
+					left = frame_offset.left + $this.offset().left, right = left + $this.outerWidth();
+				if( e.pageX <= right && e.pageX >= left && e.pageY <= bottom && e.pageY >= top ) {
+					if( $this.hasClass("ui-btn-active") ) {
+						el_class = ".ui-btn-active";
+					} else {
+						el_class = ".ui-link";
+					}
+					element = $this;
+					return false;
+				}
+			});
+			if( !element ) {
+				//if no acceptable element was found, drop the color
+				$( ".ui-draggable .ui-draggable-dragging" ).trigger( "drop" );
+			} else {
+				//else apply the color and select the element in the panel
+				var swatch = element.attr( "data-theme" );
+				if( el_class == ".ui-btn-active" ) {
+					swatch = "global";
+				}
+				if( el_class.indexOf(".ui-bar") != -1 ) {
+					swatch = element.attr( "data-swatch" );
+				}
+				var color = $( ".color-drag.ui-draggable-dragging" ).css( "background-color" ) || $( ".kuler-color.ui-draggable-dragging" ).css( "background-color" );
+				color = TR.rgbtohex( color );
+			
+				for( var i in classtokey ) {
+					if( el_class.indexOf(i) != -1 ) {
+						TR.applyColor( color, swatch + classtokey[i] );
+						break;
+					}
+				}
+								
+	            TR.selectElement(element);
+	
+				//store color in most recent colors
+				var color = element.css("background-color");
+				TR.addMostRecent( color );
+			}
+		}
+		
+	});
+
+	//triggering change on current colorwell forces the update of the css as well as
+	//the change in background of the slider
+    $( "#colorpicker" ).bind( "mousemove", function() {
+        $( ".colorwell[data-name=" + $("*:focus").attr("data-name") + "]" ).trigger( "change" );
+    });
+}
+
 //intialize mouseover and click events for Inspector
 TR.initInspector = function() {
 	//click on an element with inspector-on and select element in panel
@@ -1066,7 +1041,7 @@ TR.initStyleArray = function( refresh ) {
         reference = reference.substr( 1,reference.length-2 );
         index = style.search( reg );
         if( index != -1 ) {
-            TR.tokens[i++] = {
+      	    TR.tokens[i++] = {
                 value: style.substr( 0, index ), 
                 type: "string"
             };
@@ -1076,8 +1051,6 @@ TR.initStyleArray = function( refresh ) {
                 ref: reference
             };
             //update TR.styleArray
-            var prefix_end = reference.indexOf( "-" );
-            var prefix = reference.substring( 0, prefix_end );
             if( refresh != "refresh" ) {
 				TR.styleArray[reference] = TR.tokens[i-1].value.replace( /\/\*.*\*\//, "" );
 			}
@@ -1119,17 +1092,17 @@ TR.initThemeRoller = function() {
 	TR.panelTemplate = $( "#tab2" ).html();
 	TR.swatchTemplate = "<div class=\"preview ui-shadow swatch\">\n		<div class=\"ui-header ui-bar-a\" data-swatch=\"a\" data-theme=\"a\" data-form=\"ui-bar-a\" data-role=\"header\" role=\"banner\">\n			<a class=\"ui-btn-left ui-btn ui-btn-icon-notext ui-btn-corner-all ui-shadow ui-btn-up-a\" data-iconpos=\"notext\" data-theme=\"a\" data-role=\"button\" data-icon=\"home\" title=\" Home \">\n				<span class=\"ui-btn-inner ui-btn-corner-all\">\n					<span class=\"ui-btn-text\"> Home </span>\n					<span data-form=\"ui-icon\" class=\"ui-icon ui-icon-home ui-icon-shadow\"></span>\n				</span>\n			</a>\n			<h1 class=\"ui-title\" tabindex=\"0\" role=\"heading\" aria-level=\"1\">A</h1>\n			<a class=\"ui-btn-right ui-btn ui-btn-icon-notext ui-btn-corner-all ui-shadow ui-btn-up-a\" data-iconpos=\"notext\" data-theme=\"a\" data-role=\"button\" data-icon=\"grid\" title=\" Navigation \">\n				<span class=\"ui-btn-inner ui-btn-corner-all\">\n					<span class=\"ui-btn-text\"> Navigation </span>\n					<span data-form=\"ui-icon\" class=\"ui-icon ui-icon-grid ui-icon-shadow\"></span>\n				</span>\n			</a>\n		</div>\n\n		<div class=\"ui-content ui-body-a\" data-theme=\"a\" data-form=\"ui-body-a\" data-role=\"content\" role=\"main\">\n\n			<p>\n				Sample text and <a class=\"ui-link\" data-form=\"ui-body-a\" href=\"#\" data-theme=\"a\">links</a>.\n			</p>\n\n			<div data-role=\"fieldcontain\">\n			    <fieldset data-role=\"controlgroup\">\n						<li data-swatch=\"a\" class=\"ui-li ui-li-divider ui-btn ui-bar-a ui-corner-top\" data-role=\"list-divider\" role=\"\" data-form=\"ui-bar-a\">List Header</li>\n\n						<input type=\"radio\" name=\"radio-choice-a\" id=\"radio-choice-1-a\" value=\"choice-1\" checked=\"checked\" />\n				        <label for=\"radio-choice-1-a\" data-form=\"ui-btn-up-a\" class=\"ui-corner-none\">Radio 1</label>\n\n		         		<input type=\"radio\" name=\"radio-choice-a\" id=\"radio-choice-2-a\" value=\"choice-2\"  />\n			         	<label for=\"radio-choice-2-a\" data-form=\"ui-btn-up-a\">Radio 2</label>\n\n						<input type=\"checkbox\" name=\"checkbox-1\" id=\"checkbox-1\" class=\"custom\" checked=\"checked\" />\n						<label for=\"checkbox-1\" data-form=\"ui-btn-up-a\">Checkbox</label>\n\n\n			    </fieldset>\n			</div>\n\n			<div data-role=\"fieldcontain\"> \n				<fieldset data-role=\"controlgroup\" data-type=\"horizontal\">\n						<input type=\"radio\" name=\"radio-view-a\" id=\"radio-view-a-a\" value=\"list\" checked=\"checked\"/> \n						<label for=\"radio-view-a-a\" data-form=\"ui-btn-up-a\">On</label> \n						<input type=\"radio\" name=\"radio-view-a\" id=\"radio-view-b-a\" value=\"grid\"  /> \n						<label for=\"radio-view-b-a\" data-form=\"ui-btn-up-a\">Off</label> \n				</fieldset> \n			</div>\n\n			<div data-role=\"fieldcontain\">\n				<select name=\"select-choice-1\" id=\"select-choice-1\" data-native-menu=\"false\" data-theme=\"a\" data-form=\"ui-btn-up-a\">\n					<option value=\"standard\">Option 1</option>\n					<option value=\"rush\">Option 2</option>\n					<option value=\"express\">Option 3</option>\n					<option value=\"overnight\">Option 4</option>\n				</select>\n			</div>\n\n			<input type=\"text\" value=\"Text Input\" class=\"input\" data-form=\"ui-body-a\" />\n\n			<div data-role=\"fieldcontain\">\n				<input type=\"range\" name=\"slider\" value=\"0\" min=\"0\" max=\"100\" data-form=\"ui-body-a\" data-theme=\"a\" />\n			</div>\n\n			<button data-icon=\"star\" data-theme=\"a\" data-form=\"ui-btn-up-a\">Button</button>\n		</div>\n	</div>";
 	
+	TR.swatchTemplate = "<div class=\"preview ui-shadow swatch\">\n		<div class=\"ui-header ui-bar-a\" data-swatch=\"a\" data-theme=\"a\" data-form=\"ui-bar-a\" data-role=\"header\" role=\"banner\">\n			<a class=\"ui-btn-left ui-btn ui-btn-icon-notext ui-btn-corner-all ui-shadow ui-btn-up-a\" data-iconpos=\"notext\" data-theme=\"a\" data-role=\"button\" data-icon=\"home\" title=\" Home \">\n				<span class=\"ui-btn-inner ui-btn-corner-all\">\n					<span class=\"ui-btn-text\"> Home </span>\n					<span data-form=\"ui-icon\" class=\"ui-icon ui-icon-home ui-icon-shadow\"></span>\n				</span>\n			</a>\n			<h1 class=\"ui-title\" tabindex=\"0\" role=\"heading\" aria-level=\"1\">A</h1>\n			<a class=\"ui-btn-right ui-btn ui-btn-icon-notext ui-btn-corner-all ui-shadow ui-btn-up-a\" data-iconpos=\"notext\" data-theme=\"a\" data-role=\"button\" data-icon=\"grid\" title=\" Navigation \">\n				<span class=\"ui-btn-inner ui-btn-corner-all\">\n					<span class=\"ui-btn-text\"> Navigation </span>\n					<span data-form=\"ui-icon\" class=\"ui-icon ui-icon-grid ui-icon-shadow\"></span>\n				</span>\n			</a>\n		</div>\n\n		<div class=\"ui-content ui-body-a\" data-theme=\"a\" data-form=\"ui-body-a\" data-role=\"content\" role=\"main\">\n\n			<p>\n				Sample text and <a class=\"ui-link\" data-form=\"ui-body-a\" href=\"#\" data-theme=\"a\">links</a>.\n			</p>\n\n			<div data-role=\"fieldcontain\">\n			    <fieldset data-role=\"controlgroup\">\n						<li data-swatch=\"a\" class=\"ui-li ui-li-divider ui-btn ui-bar-a ui-corner-top\" data-role=\"list-divider\" role=\"\" data-form=\"ui-bar-a\">List Header</li>\n\n						<input type=\"radio\" name=\"radio-choice-a\" id=\"radio-choice-1-a\" value=\"choice-1\" checked=\"checked\" />\n				        <label for=\"radio-choice-1-a\" data-form=\"ui-btn-up-a\" class=\"ui-corner-none\">Radio 1</label>\n\n		         		<input type=\"radio\" name=\"radio-choice-a\" id=\"radio-choice-2-a\" value=\"choice-2\"  />\n			         	<label for=\"radio-choice-2-a\" data-form=\"ui-btn-up-a\">Radio 2</label>\n\n						<input type=\"checkbox\" name=\"checkbox-1\" id=\"checkbox-1\" class=\"custom\" checked=\"checked\" />\n						<label for=\"checkbox-1\" data-form=\"ui-btn-up-a\">Checkbox</label>\n\n\n			    </fieldset>\n			</div>\n\n			<div data-role=\"fieldcontain\"> \n				<fieldset data-role=\"controlgroup\" data-type=\"horizontal\">\n						<input type=\"radio\" name=\"radio-view-a\" id=\"radio-view-a-a\" value=\"list\" checked=\"checked\"/> \n						<label for=\"radio-view-a-a\" data-form=\"ui-btn-up-a\">On</label> \n						<input type=\"radio\" name=\"radio-view-a\" id=\"radio-view-b-a\" value=\"grid\"  /> \n						<label for=\"radio-view-b-a\" data-form=\"ui-btn-up-a\">Off</label> \n				</fieldset> \n			</div>\n\n			<div data-role=\"fieldcontain\">\n				<select name=\"select-choice-1\" id=\"select-choice-1\" data-native-menu=\"false\" data-theme=\"a\" data-form=\"ui-btn-up-a\">\n					<option value=\"standard\">Option 1</option>\n					<option value=\"rush\">Option 2</option>\n					<option value=\"express\">Option 3</option>\n					<option value=\"overnight\">Option 4</option>\n				</select>\n			</div>\n\n			<input type=\"text\" value=\"Text Input\" class=\"input\" data-form=\"ui-body-a\" />\n\n			<div data-role=\"fieldcontain\">\n				<input type=\"range\" name=\"slider\" value=\"0\" min=\"0\" max=\"100\" data-form=\"ui-body-a\" data-theme=\"a\" />\n			</div>\n\n			<button data-icon=\"star\" data-theme=\"a\" data-form=\"ui-btn-up-a\">Button</button>\n		</div>\n	</div>";
+	TR.panelTemplate = $( "#tab2" ).html();
+	
 	//call initialization methods
-	TR.initStyleArray();
 	TR.initAddSwatch();
 	TR.initInspector();
 	TR.initControls();
-	TR.dialogs();
-	TR.draggableColors();
+	TR.initDialogs();
+	TR.initDraggableColors();
+	TR.initStyleArray();
 	TR.correctNumberOfSwatches();
-	
-	TR.swatch_template = "<div class=\"preview ui-shadow swatch\">\n		<div class=\"ui-header ui-bar-a\" data-swatch=\"a\" data-theme=\"a\" data-form=\"ui-bar-a\" data-role=\"header\" role=\"banner\">\n			<a class=\"ui-btn-left ui-btn ui-btn-icon-notext ui-btn-corner-all ui-shadow ui-btn-up-a\" data-iconpos=\"notext\" data-theme=\"a\" data-role=\"button\" data-icon=\"home\" title=\" Home \">\n				<span class=\"ui-btn-inner ui-btn-corner-all\">\n					<span class=\"ui-btn-text\"> Home </span>\n					<span data-form=\"ui-icon\" class=\"ui-icon ui-icon-home ui-icon-shadow\"></span>\n				</span>\n			</a>\n			<h1 class=\"ui-title\" tabindex=\"0\" role=\"heading\" aria-level=\"1\">A</h1>\n			<a class=\"ui-btn-right ui-btn ui-btn-icon-notext ui-btn-corner-all ui-shadow ui-btn-up-a\" data-iconpos=\"notext\" data-theme=\"a\" data-role=\"button\" data-icon=\"grid\" title=\" Navigation \">\n				<span class=\"ui-btn-inner ui-btn-corner-all\">\n					<span class=\"ui-btn-text\"> Navigation </span>\n					<span data-form=\"ui-icon\" class=\"ui-icon ui-icon-grid ui-icon-shadow\"></span>\n				</span>\n			</a>\n		</div>\n\n		<div class=\"ui-content ui-body-a\" data-theme=\"a\" data-form=\"ui-body-a\" data-role=\"content\" role=\"main\">\n\n			<p>\n				Sample text and <a class=\"ui-link\" data-form=\"ui-body-a\" href=\"#\" data-theme=\"a\">links</a>.\n			</p>\n\n			<div data-role=\"fieldcontain\">\n			    <fieldset data-role=\"controlgroup\">\n						<li data-swatch=\"a\" class=\"ui-li ui-li-divider ui-btn ui-bar-a ui-corner-top\" data-role=\"list-divider\" role=\"\" data-form=\"ui-bar-a\">List Header</li>\n\n						<input type=\"radio\" name=\"radio-choice-a\" id=\"radio-choice-1-a\" value=\"choice-1\" checked=\"checked\" />\n				        <label for=\"radio-choice-1-a\" data-form=\"ui-btn-up-a\" class=\"ui-corner-none\">Radio 1</label>\n\n		         		<input type=\"radio\" name=\"radio-choice-a\" id=\"radio-choice-2-a\" value=\"choice-2\"  />\n			         	<label for=\"radio-choice-2-a\" data-form=\"ui-btn-up-a\">Radio 2</label>\n\n						<input type=\"checkbox\" name=\"checkbox-1\" id=\"checkbox-1\" class=\"custom\" checked=\"checked\" />\n						<label for=\"checkbox-1\" data-form=\"ui-btn-up-a\">Checkbox</label>\n\n\n			    </fieldset>\n			</div>\n\n			<div data-role=\"fieldcontain\"> \n				<fieldset data-role=\"controlgroup\" data-type=\"horizontal\">\n						<input type=\"radio\" name=\"radio-view-a\" id=\"radio-view-a-a\" value=\"list\" checked=\"checked\"/> \n						<label for=\"radio-view-a-a\" data-form=\"ui-btn-up-a\">On</label> \n						<input type=\"radio\" name=\"radio-view-a\" id=\"radio-view-b-a\" value=\"grid\"  /> \n						<label for=\"radio-view-b-a\" data-form=\"ui-btn-up-a\">Off</label> \n				</fieldset> \n			</div>\n\n			<div data-role=\"fieldcontain\">\n				<select name=\"select-choice-1\" id=\"select-choice-1\" data-native-menu=\"false\" data-theme=\"a\" data-form=\"ui-btn-up-a\">\n					<option value=\"standard\">Option 1</option>\n					<option value=\"rush\">Option 2</option>\n					<option value=\"express\">Option 3</option>\n					<option value=\"overnight\">Option 4</option>\n				</select>\n			</div>\n\n			<input type=\"text\" value=\"Text Input\" class=\"input\" data-form=\"ui-body-a\" />\n\n			<div data-role=\"fieldcontain\">\n				<input type=\"range\" name=\"slider\" value=\"0\" min=\"0\" max=\"100\" data-form=\"ui-body-a\" data-theme=\"a\" />\n			</div>\n\n			<button data-icon=\"star\" data-theme=\"a\" data-form=\"ui-btn-up-a\">Button</button>\n		</div>\n	</div>";
-	TR.panelTemplate = $( "#tab2" ).html();
 }
 
 //pad a string with zeroes to a certain length

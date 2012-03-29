@@ -140,6 +140,10 @@ h2{
 	cursor: pointer;
 }
 
+#upload label{
+	margin-right: 5px;
+}
+
 #colors{
 	margin: 7px 0px 0px 13px;
 	float: left;
