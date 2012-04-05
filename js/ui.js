@@ -56,9 +56,10 @@ TR.initializeUI = function() {
 	
 	//sizing content to the right of the TR panel
 	function resize() {
-		var top_border = $( "#tr_panel" ).css( "border-top-width" ).substring( 0, 1 );
-		$( "#tr_panel" ).height( $(window).height() - top_border );
-		$( "#content" ).height( $(window).height() - $("#header-wrapper").outerHeight() - 3 );
+		var top_border = $( "#tr_panel" ).css( "border-top-width" ).substring( 0, 1 ),
+			toolbar_height = $( "#toolbar" ).outerHeight();
+		$( "#tr_panel" ).height( $(window).height() - top_border - toolbar_height );
+		$( "#content" ).height( $(window).height() - $("#header-wrapper").outerHeight() - 3 - toolbar_height );
 	}
 	
 	//global array of color values in quickswatch colors for lightness/saturation adjustments
