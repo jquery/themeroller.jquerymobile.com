@@ -92,26 +92,16 @@ TR.initializeUI = function() {
 	});
 	
 	//Inspector Radio behavior
-	$( "#inspector_form" ).find( "div" ).click(function() {
-		var other = $(this).siblings( "div" );
-		$(this).addClass( "on" );
-		other.removeClass( "on" );
-	});
-	
-	//Keyboard shortcut for inspector radio
-	$(document).keypress(function(e) {
-		if( (e.ctrlKey || e.metaKey) && e.shiftKey && (e.which == 73 || e.which == 9) ) {
-			e.preventDefault();
-			if( $("#inspector_form .left").hasClass("on") ) {
-				$( "iframe" ).contents().find( "#highlight" ).hide();
-				$( "#inspector_form .left" ).removeClass( "on" );
-				$( "#inspector_form .right" ).addClass( "on" );
-			} else {
-				$( "#inspector_form .left" ).addClass( "on" );
-				$( "#inspector_form .right" ).removeClass( "on" );
-			}
+	$( ".inspector-button" ).click(function() {
+		var $this = $( this ),
+			other = $this.siblings( ".inspector-button" );
+			active = $this.hasClass( "active" );
+			
+		if( !active ) {
+			$this.addClass( "active" ).find( "img" ).attr( "src", "images/inspector-active.png" );
+			other.removeClass( "active" ).find( "img" ).attr( "src", "images/inspector.png" );
 		}
-	})
+	});
 
 	// Accordion
 	$( ".accordion" ).accordion({ 

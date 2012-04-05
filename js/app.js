@@ -20,6 +20,8 @@ window.TR = TR;
 
 TR.styleArray = [];
 TR.tokens = {};
+TR.undoLog = [];
+TR.redoLog = [];
 
 TR.showStartEnd = [];
 TR.firstAdd = 1;
@@ -53,32 +55,26 @@ TR.addInspectorAttributes = function( swatch ) {
 
 //adds a most-recent-color to the five right-most draggables in the quickswatch panel
 TR.addMostRecent = function( color ) {
-	var found = 0, quickswatch = $( "#quickswatch" );
-	quickswatch.find( ".color-drag:gt(31)" ).each(function() {
+	var found = 0,
+		most_recents = $( "#most-recent-colors .color-drag" );
+	
+	most_recents.each( function() {
 		if( color == $(this).css("background-color") ) {
 			found = 1;
 		}
 	});
+	
 	if( !found ) {
-		quickswatch.find( ".color-drag:last" ).remove();
-		quickswatch.find( ".colors .color-drag:eq(31)" ).removeClass( "separator" );
-		
-		var new_color = $( "<div class=\"color-drag separator\" style=\"background-color: " + color + "\"></div>" );
-		new_color.draggable({
-			appendTo: "body",
-			revert: true,
-			revertDuration: 200,
-			opacity: 1,
-			containment: "document",
-			cursor: "move",
-			helper: "clone",
-			zIndex: 3000,
-			iframeFix: true,
-			drag: function() {
-				TR.movingColor = 1;
+		var last = null;
+		most_recents.each(function() {
+			var temp = $( this ).css( "background-color" );
+			last = last ? last : color;
+			$( this ).css( "background-color", last );
+			if( last != temp ) {
+				$( this ).draggable( "enable" );
 			}
+			last = temp;
 		});
-		quickswatch.find( ".colors .color-drag:eq(30)" ).after( new_color );
 	}
 }
 
@@ -89,6 +85,10 @@ TR.addSwatch = function( new_style ) {
 		var next_tab = TR.tabCount + 1,
 			lower = TR.alpha[TR.tabCount - 1],
 			upper = lower.toUpperCase();
+		
+		//log style before adding swatch
+		TR.undoLog.push( TR.styleBlock.text() );
+		TR.redoLog = [];
 		
 		//new_style flag is only set if styles have not been added to TR.styleArray
 		//or CSS yet. correctNumberOfSwatches calles addSwatch with new_style=false
@@ -276,7 +276,10 @@ TR.applyColor = function( color, prefix ) {
 	}
 
 	//we've updated TR.styleArray now update the CSS
-	TR.updateAllCSS();
+	//if it's a button, we don't call updateAllCSS until all three are updated in the styleArray
+	if( element != "bdown" && element != "bhover" ) {
+		TR.updateAllCSS();
+	}
 }
 
 //pass in a color and a slider value and get back a tuple with start and end colors
@@ -402,6 +405,10 @@ TR.deleteSwatch = function( e, ele ) {
     var letter =  delete_class.substr( delete_class.length - 1, delete_class.length );
     var number = TR.num[letter];	
 
+	//log before delete
+	TR.undoLog.push( TR.styleBlock.text() );
+	TR.redoLog = [];
+
     //moving content of the tabs back one starting at the one we're deleting
     for( var i = number + 1; i <= TR.tabCount - 2; i++ ) {
         var current_letter = TR.alpha[i];
@@ -465,7 +472,7 @@ TR.deleteSwatch = function( e, ele ) {
     TR.iframe.find( ".add-swatch" ).height(swatch_height);
         
     TR.initStyleArray( "refresh" );
-    TR.updateAllCSS();
+    TR.updateAllCSS( true );
 	
 	return false;
 }
@@ -496,6 +503,16 @@ TR.initAddSwatch = function() {
 //binds TR controls to updateAllCSS
 //also takes care of things like slider handle color, etc.
 TR.initControls = function() {
+	//Undo
+	$( "#undo" ).click(function() {
+		TR.undo();
+	});
+	
+	//Redo
+	$( "#redo" ).click(function() {
+		TR.redo();
+	})
+	
 	//Font Family
     $( "[data-type=font-family]" ).bind( "blur change keyup", function() {
 		var name = $( this ).attr( "data-name" );
@@ -780,7 +797,7 @@ TR.initDialogs = function() {
     }));
 	
 	//ajax call performed when share link is clicked
-	$( "#generate_url" ).click(function(e) {
+	$( "#share-button" ).click(function(e) {
 		e.preventDefault();
 		
 		$( "#share" ).dialog( "open" );
@@ -801,19 +818,19 @@ TR.initDialogs = function() {
 	});
 	
 	//help dialog
-	$( "#tr_help" ).click(function(e) {
+	$( "#help-button" ).click(function(e) {
 		e.preventDefault();
 		$( "#help" ).dialog( "open" );
 	});
 	
 	//upload dialog
-    $( "#tr_upload" ).click(function() {
+    $( "#import-button" ).click(function() {
         $( "#upload" ).dialog( "open" );
         return false;
     });
 
 	//download dialog
-    $( "#tr_download" ).click(function() {
+    $( "#download-button" ).click(function() {
         $( "#download" ).dialog( "open" );			
         return false;
     });
@@ -825,7 +842,7 @@ TR.initDialogs = function() {
 //initializes the draggable colors and the drop method
 TR.initDraggableColors = function() {
 	//draggable colors
-	$( ".color-drag:not(.disabled)" ).draggable({
+	$( ".color-drag" ).draggable({
 		appendTo: "body",
 		revert: true,
 		revertDuration: 200,
@@ -839,6 +856,8 @@ TR.initDraggableColors = function() {
 			TR.movingColor = 1;
 		}
 	});
+	
+	$( ".color-drag.disabled" ).draggable( "disable" );
 	
 	//droppable for colorwell
 	$( ".colorwell" ).droppable({
@@ -957,7 +976,7 @@ TR.initDraggableColors = function() {
 TR.initInspector = function() {
 	//click on an element with inspector-on and select element in panel
     TR.iframe.find( "[data-form]" ).mouseup(function(e) {
-        if( $("[data-id=inspector-on]").hasClass("on") ) {
+        if( $("#inspector-on").hasClass("active") ) {
             e.stopPropagation();
 			TR.selectElement( $(this) );  		
             frame.find( "#highlight" ).show();
@@ -967,7 +986,7 @@ TR.initInspector = function() {
     //highlight moves as you mouseover things
     TR.iframe.find( "[data-form]" ).bind( "mouseover", function() {
 		var $this = $( this );
-        if( $("[data-id=inspector-on]").hasClass("on") ) {
+        if( $("#inspector-on").hasClass("active") ) {
             var left = $this.offset().left, top = $this.offset().top,
             	width = $this.outerWidth(), height = $this.outerHeight();
 			
@@ -1008,7 +1027,7 @@ TR.initInspector = function() {
     });
 	
     TR.iframe.find( "#highlight" ).mousedown(function() {
-        if( $("[data-id=inspector-on]").hasClass("on") ) {
+        if( $("#inspector-on").hasClass("active") ) {
             $( this ).css( "z-index", -1 );
         }
     });
@@ -1092,7 +1111,7 @@ TR.initThemeRoller = function() {
 	TR.panelTemplate = $( "#tab2" ).html();
 	TR.swatchTemplate = "<div class=\"preview ui-shadow swatch\">\n		<div class=\"ui-header ui-bar-a\" data-swatch=\"a\" data-theme=\"a\" data-form=\"ui-bar-a\" data-role=\"header\" role=\"banner\">\n			<a class=\"ui-btn-left ui-btn ui-btn-icon-notext ui-btn-corner-all ui-shadow ui-btn-up-a\" data-iconpos=\"notext\" data-theme=\"a\" data-role=\"button\" data-icon=\"home\" title=\" Home \">\n				<span class=\"ui-btn-inner ui-btn-corner-all\">\n					<span class=\"ui-btn-text\"> Home </span>\n					<span data-form=\"ui-icon\" class=\"ui-icon ui-icon-home ui-icon-shadow\"></span>\n				</span>\n			</a>\n			<h1 class=\"ui-title\" tabindex=\"0\" role=\"heading\" aria-level=\"1\">A</h1>\n			<a class=\"ui-btn-right ui-btn ui-btn-icon-notext ui-btn-corner-all ui-shadow ui-btn-up-a\" data-iconpos=\"notext\" data-theme=\"a\" data-role=\"button\" data-icon=\"grid\" title=\" Navigation \">\n				<span class=\"ui-btn-inner ui-btn-corner-all\">\n					<span class=\"ui-btn-text\"> Navigation </span>\n					<span data-form=\"ui-icon\" class=\"ui-icon ui-icon-grid ui-icon-shadow\"></span>\n				</span>\n			</a>\n		</div>\n\n		<div class=\"ui-content ui-body-a\" data-theme=\"a\" data-form=\"ui-body-a\" data-role=\"content\" role=\"main\">\n\n			<p>\n				Sample text and <a class=\"ui-link\" data-form=\"ui-body-a\" href=\"#\" data-theme=\"a\">links</a>.\n			</p>\n\n			<div data-role=\"fieldcontain\">\n			    <fieldset data-role=\"controlgroup\">\n						<li data-swatch=\"a\" class=\"ui-li ui-li-divider ui-btn ui-bar-a ui-corner-top\" data-role=\"list-divider\" role=\"\" data-form=\"ui-bar-a\">List Header</li>\n\n						<input type=\"radio\" name=\"radio-choice-a\" id=\"radio-choice-1-a\" value=\"choice-1\" checked=\"checked\" />\n				        <label for=\"radio-choice-1-a\" data-form=\"ui-btn-up-a\" class=\"ui-corner-none\">Radio 1</label>\n\n		         		<input type=\"radio\" name=\"radio-choice-a\" id=\"radio-choice-2-a\" value=\"choice-2\"  />\n			         	<label for=\"radio-choice-2-a\" data-form=\"ui-btn-up-a\">Radio 2</label>\n\n						<input type=\"checkbox\" name=\"checkbox-1\" id=\"checkbox-1\" class=\"custom\" checked=\"checked\" />\n						<label for=\"checkbox-1\" data-form=\"ui-btn-up-a\">Checkbox</label>\n\n\n			    </fieldset>\n			</div>\n\n			<div data-role=\"fieldcontain\"> \n				<fieldset data-role=\"controlgroup\" data-type=\"horizontal\">\n						<input type=\"radio\" name=\"radio-view-a\" id=\"radio-view-a-a\" value=\"list\" checked=\"checked\"/> \n						<label for=\"radio-view-a-a\" data-form=\"ui-btn-up-a\">On</label> \n						<input type=\"radio\" name=\"radio-view-a\" id=\"radio-view-b-a\" value=\"grid\"  /> \n						<label for=\"radio-view-b-a\" data-form=\"ui-btn-up-a\">Off</label> \n				</fieldset> \n			</div>\n\n			<div data-role=\"fieldcontain\">\n				<select name=\"select-choice-1\" id=\"select-choice-1\" data-native-menu=\"false\" data-theme=\"a\" data-form=\"ui-btn-up-a\">\n					<option value=\"standard\">Option 1</option>\n					<option value=\"rush\">Option 2</option>\n					<option value=\"express\">Option 3</option>\n					<option value=\"overnight\">Option 4</option>\n				</select>\n			</div>\n\n			<input type=\"text\" value=\"Text Input\" class=\"input\" data-form=\"ui-body-a\" />\n\n			<div data-role=\"fieldcontain\">\n				<input type=\"range\" name=\"slider\" value=\"0\" min=\"0\" max=\"100\" data-form=\"ui-body-a\" data-theme=\"a\" />\n			</div>\n\n			<button data-icon=\"star\" data-theme=\"a\" data-form=\"ui-btn-up-a\">Button</button>\n		</div>\n	</div>";
 	
-	TR.swatchTemplate = "<div class=\"preview ui-shadow swatch\">\n		<div class=\"ui-header ui-bar-a\" data-swatch=\"a\" data-theme=\"a\" data-form=\"ui-bar-a\" data-role=\"header\" role=\"banner\">\n			<a class=\"ui-btn-left ui-btn ui-btn-icon-notext ui-btn-corner-all ui-shadow ui-btn-up-a\" data-iconpos=\"notext\" data-theme=\"a\" data-role=\"button\" data-icon=\"home\" title=\" Home \">\n				<span class=\"ui-btn-inner ui-btn-corner-all\">\n					<span class=\"ui-btn-text\"> Home </span>\n					<span data-form=\"ui-icon\" class=\"ui-icon ui-icon-home ui-icon-shadow\"></span>\n				</span>\n			</a>\n			<h1 class=\"ui-title\" tabindex=\"0\" role=\"heading\" aria-level=\"1\">A</h1>\n			<a class=\"ui-btn-right ui-btn ui-btn-icon-notext ui-btn-corner-all ui-shadow ui-btn-up-a\" data-iconpos=\"notext\" data-theme=\"a\" data-role=\"button\" data-icon=\"grid\" title=\" Navigation \">\n				<span class=\"ui-btn-inner ui-btn-corner-all\">\n					<span class=\"ui-btn-text\"> Navigation </span>\n					<span data-form=\"ui-icon\" class=\"ui-icon ui-icon-grid ui-icon-shadow\"></span>\n				</span>\n			</a>\n		</div>\n\n		<div class=\"ui-content ui-body-a\" data-theme=\"a\" data-form=\"ui-body-a\" data-role=\"content\" role=\"main\">\n\n			<p>\n				Sample text and <a class=\"ui-link\" data-form=\"ui-body-a\" href=\"#\" data-theme=\"a\">links</a>.\n			</p>\n\n			<div data-role=\"fieldcontain\">\n			    <fieldset data-role=\"controlgroup\">\n						<li data-swatch=\"a\" class=\"ui-li ui-li-divider ui-btn ui-bar-a ui-corner-top\" data-role=\"list-divider\" role=\"\" data-form=\"ui-bar-a\">List Header</li>\n\n						<input type=\"radio\" name=\"radio-choice-a\" id=\"radio-choice-1-a\" value=\"choice-1\" checked=\"checked\" />\n				        <label for=\"radio-choice-1-a\" data-form=\"ui-btn-up-a\" class=\"ui-corner-none\">Radio 1</label>\n\n		         		<input type=\"radio\" name=\"radio-choice-a\" id=\"radio-choice-2-a\" value=\"choice-2\"  />\n			         	<label for=\"radio-choice-2-a\" data-form=\"ui-btn-up-a\">Radio 2</label>\n\n						<input type=\"checkbox\" name=\"checkbox-1\" id=\"checkbox-1\" class=\"custom\" checked=\"checked\" />\n						<label for=\"checkbox-1\" data-form=\"ui-btn-up-a\">Checkbox</label>\n\n\n			    </fieldset>\n			</div>\n\n			<div data-role=\"fieldcontain\"> \n				<fieldset data-role=\"controlgroup\" data-type=\"horizontal\">\n						<input type=\"radio\" name=\"radio-view-a\" id=\"radio-view-a-a\" value=\"list\" checked=\"checked\"/> \n						<label for=\"radio-view-a-a\" data-form=\"ui-btn-up-a\">On</label> \n						<input type=\"radio\" name=\"radio-view-a\" id=\"radio-view-b-a\" value=\"grid\"  /> \n						<label for=\"radio-view-b-a\" data-form=\"ui-btn-up-a\">Off</label> \n				</fieldset> \n			</div>\n\n			<div data-role=\"fieldcontain\">\n				<select name=\"select-choice-1\" id=\"select-choice-1\" data-native-menu=\"false\" data-theme=\"a\" data-form=\"ui-btn-up-a\">\n					<option value=\"standard\">Option 1</option>\n					<option value=\"rush\">Option 2</option>\n					<option value=\"express\">Option 3</option>\n					<option value=\"overnight\">Option 4</option>\n				</select>\n			</div>\n\n			<input type=\"text\" value=\"Text Input\" class=\"input\" data-form=\"ui-body-a\" />\n\n			<div data-role=\"fieldcontain\">\n				<input type=\"range\" name=\"slider\" value=\"0\" min=\"0\" max=\"100\" data-form=\"ui-body-a\" data-theme=\"a\" />\n			</div>\n\n			<button data-icon=\"star\" data-theme=\"a\" data-form=\"ui-btn-up-a\">Button</button>\n		</div>\n	</div>";
+	TR.swatchTemplate = "<div class=\"preview ui-shadow swatch\"><div class=\"ui-header ui-bar-a\" data-swatch=\"a\" data-theme=\"a\" data-form=\"ui-bar-a\" data-role=\"header\" role=\"banner\"><a class=\"ui-btn-left ui-btn ui-btn-icon-notext ui-btn-corner-all ui-shadow ui-btn-up-a\" data-iconpos=\"notext\" data-theme=\"a\" data-role=\"button\" data-icon=\"home\" title=\" Home \"><span class=\"ui-btn-inner ui-btn-corner-all\"><span class=\"ui-btn-text\"> Home </span><span data-form=\"ui-icon\" class=\"ui-icon ui-icon-home ui-icon-shadow\"></span></span></a><h1 class=\"ui-title\" tabindex=\"0\" role=\"heading\" aria-level=\"1\">A</h1><a class=\"ui-btn-right ui-btn ui-btn-icon-notext ui-btn-corner-all ui-shadow ui-btn-up-a\" data-iconpos=\"notext\" data-theme=\"a\" data-role=\"button\" data-icon=\"grid\" title=\" Navigation \"><span class=\"ui-btn-inner ui-btn-corner-all\"><span class=\"ui-btn-text\"> Navigation </span><span data-form=\"ui-icon\" class=\"ui-icon ui-icon-grid ui-icon-shadow\"></span></span></a></div><div class=\"ui-content ui-body-a\" data-theme=\"a\" data-form=\"ui-body-a\" data-role=\"content\" role=\"main\"><p class=\"mini\">Sample text and <a class=\"ui-link\" data-form=\"ui-body-a\" href=\"#\" data-theme=\"a\">links</a>.</p><div data-role=\"fieldcontain\">    <fieldset data-role=\"controlgroup\"><li data-swatch=\"a\" class=\"ui-li ui-li-divider ui-btn ui-bar-a ui-corner-top ui-mini\" data-role=\"list-divider\" role=\"\" data-form=\"ui-bar-a\">List Header</li><input type=\"radio\" name=\"radio-choice-a\" id=\"radio-choice-1-a\" value=\"choice-1\" checked=\"checked\" />        <label for=\"radio-choice-1-a\" data-form=\"ui-btn-up-a\" class=\"ui-corner-none\" data-mini=\"true\">Radio 1</label>         <input type=\"radio\" name=\"radio-choice-a\" id=\"radio-choice-2-a\" value=\"choice-2\" />         <label for=\"radio-choice-2-a\" data-form=\"ui-btn-up-a\" data-mini=\"true\">Radio 2</label><input type=\"checkbox\" name=\"checkbox-1\" id=\"checkbox-1\" class=\"custom\" checked=\"checked\" /><label for=\"checkbox-1\" data-form=\"ui-btn-up-a\" data-mini=\"true\">Checkbox</label>    </fieldset></div><div data-role=\"fieldcontain\"> <fieldset data-role=\"controlgroup\" data-type=\"horizontal\"><input type=\"radio\" name=\"radio-view-a\" id=\"radio-view-a-a\" value=\"list\" checked=\"checked\"/> <label for=\"radio-view-a-a\" data-form=\"ui-btn-up-a\" data-mini=\"true\">On</label> <input type=\"radio\" name=\"radio-view-a\" id=\"radio-view-b-a\" value=\"grid\"  /> <label for=\"radio-view-b-a\" data-form=\"ui-btn-up-a\" data-mini=\"true\">Off</label> </fieldset> </div><div data-role=\"fieldcontain\"><select name=\"select-choice-1\" id=\"select-choice-1\" data-native-menu=\"false\" data-theme=\"a\" data-form=\"ui-btn-up-a\" data-mini=\"true\"><option value=\"standard\">Option 1</option><option value=\"rush\">Option 2</option><option value=\"express\">Option 3</option><option value=\"overnight\">Option 4</option></select></div><input type=\"text\" value=\"Text Input\" class=\"input\" data-form=\"ui-body-a\" data-mini=\"true\" /><div data-role=\"fieldcontain\"><input type=\"range\" name=\"slider\" value=\"50\" min=\"0\" max=\"100\" data-form=\"ui-body-a\" data-theme=\"a\" data-mini=\"true\" data-highlight=\"true\" /></div><button data-icon=\"star\" data-theme=\"a\" data-form=\"ui-btn-up-a\" data-mini=\"true\">Button</button></div></div>";
 	TR.panelTemplate = $( "#tab2" ).html();
 	
 	//call initialization methods
@@ -1168,7 +1187,7 @@ TR.refreshIframe = function( swatch )
 {	
     //click behavior for inspector
 	TR.iframe.find( ".ui-bar-" + swatch + ", " + ".ui-body-" + swatch + ", .ui-bar-" + swatch + " [data-form], .ui-body-" + swatch + " [data-form]" ).mouseup(function(e) {
-        if( $("[data-id=inspector-on]").hasClass("on") ) {
+        if( $("#inspector-on").hasClass("active") ) {
             e.stopPropagation();
             //apply attributes to slider of the new swatch
             		
@@ -1214,7 +1233,7 @@ TR.refreshIframe = function( swatch )
 	
     //bind hover behavior for inspector
     TR.iframe.find( "[data-form$=-" + swatch + "]" ).bind( "mouseover", function() {
-        if( $("[data-id=inspector-on]").hasClass("on") ) {
+        if( $("#inspector-on").hasClass("active") ) {
             var left = $( this ).offset().left;
             var top = $( this ).offset().top;
             var width = $( this ).outerWidth();
@@ -1318,10 +1337,34 @@ TR.selectElement = function( element ) {
 	}, 200);
 }
 
+//on undo, backup CSS before the undo and push onto the redoLog
+//apply previous CSS from undoLog and reinit
+TR.undo = function() {
+	TR.redoLog.push( TR.styleBlock.text() );
+	TR.styleBlock.text( TR.undoLog.pop() );
+	TR.initStyleArray();
+	TR.correctNumberOfSwatches();
+}
+
+//on redo, backup CSS before the redo and push onto the undoLog
+//apply last action's CSS from redoLog and reinit
+TR.redo = function() {
+	TR.undoLog.push( TR.styleBlock.text() );
+	TR.styleBlock.text( TR.redoLog.pop() );
+	TR.initStyleArray();
+	TR.correctNumberOfSwatches();
+}
+
 //work horse of the app
 //this function runs through the token array and pushes out any changes that may have been made
-TR.updateAllCSS = function() {
-    var new_style = [];
+TR.updateAllCSS = function( skip_log ) {
+	var skip_log = skip_log || false,
+		new_style = [];
+	if( !skip_log ) {
+		TR.undoLog.push( TR.styleBlock.text() );
+		TR.redoLog = [];
+	}
+	
     for( var i in TR.tokens ) {
     	var t = TR.tokens[i];
         if( t.type == "placeholder" ) {

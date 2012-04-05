@@ -19,6 +19,7 @@ if ( isset($_GET['style_id']) ) {
 	<link rel="stylesheet" type="text/css" href="css/jquery.ui.css" />
 	<link rel="stylesheet" type="text/css" href="css/farbtastic.css" />
 	<link rel="stylesheet" type="text/css" href="css/tr.panel.css" />
+	<link rel="stylesheet" type="text/css" href="css/new.css" />
 
 	<script src="js/jquery.js"></script>
 	<script src="js/jquery.ui.js"></script>
@@ -127,6 +128,7 @@ if ( isset($_GET['style_id']) ) {
 				</p>
 			</div>
 		</div>
+		
 		<div id="share" class="dialog" title=" ">
 			<h1><strong>Share</strong> Theme</h1>
 			<p>
@@ -187,15 +189,84 @@ if ( isset($_GET['style_id']) ) {
 			</div>
 		</div>
 		
+		<div id="toolbar">
+			<div id="tr-logo"></div>
+			<div id="button-block-1">
+				<div class="tb-button" id="version-select">
+					<img src="images/jqm_logo_small.png" alt="jQuery Mobile"/>
+					<img id="version-select-arrow" src="images/version_select_arrow.png" alt=" " />
+					<div id="current-version">Version 1.0</div>
+				</div>
+				<div id="fix-buttons">
+					<div id="undo">
+						<img src="images/undo.png" alt="Undo" /><br />
+						<span>undo</span>
+					</div>
+					<div id="redo">
+						<img src="images/redo.png" alt="Redo" /><br />
+						<span>redo</span>
+					</div>
+				</div>
+				<div class="tb-button inspector-button active" id="inspector-off">
+					<img src="images/inspector.png" alt=" "/><br />
+					<span>Inspector <strong>off</strong></span>
+				</div>
+				<div class="tb-button inspector-button" id="inspector-on">
+					<img src="images/inspector-active.png" alt="Inspector on"/><br />
+					<span>Inspector <strong>on</strong></span>
+				</div>
+			</div>
+			<div id="button-block-2">
+				<div class="tb-button" id="download-button">
+					<div class="tb-button-inner">
+						<img src="images/download.png" alt="Download" />
+						<div class="text">
+							<span class="big">Download</span><br />
+							<span>theme zip file</span>
+						</div>
+					</div>
+				</div>
+				<div class="tb-button" id="import-button">
+					<div class="tb-button-inner">
+						<img src="images/import.png" alt="Import" />
+						<div class="text">
+							<span class="big">Import</span><br />
+							<span>or upgrade</span>
+						</div>
+					</div>
+				</div>
+				<div class="tb-button" id="share-button">
+					<div class="tb-button-inner">
+						<img src="images/share.png" alt="Share" />
+						<div class="text">
+							<span class="big">Share</span><br />
+							<span>theme link</span>
+						</div>
+					</div>
+				</div>
+				<div class="tb-button" id="help-button">
+					<div class="tb-button-inner">
+						<img src="images/help.png" alt="Help" />
+						<div class="text">
+							<span class="big">Help</span><br />
+							<span>center</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
 		<div id="colorpicker"></div>
+		
 		<div id="tr_panel">
+			<!--
 			<div id="tr_header">
 				<div id="tr_logo"><img src="images/themeroller_logo.png" alt=" "/></div>
 				<a href="#" id="tr_download"><img src="images/themeroller_download.png" alt=" "/></a>
 				<div id="separator"></div>
 				<span id="tr_links"><a href="#" id="tr_help">Help</a><a href="#" id="tr_upload">Import</a><a href="#" id="generate_url">Share</a></span>
 			</div>
-
+			-->
 			<div id="tabs">
 				<ul>
 					<li><a href="#tab1">Global</a></li>
@@ -509,17 +580,8 @@ if ( isset($_GET['style_id']) ) {
 		<div id="wrapper">
 			<div id="header-wrapper">
 				<div id="header">
-					<div id="inspector_form" title="Shift+Ctrl+I">
-						<h2>Inspector:</h2>
-						<div class="radio left" data-id="inspector-on">
-							On
-						</div>
-						<div class="radio right on">
-							Off
-						</div>
-					</div>
 					<div id="quickswatch">
-						<h2>Drag a color onto an element below or in the panel</h2>
+						<h2>Drag a color onto an element below</h2>
 						<div class="colors">
 							<div class="color-drag" style="background-color: #FFFFFF"></div>
 							<div class="color-drag" style="background-color: #F2F2F2"></div>
@@ -552,11 +614,6 @@ if ( isset($_GET['style_id']) ) {
 							<div class="color-drag" style="background-color: #C69C6D"></div>
 							<div class="color-drag" style="background-color: #8C6239"></div>
 							<div class="color-drag" style="background-color: #603813"></div>
-							<div class="color-drag disabled separator" style="background-color: #ddd"></div>
-							<div class="color-drag disabled" style="background-color: #ddd"></div>
-							<div class="color-drag disabled" style="background-color: #ddd"></div>
-							<div class="color-drag disabled" style="background-color: #ddd"></div>
-							<div class="color-drag disabled" style="background-color: #ddd"></div>
 						</div>
 						<div id="sliders">
 							<img src="images/target.png" alt=" "/>
@@ -564,9 +621,35 @@ if ( isset($_GET['style_id']) ) {
 							<span>SATURATION</span><div id="saturation_slider"></div>
 						</div>
 					</div>
+					<div id="most-recent-colors">
+						<h2>Recent Colors</h2>
+						<div class="colors">
+							<div class="color-drag disabled" style="background-color: #ddd"></div>
+							<div class="color-drag disabled" style="background-color: #ddd"></div>
+							<div class="color-drag disabled" style="background-color: #ddd"></div>
+							<div class="color-drag disabled" style="background-color: #ddd"></div>
+							<div class="color-drag disabled" style="background-color: #ddd"></div>
+							<div class="color-drag disabled" style="background-color: #ddd"></div>
+							<div class="color-drag disabled" style="background-color: #ddd"></div>
+							<div class="color-drag disabled" style="background-color: #ddd"></div>
+							<div class="color-drag disabled" style="background-color: #ddd"></div>
+							<div class="color-drag disabled" style="background-color: #ddd"></div>
+							<div class="color-drag disabled" style="background-color: #ddd"></div>
+							<div class="color-drag disabled" style="background-color: #ddd"></div>
+							<div class="color-drag disabled" style="background-color: #ddd"></div>
+							<div class="color-drag disabled" style="background-color: #ddd"></div>
+							<div class="color-drag disabled" style="background-color: #ddd"></div>
+							<div class="color-drag disabled" style="background-color: #ddd"></div>
+							<div class="color-drag disabled" style="background-color: #ddd"></div>
+							<div class="color-drag disabled" style="background-color: #ddd"></div>
+							<div class="color-drag disabled" style="background-color: #ddd"></div>
+							<div class="color-drag disabled" style="background-color: #ddd"></div>
+						</div>
+					</div>
 					<div id="back-to-jquery">
 						<a href="http://jquerymobile.com/">
 							<img src="images/jquery-mobile-logo.png" alt="jQuery Mobile" />
+							<img id="right-arrow" src="images/right_arrow.png" alt=" "/>
 						</a>
 					</div>
 				</div>

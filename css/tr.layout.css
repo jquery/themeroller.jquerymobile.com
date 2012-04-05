@@ -166,8 +166,8 @@ h2{
 
 #header{
 	height: 100%;
-	width: 922px;
-	margin: 0;
+	width: 887px;
+	margin-left: 5px;
 	position: relative;
 }
 
@@ -180,12 +180,13 @@ h2{
 
 
 #quickswatch{
-	width: 580px;
+	width: 485px;
 	height: 100%;
 	float: left;
+	border-right: 1px solid #F2F2F2;
 }
 
-#quickswatch h2{
+#quickswatch h2 {
 	font-weight: normal;
 }
 
@@ -228,8 +229,25 @@ h2{
 	margin-left: 15px;
 }
 
-#quickswatch .colors .color-drag{
-	margin-right: 1px;
+#quickswatch .colors .color-drag, #most-recent-colors .color-drag{
+	margin: 0 1px 1px 0;
+}
+
+#most-recent-colors {
+	float: left;
+	height: 73px;
+	width: 150px;
+	border-right: 1px solid #f2f2f2;
+	padding: 10px 20px;
+}
+
+#most-recent-colors h2 {
+	font-weight: normal;
+	margin-left: 0;
+}
+
+#most-recent-colors .colors {
+	margin-top: -2px;
 }
 
 #sliders{
@@ -294,10 +312,16 @@ h2{
 	height: 100%;
 	float: left;
 	text-align: center;
+	position: relative;
 }
 
-#back-to-jquery img{
+#back-to-jquery a img{
 	margin-top: 30px;
+}
+
+#back-to-jquery #right-arrow {
+	position: absolute;
+	right: 0;
 }
 
 #content{
@@ -423,11 +447,12 @@ iframe body{
 }
 
 #load-mask{
-	background-image: url(../images/loading_background.png);
+	background-image: -moz-linear-gradient( #4d4d4d, #000000 );
+	background-repeat: no-repeat;
+	background-color: #000000;
 	position: absolute;
 	top: 0;
 	left: 0;
-	z-index: 10000;
 }
 
 #load-screen{
@@ -451,3 +476,173 @@ iframe body{
 	top: 173px;
 	left: -130px;
 }
+
+#toolbar {
+	background-color: #1a1a1a;
+	height: 40px;
+	min-width: 1225px;
+	padding: 5px;
+}
+
+	#toolbar .tb-button {
+		height: 29px;
+		padding: 5px 0 4px;
+		margin-right: 10px;
+		border-radius: 2px;
+		background-color: #4d4d4d;
+		-moz-border-radius: 2px;
+		-webkit-border-radius: 2px;
+		-o-border-radius: 2px;
+		text-align: center;
+		float: left;
+		cursor: pointer;
+		color: #B3B3B3;
+	}
+	
+	#toolbar .tb-button-inner {
+		margin: auto;
+		overflow: hidden;
+	}
+	
+	#toolbar .tb-button strong {
+		color: #fff;
+	}
+	
+	#toolbar .tb-button:hover, #fix-buttons>div:hover {
+		background-color: #3a3a3a;
+	}
+	
+	#toolbar .tb-button:active, #fix-buttons>div:active {
+		background-color: #2e2e2e;
+	}
+
+
+#tr-logo {
+	background: url(../images/tr_logo.png) no-repeat;
+	margin: 2px 0 0 5px;
+	width: 313px;
+	height: 43px;
+	float: left;
+}
+
+#button-block-1 {
+	width: 423px;
+	height: 40px;
+	margin-right: 35px;
+	float: left;
+}
+
+	#toolbar #button-block-1 #version-select {
+		width: 125px;
+		background-color: #fff;
+		text-align: left;
+		padding-left: 10px;
+		padding-right: 10px;
+		position: relative;
+	}
+	
+	#version-select-arrow {
+		position: absolute;
+		top: 15px;
+		right: 10px;
+	}
+	
+	#current-version{
+		font-size: 13px;
+		color: #75B043;
+	}
+	
+	.inspector-button {
+		width: 75px;
+	}
+	
+	#toolbar .inspector-button.active {
+		background-color: #75B043;
+	}
+	
+	#toolbar .inspector-button.active span {
+		color: #000;
+	}
+	
+	#fix-buttons {
+		width: 88px;
+		height: 38px;
+		float: left;
+		margin-right: 10px;
+	}
+	
+	#fix-buttons>div{
+		width: 43px;
+		height: 29px;
+		padding: 5px 0 4px;
+		float: left;
+		background-color: #4d4d4d;
+		text-align: center;
+		cursor: pointer;
+		color: #B3B3B3;
+	}
+	
+	#undo {
+		border-radius: 2px 0 0 2px;
+		-moz-border-radius: 2px 0 0 2px;
+		-webkit-border-radius: 2px 0 0 2px;
+		-o-border-radius: 2px 0 0 2px;
+		margin-right: 2px;
+	}
+	
+	#redo {
+		border-radius: 0 2px 2px 0;
+		-moz-border-radius: 0 2px 2px 0;
+		-webkit-border-radius: 0 2px 2px 0;
+		-o-border-radius: 0 2px 2px 0;
+	}
+
+#button-block-2 {
+	width: 440px;
+	height: 40px;
+	float: left;
+}
+
+	#button-block-2 .tb-button {
+		width: 100px;
+		text-align: left;
+	}
+	
+	#button-block-2 .tb-button img {
+		float: left;
+		margin: 2px 10px 0 0;
+	}
+	
+	#button-block-2 .tb-button .text {
+		float: left;
+		margin-top: 2px;
+	}
+	
+	#button-block-2 .big {
+		font-size: 12px;
+		color: #fff;
+	}
+	
+	#download-button .tb-button-inner {
+		width: 90px;
+	}
+	
+	#import-button .tb-button-inner {
+		width: 79px;
+	}
+	
+	#button-block-2 #import-button img {
+		margin-top: -1px;
+	}
+	
+	#share-button .tb-button-inner {
+		width: 80px;
+	}
+	
+	#help-button .tb-button-inner {
+		width: 57px;
+	}
+	
+	#button-block-2 #help-button img {
+		margin-right: 7px;
+	}

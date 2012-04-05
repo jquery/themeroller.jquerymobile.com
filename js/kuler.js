@@ -33,7 +33,7 @@ $(function(){
 	
 	//Adding kuler activation link
 	var h2 = $( "#quickswatch h2" );
-	h2.html( h2.html() + " or pick one from the <img src=\"" + images["kuler_logo"] + "\" alt=\" \"/><span id=\"kuler-activation\">Adobe Kuler swatches<img src=\"" + images["arrow_down"] + "\" alt=\" \" /></span>" );
+	h2.html( h2.html() + " or pick from the <img src=\"" + images["kuler_logo"] + "\" alt=\" \"/><span id=\"kuler-activation\">Adobe Kuler swatches<img src=\"" + images["arrow_down"] + "\" alt=\" \" /></span>" );
 	
 	$( "#kuler-activation" ).click(initialize_kuler);
 	
