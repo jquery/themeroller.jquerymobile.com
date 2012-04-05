@@ -92,7 +92,7 @@ TR.getNumberOfSwatches = function() {
 	for( var i in TR.styleArray ) {
 		var letter = i.split("-")[0];
 		if( letter.length == 1 ) {
-			var num = letter.charCodeAt(0) - 97;
+			var num = letter.charCodeAt(0) - 96;
 			if ( num > count ) {
 				count = num;
 			}

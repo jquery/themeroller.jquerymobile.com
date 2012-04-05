@@ -786,6 +786,7 @@ TR.initDialogs = function() {
 						},
 						success: function(response) {
 							window.location = response;
+							$( "#download" ).dialog( "close" );
 						}
 					});
 					
