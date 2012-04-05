@@ -35,10 +35,18 @@ TR.initUpgrade = function() {
 }
 
 TR.upgradeTheme = function() {
+	var version = $( "#upgrade-to-version" ).val();
+	
 	$.ajax({
-		url: "upgrade/css/" + $("#upgrade-to-version").val() + "-theme.css",
+		url: "upgrade/css/" + version + "-theme.css",
 		dataType: "text",
 		success: function(css) {
+			$( "#interface" ).css({
+				position: "relative",
+				left: "-9999px"
+			});
+			$( "#load-mask" ).height($(window).height()).width($(window).width() + 15).show();
+			
 			//takes in the imported CSS and puts values into styleArray
 			TR.styleBlock.text($('#load-css').val());
 			TR.initStyleArray();
@@ -55,12 +63,21 @@ TR.upgradeTheme = function() {
 			
 			//close the import dialog
 			$('#upload').dialog('close');
+			
+			//pass the theme in the post to the appropriate version
+			TR.passThemeToVersion( version );
 		}
 	});
 }
 
+TR.passThemeToVersion = function( version ) {
+	$( "body" ).append( "<form id=\"pass-theme\" style=\"display: none\" action=\"index.php\" method=\"post\"><input name=\"style\" value=\"" + encodeURI(TR.styleBlock.text()) + "\" /></form>" );
+	$( "#pass-theme" ).submit();
+}
+
 TR.upgradeNumberOfSwatches = function( style, count ) {
 	var diff = count - 3;
+	console.log(diff);
 	if( diff > 0 ) {
 		var start = style.search( /\/\* A.*\n-*\*\// );
         var end = style.search( /\/\* B.*\n-*\*\// );
@@ -89,6 +106,7 @@ TR.upgradeNumberOfSwatches = function( style, count ) {
 
 TR.getNumberOfSwatches = function() {
 	var count = 1;
+	console.log(TR.styleArray);
 	for( var i in TR.styleArray ) {
 		var letter = i.split("-")[0];
 		if( letter.length == 1 ) {

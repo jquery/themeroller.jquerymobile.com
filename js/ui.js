@@ -25,7 +25,9 @@ TR.initializeUI = function() {
 		});
 		$( "#load-mask" ).hide();
 		if(!TR.welcomed) {
-			$( "#welcome" ).dialog( "open" );
+			if( !$("#skip-welcome").length ) {
+				$( "#welcome" ).dialog( "open" );
+			}
 			TR.welcomed = 1;
 		}
 		resize();

@@ -4,6 +4,9 @@ require_once( 'upgrade/upgrade.php' );
 if ( isset($_GET['style_id']) ) {
 	$style_id = $_GET['style_id'];
 }
+if ( isset($_POST['style']) ) {
+	$style = urldecode($_POST['style']);
+}
 ?>
 <!DOCTYPE html>
 <html>             
@@ -655,14 +658,24 @@ if ( isset($_GET['style_id']) ) {
 				</iframe>
 			</div>
 			
+			<?php
+				if( isset($style) ) {
+					echo '<div style="display: none" id="skip-welcome"></div>';
+				} 
+			?>
+			
 			<div id="style"><?php
-					//If the file exists we add the CSS here, if not, we leave it blank for the JS to find on load
-					$file_path = "css/jqm.starter.theme.css";
-					if( isset($style_id) ) {
-						$file_path = "css/user_themes/" . $style_id . ".css";
-					}
-					if( is_file($file_path) ) {
-						echo file_get_contents( $file_path );
+					if( isset($style) ) {
+						echo $style;
+					} else {
+						//If the file exists we add the CSS here, if not, we leave it blank for the JS to find on load
+						$file_path = "css/jqm.starter.theme.css";
+						if( isset($style_id) ) {
+							$file_path = "css/user_themes/" . $style_id . ".css";
+						}
+						if( is_file($file_path) ) {
+							echo file_get_contents( $file_path );
+						}
 					}
 				?>
 			</div>

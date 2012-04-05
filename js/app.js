@@ -1044,6 +1044,12 @@ TR.initInspector = function() {
 TR.initStyleArray = function( refresh ) {
 	refresh = refresh || "fresh";
 
+	//if we're not refreshing the styleArray
+	//we start from scratch
+	if( refresh != "refresh" ) {
+		TR.styleArray = [];
+	}
+
     var style = TR.styleBlock.text();
     escaped_style = style.replace( /\n/g, "%0A" );
     escaped_style = escaped_style.replace( /\t/g, "%09" );
