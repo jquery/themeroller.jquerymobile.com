@@ -340,114 +340,13 @@ iframe body{
 	background: #fff;
 }
 
-.radio{
-	text-align: center;
-	float: left;
-	padding: 6px 15px 8px 15px;
-	font-weight: bold;
-	cursor: pointer;
-	font-size: 12px;
-	width: 20px;
-	height: 16px;
-	font-family: "Segoe UI", Verdana, Arial, sans-serif;
-	border: 1px solid  		#ccc;
-	background:  			#eee;
-	color:  					#2F3E46;
-	text-shadow:  0 1px 1px #f6f6f6;
-	background-image: -webkit-gradient(linear, left top, left bottom,  from( #fdfdfd), to( #eee )); /* Saf4+, Chrome */
-	background-image: -webkit-linear-gradient( #fdfdfd, #eee ); /* Chrome 10+, Saf5.1+ */
-	background-image:    -moz-linear-gradient( #fdfdfd, #eee ); /* FF3.6 */
-	background-image:     -ms-linear-gradient( #fdfdfd, #eee ); /* IE10 */
-	background-image:      -o-linear-gradient( #fdfdfd, #eee ); /* Opera 11.10+ */
-	background-image:         linear-gradient( #fdfdfd, #eee );
-}
-
-.radio:hover{
-	border: 1px solid  		#bbb;
-	background:  			#dadada;
-	color:  					#2F3E46;
-	text-shadow:  0 1px 1px #fff;
-	background-image: -webkit-gradient(linear, left top, left bottom,  from( #ededed),  to( #dadada)); /* Saf4+, Chrome */
-	background-image: -webkit-linear-gradient( #ededed, #dadada ); /* Chrome 10+, Saf5.1+ */
-	background-image:    -moz-linear-gradient( #ededed, #dadada ); /* FF3.6 */
-	background-image:     -ms-linear-gradient( #ededed, #dadada ); /* IE10 */
-	background-image:      -o-linear-gradient( #ededed, #dadada ); /* Opera 11.10+ */
-	background-image:         linear-gradient( #ededed, #dadada );
-}
-
-.radio:active{
-	border: 1px solid  		#808080;
-	background:  			#fdfdfd;
-	color:  					#2F3E46;
-	text-shadow:  0 1px 1px #ffffff;
-	background-image: -webkit-gradient(linear, left top, left bottom,  from( #eee), to( #fdfdfd  /*{a-bdown-background-end}*/)); /* Saf4+, Chrome */
-	background-image: -webkit-linear-gradient( #eee, #fdfdfd ); /* Chrome 10+, Saf5.1+ */
-	background-image:    -moz-linear-gradient( #eee, #fdfdfd ); /* FF3.6 */
-	background-image:     -ms-linear-gradient( #eee, #fdfdfd ); /* IE10 */
-	background-image:      -o-linear-gradient( #eee, #fdfdfd ); /* Opera 11.10+ */
-	background-image:         linear-gradient( #eee, #fdfdfd );
-}
-
-.radio.left{
-	margin-left: 10px;
-	-moz-border-radius-topleft: 		.6em;
-	-webkit-border-top-left-radius: 	.6em;
-	border-top-left-radius: 			.6em;
-	-moz-border-radius-bottomleft: 		.6em;
-	-webkit-border-bottom-left-radius: 	.6em;
-	border-bottom-left-radius: 			.6em;
-}
-
-.radio.right{
-	-moz-border-radius-topright:  			.6em;
-	-webkit-border-top-right-radius:  			.6em;
-	border-top-right-radius:  			.6em;
-	-moz-border-radius-bottomright:  			.6em;
-	-webkit-border-bottom-right-radius:  			.6em ;
-	border-bottom-right-radius:  			.6em;
-}
-
-.radio.on {
-	border: 1px solid #b4dd4b ;
-	background: #87ff52 ;
-	color:  					#fff  ;
-	text-shadow:  0    -1px    1px   #969696 ;
-	background-image: -webkit-gradient(linear, left top, left bottom, from( #b4dd4b ), to( #9ec441 )); /* Saf4+, Chrome */
-	background-image: -webkit-linear-gradient( #b4dd4b, #9ec441 ); /* Chrome 10+, Saf5.1+ */
-	background-image:    -moz-linear-gradient( #b4dd4b, #9ec441 ); /* FF3.6 */
-	background-image:     -ms-linear-gradient( #b4dd4b, #9ec441 ); /* IE10 */
-	background-image:      -o-linear-gradient( #b4dd4b, #9ec441 ); /* Opera 11.10+ */
-	background-image:         linear-gradient( #b4dd4b, #9ec441 );
-}
-
-.radio.on:hover{
-	border: 1px solid #b4dd4b ;
-	background: #87ff52 ;
-	color:  					#fff  ;
-	text-shadow:  0    -1px    1px   #969696 ;
-	background-image: -webkit-gradient(linear, left top, left bottom, from( #b4dd4b ), to( #9ec441 )); /* Saf4+, Chrome */
-	background-image: -webkit-linear-gradient( #b4dd4b, #9ec441 ); /* Chrome 10+, Saf5.1+ */
-	background-image:    -moz-linear-gradient( #b4dd4b, #9ec441 ); /* FF3.6 */
-	background-image:     -ms-linear-gradient( #b4dd4b, #9ec441 ); /* IE10 */
-	background-image:      -o-linear-gradient( #b4dd4b, #9ec441 ); /* Opera 11.10+ */
-	background-image:         linear-gradient( #b4dd4b, #9ec441 );
-	}
-
-.radio.on:active{
-	border: 1px solid #b4dd4b ;
-	background: #87ff52 ;
-	color:  					#fff  ;
-	text-shadow:  0    -1px    1px   #969696 ;
-	background-image: -webkit-gradient(linear, left top, left bottom, from( #b4dd4b ), to( #9ec441 )); /* Saf4+, Chrome */
-	background-image: -webkit-linear-gradient( #b4dd4b, #9ec441 ); /* Chrome 10+, Saf5.1+ */
-	background-image:    -moz-linear-gradient( #b4dd4b, #9ec441 ); /* FF3.6 */
-	background-image:     -ms-linear-gradient( #b4dd4b, #9ec441 ); /* IE10 */
-	background-image:      -o-linear-gradient( #b4dd4b, #9ec441 ); /* Opera 11.10+ */
-	background-image:         linear-gradient( #b4dd4b, #9ec441 );
-}
-
 #load-mask{
-	background-image: -moz-linear-gradient( #4d4d4d, #000000 );
+	background-image: -webkit-gradient(linear, left top, left bottom, from(#4d4d4d), to(#000000)); /* Saf4+, Chrome */
+	background-image: -webkit-linear-gradient(#4d4d4d, #000000); /* Chrome 10+, Saf5.1+ */
+	background-image:    -moz-linear-gradient(#4d4d4d, #000000); /* FF3.6 */
+	background-image:     -ms-linear-gradient(#4d4d4d, #000000); /* IE10 */
+	background-image:      -o-linear-gradient(#4d4d4d, #000000); /* Opera 11.10+ */
+	background-image:         linear-gradient(#4d4d4d, #000000);
 	background-repeat: no-repeat;
 	background-color: #000000;
 	position: absolute;
@@ -526,7 +425,7 @@ iframe body{
 }
 
 #button-block-1 {
-	width: 423px;
+	width: 338px;
 	height: 40px;
 	margin-right: 35px;
 	float: left;
@@ -552,15 +451,15 @@ iframe body{
 		color: #75B043;
 	}
 	
-	.inspector-button {
+	#inspector-button {
 		width: 75px;
 	}
 	
-	#toolbar .inspector-button.active {
+	#toolbar #inspector-button.active {
 		background-color: #75B043;
 	}
 	
-	#toolbar .inspector-button.active span {
+	#toolbar #inspector-button.active span {
 		color: #000;
 	}
 	
@@ -598,13 +497,13 @@ iframe body{
 	}
 
 #button-block-2 {
-	width: 440px;
+	width: 520px;
 	height: 40px;
 	float: left;
 }
 
 	#button-block-2 .tb-button {
-		width: 100px;
+		width: 120px;
 		text-align: left;
 	}
 	
@@ -624,11 +523,11 @@ iframe body{
 	}
 	
 	#download-button .tb-button-inner {
-		width: 90px;
+		width: 92px;
 	}
 	
 	#import-button .tb-button-inner {
-		width: 79px;
+		width: 81px;
 	}
 	
 	#button-block-2 #import-button img {
@@ -636,11 +535,11 @@ iframe body{
 	}
 	
 	#share-button .tb-button-inner {
-		width: 80px;
+		width: 82px;
 	}
 	
 	#help-button .tb-button-inner {
-		width: 57px;
+		width: 59px;
 	}
 	
 	#button-block-2 #help-button img {

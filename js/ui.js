@@ -93,14 +93,16 @@ TR.initializeUI = function() {
 	});
 	
 	//Inspector Radio behavior
-	$( ".inspector-button" ).click(function() {
+	$( "#inspector-button" ).click(function() {
 		var $this = $( this ),
-			other = $this.siblings( ".inspector-button" );
 			active = $this.hasClass( "active" );
 			
 		if( !active ) {
 			$this.addClass( "active" ).find( "img" ).attr( "src", "images/inspector-active.png" );
-			other.removeClass( "active" ).find( "img" ).attr( "src", "images/inspector.png" );
+			$this.find( "strong" ).text( "on" );
+		} else {
+			$this.removeClass( "active" ).find( "img" ).attr( "src", "images/inspector.png" );
+			$this.find( "strong" ).text( "off" );
 		}
 	});
 

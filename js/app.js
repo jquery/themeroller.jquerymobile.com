@@ -976,7 +976,7 @@ TR.initDraggableColors = function() {
 TR.initInspector = function() {
 	//click on an element with inspector-on and select element in panel
     TR.iframe.find( "[data-form]" ).mouseup(function(e) {
-        if( $("#inspector-on").hasClass("active") ) {
+        if( $("#inspector-button").hasClass("active") ) {
             e.stopPropagation();
 			TR.selectElement( $(this) );  		
             TR.iframe.find( "#highlight" ).show();
@@ -986,7 +986,7 @@ TR.initInspector = function() {
     //highlight moves as you mouseover things
     TR.iframe.find( "[data-form]" ).bind( "mouseover", function() {
 		var $this = $( this );
-        if( $("#inspector-on").hasClass("active") ) {
+        if( $("#inspector-button").hasClass("active") ) {
             var left = $this.offset().left, top = $this.offset().top,
             	width = $this.outerWidth(), height = $this.outerHeight();
 			
@@ -1027,7 +1027,7 @@ TR.initInspector = function() {
     });
 	
     TR.iframe.find( "#highlight" ).mousedown(function() {
-        if( $("#inspector-on").hasClass("active") ) {
+        if( $("#inspector-button").hasClass("active") ) {
             $( this ).css( "z-index", -1 );
         }
     });
@@ -1185,7 +1185,7 @@ TR.refreshIframe = function( swatch )
 {	
     //click behavior for inspector
 	TR.iframe.find( ".ui-bar-" + swatch + ", " + ".ui-body-" + swatch + ", .ui-bar-" + swatch + " [data-form], .ui-body-" + swatch + " [data-form]" ).mouseup(function(e) {
-        if( $("#inspector-on").hasClass("active") ) {
+        if( $("#inspector-button").hasClass("active") ) {
             e.stopPropagation();
             //apply attributes to slider of the new swatch
             		
@@ -1207,7 +1207,6 @@ TR.refreshIframe = function( swatch )
             if( form == "ui-icon" ) {
             	data_theme = "global";
             }
-			
 			
             $( "#tabs" ).tabs( "select", TR.num[data_theme] );	
 			
@@ -1231,7 +1230,7 @@ TR.refreshIframe = function( swatch )
 	
     //bind hover behavior for inspector
     TR.iframe.find( "[data-form$=-" + swatch + "]" ).bind( "mouseover", function() {
-        if( $("#inspector-on").hasClass("active") ) {
+        if( $("#inspector-button").hasClass("active") ) {
             var left = $( this ).offset().left;
             var top = $( this ).offset().top;
             var width = $( this ).outerWidth();

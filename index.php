@@ -19,7 +19,6 @@ if ( isset($_GET['style_id']) ) {
 	<link rel="stylesheet" type="text/css" href="css/jquery.ui.css" />
 	<link rel="stylesheet" type="text/css" href="css/farbtastic.css" />
 	<link rel="stylesheet" type="text/css" href="css/tr.panel.css" />
-	<link rel="stylesheet" type="text/css" href="css/new.css" />
 
 	<script src="js/jquery.js"></script>
 	<script src="js/jquery.ui.js"></script>
@@ -207,13 +206,9 @@ if ( isset($_GET['style_id']) ) {
 						<span>redo</span>
 					</div>
 				</div>
-				<div class="tb-button inspector-button active" id="inspector-off">
+				<div class="tb-button" id="inspector-button">
 					<img src="images/inspector.png" alt=" "/><br />
 					<span>Inspector <strong>off</strong></span>
-				</div>
-				<div class="tb-button inspector-button" id="inspector-on">
-					<img src="images/inspector-active.png" alt="Inspector on"/><br />
-					<span>Inspector <strong>on</strong></span>
 				</div>
 			</div>
 			<div id="button-block-2">
