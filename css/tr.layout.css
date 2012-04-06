@@ -167,7 +167,6 @@ h2{
 #header{
 	height: 100%;
 	width: 887px;
-	margin-left: 5px;
 	position: relative;
 }
 
@@ -184,6 +183,7 @@ h2{
 	height: 100%;
 	float: left;
 	border-right: 1px solid #F2F2F2;
+	padding-left: 5px;
 }
 
 #quickswatch h2 {
