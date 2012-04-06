@@ -41,6 +41,8 @@ TR.upgradeTheme = function() {
 		url: "upgrade/css/" + version + "-theme.css",
 		dataType: "text",
 		success: function(css) {
+			TR.undoLog.push( TR.styleBlock.text() );
+			
 			$( "#interface" ).css({
 				position: "relative",
 				left: "-9999px"
@@ -59,7 +61,7 @@ TR.upgradeTheme = function() {
 			
 			//styleArray has correct values and tokens array has the appropriate stylesheet
 			//so we write out
-			TR.updateAllCSS();
+			TR.updateAllCSS( true );
 			
 			//close the import dialog
 			$('#upload').dialog('close');
@@ -77,13 +79,12 @@ TR.passThemeToVersion = function( version ) {
 
 TR.upgradeNumberOfSwatches = function( style, count ) {
 	var diff = count - 3;
-	console.log(diff);
 	if( diff > 0 ) {
 		var start = style.search( /\/\* A.*\n-*\*\// );
         var end = style.search( /\/\* B.*\n-*\*\// );
 		var swatch_a = style.substring( start, end );
 		
-		for( var i = 0; i <= diff; i++) {
+		for( var i = 0; i < diff; i++) {
 			var letter = String.fromCharCode( i + 100 );
 	
 			var temp_style_template = swatch_a.replace( /-a,/g, "-" + letter + "," ).replace( /-a\s/g, "-" + letter + " " )
@@ -106,7 +107,6 @@ TR.upgradeNumberOfSwatches = function( style, count ) {
 
 TR.getNumberOfSwatches = function() {
 	var count = 1;
-	console.log(TR.styleArray);
 	for( var i in TR.styleArray ) {
 		var letter = i.split("-")[0];
 		if( letter.length == 1 ) {

@@ -86,14 +86,13 @@ TR.addSwatch = function( new_style ) {
 			lower = TR.alpha[TR.tabCount - 1],
 			upper = lower.toUpperCase();
 		
-		//log style before adding swatch
-		TR.undoLog.push( TR.styleBlock.text() );
-		TR.redoLog = [];
-		
 		//new_style flag is only set if styles have not been added to TR.styleArray
 		//or CSS yet. correctNumberOfSwatches calles addSwatch with new_style=false
 		//so this block is skipped
 		if( new_style ) {
+			TR.undoLog.push( TR.styleBlock.text() );
+			TR.redoLog = [];
+			
 			//defining TR.styleArray indices
             var indices = [],
 				reg = new RegExp( "a-.*" );
@@ -1344,19 +1343,25 @@ TR.selectElement = function( element ) {
 //on undo, backup CSS before the undo and push onto the redoLog
 //apply previous CSS from undoLog and reinit
 TR.undo = function() {
-	TR.redoLog.push( TR.styleBlock.text() );
-	TR.styleBlock.text( TR.undoLog.pop() );
-	TR.initStyleArray();
-	TR.correctNumberOfSwatches();
+	var style = TR.undoLog.pop();
+	if( style ) {
+		TR.redoLog.push( TR.styleBlock.text() );
+		TR.styleBlock.text( style );
+		TR.initStyleArray();
+		TR.correctNumberOfSwatches();
+	}
 }
 
 //on redo, backup CSS before the redo and push onto the undoLog
 //apply last action's CSS from redoLog and reinit
 TR.redo = function() {
-	TR.undoLog.push( TR.styleBlock.text() );
-	TR.styleBlock.text( TR.redoLog.pop() );
-	TR.initStyleArray();
-	TR.correctNumberOfSwatches();
+	var style = TR.redoLog.pop();
+	if( style ) {
+		TR.undoLog.push( TR.styleBlock.text() );
+		TR.styleBlock.text( style );
+		TR.initStyleArray();
+		TR.correctNumberOfSwatches();
+	}
 }
 
 //work horse of the app
