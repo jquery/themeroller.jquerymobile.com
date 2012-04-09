@@ -29,5 +29,6 @@ for branch in $branches; do
   log "untarring $branch.tar into $output/$branch/"
   tar -C "$output/$branch" -xf "$output/$branch.tar"
   rm -f "$output/$branch.tar"
+  rm -Rf $output/$branch/upgrade/*
   cp -r upgrade "$output/$branch"
 done

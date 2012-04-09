@@ -1,5 +1,5 @@
 <?php
-	$MASTER = "1.1";
+	$MASTER = "1.1.0-rc.2";
 	
 	$dir = preg_grep('/^([^.])/', scandir( "upgrade/css" ));
 	

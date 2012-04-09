@@ -209,13 +209,13 @@ if ( isset($_POST['style']) ) {
 					
 					<?php
 						if (isset($VERSION_LIST)) {
-							echo '<ul>';
+							echo '<ul><b>Switch to</b>';
 							foreach($VERSION_LIST as $key => $l) {
 								if( $l != $JQM_VERSION ) {
 									$version = explode( "-", $l );
 									$version[1] = strtoupper($version[1]);
 									$version[1] = implode( "", explode( ".", $version[1] ) );
-									echo '<li data-version="' . $key . '">Switch to ' . implode( " ", $version ) . '</li>';
+									echo '<li data-version="' . $key . '">' . implode( " ", $version ) . '</li>';
 								}
 							}
 							echo '</ul>';
