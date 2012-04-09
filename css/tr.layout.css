@@ -469,7 +469,7 @@ iframe body{
 		}
 		
 		#version-select ul li {
-			margin-bottom: 5px;
+			margin: 5px 0 0 15px;
 			cursor: pointer;
 		}
 		
