@@ -88,7 +88,7 @@ TR.upgradeTheme = function() {
 
 TR.passThemeToVersion = function( version, master ) {
 	if ( master ) {
-		version = "../..";
+		version = "..";
 	}
 	$( "body" ).append( "<form id=\"pass-theme\" style=\"display: none\" action=\"" + version + "/index.php\" method=\"post\"><input name=\"style\" value=\"" + encodeURI(TR.styleBlock.text()) + "\" /></form>" );
 	$( "#pass-theme" ).submit();
