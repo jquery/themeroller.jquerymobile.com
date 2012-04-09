@@ -1,6 +1,6 @@
 <?php
 
-	$JQM_VERSION = "1.0.1";
+	$JQM_VERSION = "1.1";
 	$JQUERY_VERSION = "1.6.4";
 
 ?>

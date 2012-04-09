@@ -79,10 +79,16 @@ if ( isset($_POST['style']) ) {
 		<div id="upload" class="dialog" title=" ">
 			<h1><strong>Import</strong> Theme<span href="#" id="import-default">Import Default Theme</span></h1>
 			<?php
-				if (isset($VERSION_LIST)) {
+				if (isset($VERSION_LIST) && isset($MASTER)) {
 					echo '<label>Upgrade to version:</label><select id="upgrade-to-version">';
 					foreach($VERSION_LIST as $key => $l) {
-						echo '<option value="' . $key . '">' . $l . '</option>';
+						
+						echo '<option value="' . $key . '"';
+						//if the build script has been run, $MASTER will be the same in each version
+						if( $l == $MASTER ) {
+							echo ' class="master"';
+						}
+						echo '>' . $l . '</option>';
 					}
 					echo '</select>';
 				}
@@ -197,11 +203,19 @@ if ( isset($_POST['style']) ) {
 				<div class="tb-button" id="version-select">
 					<img src="images/jqm_logo_small.png" alt="jQuery Mobile"/>
 					<img id="version-select-arrow" src="images/version_select_arrow.png" alt=" " />
-					<div id="current-version">Version 1.0</div>
+					<div id="current-version">Version 1.1</div>
 					
-					<ul id="version-drop-down">
-						<li data-version="1.1">Switch to 1.1</li>
-					</ul>
+					<?php
+						if (isset($VERSION_LIST)) {
+							echo '<ul>';
+							foreach($VERSION_LIST as $key => $l) {
+								if( $l != $JQM_VERSION ) {
+									echo '<li data-version="' . $key . '">' . $l . '</li>';
+								}
+							}
+							echo '</ul>';
+						}
+					?>
 				</div>
 				
 				<div id="fix-buttons">

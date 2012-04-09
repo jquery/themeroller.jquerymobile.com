@@ -34,16 +34,18 @@ TR.initUpgrade = function() {
 	});
 	
 	$( "#version-select ul li" ).click( function() {
+		alert( "test" );
 		var version = $( this ).attr( "data-version" );
 		if( TR.version != version) {
 			//pass the theme in the post to the appropriate version
-			TR.passThemeToVersion( version );
+			TR.passThemeToVersion( version, false );
 		}
 	})
 }
 
 TR.upgradeTheme = function() {
-	var version = $( "#upgrade-to-version" ).val();
+	var version = $( "#upgrade-to-version" ).val(),
+		master = $( "#upgrade-to-version option[value=\"" + version + "\"]" ).hasClass( "master" );
 	
 	$.ajax({
 		url: "upgrade/css/" + version + "-theme.css",
@@ -76,16 +78,19 @@ TR.upgradeTheme = function() {
 			//close the import dialog
 			$('#upload').dialog('close');
 			
-			if( TR.version != version) {
+			if( TR.version != version ) {
 				//pass the theme in the post to the appropriate version
-				TR.passThemeToVersion( version );
+				TR.passThemeToVersion( version, master );
 			}
 		}
 	});
 }
 
-TR.passThemeToVersion = function( version ) {
-	$( "body" ).append( "<form id=\"pass-theme\" style=\"display: none\" action=\"index.php\" method=\"post\"><input name=\"style\" value=\"" + encodeURI(TR.styleBlock.text()) + "\" /></form>" );
+TR.passThemeToVersion = function( version, master ) {
+	if ( master ) {
+		version = "";
+	}
+	$( "body" ).append( "<form id=\"pass-theme\" style=\"display: none\" action=\"" + version + "/index.php\" method=\"post\"><input name=\"style\" value=\"" + encodeURI(TR.styleBlock.text()) + "\" /></form>" );
 	$( "#pass-theme" ).submit();
 }
 
