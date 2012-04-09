@@ -198,7 +198,12 @@ if ( isset($_POST['style']) ) {
 					<img src="images/jqm_logo_small.png" alt="jQuery Mobile"/>
 					<img id="version-select-arrow" src="images/version_select_arrow.png" alt=" " />
 					<div id="current-version">Version 1.0</div>
+					
+					<ul id="version-drop-down">
+						<li data-version="1.1">Switch to 1.1</li>
+					</ul>
 				</div>
+				
 				<div id="fix-buttons">
 					<div id="undo">
 						<img src="images/undo.png" alt="Undo" /><br />
@@ -662,6 +667,12 @@ if ( isset($_POST['style']) ) {
 				if( isset($style) ) {
 					echo '<div style="display: none" id="skip-welcome"></div>';
 				} 
+			?>
+			
+			<?php
+				if( isset($JQM_VERSION) ) {
+					echo '<div id="version">' . $JQM_VERSION . '</div>';
+				}
 			?>
 			
 			<div id="style"><?php

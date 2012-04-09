@@ -389,10 +389,10 @@ iframe body{
 		padding: 5px 0 4px;
 		margin-right: 10px;
 		border-radius: 2px;
-		background-color: #4d4d4d;
 		-moz-border-radius: 2px;
 		-webkit-border-radius: 2px;
 		-o-border-radius: 2px;
+		background-color: #4d4d4d;
 		text-align: center;
 		float: left;
 		cursor: pointer;
@@ -433,24 +433,49 @@ iframe body{
 }
 
 	#toolbar #button-block-1 #version-select {
-		width: 125px;
+		width: 123px;
 		background-color: #fff;
 		text-align: left;
 		padding-left: 10px;
 		padding-right: 10px;
 		position: relative;
+		z-index: 3000;
+		overflow: hidden;
+		box-shadow: 0 0 10px #000;
 	}
+		
+		#version-select:hover{
+			height: auto;
+		}
 	
-	#version-select-arrow {
-		position: absolute;
-		top: 15px;
-		right: 10px;
-	}
+		#version-select #version-select-arrow {
+			position: absolute;
+			top: 15px;
+			right: 10px;
+		}
 	
-	#current-version{
-		font-size: 13px;
-		color: #75B043;
-	}
+		#current-version{
+			font-size: 13px;
+			color: #75B043;
+			padding-bottom: 10px;
+			border-bottom: 1px solid #f2f2f2;
+		}
+		
+		#version-select ul {
+			list-style-type: none;
+			color: #000;
+			font-size: 12px;
+			padding: 0;
+		}
+		
+		#version-select ul li {
+			margin-bottom: 5px;
+			cursor: pointer;
+		}
+		
+		#version-select ul li:hover{
+			text-decoration: underline;
+		}
 	
 	#inspector-button {
 		width: 75px;
@@ -546,3 +571,7 @@ iframe body{
 	#button-block-2 #help-button img {
 		margin-right: 7px;
 	}
+	
+#version {
+	display: none;
+}

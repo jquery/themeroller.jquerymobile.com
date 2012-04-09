@@ -32,6 +32,14 @@ TR.initUpgrade = function() {
 			}
 		});
 	});
+	
+	$( "#version-select ul li" ).click( function() {
+		var version = $( this ).attr( "data-version" );
+		if( TR.version != version) {
+			//pass the theme in the post to the appropriate version
+			TR.passThemeToVersion( version );
+		}
+	})
 }
 
 TR.upgradeTheme = function() {
@@ -43,11 +51,13 @@ TR.upgradeTheme = function() {
 		success: function(css) {
 			TR.undoLog.push( TR.styleBlock.text() );
 			
-			$( "#interface" ).css({
-				position: "relative",
-				left: "-9999px"
-			});
-			$( "#load-mask" ).height($(window).height()).width($(window).width() + 15).show();
+			if( TR.version != version ) {
+				$( "#interface" ).css({
+					position: "relative",
+					left: "-9999px"
+				});
+				$( "#load-mask" ).height($(window).height()).width($(window).width() + 15).show();
+			}
 			
 			//takes in the imported CSS and puts values into styleArray
 			TR.styleBlock.text($('#load-css').val());
@@ -66,8 +76,10 @@ TR.upgradeTheme = function() {
 			//close the import dialog
 			$('#upload').dialog('close');
 			
-			//pass the theme in the post to the appropriate version
-			TR.passThemeToVersion( version );
+			if( TR.version != version) {
+				//pass the theme in the post to the appropriate version
+				TR.passThemeToVersion( version );
+			}
 		}
 	});
 }
@@ -78,28 +90,19 @@ TR.passThemeToVersion = function( version ) {
 }
 
 TR.upgradeNumberOfSwatches = function( style, count ) {
-	var diff = count - 3;
+	var diff = count - 1;
 	if( diff > 0 ) {
-		var start = style.search( /\/\* A.*\n-*\*\// );
-        var end = style.search( /\/\* B.*\n-*\*\// );
-		var swatch_a = style.substring( start, end );
+		var start = style.search( /\/\* A.*\n-*\*\// ),
+        	end = style.search( /\/\* Structure /),
+ 			swatch_a = style.substring( start, end );
 		
 		for( var i = 0; i < diff; i++) {
-			var letter = String.fromCharCode( i + 100 );
+			var letter = String.fromCharCode( i + 98 );
 	
 			var temp_style_template = swatch_a.replace( /-a,/g, "-" + letter + "," ).replace( /-a\s/g, "-" + letter + " " )
 				.replace( /{a-/g, "{" + letter + "-" ).replace( /\/\*\sA/, "/* " + letter.toUpperCase() );
 			
 			style = style.replace( /\/\*\sStructure\s/, temp_style_template + "\n\n/* Structure " );
-		}
-	} else if( diff < 0 ) {
-		for( var i = Math.abs(diff); i > 0; i-- ) {
-			var start_reg = new RegExp( "\\/\\* " + String.fromCharCode( i + 97 ).toUpperCase() + "\\s*\\n-*\\*\\/" ),
-				end_reg = new RegExp( "\\/\\* Structure \\*\\/" ),
-				start = style.search( start_reg ),
-				end = style.search( end_reg );         
-
-			style = style.substring( 0, start ) + style.substring( end, style.length );
 		}
 	}
 	return style;

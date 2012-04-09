@@ -22,6 +22,7 @@ TR.styleArray = [];
 TR.tokens = {};
 TR.undoLog = [];
 TR.redoLog = [];
+TR.version = null;
 
 TR.showStartEnd = [];
 TR.firstAdd = 1;
@@ -67,11 +68,13 @@ TR.addMostRecent = function( color ) {
 	if( !found ) {
 		var last = null;
 		most_recents.each(function() {
-			var temp = $( this ).css( "background-color" );
-			last = last ? last : color;
-			$( this ).css( "background-color", last );
+			var $this = $( this ),
+				temp = $this.css( "background-color" )
+				last = last ? last : color;
+			$this.css( "background-color", last );
 			if( last != temp ) {
-				$( this ).draggable( "enable" );
+				$this.draggable( "enable" );
+				$this.removeClass( "disabled" );
 			}
 			last = temp;
 		});
@@ -865,7 +868,10 @@ TR.initDraggableColors = function() {
 		hoverClass: "hover",
 		drop: function() {
 			var $this = $( this );
-			var color = TR.rgbtohex( $(".ui-draggable-dragging").css("background-color") );
+			var color = $(".ui-draggable-dragging").css("background-color");
+			if( color != "transparent" ) {
+				color = TR.rgbtohex( color );
+			}
 			$( ".ui-draggable .ui-draggable-dragging" ).trigger( "drop" );
 			$this.val( color ).css( "background-color", color );
 			$this.trigger( "change" );
@@ -946,7 +952,9 @@ TR.initDraggableColors = function() {
 					swatch = element.attr( "data-swatch" );
 				}
 				var color = $( ".color-drag.ui-draggable-dragging" ).css( "background-color" ) || $( ".kuler-color.ui-draggable-dragging" ).css( "background-color" );
-				color = TR.rgbtohex( color );
+				if( color != "transparent" ) {
+					color = TR.rgbtohex( color );
+				}
 			
 				for( var i in classtokey ) {
 					if( el_class.indexOf(i) != -1 ) {
@@ -1102,6 +1110,8 @@ TR.initThemeRoller = function() {
 	TR.styleBlock = TR.iframe.find( "#styleblock" );
 	TR.styleBlock.text( $("#style").text() );
     
+	TR.version = $( "#version" ).text(); 
+
     //adding attributes to elements in the preview to make them compatible
     //with the inspector
 	var starting_swatches = ["a", "b", "c"];
@@ -1115,7 +1125,7 @@ TR.initThemeRoller = function() {
 	
 	//initialize templates for adding swatches later
 	TR.panelTemplate = $( "#tab2" ).html();
-	TR.swatchTemplate = "<div class=\"preview ui-shadow swatch\"><div class=\"ui-header ui-bar-a\" data-swatch=\"a\" data-theme=\"a\" data-form=\"ui-bar-a\" data-role=\"header\" role=\"banner\"><a class=\"ui-btn-left ui-btn ui-btn-icon-notext ui-btn-corner-all ui-shadow ui-btn-up-a\" data-iconpos=\"notext\" data-theme=\"a\" data-role=\"button\" data-icon=\"home\" title=\" Home \"><span class=\"ui-btn-inner ui-btn-corner-all\"><span class=\"ui-btn-text\"> Home </span><span data-form=\"ui-icon\" class=\"ui-icon ui-icon-home ui-icon-shadow\"></span></span></a><h1 class=\"ui-title\" tabindex=\"0\" role=\"heading\" aria-level=\"1\">A</h1><a class=\"ui-btn-right ui-btn ui-btn-icon-notext ui-btn-corner-all ui-shadow ui-btn-up-a\" data-iconpos=\"notext\" data-theme=\"a\" data-role=\"button\" data-icon=\"grid\" title=\" Navigation \"><span class=\"ui-btn-inner ui-btn-corner-all\"><span class=\"ui-btn-text\"> Navigation </span><span data-form=\"ui-icon\" class=\"ui-icon ui-icon-grid ui-icon-shadow\"></span></span></a></div><div class=\"ui-content ui-body-a\" data-theme=\"a\" data-form=\"ui-body-a\" data-role=\"content\" role=\"main\"><p class=\"mini\">Sample text and <a class=\"ui-link\" data-form=\"ui-body-a\" href=\"#\" data-theme=\"a\">links</a>.</p><div data-role=\"fieldcontain\">    <fieldset data-role=\"controlgroup\"><li data-swatch=\"a\" class=\"ui-li ui-li-divider ui-btn ui-bar-a ui-corner-top ui-mini\" data-role=\"list-divider\" role=\"\" data-form=\"ui-bar-a\">List Header</li><input type=\"radio\" name=\"radio-choice-a\" id=\"radio-choice-1-a\" value=\"choice-1\" checked=\"checked\" />        <label for=\"radio-choice-1-a\" data-form=\"ui-btn-up-a\" class=\"ui-corner-none\" data-mini=\"true\">Radio 1</label>         <input type=\"radio\" name=\"radio-choice-a\" id=\"radio-choice-2-a\" value=\"choice-2\" />         <label for=\"radio-choice-2-a\" data-form=\"ui-btn-up-a\" data-mini=\"true\">Radio 2</label><input type=\"checkbox\" name=\"checkbox-1\" id=\"checkbox-1\" class=\"custom\" checked=\"checked\" /><label for=\"checkbox-1\" data-form=\"ui-btn-up-a\" data-mini=\"true\">Checkbox</label>    </fieldset></div><div data-role=\"fieldcontain\"> <fieldset data-role=\"controlgroup\" data-type=\"horizontal\"><input type=\"radio\" name=\"radio-view-a\" id=\"radio-view-a-a\" value=\"list\" checked=\"checked\"/> <label for=\"radio-view-a-a\" data-form=\"ui-btn-up-a\" data-mini=\"true\">On</label> <input type=\"radio\" name=\"radio-view-a\" id=\"radio-view-b-a\" value=\"grid\"  /> <label for=\"radio-view-b-a\" data-form=\"ui-btn-up-a\" data-mini=\"true\">Off</label> </fieldset> </div><div data-role=\"fieldcontain\"><select name=\"select-choice-1\" id=\"select-choice-1\" data-native-menu=\"false\" data-theme=\"a\" data-form=\"ui-btn-up-a\" data-mini=\"true\"><option value=\"standard\">Option 1</option><option value=\"rush\">Option 2</option><option value=\"express\">Option 3</option><option value=\"overnight\">Option 4</option></select></div><input type=\"text\" value=\"Text Input\" class=\"input\" data-form=\"ui-body-a\" data-mini=\"true\" /><div data-role=\"fieldcontain\"><input type=\"range\" name=\"slider\" value=\"50\" min=\"0\" max=\"100\" data-form=\"ui-body-a\" data-theme=\"a\" data-mini=\"true\" data-highlight=\"true\" /></div><button data-icon=\"star\" data-theme=\"a\" data-form=\"ui-btn-up-a\" data-mini=\"true\">Button</button></div></div>";
+	TR.swatchTemplate = "<div class=\"preview ui-shadow swatch\"><div class=\"ui-header ui-bar-a\" data-swatch=\"a\" data-theme=\"a\" data-form=\"ui-bar-a\" data-role=\"header\" role=\"banner\"><a class=\"ui-btn-left ui-btn ui-btn-icon-notext ui-btn-corner-all ui-shadow ui-btn-up-a\" data-iconpos=\"notext\" data-theme=\"a\" data-role=\"button\" data-icon=\"home\" title=\" Home \"><span class=\"ui-btn-inner ui-btn-corner-all\"><span class=\"ui-btn-text\"> Home </span><span data-form=\"ui-icon\" class=\"ui-icon ui-icon-home ui-icon-shadow\"></span></span></a><h1 class=\"ui-title\" tabindex=\"0\" role=\"heading\" aria-level=\"1\">A</h1><a class=\"ui-btn-right ui-btn ui-btn-icon-notext ui-btn-corner-all ui-shadow ui-btn-up-a\" data-iconpos=\"notext\" data-theme=\"a\" data-role=\"button\" data-icon=\"grid\" title=\" Navigation \"><span class=\"ui-btn-inner ui-btn-corner-all\"><span class=\"ui-btn-text\"> Navigation </span><span data-form=\"ui-icon\" class=\"ui-icon ui-icon-grid ui-icon-shadow\"></span></span></a></div><div class=\"ui-content ui-body-a\" data-theme=\"a\" data-form=\"ui-body-a\" data-role=\"content\" role=\"main\"><p>Sample text and <a class=\"ui-link\" data-form=\"ui-body-a\" href=\"#\" data-theme=\"a\">links</a>.</p><div data-role=\"fieldcontain\">    <fieldset data-role=\"controlgroup\"><li data-swatch=\"a\" class=\"ui-li ui-li-divider ui-btn ui-bar-a ui-corner-top\" data-role=\"list-divider\" role=\"\" data-form=\"ui-bar-a\">List Header</li><input type=\"radio\" name=\"radio-choice-a\" id=\"radio-choice-1-a\" value=\"choice-1\" checked=\"checked\" />        <label for=\"radio-choice-1-a\" data-form=\"ui-btn-up-a\" class=\"ui-corner-none\">Radio 1</label>         <input type=\"radio\" name=\"radio-choice-a\" id=\"radio-choice-2-a\" value=\"choice-2\"  />         <label for=\"radio-choice-2-a\" data-form=\"ui-btn-up-a\">Radio 2</label><input type=\"checkbox\" name=\"checkbox-1\" id=\"checkbox-1\" class=\"custom\" checked=\"checked\" /><label for=\"checkbox-1\" data-form=\"ui-btn-up-a\">Checkbox</label>    </fieldset></div><div data-role=\"fieldcontain\"> <fieldset data-role=\"controlgroup\" data-type=\"horizontal\"><input type=\"radio\" name=\"radio-view-a\" id=\"radio-view-a-a\" value=\"list\" checked=\"checked\"/> <label for=\"radio-view-a-a\" data-form=\"ui-btn-up-a\">On</label> <input type=\"radio\" name=\"radio-view-a\" id=\"radio-view-b-a\" value=\"grid\"  /> <label for=\"radio-view-b-a\" data-form=\"ui-btn-up-a\">Off</label> </fieldset> </div><div data-role=\"fieldcontain\"><select name=\"select-choice-1\" id=\"select-choice-1\" data-native-menu=\"false\" data-theme=\"a\" data-form=\"ui-btn-up-a\"><option value=\"standard\">Option 1</option><option value=\"rush\">Option 2</option><option value=\"express\">Option 3</option><option value=\"overnight\">Option 4</option></select></div><input type=\"text\" value=\"Text Input\" class=\"input\" data-form=\"ui-body-a\" /><div data-role=\"fieldcontain\"><input type=\"range\" name=\"slider\" value=\"0\" min=\"0\" max=\"100\" data-form=\"ui-body-a\" data-theme=\"a\" /></div><button data-icon=\"star\" data-theme=\"a\" data-form=\"ui-btn-up-a\">Button</button></div></div>";
 	TR.panelTemplate = $( "#tab2" ).html();
 	
 	//call initialization methods
@@ -1535,7 +1545,10 @@ TR.updateThemeRoller = function( tab ) {
 		hoverClass: "hover",
 		drop: function() {
 			var $this = $( this );
-			var color = rgbtohex( $(".ui-draggable-dragging").css("background-color") );
+			var color = $(".ui-draggable-dragging").css("background-color");
+			if( color != "transparent" ) {
+				color = TR.rgbtohex( color );
+			}
 			$( ".ui-draggable .ui-draggable-dragging" ).trigger( "drop" );
 			$this.val( color ).css( "background-color", color );
 			$this.trigger( "change" );
