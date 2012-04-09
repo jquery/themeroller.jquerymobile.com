@@ -34,12 +34,19 @@ TR.initUpgrade = function() {
 	});
 	
 	$( "#version-select ul li" ).click( function() {
-		alert( "test" );
 		var version = $( this ).attr( "data-version" );
-		if( TR.version != version) {
-			//pass the theme in the post to the appropriate version
-			TR.passThemeToVersion( version, false );
-		}
+		
+		//reads the target CSS file, adds/subtracts appropriate number of swatches and tokenizes it
+		var swatchCount = TR.getNumberOfSwatches();
+		TR.styleBlock.text( TR.upgradeNumberOfSwatches( css, swatchCount ) );
+		TR.initStyleArray( "refresh" );
+		
+		//styleArray has correct values and tokens array has the appropriate stylesheet
+		//so we write out
+		TR.updateAllCSS( true );
+		
+		//pass the theme in the post to the appropriate version
+		TR.passThemeToVersion( version, master );
 	})
 }
 
