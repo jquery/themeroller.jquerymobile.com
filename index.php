@@ -210,7 +210,7 @@ if ( isset($_POST['style']) ) {
 							echo '<ul>';
 							foreach($VERSION_LIST as $key => $l) {
 								if( $l != $JQM_VERSION ) {
-									echo '<li data-version="' . $key . '">' . $l . '</li>';
+									echo '<li data-version="' . $key . '">Switch to ' . $l . '</li>';
 								}
 							}
 							echo '</ul>';

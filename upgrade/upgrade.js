@@ -36,61 +36,65 @@ TR.initUpgrade = function() {
 	$( "#version-select ul li" ).click( function() {
 		var version = $( this ).attr( "data-version" );
 		
-		//reads the target CSS file, adds/subtracts appropriate number of swatches and tokenizes it
-		var swatchCount = TR.getNumberOfSwatches();
-		TR.styleBlock.text( TR.upgradeNumberOfSwatches( css, swatchCount ) );
-		TR.initStyleArray( "refresh" );
-		
-		//styleArray has correct values and tokens array has the appropriate stylesheet
-		//so we write out
-		TR.updateAllCSS( true );
-		
-		//pass the theme in the post to the appropriate version
-		TR.passThemeToVersion( version, master );
+		$.ajax({
+			url: "upgrade/css/" + version + "-theme.css",
+			dataType: "text",
+			success: function(css) {
+				TR.mergeThemes(css, version, false);
+			}
+		});
+	
 	})
 }
 
 TR.upgradeTheme = function() {
-	var version = $( "#upgrade-to-version" ).val(),
-		master = $( "#upgrade-to-version option[value=\"" + version + "\"]" ).hasClass( "master" );
+	var version = $( "#upgrade-to-version" ).val();
 	
 	$.ajax({
 		url: "upgrade/css/" + version + "-theme.css",
 		dataType: "text",
 		success: function(css) {
-			TR.undoLog.push( TR.styleBlock.text() );
-			
-			if( TR.version != version ) {
-				$( "#interface" ).css({
-					position: "relative",
-					left: "-9999px"
-				});
-				$( "#load-mask" ).height($(window).height()).width($(window).width() + 15).show();
-			}
-			
-			//takes in the imported CSS and puts values into styleArray
-			TR.styleBlock.text($('#load-css').val());
-			TR.initStyleArray();
-			TR.correctNumberOfSwatches();
-			
-			//reads the target CSS file, adds/subtracts appropriate number of swatches and tokenizes it
-			var swatchCount = TR.getNumberOfSwatches();
-			TR.styleBlock.text( TR.upgradeNumberOfSwatches( css, swatchCount ) );
-			TR.initStyleArray( "refresh" );
-			
-			//styleArray has correct values and tokens array has the appropriate stylesheet
-			//so we write out
-			TR.updateAllCSS( true );
-			
-			//close the import dialog
-			$('#upload').dialog('close');
-			
-			if( TR.version != version ) {
-				//pass the theme in the post to the appropriate version
-				TR.passThemeToVersion( version, master );
-			}
+			TR.mergeThemes( css, version, true);
 		}
 	});
+}
+
+TR.mergeThemes = function( css, version, importing ) {
+	var master = $( "#upgrade-to-version option[value=\"" + version + "\"]" ).hasClass( "master" );
+	
+	TR.undoLog.push( TR.styleBlock.text() );
+	
+	if( importing ) {
+		if( TR.version != version ) {
+			$( "#interface" ).css({
+				position: "relative",
+				left: "-9999px"
+			});
+			$( "#load-mask" ).height($(window).height()).width($(window).width() + 15).show();
+		}
+	
+		//takes in the imported CSS and puts values into styleArray
+		TR.styleBlock.text($('#load-css').val());
+		TR.initStyleArray();
+		TR.correctNumberOfSwatches();
+	}
+	
+	//reads the target CSS file, adds/subtracts appropriate number of swatches and tokenizes it
+	var swatchCount = TR.getNumberOfSwatches();
+	TR.styleBlock.text( TR.upgradeNumberOfSwatches( css, swatchCount ) );
+	TR.initStyleArray( "refresh" );
+	
+	//styleArray has correct values and tokens array has the appropriate stylesheet
+	//so we write out
+	TR.updateAllCSS( true );
+	
+	//close the import dialog
+	$('#upload').dialog('close');
+	
+	if( TR.version != version ) {
+		//pass the theme in the post to the appropriate version
+		TR.passThemeToVersion( version, master );
+	}
 }
 
 TR.passThemeToVersion = function( version, master ) {
