@@ -446,15 +446,13 @@ TR.deleteSwatch = function( e, ele ) {
     TR.styleArray = newStyleArray;
     
     //delete the swatch's CSS from the file
-    var css = TR.styleBlock.text();
-    var start_reg = new RegExp ("\\/\\* " + TR.alpha[TR.tabCount - 2].toUpperCase() + "\\s*\\n-*\\*\\/" );
-       
-	var end_reg = new RegExp( "\\/\\* Structure \\*\\/" );
-	var start = css.search( start_reg );
-	var end = css.search( end_reg );         
-       
-	var part1 = css.substring(0, start);
-	var part2 = css.substring(end, css.length);
+    var css = TR.styleBlock.text(),
+		start_reg = new RegExp ("\\/\\* " + TR.alpha[TR.tabCount - 2].toUpperCase() + "\\s*\\n-*\\*\\/" ),
+		end_reg = new RegExp( "\\/\\* Structure \\*\\/" ),
+		start = css.search( start_reg ),
+		end = css.search( end_reg ),
+		part1 = css.substring(0, start),
+		part2 = css.substring(end, css.length);
 	TR.styleBlock.text( part1 + part2 );
 	
     TR.tabCount--;
@@ -1049,6 +1047,7 @@ TR.initInspector = function() {
 //initStyleArray is used to initialize the array of tokens and the TR.styleArray
 //if the refresh flag is passed it refreshes the token array and does not initialize the TR.styleArray
 TR.initStyleArray = function( refresh ) {
+	TR.tokens = [];
 	refresh = refresh || "fresh";
 
 	//if we're not refreshing the styleArray
