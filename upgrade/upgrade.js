@@ -37,7 +37,7 @@ TR.initUpgrade = function() {
 		var version = $( this ).attr( "data-version" );
 		
 		$.ajax({
-			url: "upgrade/css/" + version + "-theme.css",
+			url: "upgrade/css/" + version + "_theme.css",
 			dataType: "text",
 			success: function(css) {
 				TR.mergeThemes(css, version, false);
@@ -51,7 +51,7 @@ TR.upgradeTheme = function() {
 	var version = $( "#upgrade-to-version" ).val();
 	
 	$.ajax({
-		url: "upgrade/css/" + version + "-theme.css",
+		url: "upgrade/css/" + version + "_theme.css",
 		dataType: "text",
 		success: function(css) {
 			TR.mergeThemes( css, version, true);
