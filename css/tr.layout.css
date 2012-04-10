@@ -380,23 +380,24 @@ iframe body{
 #toolbar {
 	background-color: #1a1a1a;
 	height: 40px;
-	min-width: 1225px;
+	min-width: 1270px;
 	padding: 5px;
 }
 
-	#toolbar .tb-button {
-		height: 29px;
-		padding: 5px 0 4px;
+#toolbar .tb-button {
+		height: 31px;
+		padding: 2px 2px 5px 4px;
 		margin-right: 10px;
 		border-radius: 2px;
 		-moz-border-radius: 2px;
 		-webkit-border-radius: 2px;
 		-o-border-radius: 2px;
-		background-color: #4d4d4d;
+		background-color: #383838;
 		text-align: center;
 		float: left;
 		cursor: pointer;
 		color: #B3B3B3;
+		font-weight:bold;
 	}
 	
 	#toolbar .tb-button-inner {
@@ -408,12 +409,12 @@ iframe body{
 		color: #fff;
 	}
 	
-	#toolbar .tb-button:hover, #fix-buttons>div:hover {
-		background-color: #3a3a3a;
+	#toolbar .tb-button:hover, #fix-buttons div:hover {
+		background-color: #4f4f4f;
 	}
 	
-	#toolbar .tb-button:active, #fix-buttons>div:active {
-		background-color: #2e2e2e;
+	#toolbar .tb-button:active, #fix-buttons div:active {
+		background-color: #666666;
 	}
 
 
@@ -426,25 +427,30 @@ iframe body{
 }
 
 #button-block-1 {
-	width: 338px;
+	width: 375px;
 	height: 40px;
-	margin-right: 35px;
+	margin-right: 15px;
 	float: left;
 }
 
 	#toolbar #button-block-1 #version-select {
-		width: 123px;
+		width: 140px;
 		background-color: #fff;
 		text-align: left;
 		padding-left: 10px;
 		padding-right: 10px;
+		padding-top:2px;
 		position: relative;
 		z-index: 3000;
 		overflow: hidden;
 		box-shadow: 0 0 10px #000;
 	}
 		
-		#version-select:hover{
+		#toolbar #version-select img {
+			padding-top:2px;
+		}
+		
+		#version-select:hover {
 			height: auto;
 		}
 	
@@ -454,23 +460,30 @@ iframe body{
 			right: 10px;
 		}
 	
-		#current-version{
+		#current-version {
 			font-size: 13px;
 			color: #75B043;
 			padding-bottom: 10px;
 			border-bottom: 1px solid #f2f2f2;
+			margin-top:-3px;
 		}
 		
 		#version-select ul {
 			list-style-type: none;
-			color: #000;
-			font-size: 12px;
+			font-size: 13px;
 			padding: 0;
 		}
 		
 		#version-select ul li {
-			margin: 5px 0 0 15px;
+			margin: 5px 0 0 0;
+			color: #75B043;
 			cursor: pointer;
+		}
+		
+		#version-select ul b {
+			color: #aaa;
+			font-size:11px;
+			margin:-8px 0 -4px 0;
 		}
 		
 		#version-select ul li:hover{
@@ -501,12 +514,23 @@ iframe body{
 		height: 29px;
 		padding: 5px 0 4px;
 		float: left;
-		background-color: #4d4d4d;
+		background-color: #383838;
 		text-align: center;
 		cursor: pointer;
 		color: #B3B3B3;
+		font-weight:bold;
 	}
-	
+	#fix-buttons span {
+		display:block;
+		margin-top:-3px;
+	}
+	#inspector-button img {
+		margin-top:3px;
+	}
+	#inspector-button span {
+		display:block;
+		margin-top:-1px;
+	}
 	#undo {
 		border-radius: 2px 0 0 2px;
 		-moz-border-radius: 2px 0 0 2px;
@@ -523,54 +547,38 @@ iframe body{
 	}
 
 #button-block-2 {
-	width: 520px;
+	width: 560px;
 	height: 40px;
-	float: left;
+	float: right;
 }
 
 	#button-block-2 .tb-button {
-		width: 120px;
+		width: 125px;
+		text-align: left;
+	}
+	
+	#button-block-2 #help-button {
+		width: 85px;
 		text-align: left;
 	}
 	
 	#button-block-2 .tb-button img {
 		float: left;
-		margin: 2px 10px 0 0;
+		margin: 4px 14px 0 8px;
 	}
 	
 	#button-block-2 .tb-button .text {
 		float: left;
-		margin-top: 2px;
+		margin-top: 1px;
 	}
 	
 	#button-block-2 .big {
-		font-size: 12px;
+		font-size: 13px;
 		color: #fff;
+		display:block;
+		margin-bottom:-1px;
 	}
 	
-	#download-button .tb-button-inner {
-		width: 92px;
-	}
-	
-	#import-button .tb-button-inner {
-		width: 81px;
-	}
-	
-	#button-block-2 #import-button img {
-		margin-top: -1px;
-	}
-	
-	#share-button .tb-button-inner {
-		width: 82px;
-	}
-	
-	#help-button .tb-button-inner {
-		width: 59px;
-	}
-	
-	#button-block-2 #help-button img {
-		margin-right: 7px;
-	}
 	
 #version {
 	display: none;

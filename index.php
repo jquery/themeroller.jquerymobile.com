@@ -209,7 +209,7 @@ if ( isset($_POST['style']) ) {
 					
 					<?php
 						if (isset($VERSION_LIST)) {
-							echo '<ul><b>Switch to</b>';
+							echo '<ul><b>Switch to version:</b>';
 							foreach($VERSION_LIST as $key => $l) {
 								if( $l != $JQM_VERSION ) {
 									$version = explode( "-", $l );
@@ -225,16 +225,16 @@ if ( isset($_POST['style']) ) {
 				
 				<div id="fix-buttons">
 					<div id="undo">
-						<img src="images/undo.png" alt="Undo" /><br />
+						<img src="images/undo.png" alt="Undo" />
 						<span>undo</span>
 					</div>
 					<div id="redo">
-						<img src="images/redo.png" alt="Redo" /><br />
+						<img src="images/redo.png" alt="Redo" />
 						<span>redo</span>
 					</div>
 				</div>
 				<div class="tb-button" id="inspector-button">
-					<img src="images/inspector.png" alt=" "/><br />
+					<img src="images/inspector.png" alt=" "/>
 					<span>Inspector <strong>off</strong></span>
 				</div>
 			</div>
@@ -243,7 +243,7 @@ if ( isset($_POST['style']) ) {
 					<div class="tb-button-inner">
 						<img src="images/download.png" alt="Download" />
 						<div class="text">
-							<span class="big">Download</span><br />
+							<span class="big">Download</span>
 							<span>theme zip file</span>
 						</div>
 					</div>
@@ -252,7 +252,7 @@ if ( isset($_POST['style']) ) {
 					<div class="tb-button-inner">
 						<img src="images/import.png" alt="Import" />
 						<div class="text">
-							<span class="big">Import</span><br />
+							<span class="big">Import</span>
 							<span>or upgrade</span>
 						</div>
 					</div>
@@ -261,7 +261,7 @@ if ( isset($_POST['style']) ) {
 					<div class="tb-button-inner">
 						<img src="images/share.png" alt="Share" />
 						<div class="text">
-							<span class="big">Share</span><br />
+							<span class="big">Share</span>
 							<span>theme link</span>
 						</div>
 					</div>
@@ -270,7 +270,7 @@ if ( isset($_POST['style']) ) {
 					<div class="tb-button-inner">
 						<img src="images/help.png" alt="Help" />
 						<div class="text">
-							<span class="big">Help</span><br />
+							<span class="big">Help</span>
 							<span>center</span>
 						</div>
 					</div>
