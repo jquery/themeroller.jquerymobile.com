@@ -44,7 +44,7 @@ img{border: none;}
 #tr_panel .end-label{position: relative; top: -3px;}
 #tr_panel .start-end.links{margin-top: 0}
 
-#tr_panel h1 a {float: right; font-size: 11px; margin-top:2px; margin-right:6px; }
+#tr_panel h1 a {float: right; font-size: 11px; margin-top:2px; margin-right:10px; }
 #tr_panel h1 a:hover { color:#333; }
 
 #tr_panel .ui-tabs {font-family:"Segoe ui", verdana, arial, sans-serif; font-weight: normal; position: relative; padding: .2em; zoom: 1; padding: 0; margin: 0; border: 0;} /* position: relative prevents IE scroll bug (element with position: relative inside container with overflow: auto appear as "fixed") */

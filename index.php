@@ -351,7 +351,7 @@ if ( isset($_POST['style']) ) {
 					</div>
 				</div>
 				<div id="tab2">
-					<h1>Swatch A<a class="delete-swatch-a" href="">Delete</a></h1>
+					<h1>Swatch A<a class="duplicate-swatch-a" href="">Duplicate</a><a class="delete-swatch-a" href="">Delete</a></h1>
 
 					<div class="accordion" data-form="ui-bar-a">
 						<div>
@@ -431,7 +431,7 @@ if ( isset($_POST['style']) ) {
 					</div>
 				</div>
 				<div id="tab3">
-					<h1>Swatch B<a class="delete-swatch-b" href="">Delete</a></h1>
+					<h1>Swatch B<a class="duplicate-swatch-b" href="">Duplicate</a><a class="delete-swatch-b" href="">Delete</a></h1>
 
 					<div class="accordion" data-form="ui-bar-b">
 						<div>
@@ -511,7 +511,7 @@ if ( isset($_POST['style']) ) {
 					</div>
 				</div>
 				<div id="tab4">
-					<h1>Swatch C<a class="delete-swatch-c" href="">Delete</a></h1>
+					<h1>Swatch C<a class="duplicate-swatch-c" href="">Duplicate</a><a class="delete-swatch-c" href="">Delete</a></h1>
 
 					<div class="accordion" data-form="ui-bar-c">
 						<div>
