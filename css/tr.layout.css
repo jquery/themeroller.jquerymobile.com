@@ -549,7 +549,7 @@ iframe body{
 #button-block-2 {
 	width: 560px;
 	height: 40px;
-	float: right;
+	float: left;
 }
 
 	#button-block-2 .tb-button {
