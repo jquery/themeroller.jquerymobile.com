@@ -46,14 +46,12 @@ if ( isset($_POST['style']) ) {
 		<div id="welcome" class="dialog" title=" ">
 			<h1><strong>Welcome</strong> to ThemeRoller for jQuery Mobile</h1>
 			<p>
-				You can create up to 26 theme "swatches" lettered from A-Z, 
-				each with a unique color scheme that can be mixed and
-				matched for unlimited possibilities.
+				Create up to 26 theme "swatches" lettered from A-Z, 
+				each with a unique color scheme, then mix and
+				match for unlimited possibilities. We recommend building themes with at least 3 swatches (A-C). 
 			</p>
 			<p>
-				<strong>To start,</strong> either drag a QuickSwatch color onto an element in the preview 
-				or use the inspector panel on the left to get crafty. 
-				We <strong>strongly</strong> recommend building themes with at least 3 swatches (A-C). 
+				<strong>To upgrade a 1.0 theme to 1.1:</strong> Click the Import button, paste in your uncompressed 1.0 theme, then tweak and download the 1.1 version. 
 			</p>
 
 			<div class="buttonpane">
