@@ -1,6 +1,6 @@
 #!/bin/bash
 # determine the project root
-output="."
+output="versions"
 
 function log {
   echo "[branches preview] $1"
