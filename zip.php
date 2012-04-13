@@ -77,11 +77,11 @@
 	*/
 	
 	//add files to zip and echo it back to page
-	$zip->addFromString("themes/images/icons-18-white.png", file_get_contents("http://code.jquery.com/mobile/latest/images/icons-18-white.png"));
-	$zip->addFromString("themes/images/icons-18-black.png", file_get_contents("http://code.jquery.com/mobile/latest/images/icons-18-black.png"));
-	$zip->addFromString("themes/images/icons-36-white.png", file_get_contents("http://code.jquery.com/mobile/latest/images/icons-36-white.png"));
-	$zip->addFromString("themes/images/icons-36-black.png", file_get_contents("http://code.jquery.com/mobile/latest/images/icons-36-black.png"));
-	$zip->addFromString("themes/images/ajax-loader.png", file_get_contents("http://code.jquery.com/mobile/latest/images/ajax-loader.png"));
+	$zip->addFromString("themes/images/icons-18-white.png", file_get_contents("http://code.jquery.com/mobile/" . $JQM_VERSION . "/images/icons-18-white.png"));
+	$zip->addFromString("themes/images/icons-18-black.png", file_get_contents("http://code.jquery.com/mobile/" . $JQM_VERSION . "/images/icons-18-black.png"));
+	$zip->addFromString("themes/images/icons-36-white.png", file_get_contents("http://code.jquery.com/mobile/" . $JQM_VERSION . "/images/icons-36-white.png"));
+	$zip->addFromString("themes/images/icons-36-black.png", file_get_contents("http://code.jquery.com/mobile/" . $JQM_VERSION . "/images/icons-36-black.png"));
+	$zip->addFromString("themes/images/ajax-loader.gif", file_get_contents("http://code.jquery.com/mobile/" . $JQM_VERSION . "/images/ajax-loader.gif"));
 	$zip->addFromString("themes/" . $theme_name . ".css", $uncompressed);
 	$zip->addFromString("themes/" . $theme_name . ".min.css", $compressed);
 	//$zip->addFromString("js/jquery.mobile.min.js", htmlspecialchars(file_get_contents("http://code.jquery.com/mobile/latest/jquery.mobile.min.js")));

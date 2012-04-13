@@ -370,7 +370,7 @@ iframe body{
 #load-spinner{
 	width: 32px;
 	height: 32px;
-	background: url('../images/ajax-loader.gif') no-repeat;
+	background: url('../images/ajax-load.gif') no-repeat;
 	position: relative;
 	margin: auto;
 	top: 173px;

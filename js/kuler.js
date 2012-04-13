@@ -158,7 +158,7 @@ $(function(){
 			beforeSend: function() {
 				kuler.find( "*" ).remove();
 				$( "#kuler-pages>div:first" ).html( "<br /><br />" );
-				kuler.html( "<div id=\"kuler-loader\"><img src=\"images/ajax-loader.gif\" alt=\" \" />&nbsp;&nbsp;Loading...</div>" );
+				kuler.html( "<div id=\"kuler-loader\"><img src=\"images/ajax-load.gif\" alt=\" \" />&nbsp;&nbsp;Loading...</div>" );
 			},
 			success: function(data){
 				kuler.html( "" )
