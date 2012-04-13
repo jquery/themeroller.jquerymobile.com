@@ -2,7 +2,7 @@
 * jQuery Mobile Framework 1.1.0
 * http://jquerymobile.com
 *
-* Copyright 2011-2012 (c) jQuery Project
+* Copyright 2011 (c) jQuery Project
 * Dual licensed under the MIT or GPL Version 2 licenses.
 * http://jquery.org/license
 *
@@ -173,7 +173,7 @@ a.ui-link-inherit {
 	font-weight: bold;
 	color: 					#ffffff /*{global-active-color}*/;
 	cursor: pointer;
-	text-shadow: 0 /*{global-active-shadow-x}*/ 1px /*{global-active-shadow-y}*/ 1px /*{global-active-shadow-radius}*/ #145072 /*{global-active-shadow-color}*/;
+	text-shadow: 0 /*{global-active-shadow-x}*/ 1px /*{global-active-shadow-y}*/ 1px /*{global-active-shadow-radius}*/ #3373a5 /*{global-active-shadow-color}*/;
 	text-decoration: none;
 	background-image: -webkit-gradient(linear, left top, left bottom, from( #5393c5 /*{global-active-background-start}*/), to( #6facd5 /*{global-active-background-end}*/)); /* Saf4+, Chrome */
 	background-image: -webkit-linear-gradient( #5393c5 /*{global-active-background-start}*/, #6facd5 /*{global-active-background-end}*/); /* Chrome 10+, Saf5.1+ */
