@@ -203,7 +203,7 @@ if ( isset($_POST['style']) ) {
 				<div class="tb-button" id="version-select">
 					<img src="images/jqm_logo_small.png" alt="jQuery Mobile"/>
 					<img id="version-select-arrow" src="images/version_select_arrow.png" alt=" " />
-					<div id="current-version">Version 1.1.0 RC2</div>
+					<div id="current-version">Version 1.1.0</div>
 					
 					<?php
 						if (isset($VERSION_LIST)) {
