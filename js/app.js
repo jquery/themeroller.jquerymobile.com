@@ -1666,6 +1666,13 @@ TR.updateThemeRoller = function( tab ) {
 	$( ".delete-swatch-" + TR.alpha[tab - 1] ).click( function(e){
 		TR.deleteSwatch( e, $(this) );
 	});
+	
+	$( ".duplicate-swatch-" + TR.alpha[tab - 1] ).click( function(e) {
+		e.preventDefault();
+		var letter = $(this).attr('class').split('-');
+		letter = letter[letter.length - 1];
+		TR.addSwatch( true, letter );
+	});
 }
 
 }) ( jQuery, window );
