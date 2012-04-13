@@ -298,7 +298,7 @@ if ( isset($_POST['style']) ) {
 				<div id="tab1">
 					<h1>Theme Settings</h1>
 
-					<div class="accordion" data-form="ui-btn-active">
+					<div class="accordion">
 						<div>
 							<h3><a href="#">Font Family</a></h3>
 							<form>
