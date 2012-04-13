@@ -96,20 +96,6 @@ TR.addSwatch = function( new_style, duplicate ) {
 		if( new_style ) {
 			TR.undoLog.push( TR.styleBlock.text() );
 			TR.redoLog = [];
-			
-			//defining TR.styleArray indices
-            var indices = [],
-				reg = new RegExp( "a-.*" );
-            for( var j in TR.styleArray ) {
-                if( j.search(reg) != -1 ) {
-                    indices.push( j );
-                }
-            }
-            for( var k in indices ) {
-                var index = indices[k] + "",
-					suffix = index.substr( 1, index.length - 1 );
-                TR.styleArray[lower + suffix] = TR.styleArray[index];
-            }
 
 			//adding swatch to CSS
 			var temp_css_template = TR.graySwatch.replace( /-a,/g, "-" + lower + "," )
@@ -164,7 +150,10 @@ TR.addSwatch = function( new_style, duplicate ) {
 		TR.addInspectorAttributes( lower );
 			 
         //redefine the token array
-        TR.initStyleArray( "refresh" );
+		//not with refresh because we've only defined the CSS
+		//let initStyleArray edit the styleArray
+        TR.initStyleArray();
+
         //binds all appropriate events for accordions and new tab
         TR.updateThemeRoller( TR.tabCount );
 		
