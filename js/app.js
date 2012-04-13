@@ -1333,7 +1333,7 @@ TR.selectElement = function( element ) {
 		data_theme = data_theme[data_theme.length - 1];
 	}
 
-	if( element.hasClass("ui-radio-on") ) {
+	if( element.hasClass("ui-btn-active") ) {
 		data_theme = "global";
 		form = "ui-btn-active";
 	}
