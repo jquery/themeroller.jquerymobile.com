@@ -365,7 +365,8 @@ TR.correctNumberOfSwatches = function() {
 				}
 			});
 		} else {
-			//alert( "Invalid theme file. Please import unminified files only with all original CSS comments in place." );
+			alert( "Invalid theme file. Please import unminified files only with all original CSS comments in place." );
+			TR.undo();
 		}
 		//return early because the file is of the incorrect format
 		return;
