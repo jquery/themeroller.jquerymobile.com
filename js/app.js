@@ -1086,13 +1086,13 @@ TR.initStyleArray = function( refresh ) {
                 type: "string"
             };
             TR.tokens[i++] = {
-                value: style.substr( index, length ), 
+                value: style.substr( index, length ).trim(), 
                 type: "placeholder", 
                 ref: reference
             };
             //update TR.styleArray
             if( refresh != "refresh" ) {
-				TR.styleArray[reference] = TR.tokens[i-1].value.replace( /\/\*.*\*\//, "" );
+				TR.styleArray[reference] = TR.tokens[i-1].value.replace( /\/\*.*\*\//, "" ).trim();
 			}
 			//cut off string and continue
             style = style.substring( index+length ); 
@@ -1665,4 +1665,7 @@ TR.updateThemeRoller = function( tab ) {
 	});
 }
 
+String.prototype.trim = function() {
+	return this.replace(/^\s+|\s+$/g,"");
+}
 }) ( jQuery, window );
