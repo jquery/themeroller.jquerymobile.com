@@ -10,8 +10,6 @@ TR.initPanel = function() {
 		newControlGroup, newControl,
 		count = 1;
 	
-	TR.extendPanel( "C" );
-	
 	for ( var tab in TR.panelDict ) {
 		tabPanel = TR.panelDict[ tab ];
 		tabPanelLabel = tabPanel.label;
@@ -78,7 +76,6 @@ TR.createControl = function( control, label, subGroup ) {
 		return $( controlMarkup + '<br class="clear" />' );
 	}
 
-
 	switch ( control.type ) {
 		case "text":
 			controlMarkup += '<input data-type="' + group + '" data-name="' + name + '" />'; 
@@ -105,7 +102,7 @@ TR.createControl = function( control, label, subGroup ) {
 			controlMarkup += '<label>END</label><input data-name="' + prefix + '-end" data-type="end" class="colorwell" /></div>';
 			break;
 		case "select":
-			controlMarkup += '<select>';
+			controlMarkup += '<select data-type="' + group + '" data-name="' + name + '">';
 			for ( var optVal in control.options ) {
 				controlMarkup += '<option value="' + optVal + '">' + control.options[ optVal ] + '</option>';
 			}
@@ -292,9 +289,9 @@ TR.panelDict = {
 	"A": {
 		"label": "Swatch A",
 		
-		"delete": "delete-swatch-a",
-		
 		"duplicate": "duplicate-swatch-a",
+		
+		"delete": "delete-swatch-a",
 		
 		"Header/Footer Bar": {
 			"data-form": "ui-bar-a",
@@ -571,7 +568,9 @@ TR.panelDict = {
 				name: "a-bdown-border"
 			}
 		}
-	}
+	},
+	
+	"+": {}
 };
 
 TR.isArray = function( obj ) {	
