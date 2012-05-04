@@ -8,10 +8,11 @@ $(function(){
 
 TR.isDOMReady = false;
 TR.isIFrameReady = false;
+TR.panelReady = false;
 
 TR.initializeUI = function() {
 	
-	if ( !TR.isDOMReady || !TR.isIFrameReady ) {
+	if ( !TR.isDOMReady || !TR.isIFrameReady || !TR.panelReady ) {
 		return;
 	}
 
@@ -222,5 +223,5 @@ TR.iframeLoadCallback = function()
 
 $(function() {
 	TR.isDOMReady = true;
-	TR.initializeUI();
+	TR.initPanel();
 });

@@ -1668,4 +1668,5 @@ TR.updateThemeRoller = function( tab ) {
 String.prototype.trim = function() {
 	return this.replace(/^\s+|\s+$/g,"");
 }
+
 }) ( jQuery, window );

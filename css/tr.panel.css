@@ -37,10 +37,7 @@ img{border: none;}
 #tr_panel .separator{margin: 5px; border-bottom: 2px solid #EEEEEE;}
 #tr_panel input[data-type=font-family]{width: 170px;}
 #tr_panel input[data-type=icon_set]{width: 80px}
-#tr_panel input#with_disc{width: 90px}
-#tr_panel input#icon_opacity{width: 25px}
-#tr_panel input#box-shadow-opacity{width: 30px;}
-#tr_panel input#box-shadow-size{width: 30px;}
+#tr_panel input.number {width: 30px}
 #tr_panel .end-label{position: relative; top: -3px;}
 #tr_panel .start-end.links{margin-top: 0}
 
