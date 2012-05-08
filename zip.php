@@ -38,7 +38,7 @@
 	
 	$zip = new ZipArchive();
 
-	$dir = scandir('generated_zips');
+	$dir = scandir('zips');
 	$today = date('His', strtotime('now'));
 	
 	//Loop to detect if any other zips are being created at this very second,
@@ -56,7 +56,7 @@
 					$last_file_num = $file_num;
 				}
 				if(strtotime('now - 15 seconds') >= strtotime($time) || strtotime('now + 15 seconds') <= strtotime($time)) {
-					unlink('generated_zips/' . $file);
+					unlink('zips/' . $file);
 				}
 			}
 		}

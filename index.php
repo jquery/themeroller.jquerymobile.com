@@ -1,6 +1,5 @@
 <?php
-require_once( 'version.php' );
-require_once( 'upgrade/upgrade.php' );
+require_once( 'time-machine.php' );
 if ( isset($_GET['style_id']) ) {
 	$style_id = $_GET['style_id'];
 }
@@ -32,8 +31,8 @@ if ( isset($_POST['style']) ) {
 	<script type="text/javascript" src="js/app.js"></script>
 	<script type="text/javascript" src="js/panel.js"></script>
 	<script type="text/javascript" src="js/ui.js"></script>
+	<script type="text/javascript" src="js/delorean.js"></script>
 	<script type="text/javascript" src="js/kuler.js"></script>
-	<script type="text/javascript" src="upgrade/upgrade.js"></script>
 </head>
 <body>
 	
@@ -79,18 +78,10 @@ if ( isset($_POST['style']) ) {
 		<div id="upload" class="dialog" title=" ">
 			<h1><strong>Import</strong> Theme<span href="#" id="import-default">Import Default Theme</span></h1>
 			<?php
-				if (isset($VERSION_LIST) && isset($MASTER)) {
+				if ( isset($VERSION_LIST) ) {
 					echo '<label>Upgrade to version:</label><select id="upgrade-to-version">';
-					foreach($VERSION_LIST as $key => $l) {
-						$version = explode( "-", $l );
-						$version[1] = strtoupper($version[1]);
-						$version[1] = implode( "", explode( ".", $version[1] ) );
-						echo '<option value="' . $key . '"';
-						//if the build script has been run, $MASTER will be the same in each version
-						if( $l == $MASTER ) {
-							echo ' class="master"';
-						}
-						echo '>' . implode( " ", $version ) . '</option>';
+					foreach($VERSION_LIST as $l) {
+						echo '<option value="' . $l . '">' . $l . '</option>';
 					}
 					echo '</select>';
 				}
@@ -123,9 +114,9 @@ if ( isset($_POST['style']) ) {
   &lt;meta charset="utf-8" /&gt;
   &lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;
   <b class="highlight">&lt;link rel="stylesheet" href="css/themes/my-custom-theme.css" /&gt;</b>
-  &lt;link rel="stylesheet" href="http://code.jquery.com/mobile/<?php echo $JQM_VERSION; ?>/jquery.mobile.structure-<?php echo $JQM_VERSION; ?>.min.css" /&gt; 
+  &lt;link rel="stylesheet" href="http://code.jquery.com/mobile/<span class="version-num"><?php echo $JQM_VERSION; ?></span>/jquery.mobile.structure-<span class="version-num"><?php echo $JQM_VERSION; ?></span>.min.css" /&gt; 
   &lt;script src="http://code.jquery.com/jquery-<?php echo $JQUERY_VERSION; ?>.min.js"&gt;&lt;/script&gt; 
-  &lt;script src="http://code.jquery.com/mobile/<?php echo $JQM_VERSION; ?>/jquery.mobile-<?php echo $JQM_VERSION; ?>.min.js"&gt;&lt;/script&gt; 
+  &lt;script src="http://code.jquery.com/mobile/<span class="version-num"><?php echo $JQM_VERSION; ?></span>/jquery.mobile-<span class="version-num"><?php echo $JQM_VERSION; ?></span>.min.js"&gt;&lt;/script&gt; 
 
 &lt;/head&gt;
 				</code>
@@ -210,12 +201,9 @@ if ( isset($_POST['style']) ) {
 					<?php
 						if (isset($VERSION_LIST)) {
 							echo '<ul><b>Switch to version:</b>';
-							foreach($VERSION_LIST as $key => $l) {
+							foreach($VERSION_LIST as $l) {
 								if( $l != $JQM_VERSION ) {
-									$version = explode( "-", $l );
-									$version[1] = strtoupper($version[1]);
-									$version[1] = implode( "", explode( ".", $version[1] ) );
-									echo '<li data-version="' . $key . '">' . implode( " ", $version ) . '</li>';
+									echo '<li data-version="' . $l . '">' . $l . '</li>';
 								}
 							}
 							echo '</ul>';
@@ -281,14 +269,6 @@ if ( isset($_POST['style']) ) {
 		<div id="colorpicker"></div>
 		
 		<div id="tr_panel">
-			<!--
-			<div id="tr_header">
-				<div id="tr_logo"><img src="images/themeroller_logo.png" alt=" "/></div>
-				<a href="#" id="tr_download"><img src="images/themeroller_download.png" alt=" "/></a>
-				<div id="separator"></div>
-				<span id="tr_links"><a href="#" id="tr_help">Help</a><a href="#" id="tr_upload">Import</a><a href="#" id="generate_url">Share</a></span>
-			</div>
-			-->
 			<div id="tabs">
 				<ul>
 				    <!--Tabs and tab panels go here-->
@@ -375,15 +355,9 @@ if ( isset($_POST['style']) ) {
 			</div>
 
 			<div id="content">
-				<iframe id="frame" src="preview.html" onload="TR.iframeLoadCallback();">
+				<iframe id="frame" src="jqm/<?php echo $JQM_VERSION ;?>/preview.html" onload="TR.iframeLoadCallback();">
 				</iframe>
 			</div>
-			
-			<?php
-				if( isset($style) ) {
-					echo '<div style="display: none" id="skip-welcome"></div>';
-				} 
-			?>
 			
 			<?php
 				if( isset($JQM_VERSION) ) {
@@ -396,7 +370,7 @@ if ( isset($_POST['style']) ) {
 						echo $style;
 					} else {
 						//If the file exists we add the CSS here, if not, we leave it blank for the JS to find on load
-						$file_path = "css/jqm.starter.theme.css";
+						$file_path = "jqm/" . $JQM_VERSION . "/jqm.starter.theme.css";
 						if( isset($style_id) ) {
 							$file_path = "css/user_themes/" . $style_id . ".css";
 						}

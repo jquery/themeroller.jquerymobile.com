@@ -731,40 +731,6 @@ TR.initDialogs = function() {
 	$( "#importing" ).dialog( $.extend( {}, dialogObj, {
 		height: 70
 	}));
-	
-	if ( !TR.initUpgrade ) {
-    	$( "#upload" ).dialog( $.extend( {}, dialogObj, {
-	        width: 800,
-	        height: 430,
-	        buttons: {
-	            "Cancel": function() { 
-	                $( "#upload" ).dialog( "close" ); 
-	            },
-	            "Import": function() {
-	                $( "#upload" ).dialog( "close" );
-	            	if( $( "#load-css" ).val() != "" ) {
-						TR.styleBlock.text( $("#load-css").val() );
-						TR.initStyleArray();
-						TR.correctNumberOfSwatches();
-	                }
-				
-	            }
-	        }
-	    }));
-	
-		$( "#import-default" ).click(function(e) {
-			e.preventDefault();
-
-			$.ajax({
-				url: "css/jqm.default.theme.css",
-				dataType: "text",
-				mimeType: "text/plain",
-				success: function( data ) {
-					$( "#load-css" ).val( data ); 
-				}
-			});
-		});
-	}
 
 	$( "#help" ).dialog( $.extend( {}, dialogObj, {
 		width: 700,
@@ -1119,9 +1085,9 @@ TR.initThemeRoller = function() {
     //copy it to #styleblock so its in the scope of the iframe
 	TR.styleBlock = TR.iframe.find( "#styleblock" );
 	TR.styleBlock.text( $("#style").text() );
-    
-	//store current version and preselect it in the upgrade dropdown
-	TR.version = $( "#version" ).text(); 
+	
+	//store current version and preselect it in the import dropdown
+	TR.version = $( "#version" ).text();
 	$( "#upgrade-to-version" ).val( TR.version );
 
     //adding attributes to elements in the preview to make them compatible
@@ -1149,6 +1115,12 @@ TR.initThemeRoller = function() {
 	TR.initDraggableColors();
 	TR.initStyleArray();
 	TR.correctNumberOfSwatches();
+	Delorean.init();
+	
+	//start the app out with 3 swatches A-C
+	for ( var letter = TR.num[ "a" ]; letter < TR.num[ "c" ]; letter++ ) {
+		TR.addSwatch( true );
+	}
 }
 
 //pad a string with zeroes to a certain length

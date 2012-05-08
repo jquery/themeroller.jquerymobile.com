@@ -121,10 +121,10 @@ TR.createControl = function( control, label, subGroup ) {
 	return $( controlMarkup += '<br class="clear"/>' );
 };
 
-TR.extendPanel = function( letter ) {
+TR.extendPanelDict = function( letter ) {
 	var target = TR.num[ letter.toLowerCase() ] + 1,
 		tabPanelA = TR.panelDict[ "A" ];
-	
+    
 	for ( var i = 3; i <= target; i++ ) {
 		var lower = TR.alpha[ i - 1 ],
 			upper = lower.toUpperCase(),
@@ -191,7 +191,7 @@ TR.panelDict = {
 					separator: true
 				},
 			],
-			
+            
 			"Background": {
 				type: "gradient",
 				group: "background",
