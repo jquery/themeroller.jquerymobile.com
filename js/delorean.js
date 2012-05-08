@@ -25,7 +25,7 @@ Delorean.init = function() {
 		e.preventDefault();
 		
 		$.ajax({
-			url: "css/jqm.default.theme.css",
+			url: "jqm/" + TR.version + "/jqm.default.theme.css",
 			dataType: "text",
 			mimeType: "text/plain",
 			success: function( data ) {
@@ -45,10 +45,20 @@ Delorean.travelTo = function( version, importing ) {
 		dataType: "text",
 		success: function( target ) {
 			Delorean.merge( target, version, importing );
-			//Delorean.morphPanel( version );
-			//Delorean.refresh();
+			if ( version != TR.version ) {
+				Delorean.passTheme( version );
+			} else {
+				$( "#upload" ).dialog( "close" );
+			}
 		}
 	});
+}
+
+Delorean.passTheme = function( version ) {
+	var form = $( '<form style="display: none" action="index.php?\
+		ver=' + version + '" method="post"><input name="style" value="' + encodeURI( TR.styleBlock.text() ) + '" /></form>' );
+	$( "body" ).append( form );
+	form.submit();
 }
 
 //takes current theme and updates styleDict, takes target CSS file (version we are traveling to)

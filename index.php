@@ -1,11 +1,15 @@
 <?php
-require_once( 'time-machine.php' );
+require_once( 'version.php' );
 if ( isset($_GET['style_id']) ) {
 	$style_id = $_GET['style_id'];
+}
+if ( isset($_GET['ver']) ) {
+    $JQM_VERSION = $_GET['ver'];
 }
 if ( isset($_POST['style']) ) {
 	$style = urldecode($_POST['style']);
 }
+$JQUERY_VERSION = $ALL_JQUERY_VERSIONS[ $JQM_VERSION ] ? $ALL_JQUERY_VERSIONS[ $JQM_VERSION ] : "1.6.4";
 ?>
 <!DOCTYPE html>
 <html>             
@@ -33,6 +37,7 @@ if ( isset($_POST['style']) ) {
 	<script type="text/javascript" src="js/ui.js"></script>
 	<script type="text/javascript" src="js/delorean.js"></script>
 	<script type="text/javascript" src="js/kuler.js"></script>
+	<script type="text/javascript" src="jqm/<?php echo $JQM_VERSION ?>/panel.js"></script>
 </head>
 <body>
 	
@@ -196,7 +201,7 @@ if ( isset($_POST['style']) ) {
 				<div class="tb-button" id="version-select">
 					<img src="images/jqm_logo_small.png" alt="jQuery Mobile"/>
 					<img id="version-select-arrow" src="images/version_select_arrow.png" alt=" " />
-					<div id="current-version">Version 1.1.0</div>
+					<div id="current-version">Version <?php echo $JQM_VERSION ?></div>
 					
 					<?php
 						if (isset($VERSION_LIST)) {
@@ -363,6 +368,12 @@ if ( isset($_POST['style']) ) {
 				if( isset($JQM_VERSION) ) {
 					echo '<div id="version">' . $JQM_VERSION . '</div>';
 				}
+			?>
+			
+			<?php
+    			if( isset($style) || isset($style_id) ) {
+    			    echo '<div style="display: none" id="imported-style">true</div>';
+    			}
 			?>
 			
 			<div id="style"><?php

@@ -1,6 +1,10 @@
 (function( $, window, undefined ) {
 	
 TR.initPanel = function() {
+	if ( $.isEmptyObject( TR.panelDict ) ) {
+		TR.panelDict = TR.panelDictBase;
+	}
+	
 	TR.panel = $( "#tr_panel" );
 	
 	var tabPanel, tabPanelLabel,
@@ -76,6 +80,10 @@ TR.createControl = function( control, label, subGroup ) {
 		return $( controlMarkup + '<br class="clear" />' );
 	}
 
+	
+	var prefix = name.split( "-" );
+	prefix = prefix[0] + "-" + prefix[1] + "-" + prefix[2];
+
 	switch ( control.type ) {
 		case "text":
 			controlMarkup += '<input data-type="' + group + '" data-name="' + name + '" />'; 
@@ -87,12 +95,18 @@ TR.createControl = function( control, label, subGroup ) {
 				controlMarkup += '<div class="slider" data-type="' + group + '" data-name="' + name + '" ></div>';
 			}
 			break;
+		case "link":
+			controlMarkup += '<input data-type="' + group + '" data-name="' + name + '" class="colorwell"/>&nbsp;&nbsp;<a class="more" data-name="' + name + '" href="#">+</a><br class="clear" />';
+			controlMarkup += '<div class="start-end links" data-name="' + name + '">';
+			controlMarkup += '<label class="first">LINK HOVER</label><input data-type="' + group + '" data-name="' + prefix + '-hover" class="colorwell"/><br class="clear" />';
+			controlMarkup += '<label class="first">LINK ACTIVE</label><input data-type="' + group + '" data-name="' + prefix + '-active" class="colorwell"/><br class="clear" />';
+			controlMarkup += '<label class="first">LINK VISITED</label><input data-type="' + group + '" data-name="' + prefix + '-visited" class="colorwell"/></div>';
+			var noBreak = true;
+			break;
 		case "color":
 			controlMarkup += '<input data-type="' + group + '" data-name="' + name + '" class="colorwell" />';
 			break;
 		case "gradient":
-			var prefix = name.split( "-" );
-			prefix = prefix[0] + "-" + prefix[1] + "-" + prefix[2];
 			controlMarkup += '<input data-type="' + group + '" data-name="' + name + '" class="colorwell" />';
 			controlMarkup += '<div class="slider" data-type="' + group + '" data-name="' + name + '"></div>&nbsp;&nbsp;'
 			controlMarkup += '<a class="more" data-name="' + prefix + '" href="">+</a>';
@@ -112,6 +126,9 @@ TR.createControl = function( control, label, subGroup ) {
 			break;
 	}
 	
+	if ( noBreak ) {
+		return $( controlMarkup );
+	}
 	if ( subGroup ) {
 		return controlMarkup + '&nbsp;'
 	}
@@ -138,15 +155,15 @@ TR.extendPanelDict = function( letter ) {
 	TR.panelDict[ "+" ] = {};
 }
 
-TR.panelDict = {
+TR.panelDictBase = {
 	"Global": {
 		"label": "Theme Settings",
 		
 		"Font Family": {
 			"Font": {
-				type: "text",
-				group: "font-family",
-				name: "global-font-family",
+				"type": "text",
+				"group": "font-family",
+				"name": "global-font-family",
 			}
 		},
 		
@@ -154,73 +171,73 @@ TR.panelDict = {
 			"data-form": "ui-btn-active",
 			
 			"Text Color": {
-				type: "color",
-				group: "color",
-				name: "global-active-color"
+				"type": "color",
+				"group": "color",
+				"name": "global-active-color"
 			},
 			
 			"Text Shadow": [
 				{
-					type: "number",
-					unit: "px",
-					group: "text-shadow",
-					name: "global-active-shadow-x",
-					title: "Controls the horizontal offset of text shadow"
+					"type": "number",
+					"unit": "px",
+					"group": "text-shadow",
+					"name": "global-active-shadow-x",
+					"title": "Controls the horizontal offset of text shadow"
 				},
 				
 				{
-					type: "number",
-					unit: "px",
-					group: "text-shadow",
-					name: "global-active-shadow-y",
-					title: "Controls the vertical offset of text shadow"
+					"type": "number",
+					"unit": "px",
+					"group": "text-shadow",
+					"name": "global-active-shadow-y",
+					"title": "Controls the vertical offset of text shadow"
 				},
 				
 				{
-					type: "number",
-					unit: "px",
-					group: "text-shadow",
-					name: "global-active-shadow-radius",
-					title: "Controls the blur of text shadow"
+					"type": "number",
+					"unit": "px",
+					"group": "text-shadow",
+					"name": "global-active-shadow-radius",
+					"title": "Controls the blur of text shadow"
 				},
 				
 				{
-					type: "color",
-					group: "text-shadow",
-					name: "global-active-shadow-color",
-					separator: true
+					"type": "color",
+					"group": "text-shadow",
+					"name": "global-active-shadow-color",
+					"separator": true
 				},
 			],
             
 			"Background": {
-				type: "gradient",
-				group: "background",
-				name: "global-active-background-color",
-				separator: true
+				"type": "gradient",
+				"group": "background",
+				"name": "global-active-background-color",
+				"separator": true
 			},
 			
 			"Border": {
-				type: "color",
-				group: "border",
-				name: "global-active-border"
+				"type": "color",
+				"group": "border",
+				"name": "global-active-border"
 			}
 		},
 		
 		"Corner Radii": {
 			"Group": {
-				type: "number",
-				unit: "em",
-				slider: true,
-				group: "radius",
-				name: "global-radii-blocks"
+				"type": "number",
+				"unit": "em",
+				"slider": true,
+				"group": "radius",
+				"name": "global-radii-blocks"
 			},
 			
 			"Buttons": {
-				type: "number",
-				unit: "em",
-				slider: true,
-				group: "radius",
-				name: "global-radii-buttons"
+				"type": "number",
+				"unit": "em",
+				"slider": true,
+				"group": "radius",
+				"name": "global-radii-buttons"
 			}
 		},
 		
@@ -229,20 +246,20 @@ TR.panelDict = {
 			
 			"Default Icon": [
 				{
-					type: "select",
-					group: "icon_set",
-					name: "global-icon-set",
-					options: {
+					"type": "select",
+					"group": "icon_set",
+					"name": "global-icon-set",
+					"options": {
 						"white": "White",
 						"black": "Black"
 					}
 				},
 				
 				{
-					type: "select",
-					group: "icon_disc",
-					name: "global-icon-disc",
-					options: {
+					"type": "select",
+					"group": "icon_disc",
+					"name": "global-icon-disc",
+					"options": {
 						"with_disc": "With Disc",
 						"without_disc": "W/O Disc"
 					}
@@ -250,38 +267,38 @@ TR.panelDict = {
 			],
 			
 			"Disc Color": {
-				type: "color",
-				group: "icon_disc",
-				name: "global-icon-disc"
+				"type": "color",
+				"group": "icon_disc",
+				"name": "global-icon-disc"
 			},
 			
 			"Disc Opacity": {
-				type: "number",
-				unit: "%",
-				group: "icon_disc",
-				name: "global-icon-disc"
+				"type": "number",
+				"unit": "%",
+				"group": "icon_disc",
+				"name": "global-icon-disc"
 			}
 		},
 		
 		"Box Shadow": {
 			"Color": {
-				type: "color",
-				group: "box_shadow",
-				name: "global-box-shadow-color"
+				"type": "color",
+				"group": "box_shadow",
+				"name": "global-box-shadow-color"
 			},
 			
 			"Opacity": {
-				type: "number",
-				unit: "%",
-				group: "box_shadow",
-				name: "global-box-shadow-color"
+				"type": "number",
+				"unit": "%",
+				"group": "box_shadow",
+				"name": "global-box-shadow-color"
 			},
 			
 			"Size": {
-				type: "number",
-				unit: "px",
-				group: "box_shadow",
-				name: "global-box-shadow-size"
+				"type": "number",
+				"unit": "px",
+				"group": "box_shadow",
+				"name": "global-box-shadow-size"
 			}
 		}
 	},
@@ -297,111 +314,117 @@ TR.panelDict = {
 			"data-form": "ui-bar-a",
 			
 			"Text Color": {
-				type: "color",
-				group: "color",
-				name: "a-bar-color"
+				"type": "color",
+				"group": "color",
+				"name": "a-bar-color"
 			},
 			
 			"Text Shadow": [
 				{
-					type: "number",
-					unit: "px",
-					group: "text-shadow",
-					name: "a-bar-shadow-x",
-					title: "Controls the horizontal offset of text shadow"
+					"type": "number",
+					"unit": "px",
+					"group": "text-shadow",
+					"name": "a-bar-shadow-x",
+					"title": "Controls the horizontal offset of text shadow"
 				},
 				
 				{
-					type: "number",
-					unit: "px",
-					group: "text-shadow",
-					name: "a-bar-shadow-y",
-					title: "Controls the vertical offset of text shadow"
+					"type": "number",
+					"unit": "px",
+					"group": "text-shadow",
+					"name": "a-bar-shadow-y",
+					"title": "Controls the vertical offset of text shadow"
 				},
 				
 				{
-					type: "number",
-					unit: "px",
-					group: "text-shadow",
-					name: "a-bar-shadow-radius",
-					title: "Controls the blur of text shadow"
+					"type": "number",
+					"unit": "px",
+					"group": "text-shadow",
+					"name": "a-bar-shadow-radius",
+					"title": "Controls the blur of text shadow"
 				},
 				
 				{
-					type: "color",
-					group: "text-shadow",
-					name: "a-bar-shadow-color",
-					separator: true
+					"type": "color",
+					"group": "text-shadow",
+					"name": "a-bar-shadow-color",
+					"separator": true
 				},
 			],
 			
 			"Background": {
-				type: "gradient",
-				group: "background",
-				name: "a-bar-background-color",
-				separator: true
+				"type": "gradient",
+				"group": "background",
+				"name": "a-bar-background-color",
+				"separator": true
 			},
 			
 			"Border": {
-				type: "color",
-				group: "border",
-				name: "a-bar-border"
+				"type": "color",
+				"group": "border",
+				"name": "a-bar-border"
 			}
 		},
 		
 		"Content Body": {
 			"data-form": "ui-body-a",
 			
+			"Link Color": {
+				"type": "link",
+				"group": "link",
+				"name": "a-body-link-color"
+			},
+			
 			"Text Color": {
-				type: "color",
-				group: "color",
-				name: "a-body-color"
+				"type": "color",
+				"group": "color",
+				"name": "a-body-color"
 			},
 			
 			"Text Shadow": [
 				{
-					type: "number",
-					unit: "px",
-					group: "text-shadow",
-					name: "a-body-shadow-x",
-					title: "Controls the horizontal offset of text shadow"
+					"type": "number",
+					"unit": "px",
+					"group": "text-shadow",
+					"name": "a-body-shadow-x",
+					"title": "Controls the horizontal offset of text shadow"
 				},
 				
 				{
-					type: "number",
-					unit: "px",
-					group: "text-shadow",
-					name: "a-body-shadow-y",
-					title: "Controls the vertical offset of text shadow"
+					"type": "number",
+					"unit": "px",
+					"group": "text-shadow",
+					"name": "a-body-shadow-y",
+					"title": "Controls the vertical offset of text shadow"
 				},
 				
 				{
-					type: "number",
-					unit: "px",
-					group: "text-shadow",
-					name: "a-body-shadow-radius",
-					title: "Controls the blur of text shadow"
+					"type": "number",
+					"unit": "px",
+					"group": "text-shadow",
+					"name": "a-body-shadow-radius",
+					"title": "Controls the blur of text shadow"
 				},
 				
 				{
-					type: "color",
-					group: "text-shadow",
-					name: "a-body-shadow-color",
-					separator: true
+					"type": "color",
+					"group": "text-shadow",
+					"name": "a-body-shadow-color",
+					"separator": true
 				},
 			],
 			
 			"Background": {
-				type: "gradient",
-				group: "background",
-				name: "a-body-background-color",
-				separator: true
+				"type": "gradient",
+				"group": "background",
+				"name": "a-body-background-color",
+				"separator": true
 			},
 			
 			"Border": {
-				type: "color",
-				group: "border",
-				name: "a-body-border"
+				"type": "color",
+				"group": "border",
+				"name": "a-body-border"
 			}
 		},
 		
@@ -409,163 +432,163 @@ TR.panelDict = {
 			"data-form": "ui-btn-up-a",
 			
 			"Text Color": {
-				type: "color",
-				group: "color",
-				name: "a-bup-color"
+				"type": "color",
+				"group": "color",
+				"name": "a-bup-color"
 			},
 			
 			"Text Shadow": [
 				{
-					type: "number",
-					unit: "px",
-					group: "text-shadow",
-					name: "a-bup-shadow-x",
-					title: "Controls the horizontal offset of text shadow"
+					"type": "number",
+					"unit": "px",
+					"group": "text-shadow",
+					"name": "a-bup-shadow-x",
+					"title": "Controls the horizontal offset of text shadow"
 				},
 				
 				{
-					type: "number",
-					unit: "px",
-					group: "text-shadow",
-					name: "a-bup-shadow-y",
-					title: "Controls the vertical offset of text shadow"
+					"type": "number",
+					"unit": "px",
+					"group": "text-shadow",
+					"name": "a-bup-shadow-y",
+					"title": "Controls the vertical offset of text shadow"
 				},
 				
 				{
-					type: "number",
-					unit: "px",
-					group: "text-shadow",
-					name: "a-bup-shadow-radius",
-					title: "Controls the blur of text shadow"
+					"type": "number",
+					"unit": "px",
+					"group": "text-shadow",
+					"name": "a-bup-shadow-radius",
+					"title": "Controls the blur of text shadow"
 				},
 				
 				{
-					type: "color",
-					group: "text-shadow",
-					name: "a-bup-shadow-color",
-					separator: true
+					"type": "color",
+					"group": "text-shadow",
+					"name": "a-bup-shadow-color",
+					"separator": true
 				},
 			],
 			
 			"Background": {
-				type: "gradient",
-				group: "background",
-				name: "a-bup-background-color",
-				separator: true
+				"type": "gradient",
+				"group": "background",
+				"name": "a-bup-background-color",
+				"separator": true
 			},
 			
 			"Border": {
-				type: "color",
-				group: "border",
-				name: "a-bup-border"
+				"type": "color",
+				"group": "border",
+				"name": "a-bup-border"
 			}
 		},
 		
 		"Button: Hover": {
 			"Text Color": {
-				type: "color",
-				group: "color",
-				name: "a-bhover-color"
+				"type": "color",
+				"group": "color",
+				"name": "a-bhover-color"
 			},
 			
 			"Text Shadow": [
 				{
-					type: "number",
-					unit: "px",
-					group: "text-shadow",
-					name: "a-bhover-shadow-x",
-					title: "Controls the horizontal offset of text shadow"
+					"type": "number",
+					"unit": "px",
+					"group": "text-shadow",
+					"name": "a-bhover-shadow-x",
+					"title": "Controls the horizontal offset of text shadow"
 				},
 				
 				{
-					type: "number",
-					unit: "px",
-					group: "text-shadow",
-					name: "a-bhover-shadow-y",
-					title: "Controls the vertical offset of text shadow"
+					"type": "number",
+					"unit": "px",
+					"group": "text-shadow",
+					"name": "a-bhover-shadow-y",
+					"title": "Controls the vertical offset of text shadow"
 				},
 				
 				{
-					type: "number",
-					unit: "px",
-					group: "text-shadow",
-					name: "a-bhover-shadow-radius",
-					title: "Controls the blur of text shadow"
+					"type": "number",
+					"unit": "px",
+					"group": "text-shadow",
+					"name": "a-bhover-shadow-radius",
+					"title": "Controls the blur of text shadow"
 				},
 				
 				{
-					type: "color",
-					group: "text-shadow",
-					name: "a-bhover-shadow-color",
-					separator: true
+					"type": "color",
+					"group": "text-shadow",
+					"name": "a-bhover-shadow-color",
+					"separator": true
 				},
 			],
 			
 			"Background": {
-				type: "gradient",
-				group: "background",
-				name: "a-bhover-background-color",
-				separator: true
+				"type": "gradient",
+				"group": "background",
+				"name": "a-bhover-background-color",
+				"separator": true
 			},
 			
 			"Border": {
-				type: "color",
-				group: "border",
-				name: "a-bhover-border"
+				"type": "color",
+				"group": "border",
+				"name": "a-bhover-border"
 			}
 		},
 		
 		"Button: Pressed": {
 			"Text Color": {
-				type: "color",
-				group: "color",
-				name: "a-bdown-color"
+				"type": "color",
+				"group": "color",
+				"name": "a-bdown-color"
 			},
 			
 			"Text Shadow": [
 				{
-					type: "number",
-					unit: "px",
-					group: "text-shadow",
-					name: "a-bdown-shadow-x",
-					title: "Controls the horizontal offset of text shadow"
+					"type": "number",
+					"unit": "px",
+					"group": "text-shadow",
+					"name": "a-bdown-shadow-x",
+					"title": "Controls the horizontal offset of text shadow"
 				},
 				
 				{
-					type: "number",
-					unit: "px",
-					group: "text-shadow",
-					name: "a-bdown-shadow-y",
-					title: "Controls the vertical offset of text shadow"
+					"type": "number",
+					"unit": "px",
+					"group": "text-shadow",
+					"name": "a-bdown-shadow-y",
+					"title": "Controls the vertical offset of text shadow"
 				},
 				
 				{
-					type: "number",
-					unit: "px",
-					group: "text-shadow",
-					name: "a-bdown-shadow-radius",
-					title: "Controls the blur of text shadow"
+					"type": "number",
+					"unit": "px",
+					"group": "text-shadow",
+					"name": "a-bdown-shadow-radius",
+					"title": "Controls the blur of text shadow"
 				},
 				
 				{
-					type: "color",
-					group: "text-shadow",
-					name: "a-bdown-shadow-color",
-					separator: true
+					"type": "color",
+					"group": "text-shadow",
+					"name": "a-bdown-shadow-color",
+					"separator": true
 				},
 			],
 			
 			"Background": {
-				type: "gradient",
-				group: "background",
-				name: "a-bdown-background-color",
-				separator: true
+				"type": "gradient",
+				"group": "background",
+				"name": "a-bdown-background-color",
+				"separator": true
 			},
 			
 			"Border": {
-				type: "color",
-				group: "border",
-				name: "a-bdown-border"
+				"type": "color",
+				"group": "border",
+				"name": "a-bdown-border"
 			}
 		}
 	},
