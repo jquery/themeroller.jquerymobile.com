@@ -109,7 +109,7 @@ TR.addSwatch = function( new_style, duplicate ) {
 	            
 	 			if( css.search( end_reg ) == -1 ) {
 	                end_reg = new RegExp( "\\/\\*\\sStructure " );
-	            }				
+	            }
 				temp_css_template = css.substring( css.search( start_reg ), css.search( end_reg ) );
 
 				var reg1 = new RegExp( "-" + duplicate + ",", "g" ),
