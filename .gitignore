@@ -1,5 +1,6 @@
 .DS_Store
 css/user_themes/*.css
+jqm/*/user_themes/*.css
 zips/*.zip
 .htaccess
 build/*

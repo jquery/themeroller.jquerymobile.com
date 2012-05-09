@@ -115,6 +115,23 @@ h2{
 	font-size: 13px;
 }
 
+#share .input-wrapper {
+	position: relative;
+}
+
+#share .input-wrapper .loading-text {
+	color: #000000;
+    font-size: 15px;
+    left: 13px;
+    position: absolute;
+    top: 10px;
+}
+
+#share .input-wrapper .loading-text img {
+	position: relative;
+	top: 2px;
+}
+
 #welcome + .ui-dialog-buttonpane .separator{
 	width: 536px;
 }

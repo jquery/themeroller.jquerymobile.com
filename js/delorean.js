@@ -55,7 +55,7 @@ Delorean.travelTo = function( version, importing ) {
 }
 
 Delorean.passTheme = function( version ) {
-	var form = $( '<form style="display: none" action="index.php?\
+	var form = $( '<form style="display: none" action="?\
 		ver=' + version + '" method="post"><input name="style" value="' + encodeURI( TR.styleBlock.text() ) + '" /></form>' );
 	$( "body" ).append( form );
 	form.submit();

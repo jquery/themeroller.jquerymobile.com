@@ -358,13 +358,16 @@ TR.correctNumberOfSwatches = function() {
 		
 			//import default theme
 			$.ajax({
-				url: "css/jqm.starter.theme.css",
+				url: "jqm/" + TR.version + "/jqm.starter.theme.css",
 				dataType: "text",
 				mimeType: "text/plain",
 				success: function( data ) {
 					$( "#upload textarea" ).val( data );
 					TR.styleBlock.text( data ); 
 					TR.correctNumberOfSwatches();
+					for ( var letter = TR.num[ "a" ]; letter < TR.num[ "c" ]; letter++ ) {
+						TR.addSwatch( true, "a" );
+					}
 				}
 			});
 		} else {
@@ -755,7 +758,7 @@ TR.initDialogs = function() {
 					$.ajax({
 						url: "./zip.php",
 						type: "POST",
-						data: "theme_name=" + $( "input", this ).val() + "&file=" + encodeURIComponent(TR.styleBlock.text()),
+						data: "ver=" + TR.version + "&theme_name=" + $( "input", this ).val() + "&file=" + encodeURIComponent(TR.styleBlock.text()),
 						dataType: "text",
 						mimeType: "text/plain",
 						beforeSend: function() {
@@ -780,16 +783,18 @@ TR.initDialogs = function() {
 		
 		$( "#share" ).dialog( "open" );
 		
-		var post_data = "file=" + TR.styleBlock.text();
+		var post_data = "ver=" + TR.version + "&file=" + TR.styleBlock.text();
 		
 		$.ajax({
 			type: "post",
 			url: "share.php",
 			data: post_data,
 			beforeSend: function() {
-				$( "#share" ).dialog("open" );
+				$( "#share .loading-text" ).show();
+				$( "#share" ).dialog( "open" );
 			},
 			success: function( data ) {
+				$( "#share .loading-text" ).hide();
 				$( "#share input" ).val( data );
 			}
 		});

@@ -3,13 +3,13 @@
 	
 	$original = $_POST["file"];
 	
-	$dir = scandir('css/user_themes');
+	$dir = scandir('jqm/' . $_POST['ver'] . '/user_themes');
 	$today = date('Ymd', strtotime('today'));
 	$last_file_num = 0;
 	foreach ( $dir as $file ) {  	
-    if ( substr($file, 0, 1) !== '.' ) {
+        if ( substr($file, 0, 1) !== '.' ) {
 			$file_name = explode('.', $file);
-			if ( isset($file_name[0]) ) {
+			if ( isset($file_name[0]) && $file != "README.md" ) {
 				$date = explode('-', $file_name[0]);
 				$file_num = $date[1];
 				$date = $date[0];
@@ -24,7 +24,7 @@
 		}
 	}
 	$new_file_id = $today . '-' . ($last_file_num + 1);
-	$new_file_name = 'css/user_themes/' . $new_file_id . '.css';
+	$new_file_name = 'jqm/' . $_POST['ver'] . '/user_themes/' . $new_file_id . '.css';
 	
 	$new_file = fopen($new_file_name, 'w');
 	fwrite($new_file, $original);
@@ -36,7 +36,7 @@
 		if($dir !== "/") {
 			$dir .= "/";
 		}
-		if ($_SERVER["HTTPS"] == "on") {
+		if (isset($_SERVER["HTTPS"]) && $_SERVER["HTTPS"] == "on") {
 			$pageURL .= "s";
 		}
 		$pageURL .= "://";
@@ -48,6 +48,6 @@
 		return $pageURL;
 	}
 	
-	echo getScriptURLDirectory() . 'index.php?style_id=' . $new_file_id;
+	echo getScriptURLDirectory() . '?ver=' . $_POST['ver'] . '&style_id=' . $new_file_id;
 
 ?>

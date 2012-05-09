@@ -2,6 +2,9 @@
 	require_once('version.php');
 	date_default_timezone_set('America/Los_Angeles');
 
+    $JQM_VERSION = $_POST["ver"];
+    $JQUERY_VERSION = $ALL_JQUERY_VERSIONS[ $JQM_VERSION ];
+
 	$theme_name = $_POST["theme_name"];
 	$uncompressed = $_POST["file"];
 	

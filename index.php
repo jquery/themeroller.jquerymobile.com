@@ -141,7 +141,13 @@ $JQUERY_VERSION = $ALL_JQUERY_VERSIONS[ $JQM_VERSION ] ? $ALL_JQUERY_VERSIONS[ $
 				Use this link to share a copy of your theme. People can download 
 				or edit a copy of the theme, but your version won’t be changed. 
 			</p>
-			<input type="text" value="" />
+			<div class="input-wrapper">
+			    <input type="text" value="" />
+			    <span class="loading-text">
+			        <img src="images/ajax-load-black.gif" />
+    			    Loading...
+			    </span>
+			</div>
 			<div class="buttonpane">
 				<div class="separator"></div>
 				<img src="images/target_big.png" alt=" "/>
@@ -180,7 +186,7 @@ $JQUERY_VERSION = $ALL_JQUERY_VERSIONS[ $JQM_VERSION ] ? $ALL_JQUERY_VERSIONS[ $
 				<h3 id="importing">Importing themes <a href="#help-top" class="help-top">^ Top</a></h3>
 				<p>The import feature is primarily designed to make it easy to either edit a theme you've downloaded or to generate a updated version of a theme for a new release of the library. When you download a theme, be sure keep the uncompressed version of the theme CSS file because this is used in the import process. To import a theme, click the <strong>Import</strong> link and paste the entire contents of the uncompressed theme file (select all > copy > paste) into the text input in the dialog, and the system will parse the theme into an editable format for sharing and downloading.</p>
 
-				<h3 id="Sharing">Sharing themes <a href="#help-top" class="help-top">^ Top</a></h3>
+				<h3 id="sharing">Sharing themes <a href="#help-top" class="help-top">^ Top</a></h3>
 				<p>To generate a theme URL that can be shared with others, click the <strong>Share</strong> link and copy the URL. Post it on Twitter and become a famous theme artist. Anyone that opens the shared URL can edit or download the theme, but theor activity won't affect your original theme. Note that due to the high volume of traffic, we can only store your theme on the server for 30 days so shared links have an expiration date. Be sure to download a copy of your theme for safekeeping.</p>
 
 				<h3 id="supported">Supported browsers <a href="#help-top" class="help-top">^ Top</a></h3>
@@ -383,7 +389,7 @@ $JQUERY_VERSION = $ALL_JQUERY_VERSIONS[ $JQM_VERSION ] ? $ALL_JQUERY_VERSIONS[ $
 						//If the file exists we add the CSS here, if not, we leave it blank for the JS to find on load
 						$file_path = "jqm/" . $JQM_VERSION . "/jqm.starter.theme.css";
 						if( isset($style_id) ) {
-							$file_path = "css/user_themes/" . $style_id . ".css";
+							$file_path = "jqm/" . $JQM_VERSION . "/user_themes/" . $style_id . ".css";
 						}
 						if( is_file($file_path) ) {
 							echo file_get_contents( $file_path );
