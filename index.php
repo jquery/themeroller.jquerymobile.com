@@ -10,6 +10,8 @@ if ( isset($_POST['style']) ) {
 	$style = urldecode($_POST['style']);
 }
 $JQUERY_VERSION = $ALL_JQUERY_VERSIONS[ $JQM_VERSION ] ? $ALL_JQUERY_VERSIONS[ $JQM_VERSION ] : "1.6.4";
+
+$kuler_markup = rtrim( preg_replace( "/\n/", "\n\t\t\t\t\t", file_get_contents( "kuler/kuler.html" ) ) ) . "\n";
 ?>
 <!DOCTYPE html>
 <html>             
@@ -25,6 +27,7 @@ $JQUERY_VERSION = $ALL_JQUERY_VERSIONS[ $JQM_VERSION ] ? $ALL_JQUERY_VERSIONS[ $
 	<link rel="stylesheet" type="text/css" href="css/jquery.ui.css" />
 	<link rel="stylesheet" type="text/css" href="css/farbtastic.css" />
 	<link rel="stylesheet" type="text/css" href="css/tr.panel.css" />
+	<link rel="stylesheet" type="text/css" href="kuler/kuler.css" />
 
 	<script type="text/javascript" src="js/jquery.js"></script>
 	<script type="text/javascript" src="js/jquery.ui.js"></script>
@@ -36,7 +39,7 @@ $JQUERY_VERSION = $ALL_JQUERY_VERSIONS[ $JQM_VERSION ] ? $ALL_JQUERY_VERSIONS[ $
 	<script type="text/javascript" src="js/panel.js"></script>
 	<script type="text/javascript" src="js/ui.js"></script>
 	<script type="text/javascript" src="js/delorean.js"></script>
-	<script type="text/javascript" src="js/kuler.js"></script>
+	<script type="text/javascript" src="kuler/kuler.js"></script>
 	<script type="text/javascript" src="jqm/<?php echo $JQM_VERSION ?>/panel.js"></script>
 </head>
 <body>
@@ -331,6 +334,11 @@ $JQUERY_VERSION = $ALL_JQUERY_VERSIONS[ $JQM_VERSION ] ? $ALL_JQUERY_VERSIONS[ $
 							<span>SATURATION</span><div id="saturation_slider"></div>
 						</div>
 					</div>
+					<?php 
+					    if( isset($kuler_markup) ) {
+					        echo $kuler_markup;
+					    }
+					?>
 					<div id="most-recent-colors">
 						<h2>Recent Colors</h2>
 						<div class="colors">

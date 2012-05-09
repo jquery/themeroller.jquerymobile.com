@@ -33,7 +33,7 @@ $(function(){
 	
 	//Adding kuler activation link
 	var h2 = $( "#quickswatch h2" );
-	h2.html( h2.html() + " or pick from the <img src=\"" + images["kuler_logo"] + "\" alt=\" \"/><span id=\"kuler-activation\">Adobe Kuler swatches&nbsp;<img src=\"" + images["arrow_right_blue"] + "\" alt=\" \" /></span>" );
+	h2.html( h2.html() + " or pick from the <img src=\"images/kuler-logo-small.png\" alt=\" \"/><span id=\"kuler-activation\">Adobe Kuler swatches&nbsp;<img src=\"images/arrow-blue.png\" alt=\" \" /></span>" );
 	
 	$( "#kuler-activation" ).click(initialize_kuler);
 	
@@ -58,9 +58,9 @@ $(function(){
 				if( next.html() ) {
 					$( ".kuler-page.active" ).removeClass( "active" );
 					next.addClass( "active" );
-					$( "#kuler-back-page img" ).attr( "src", images["larrow_light"] );
+					$( "#kuler-back-page img" ).attr( "src", "images/arrow-l-light.png" );
 					if( $("[data-id=page-" + (parseInt(id) + 2) + "]").html() === null ) {
-						$( "#kuler-next-page img" ).attr( "src", images["rarrow"] );
+						$( "#kuler-next-page img" ).attr( "src", "images/arrow-r.png" );
 					}
 					current_page += 1;
 					$( "#kuler-pages>div:first" ).html( "PAGE<br />" + current_page + "/" + total_pages );
@@ -75,9 +75,9 @@ $(function(){
 					$( ".kuler-page.active" ).removeClass( "active" );
 					back.addClass( "active" );
 				
-					$( "#kuler-next-page img" ).attr( "src", images["rarrow_light"] );
+					$( "#kuler-next-page img" ).attr( "src", "images/arrow-r-light.png" );
 					if( $("[data-id=page-" + (parseInt(id) - 2) + "]").html() === null ) {
-						$( "#kuler-back-page img" ).attr( "src", images["larrow"] );
+						$( "#kuler-back-page img" ).attr( "src", "images/arrow-l.png" );
 					}
 					current_page -= 1;
 					$( "#kuler-pages>div:first" ).html( "PAGE<br />" + current_page + "/" + total_pages );
@@ -189,12 +189,12 @@ $(function(){
 					tmp += "</div><div class=\"kuler-details\" data-id=\"" + count + "\"><h5>" + $this.find( "kuler\\:themeTitle" ).text() + "</h5><p>by " + $this.find( "kuler\\:authorLabel" ).text() + "</p><div class=\"rating\">";
 					var rating = parseInt( $this.find("kuler\\:themeRating").text() );
 					for( var i = 0; i < rating; i++ ) {
-						tmp += "<img src=\"" + images["star"] + "\" class=\"detail-star\" alt=\" \"/>";
+						tmp += "<img src=\"images/star.png\" class=\"detail-star\" alt=\" \"/>";
 					}
 					for( ; i < 5; i++ ) {
-						tmp += "<img src=\"" + images["star2"] + "\" class=\"detail-star\" alt=\" \"/>";
+						tmp += "<img src=\"images/star-dark.png\" class=\"detail-star\" alt=\" \"/>";
 					}
-					tmp += "<span>" + $this.find( "kuler\\:themeDownloadCount" ).text() + " downloads</span></div><div class=\"detail-footer\"><a target=\"_blank\" href=\"http://kuler.adobe.com/index.cfm#themeID/" + $this.find( "kuler\\:themeID" ).text() + "\">View on kuler.com</a><img src=\"" + images["arrow_right"] + "\" alt=\" \"/></div></div></div>";
+					tmp += "<span>" + $this.find( "kuler\\:themeDownloadCount" ).text() + " downloads</span></div><div class=\"detail-footer\"><a target=\"_blank\" href=\"http://kuler.adobe.com/index.cfm#themeID/" + $this.find( "kuler\\:themeID" ).text() + "\">View on kuler.com</a><img src=\"images/arrow-reroute.png\" alt=\" \"/></div></div></div>";
 				
 					if( count < 6 ) {
 						page.append( tmp );
@@ -217,11 +217,11 @@ $(function(){
 					$( "#kuler-pages>div:first" ).html( "<br /><br />" );
 				} else {
 					$( "#kuler-pages>div:first" ).html( "PAGE<br />" + current_page + "/" + total_pages );
-					$( "#kuler-pages #kuler-back-page" ).html( "<img src=\"" + images["larrow"] + "\" alt=\" \" />" );
+					$( "#kuler-pages #kuler-back-page" ).html( "<img src=\"images/arrow-l.png\" alt=\" \" />" );
 					if( total_pages == 1 ) {
-						$( "#kuler-pages #kuler-next-page" ).html( "<img src=\"" + images["rarrow"] + "\" alt=\" \" />" );
+						$( "#kuler-pages #kuler-next-page" ).html( "<img src=\"images/arrow-r.png\" alt=\" \" />" );
 					} else {
-						$( "#kuler-pages #kuler-next-page" ).html( "<img src=\"" + images["rarrow_light"] + "\" alt=\" \" />" );
+						$( "#kuler-pages #kuler-next-page" ).html( "<img src=\"images/arrow-r-light.png\" alt=\" \" />" );
 					}
 				}
 				
