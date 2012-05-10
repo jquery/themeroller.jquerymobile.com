@@ -726,6 +726,7 @@ TR.initDialogs = function() {
 		width: 800,
 		buttons: {
 			"Done": function() {
+				$( this ).find( "input" ).val( "" );
 				$( this ).dialog( "close" );
 			}
 		}
