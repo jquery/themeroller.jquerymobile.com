@@ -1132,7 +1132,7 @@ TR.initThemeRoller = function() {
 	TR.initDraggableColors();
 	TR.initStyleArray();
 	TR.correctNumberOfSwatches();
-	Delorean.init();
+	TR.initVersioning();
 	
 	if ( !TR.importedStyle ) {
 		//start the app out with 3 swatches A-C default starter style only has 1

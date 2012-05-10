@@ -1,17 +1,17 @@
 <?php
-require_once( 'version.php' );
-if ( isset($_GET['style_id']) ) {
-	$style_id = $_GET['style_id'];
-}
-if ( isset($_GET['ver']) ) {
-    $JQM_VERSION = $_GET['ver'];
-}
-if ( isset($_POST['style']) ) {
-	$style = urldecode($_POST['style']);
-}
-$JQUERY_VERSION = $ALL_JQUERY_VERSIONS[ $JQM_VERSION ] ? $ALL_JQUERY_VERSIONS[ $JQM_VERSION ] : "1.6.4";
+    require_once( 'version.php' );
+    if ( isset($_GET['style_id']) ) {
+    	$style_id = $_GET['style_id'];
+    }
+    if ( isset($_GET['ver']) ) {
+        $JQM_VERSION = $_GET['ver'];
+    }
+    if ( isset($_POST['style']) ) {
+    	$style = urldecode($_POST['style']);
+    }
+    $JQUERY_VERSION = $ALL_JQUERY_VERSIONS[ $JQM_VERSION ] ? $ALL_JQUERY_VERSIONS[ $JQM_VERSION ] : "1.6.4";
 
-$kuler_markup = rtrim( preg_replace( "/\n/", "\n\t\t\t\t\t", file_get_contents( "kuler/kuler.html" ) ) ) . "\n";
+    $kuler_markup = rtrim( preg_replace( "/\n/", "\n\t\t\t\t\t", file_get_contents( "kuler/kuler.html" ) ) ) . "\n";
 ?>
 <!DOCTYPE html>
 <html>             
@@ -29,18 +29,22 @@ $kuler_markup = rtrim( preg_replace( "/\n/", "\n\t\t\t\t\t", file_get_contents( 
 	<link rel="stylesheet" type="text/css" href="css/tr.panel.css" />
 	<link rel="stylesheet" type="text/css" href="kuler/kuler.css" />
 
-	<script type="text/javascript" src="js/jquery.js"></script>
-	<script type="text/javascript" src="js/jquery.ui.js"></script>
-	<script type="text/javascript" src="js/jquery.ui.tabs.paging.js"></script>
-	<script type="text/javascript" src="js/jquery.color.js"></script>
-	<script type="text/javascript" src="js/json2.js"></script>
-	<script type="text/javascript" src="js/farbtastic.js"></script>
+	<script type="text/javascript" src="js/lib/jquery.js"></script>
+	<script type="text/javascript" src="js/lib/jquery.ui.js"></script>
+	<script type="text/javascript" src="js/lib/jquery.ui.tabs.paging.js"></script>
+	<script type="text/javascript" src="js/lib/jquery.color.js"></script>
+	<script type="text/javascript" src="js/lib/json2.js"></script>
+	<script type="text/javascript" src="js/lib/farbtastic.js"></script>
 	<script type="text/javascript" src="js/app.js"></script>
 	<script type="text/javascript" src="js/panel.js"></script>
 	<script type="text/javascript" src="js/ui.js"></script>
-	<script type="text/javascript" src="js/delorean.js"></script>
+	<script type="text/javascript" src="js/version.js"></script>
 	<script type="text/javascript" src="kuler/kuler.js"></script>
-	<script type="text/javascript" src="jqm/<?php echo $JQM_VERSION ?>/panel.js"></script>
+	<?php
+	    if( file_exists( "jqm/" . $JQM_VERSION . "/panel.js" ) ) {
+	         echo '<script type="text/javascript" src="jqm/' . $JQM_VERSION . '/panel.js"></script>';
+	    }
+	?>
 </head>
 <body>
 	

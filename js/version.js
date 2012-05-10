@@ -1,9 +1,6 @@
 (function( $, window, undefined ) {
-	
-Delorean = {};
-window.Delorean = Delorean;
 
-Delorean.init = function() {
+TR.initVersioning = function() {
 	$( "#upload" ).dialog({
         autoOpen: false,
         modal: true,
@@ -16,7 +13,7 @@ Delorean.init = function() {
                 $( "#upload" ).dialog( "close" ); 
             },
             "Import": function() {
-				Delorean.travelTo( $( "#upgrade-to-version" ).val(), true );
+				TR.travelTo( $( "#upgrade-to-version" ).val(), true );
 			}
         }
     });
@@ -35,18 +32,18 @@ Delorean.init = function() {
 	});
 	
 	$( "#version-select ul li" ).click( function() {
-		Delorean.travelTo( $( this ).attr( "data-version" ), false );
+		TR.travelTo( $( this ).attr( "data-version" ), false );
 	})
 }
 
-Delorean.travelTo = function( version, importing ) {
+TR.travelTo = function( version, importing ) {
 	$.ajax({
 		url: "jqm/" + version + "/jqm.starter.theme.css",
 		dataType: "text",
 		success: function( target ) {
-			Delorean.merge( target, version, importing );
+			TR.merge( target, version, importing );
 			if ( version != TR.version ) {
-				Delorean.passTheme( version );
+				TR.passTheme( version );
 			} else {
 				$( "#upload" ).dialog( "close" );
 			}
@@ -54,7 +51,7 @@ Delorean.travelTo = function( version, importing ) {
 	});
 }
 
-Delorean.passTheme = function( version ) {
+TR.passTheme = function( version ) {
 	var form = $( '<form style="display: none" action="?\
 		ver=' + version + '" method="post"><input name="style" value="' + encodeURI( TR.styleBlock.text() ) + '" /></form>' );
 	$( "body" ).append( form );
@@ -63,7 +60,7 @@ Delorean.passTheme = function( version ) {
 
 //takes current theme and updates styleDict, takes target CSS file (version we are traveling to)
 //and merges the two and writes out to styleBlock, ready for travel
-Delorean.merge = function( css, version, importing ) {
+TR.merge = function( css, version, importing ) {
 	TR.undoLog.push( TR.styleBlock.text() );
 	
 	if( importing ) {	
@@ -74,8 +71,8 @@ Delorean.merge = function( css, version, importing ) {
 	}
 	
 	//reads the target CSS file, adds/subtracts appropriate number of swatches and tokenizes it
-	var swatchCount = Delorean.getNumberOfSwatches();
-	TR.styleBlock.text( Delorean.fixNumberOfSwatches( css, swatchCount ) );
+	var swatchCount = TR.getNumberOfSwatches();
+	TR.styleBlock.text( TR.fixNumberOfSwatches( css, swatchCount ) );
 	TR.initStyleArray( "refresh" );
 	
 	//styleArray has correct values and tokens array has the appropriate stylesheet
@@ -84,7 +81,7 @@ Delorean.merge = function( css, version, importing ) {
 }
 
 //matches the target CSS file to have the right number of swatches in the current theme
-Delorean.fixNumberOfSwatches = function( style, count ) {
+TR.fixNumberOfSwatches = function( style, count ) {
 	var diff = count - 1;
 	if( diff > 0 ) {
 		var start = style.search( /\/\* A.*\n-*\*\// ),
@@ -104,7 +101,7 @@ Delorean.fixNumberOfSwatches = function( style, count ) {
 }
 
 //gets number of swatches in the current theme by enumerating dictionary keys in styleDict
-Delorean.getNumberOfSwatches = function() {
+TR.getNumberOfSwatches = function() {
 	var count = 1;
 	for( var i in TR.styleArray ) {
 		var letter = i.split("-")[0];
