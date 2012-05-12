@@ -603,15 +603,19 @@ TR.initControls = function() {
 
 	//Box Shadow
 	$( "[data-type=box_shadow]" ).bind( "blur change keyup", function() {
-		var color_el = $( "[data-type=box_shadow]:first" );
-		var opac_el = $( "[data-type=box_shadow]:eq(1)" );
+		var color_el = $( "[data-type=box_shadow]:first" ),
+			opac_el = $( "[data-type=box_shadow]:eq(1)" ),
+			color_arr = color_el.val().split( "" ),
+			red = parseInt( (color_arr[1] + color_arr[2]), 16 ),
+			green = parseInt( (color_arr[3] + color_arr[4]), 16 ),
+			blue = parseInt( (color_arr[5] + color_arr[6]), 16 ),
+			opacity = parseFloat( opac_el.val() ) / 100;
+			
+		if ( !opacity ) {
+			opacity = 0;
+		}
 		
-		var color_arr = color_el.val().split( "" );
-        var red = parseInt( (color_arr[1] + color_arr[2]), 16 );
-        var green = parseInt( (color_arr[3] + color_arr[4]), 16 );
-        var blue = parseInt( (color_arr[5] + color_arr[6]), 16 );
-		
-		TR.styleArray["global-box-shadow-color"] = "rgba(" + red + "," + green + "," + blue + "," + ( parseFloat(opac_el.val()) / 100 ) + ")";	
+		TR.styleArray["global-box-shadow-color"] = "rgba(" + red + "," + green + "," + blue + "," + opacity + ")";	
         TR.updateAllCSS();
 	});
 	
@@ -1202,8 +1206,7 @@ TR.percentColor = function( color, percent ) {
 }
 
 //updates Inspector behaviors in the iframe for a newly added swatch
-TR.refreshIframe = function( swatch )
-{	
+TR.refreshIframe = function( swatch ) {	
     //click behavior for inspector
 	TR.iframe.find( ".ui-bar-" + swatch + ", " + ".ui-body-" + swatch + ", .ui-bar-" + swatch + " [data-form], .ui-body-" + swatch + " [data-form]" ).mouseup(function(e) {
         if( $("#inspector-button").hasClass("active") ) {
