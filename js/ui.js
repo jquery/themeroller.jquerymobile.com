@@ -95,6 +95,33 @@ TR.initializeUI = function() {
 		colorwell = null;
 	});
 	
+	//colorwell refers to the inputs with color values
+	$( ".colorwell-toggle" ).focus(function() {
+		colorwell = $(this);
+		if( colorwell.is(":hidden") ) {
+			return;
+		}
+		var pos = $( this ).offset();
+		var name = $( this ).attr( "data-name" );
+		if(name.indexOf( "shadow-color" ) == -1) {
+			$( "#colorpicker" ).css({
+				"position": "absolute", 
+				"left": pos.left, 
+				"top": pos.top + 21
+			});
+		} else {
+			$( "#colorpicker" ).css({
+				"position": "absolute", 
+				"left": pos.left, 
+				"top": pos.top + 21
+			});
+		}
+		$( "#colorpicker" ).show();
+	}).blur(function(e) {
+		$( "#colorpicker" ).hide();
+		colorwell = null;
+	});
+	
 	//Inspector Radio behavior
 	$( "#inspector-button" ).click(function() {
 		var $this = $( this ),
@@ -201,6 +228,34 @@ TR.initializeUI = function() {
 			quickswatch.find( ".color-drag:nth-child(" + (i + 1) + ")" )
 				.css("background-color", orig.saturation(sat_str + sat_percent).lightness(lit_str + lit_percent) );
 		}
+	});
+
+  // Recent color dropper
+
+	function processFarbChange( color ) {
+		$( "#most-recent-colors input" ).val( color );
+
+		TR.updateMostRecent( color );
+	}
+
+	$( "#recent-color-picker" ).click( function() {
+		var well = $( this ).parent().find( "input" ), pos = $(this).offset();
+
+		$( this ).hide();
+		well.show();
+		well.focus();
+
+		f.linkTo( processFarbChange );
+
+		TR.addMostRecent( well.val() );
+
+		event.preventDefault();
+	});
+
+	$( "#most-recent-colors .colorwell-toggle" ).blur(function() {
+		var well = $("#most-recent-colors .colorwell-toggle");
+		well.hide();
+		$('#recent-color-picker').show();
 	});
 	
 	function rgbtohex(rgb) {
