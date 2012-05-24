@@ -344,7 +344,14 @@
 					    }
 					?>
 					<div id="most-recent-colors">
-						<h2>Recent Colors</h2>
+						<div class="picker">
+							<h2>Recent Colors</h2>
+							<div class="compact">
+								<a id="recent-color-picker" href="#">colors...</a>
+                <input type="text" class="colorwell-toggle" value="#FFFFFF" data-name="recent" style="display: none" />
+							</div>
+						</div>
+						<div class="clear"></div>
 						<div class="colors">
 							<div class="color-drag disabled" style="background-color: #ddd"></div>
 							<div class="color-drag disabled" style="background-color: #ddd"></div>

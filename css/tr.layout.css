@@ -7,6 +7,7 @@ h2{
 	font-size: 12px;
 	margin: 10px;
 }
+.clear { clear: both; }
 
 .dialog{
 	padding: 20px 27px 0px;
@@ -265,6 +266,24 @@ h2{
 
 #most-recent-colors .colors {
 	margin-top: -2px;
+}
+
+#most-recent-colors .picker {
+	overflow: hidden;
+	display: inline-block; /* Necessary to trigger "hasLayout" in IE */
+	display: block; /* Sets element back to block */
+}
+
+#most-recent-colors .picker h2 {
+	float: left;
+}
+#most-recent-colors .picker input {
+  width: 50px;
+	margin-top: -5px;
+}
+#most-recent-colors .picker div.compact {
+	float: right;
+	margin-top: 10px;
 }
 
 #sliders{
