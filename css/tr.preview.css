@@ -41,6 +41,11 @@
 	z-index: 20
 }
 
+.preview .ui-field-contain .ui-controlgroup-controls {
+	width: auto;
+	display: block;
+}
+
 .preview fieldset [data-role=list-divider]{
 	border-right-width: 1px;
 	border-left-width: 1px;
@@ -56,6 +61,10 @@
 
 .input{
 	width: 92% !important;
+	-webkit-box-sizing: content-box !important;
+	-moz-box-sizing: content-box !important;
+	-ms-box-sizing: content-box !important;
+	box-sizing: content-box !important;
 }
 
 [for=radio-choice-1]>span{
