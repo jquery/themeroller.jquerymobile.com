@@ -46,6 +46,10 @@
 	border-left-width: 1px;
 }
 
+.preview [data-role=fieldcontain] fieldset .ui-controlgroup-controls {
+	width: 100%;
+}
+
 .ui-slider{
 	width: 62% !important;
 }

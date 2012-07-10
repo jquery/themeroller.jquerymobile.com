@@ -1,24 +1,27 @@
 <?php
     require 'version.php';
 
-    $oldest = '1.0.1';
-    foreach( $VERSION_LIST as $version ) {
-        if ( !versionCompare( $version, $oldest ) ) {
-            $oldest = $version;
-        }
-    }
-
     if ( isset( $argv ) ) {
-        $jqm = $argv[ 1 ];
-        $jq = $argv[ 2 ];
+        $jqm = isset( $argv[ 1 ] ) ? $argv[ 1 ] : '';
+        $jq = isset( $argv[ 2 ] ) ? $argv[ 2 ] : '';
         $jqm_path ="http://code.jquery.com/mobile/" . $jqm;
         $jq_path ="http://code.jquery.com/jquery-" . $jq . ".min.js";
 
         chdir( 'jqm' );
         rrmdir( $jqm );
+        
+        //get most recent version of jqm
+        $versions = preg_grep('/^([^.])/', scandir( "." ));
+        $most_recent = '';
+        foreach( $versions as $version ) {
+            if ( versionCompare( $version, $most_recent ) ) {
+                $most_recent = $version;
+            }
+        }
+        
         mkdir( $jqm );
         chdir( $jqm );
-        
+                
         //Get jQuery JS
         echo "Getting jQuery JS...\n";
         getFile( $jq_path, "jquery.min.js" );
@@ -43,26 +46,22 @@
         getFile( $jqm_path . "/jquery.mobile.theme-" . $jqm . ".css", "jqm.default.theme.css" );
         //Create TR starter theme
         echo "Generating ThemeRoller starter theme CSS...\n";
-        createStarter( "jqm.default.theme.css", "jqm.starter.theme.css" );
-        //Copy preview.html from oldest version present
+        @createStarter( "jqm.default.theme.css", "jqm.starter.theme.css" );
+        //Copy preview.html from most recent version present
         echo "Generating Preview Markup...\n";
-        $contents = @file_get_contents( '../' . $oldest . '/preview.html' );
-        $file = fopen( 'preview.html', 'w' );
-		fwrite( $file, $contents );
-		fclose( $file );
+        $contents = @file_get_contents( '../' . $most_recent . '/preview.html' );
+		writeFile( 'preview.html', $contents );
 		//Create user_themes directory with README placeholder
         echo "Creating user_themes directory...\n";
         mkdir( "user_themes" );
-        $file = fopen( 'user_themes/README.md', 'w' );
-		fwrite( $file, 'This is where theme files are temporarily stored when a user "shares" a theme.' );
-		fclose( $file );
+		writeFile( 'user_themes/README.md', 'This is where theme files are temporarily stored when a user "shares" a theme.' );
+		//Create empty panel.js file
+		writeFile( 'panel.js', '' );
 		//Altering version.php with new key value pair for jQm, and jQuery versions
 		chdir( '../..' );
 		$contents = file_get_contents( 'version.php' );
 		$contents = preg_replace( "/(\\\$ALL_JQUERY_VERSIONS.*)\n.*\);/s", "$1,\n\t\"" . $jqm . "\" => \"" . $jq . "\"\n);", $contents );
-		$file = fopen( 'version.php', 'w' );
-		fwrite( $file, $contents );
-		fclose( $file );
+		writeFile( 'version.php', $contents );
         
     } else {
         echo 'This script must be executed via command line';
@@ -75,8 +74,7 @@
     function getFile( $url, $filename ) {
         if ( check404( $url ) ) {
             echo $url . " could not be found. Generating empty file for " . $filename . "\n";
-    		$file = fopen( $filename, 'w' );
-    		fclose( $file );
+    		writeFile( $filename, '' );
     		return false;
     	} else {
     	    //get contents
@@ -86,11 +84,15 @@
     		curl_close( $handle );
 		
     		//write them out to local file
-    		$file = fopen( $filename, 'w' );
-    		fwrite( $file, $contents );
-    		fclose( $file );
+    		writeFile( $filename, $contents );
     		return true;
     	}
+    }
+    
+    function writeFile( $filename, $string ) {
+        $file = fopen( $filename, 'w' );
+        fwrite( $file, $string );
+        fclose( $file );
     }
     
     function createStarter( $default, $starter ) {
@@ -109,18 +111,10 @@
         $temp = preg_replace( "/{c-/", "{a-", $temp );
         $a_swatch = preg_replace( "/\/\*\s*C(\s*-*\*\/)/", "/* A$1", $temp );
         
-        //Build B swatch
-        $temp = preg_replace( "/-c\s/", "-b ", $c_swatch );
-        $temp = preg_replace( "/-c,/", "-b,", $temp );
-        $temp = preg_replace( "/{c-/", "{b-", $temp );
-        $b_swatch = preg_replace( "/\/\*\s*C(\s*-*\*\/)/", "/* B$1", $temp );
+        $contents = preg_replace( "/\/\*\s*C\s*-*\*\/.*\/\*\sStructure\s\*\//s",
+            $a_swatch . "/* Structure */", $contents );
         
-        $contents = preg_replace( "/(\/\*\s*C\s*-*\*\/.*)\/\*\sStructure\s\*\//s",
-            $a_swatch . $b_swatch . "$1/* Structure */", $contents );
-        
-        $file = fopen( $starter, 'w' );
-		fwrite( $file, $contents );
-		fclose( $file );
+		writeFile( $starter, $contents );
     }
 
     function rrmdir($dir) {
@@ -128,9 +122,9 @@
             if(is_dir($file))
                 @rrmdir($file);
             else
-                unlink($file);
+                @unlink($file);
         }
-        rmdir($dir);
+        @rmdir($dir);
     }
 
 ?>
