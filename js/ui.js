@@ -238,7 +238,8 @@ TR.initializeUI = function() {
 		TR.updateMostRecent( color );
 	}
 
-	$( "#recent-color-picker" ).click( function() {
+	$( "#recent-color-picker" ).click( function( evt ) {
+		evt.preventDefault();
 		var well = $( this ).parent().find( "input" ), pos = $(this).offset();
 
 		$( this ).hide();
