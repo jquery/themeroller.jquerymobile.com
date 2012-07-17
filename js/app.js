@@ -108,7 +108,7 @@ TR.addSwatch = function( new_style, duplicate ) {
 
 			//adding swatch to CSS
 			var temp_css_template = TR.graySwatch.replace( /-a,/g, "-" + lower + "," )
-				.replace( /-a\s/g, "-" + lower + " " )
+				.replace( /-a:/g, "-" + lower + ":" ).replace( /-a\s/g, "-" + lower + " " )
 				.replace( /\{a-/g, "{" + lower + "-" ).replace( /\/\*\sA/, "/* " + upper ),
 				css = TR.styleBlock.text();
 			if( duplicate ) {
@@ -124,11 +124,13 @@ TR.addSwatch = function( new_style, duplicate ) {
 				var reg1 = new RegExp( "-" + duplicate + ",", "g" ),
 					reg2 = new RegExp( "-" + duplicate + "\\s", "g" ),
 					reg3 = new RegExp( "\\{" + duplicate + "-", "g" ),
-					reg4 = new RegExp( "\\/\\*\\s" + duplicate.toUpperCase(), "g" );
+					reg4 = new RegExp( "-" + duplicate + ":", "g" ),
+					reg5 = new RegExp( "\\/\\*\\s" + duplicate.toUpperCase(), "g" );
 				temp_css_template = temp_css_template.replace( reg1, "-" + lower + "," )
 					.replace( reg2, "-" + lower + " " )
 					.replace( reg3, "{" + lower + "-" )
-					.replace( reg4, "/* " + upper );
+					.replace( reg4, "-" + lower + ":" )
+					.replace( reg5, "/* " + upper );
 			}
 			css = css.replace( /\/\*\sStructure\s/, temp_css_template + "\n\n/* Structure " );
 			TR.styleBlock.text( css );
