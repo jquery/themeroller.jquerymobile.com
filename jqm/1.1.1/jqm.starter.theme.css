@@ -111,7 +111,7 @@
 	background-image:      -o-linear-gradient( #ffffff /*{a-bup-background-start}*/, #f1f1f1 /*{a-bup-background-end}*/); /* Opera 11.10+ */
 	background-image:         linear-gradient( #ffffff /*{a-bup-background-start}*/, #f1f1f1 /*{a-bup-background-end}*/);
 }
-.ui-btn-up-c:visited,
+.ui-btn-up-a:visited,
 .ui-btn-up-a a.ui-link-inherit {
 	color: 					#2F3E46 /*{a-bup-color}*/;
 }
@@ -128,8 +128,8 @@
 	background-image:      -o-linear-gradient( #f6f6f6 /*{a-bhover-background-start}*/, #e0e0e0 /*{a-bhover-background-end}*/); /* Opera 11.10+ */
 	background-image:         linear-gradient( #f6f6f6 /*{a-bhover-background-start}*/, #e0e0e0 /*{a-bhover-background-end}*/);
 }
-.ui-btn-hover-c:visited,
-.ui-btn-hover-c:hover,
+.ui-btn-hover-a:visited,
+.ui-btn-hover-a:hover,
 .ui-btn-hover-a a.ui-link-inherit {
 	color: 					#2F3E46 /*{a-bhover-color}*/;
 }
@@ -146,8 +146,8 @@
 	background-image:      -o-linear-gradient( #d0d0d0 /*{a-bdown-background-start}*/, #dfdfdf /*{a-bdown-background-end}*/); /* Opera 11.10+ */
 	background-image:         linear-gradient( #d0d0d0 /*{a-bdown-background-start}*/, #dfdfdf /*{a-bdown-background-end}*/);
 }
-.ui-btn-down-c:visited,
-.ui-btn-down-c:hover,
+.ui-btn-down-a:visited,
+.ui-btn-down-a:hover,
 .ui-btn-down-a a.ui-link-inherit {
 	color: 					#2F3E46 /*{a-bdown-color}*/;
 }

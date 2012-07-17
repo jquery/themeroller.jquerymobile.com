@@ -109,6 +109,7 @@
         $temp = preg_replace( "/-c\s/", "-a ", $c_swatch );
         $temp = preg_replace( "/-c,/", "-a,", $temp );
         $temp = preg_replace( "/{c-/", "{a-", $temp );
+        $temp = preg_replace( "/-c:/", "-a:", $temp );
         $a_swatch = preg_replace( "/\/\*\s*C(\s*-*\*\/)/", "/* A$1", $temp );
         
         $contents = preg_replace( "/\/\*\s*C\s*-*\*\/.*\/\*\sStructure\s\*\//s",
