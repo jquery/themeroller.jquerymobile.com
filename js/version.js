@@ -92,7 +92,7 @@ TR.fixNumberOfSwatches = function( style, count ) {
 			var letter = String.fromCharCode( i + 98 );
 	
 			var temp_style_template = swatch_a.replace( /-a,/g, "-" + letter + "," ).replace( /-a\s/g, "-" + letter + " " )
-				.replace( /-a\:/, "-" + letter + ":" ).replace( /{a-/g, "{" + letter + "-" ).replace( /\/\*\sA/, "/* " + letter.toUpperCase() );
+				.replace( /-a\:/g, "-" + letter + ":" ).replace( /{a-/g, "{" + letter + "-" ).replace( /\/\*\sA/, "/* " + letter.toUpperCase() );
 			
 			style = style.replace( /\/\*\sStructure\s/, temp_style_template + "\n\n/* Structure " );
 		}
