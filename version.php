@@ -56,7 +56,6 @@ foreach( $VERSION_LIST as $VERSION ) {
 $ALL_JQUERY_VERSIONS = array(
     "1.0.1" => "1.6.4",
     "1.1.0" => "1.7.1",
-	"1.1.1-rc.1" => "1.7.1",
 	"1.1.1" => "1.7.1"
 );
 

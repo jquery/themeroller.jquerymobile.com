@@ -98,6 +98,10 @@
     function createStarter( $default, $starter ) {
         $contents = file_get_contents( $default );
         
+        //replace all 3 digit hex with matching 6 digit ones
+        $contents = preg_replace( "/\#([A-Fa-f0-9])([A-Fa-f0-9])([A-Fa-f0-9])\s/s", "#$1$1$2$2$3$3 ", $contents );
+        writeFile( $default, $contents );
+        
         $contents = preg_replace( "/\/\*\s*A\s*-*\*\/.*(\/\*\s*B\s*-*\*\/)/s", "$1", $contents );
         $contents = preg_replace( "/\/\*\s*B\s*-*\*\/.*(\/\*\s*C\s*-*\*\/)/s", "$1", $contents );
         $contents = preg_replace( "/\/\*\s*D\s*-*\*\/.*(\/\*\s*E\s*-*\*\/)/s", "$1", $contents );
