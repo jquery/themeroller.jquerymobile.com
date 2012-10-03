@@ -64,7 +64,7 @@
 				match for unlimited possibilities. We recommend building themes with at least 3 swatches (A-C). 
 			</p>
 			<p>
-				<strong>To upgrade a 1.0 theme to 1.1:</strong> Click the Import button, paste in your uncompressed 1.0 theme, then tweak and download the 1.1 version. 
+				<strong>To upgrade a 1.0 theme to 1.1 or 1.2:</strong> Click the Import button, paste in your uncompressed 1.0 theme, then tweak and download the upgraded version. 
 			</p>
 
 			<div class="buttonpane">
