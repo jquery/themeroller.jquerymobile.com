@@ -763,13 +763,34 @@ TR.initDialogs = function() {
     $( "#download" ).dialog( $.extend( {}, dialogObj, {
         width: 850,
         buttons: {
-			"Close": function() { 
-                $( this ).dialog( "close" ); 
-            },
- 			"Download Zip": function() {
-				var theme_name = $( "input", this ).val();
-				if( theme_name && theme_name.indexOf(" ") == -1 ) {
+					"Close": function() { 
+						$( this ).dialog( "close" ); 
+          },
+					"Download NuGet": function() {
+						var theme_name = $( "input", this ).val();
+						if( theme_name && theme_name.indexOf(" ") == -1 ) {
+					$.ajax({
+						url: "./nuget.php",
+						type: "POST",
+						data: "ver=" + TR.version + "&theme_name=" + $( "input", this ).val() + "&file=" + encodeURIComponent(TR.styleBlock.text()),
+						dataType: "text",
+						mimeType: "text/plain",
+						beforeSend: function() {
+							//loading gif here
+						},
+						success: function(response) {
+							window.location = response;
+							$( "#download" ).dialog( "close" );
+						}
+					});
 					
+				} else {
+					alert( "Invalid theme name" );
+				}
+            },
+					"Download Zip": function() {
+						var theme_name = $( "input", this ).val();
+						if( theme_name && theme_name.indexOf(" ") == -1 ) {
 					$.ajax({
 						url: "./zip.php",
 						type: "POST",
