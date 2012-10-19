@@ -96,7 +96,7 @@
 	$zip->addFromString($nuget_path."/images/icons-18-black.png", file_get_contents("http://code.jquery.com/mobile/" . $JQM_VERSION . "/images/icons-18-black.png"));
 	$zip->addFromString($nuget_path."/images/icons-36-white.png", file_get_contents("http://code.jquery.com/mobile/" . $JQM_VERSION . "/images/icons-36-white.png"));
 	$zip->addFromString($nuget_path."/images/icons-36-black.png", file_get_contents("http://code.jquery.com/mobile/" . $JQM_VERSION . "/images/icons-36-black.png"));
-	$zip->addFromString($nuget_path . "/images/" . $match, file_get_contents("http://code.jquery.com/mobile/" . $JQM_VERSION . "/" . $match));
+	$zip->addFromString($nuget_path . "/" . $match, file_get_contents("http://code.jquery.com/mobile/" . $JQM_VERSION . "/" . $match));
 	$zip->addFromString($nuget_path . "/jqm-" . $theme_name . ".css", $uncompressed);
 	$zip->addFromString($nuget_path . "/jqm-" . $theme_name . ".min.css", $compressed);
 
