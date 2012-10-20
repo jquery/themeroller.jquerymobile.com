@@ -785,7 +785,7 @@ TR.initDialogs = function() {
 					});
 					
 				} else {
-					alert( "Invalid theme name" );
+					alert( "Please enter a theme name" );
 				}
             },
 					"Download Zip": function() {
@@ -807,7 +807,7 @@ TR.initDialogs = function() {
 					});
 					
 				} else {
-					alert( "Invalid theme name" );
+					alert( "Please enter a theme name" );
 				}
             }
         }
