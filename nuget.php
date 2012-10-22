@@ -103,7 +103,8 @@
 	$zip->addFromString($theme_name.".nuspec", "<?xml version=\"1.0\"?>
 <package xmlns=\"http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd\">
   <metadata>
-    <id>JuiceUI</id>
+    <id>jQM-theme-".$theme_name."</id>
+		<authors>You</authors>
     <version>".$JQM_VERSION."</version>
     <title>jQuery Mobile Theme</title>
     <projectUrl>http://themeroller.jquerymobile.com/</projectUrl>
