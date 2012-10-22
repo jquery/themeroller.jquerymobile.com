@@ -6,6 +6,7 @@
     $JQUERY_VERSION = $ALL_JQUERY_VERSIONS[ $JQM_VERSION ];
 
 	$theme_name = $_POST["theme_name"];
+	$safe_theme_name = preg_replace('/[^A-Za-z0-9-]+/', '',$theme_name);
 	$uncompressed = $_POST["file"];
 	
 	/*
@@ -97,18 +98,46 @@
 	$zip->addFromString($nuget_path."/images/icons-36-white.png", file_get_contents("http://code.jquery.com/mobile/" . $JQM_VERSION . "/images/icons-36-white.png"));
 	$zip->addFromString($nuget_path."/images/icons-36-black.png", file_get_contents("http://code.jquery.com/mobile/" . $JQM_VERSION . "/images/icons-36-black.png"));
 	$zip->addFromString($nuget_path . "/" . $match, file_get_contents("http://code.jquery.com/mobile/" . $JQM_VERSION . "/" . $match));
-	$zip->addFromString($nuget_path . "/jqm-" . $theme_name . ".css", $uncompressed);
-	$zip->addFromString($nuget_path . "/jqm-" . $theme_name . ".min.css", $compressed);
+	$zip->addFromString($nuget_path . "/jqm-" . $safe_theme_name . ".css", $uncompressed);
+	$zip->addFromString($nuget_path . "/jqm-" . $safe_theme_name . ".min.css", $compressed);
+
+	$zip->addFromString("[Content_Types].xml",'<?xml version="1.0" encoding="utf-8"?>
+<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types">
+	<Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml" />
+	<Default Extension="nuspec" ContentType="application/octet" />
+	<Default Extension="gif" ContentType="application/octet" />
+	<Default Extension="png" ContentType="application/octet" />
+	<Default Extension="css" ContentType="application/octet" />
+	<Default Extension="psmdcp" ContentType="application/vnd.openxmlformats-package.core-properties+xml" />
+</Types>');
+
+	// Generate some random, unique ids
+	$id1 = substr(0,16,base64_encode($safe_theme_name));
+	$id2 = substr(0,16,base64_encode(md5($safe_theme_name)));
+	$zip->addFromString("_rels/.rels",'<?xml version="1.0" encoding="utf-8"?>
+<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">
+	<Relationship Type="http://schemas.microsoft.com/packaging/2010/07/manifest" Target="/'.$safe_theme_name.'.nuspec" Id="'.$id1.'" />
+	<Relationship Type="http://schemas.openxmlformats.org/package/2006/relationships/metadata/core-properties" Target="/package/services/metadata/core-properties/'.md5($safe_theme_name).'.psmdcp" Id="'.$id2.'" />
+</Relationships>');
+
+	$zip->addFileFromString("package/services/metadata/core-properties/".md5($safe_theme_name).".psmdcp", '<?xml version="1.0" encoding="utf-8"?>
+<coreProperties xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schemas.openxmlformats.org/package/2006/metadata/core-properties">
+	<dc:creator>You!</dc:creator>
+	<dc:description>Custom built jQuery Mobile Theme</dc:description>
+	<dc:identifier>'.$safe_theme_name.'</dc:identifier>
+	<version>'.$JQM_VERSION.'</version>
+	<keywords>jQuery jQueryMobile Themes</keywords>
+	<dc:title>Custom jQuery Mobile Theme</dc:title>
+</coreProperties>');
 
 	$zip->addFromString($theme_name.".nuspec", "<?xml version=\"1.0\"?>
 <package xmlns=\"http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd\">
   <metadata>
-    <id>jQM-theme-".$theme_name."</id>
-		<authors>You</authors>
+    <id>".$safe_theme_name."</id>
+		<authors>You!</authors>
     <version>".$JQM_VERSION."</version>
-    <title>jQuery Mobile Theme</title>
+    <title>Custom jQuery Mobile Theme</title>
     <projectUrl>http://themeroller.jquerymobile.com/</projectUrl>
-    <iconUrl>TBD</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Custom built jQuery Mobile Theme</description>
     <tags>jQuery jQueryMobile Themes</tags>
