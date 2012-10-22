@@ -120,7 +120,7 @@
 	<Relationship Type="http://schemas.openxmlformats.org/package/2006/relationships/metadata/core-properties" Target="/package/services/metadata/core-properties/'.md5($safe_theme_name).'.psmdcp" Id="'.$id2.'" />
 </Relationships>');
 
-	$zip->addFileFromString("package/services/metadata/core-properties/".md5($safe_theme_name).".psmdcp", '<?xml version="1.0" encoding="utf-8"?>
+	$zip->addFromString("package/services/metadata/core-properties/".md5($safe_theme_name).".psmdcp", '<?xml version="1.0" encoding="utf-8"?>
 <coreProperties xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schemas.openxmlformats.org/package/2006/metadata/core-properties">
 	<dc:creator>You!</dc:creator>
 	<dc:description>Custom built jQuery Mobile Theme</dc:description>
