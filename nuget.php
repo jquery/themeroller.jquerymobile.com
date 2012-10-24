@@ -88,9 +88,7 @@
 
 
 	 */
-	$nuget_path = "content/Content/Themes/$name";
-
-
+	$nuget_path = "content/Content/Themes/$safe_theme_name";
 
 	//add files to zip and echo it back to page
 	$zip->addFromString($nuget_path."/images/icons-18-white.png", file_get_contents("http://code.jquery.com/mobile/" . $JQM_VERSION . "/images/icons-18-white.png"));
@@ -130,7 +128,7 @@
 	<dc:title>Custom jQuery Mobile Theme</dc:title>
 </coreProperties>');
 
-	$zip->addFromString($theme_name.".nuspec", "<?xml version=\"1.0\"?>
+	$zip->addFromString($safe_theme_name.".nuspec", "<?xml version=\"1.0\"?>
 <package xmlns=\"http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd\">
   <metadata>
     <id>".$safe_theme_name."</id>
