@@ -112,8 +112,8 @@
 </Types>');
 
 	// Generate some random, unique ids
-	$id1 = substr(md5($safe_theme_name),1,16);
-	$id2 = substr(md5($safe_theme_name),0,16);
+	$id1 = "R".substr(md5($safe_theme_name),0,15);
+	$id2 = "R".substr(md5($safe_theme_name),1,15);
 	$zip->addFromString("_rels/.rels",'<?xml version="1.0" encoding="utf-8"?>
 <Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">
 	<Relationship Type="http://schemas.microsoft.com/packaging/2010/07/manifest" Target="/'.$safe_theme_name.'.nuspec" Id="'.$id1.'" />
