@@ -41,6 +41,10 @@
 	
 	$zip = new ZipArchive();
 
+    if(!is_dir('zips')){
+		mkdir('zips');
+	}
+
 	$dir = scandir('zips');
 	$today = date('His', strtotime('now'));
 	
