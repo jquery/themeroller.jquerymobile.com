@@ -41,7 +41,7 @@
 	
 	$zip = new ZipArchive();
 
-    if(!is_dir('zips')){
+	if(!is_dir('zips')){
 		mkdir('zips');
 	}
 
