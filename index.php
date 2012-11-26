@@ -250,7 +250,7 @@
 						<img src="images/download.png" alt="Download" />
 						<div class="text">
 							<span class="big">Download</span>
-							<span>theme zip file</span>
+							<span>Zip or NuGet</span>
 						</div>
 					</div>
 				</div>

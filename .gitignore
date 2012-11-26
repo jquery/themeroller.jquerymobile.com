@@ -2,5 +2,6 @@
 css/user_themes/*.css
 jqm/*/user_themes/*.css
 zips/*.zip
+nugets/*.nupkg
 .htaccess
 build/*
