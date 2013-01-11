@@ -778,7 +778,7 @@ TR.initDialogs = function() {
                     $.ajax({
                         url: "./zip.php",
                         type: "POST",
-                        data: "ver=" + TR.version + "&theme_name=" + $( "input", this ).val() + "&less=" + encodeURIComponent(less),
+                        data: "ver=" + TR.version + "&theme_name=" + $( "input", this ).val() + "&file=" + encodeURIComponent(TR.styleBlock.text()) + "&less=" + encodeURIComponent(less),
                         dataType: "text",
                         mimeType: "text/plain",
                         beforeSend: function() {

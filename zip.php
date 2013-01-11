@@ -30,7 +30,7 @@
 	$compressed_less = $_POST["less"];
 	$less_attrs = explode('___',$compressed_less);
 	$swatches = array();
-	$globalVars = array();
+	$global_vars = array();
 	foreach($less_attrs as $attr) {
 		$couple = explode('|',$attr);
 		$key = $couple[0];
@@ -42,9 +42,9 @@
 		} elseif($key != 'recent' && substr($key,0,7)=='global-') {
 			$attribute = substr($key,7);
 			if($attribute=='box-shadow-color') {
-				$globalVars[$attribute][] = $value;
+				$global_vars[$attribute][] = $value;
 			} else {
-				$globalVars[$attribute] = $value;
+				$global_vars[$attribute] = $value;
 			}
 		}
 	}
@@ -135,33 +135,33 @@
 	$zip->addFromString("themes/" . $theme_name . ".min.css", $compressed);
 	
 	/* LessCSS */
-	$lessString = file_get_contents('./less/swatch.less');
-	$globalString = file_get_contents('./less/global.less');
-	$appString = "@import \"global.less\";\n@import \"jqm-mixins.less\";";
-	$globalVars['icon-color'] = ($globalVars['icon-color']=='white'?'#ffffff':'#000000');
-	$opacity = ($globalVars['icon-disc']/100);
-	$globalVars['icon-disc'] = "rgba(".implode(',',hex2rgb($globalVars['icon-color'])).",".$opacity.")";
-	$globalVars['icon-alt-color'] = ($swatch['global']['icon-color']=='#ffffff'?'#000000':'#ffffff');
-	$globalVars['icon-alt-disc'] = "rgba(".implode(',',hex2rgb($globalVars['icon-alt-color'])).",".$opacity.")";
-	$globalVars['icon-shadow-color'] = "rgba(".implode(',',hex2rgb($globalVars['icon-alt-color'])).",".$opacity.")";
-	foreach($globalVars as $property => $value ) {
+	$less_string = file_get_contents('./less/swatch.less');
+	$global_string = file_get_contents('./less/global.less');
+	$app_string = "@import \"global.less\";\n@import \"jqm-mixins.less\";";
+	$global_vars['icon-color'] = ($global_vars['icon-color']=='white'?'#ffffff':'#000000');
+	$opacity = ($global_vars['icon-disc']/100);
+	$global_vars['icon-disc'] = "rgba(".implode(',',hex2rgb($global_vars['icon-color'])).",".$opacity.")";
+	$global_vars['icon-alt-color'] = ($swatch['global']['icon-color']=='#ffffff'?'#000000':'#ffffff');
+	$global_vars['icon-alt-disc'] = "rgba(".implode(',',hex2rgb($global_vars['icon-alt-color'])).",".$opacity.")";
+	$global_vars['icon-shadow-color'] = "rgba(".implode(',',hex2rgb($global_vars['icon-alt-color'])).",".$opacity.")";
+	foreach($global_vars as $property => $value ) {
 		if($property == 'box-shadow-color') {
-			$globalString = str_replace('{{box-shadow-color}}',"rgba(".implode(',',hex2rgb($value[0])).",".($value[1]/100).")",$globalString);		
+			$global_string = str_replace('{{box-shadow-color}}',"rgba(".implode(',',hex2rgb($value[0])).",".($value[1]/100).")",$global_string);		
 		} else {
-			$globalString = str_replace('{{'.$property.'}}',$value,$globalString);
+			$global_string = str_replace('{{'.$property.'}}',$value,$global_string);
 		}
 	}
-	$zip->addFromString("themes/global.less", $globalString);
+	$zip->addFromString("themes/global.less", $global_string);
 	foreach($swatches as $letter => $swatch) {
-		$swatchString = str_replace('{{swatch}}',$letter,$lessString);
+		$swatchString = str_replace('{{swatch}}',$letter,$less_string);
 		foreach($swatch as $property => $value ) {
 			$swatchString = str_replace('{{'.$property.'}}',$value,$swatchString);
 		}
 		$zip->addFromString("themes/swatch-$letter.less", $swatchString);
-		$appString .= "\n@import \"swatch-$letter.less\";";
+		$app_string .= "\n@import \"swatch-$letter.less\";";
 	}
 	$zip->addFromString("themes/jqm-mixins.less", file_get_contents('./less/jqm-mixins.less'));
-	$zip->addFromString("themes/app.less", $appString);
+	$zip->addFromString("themes/app.less", $app_string);
 	$zip->addFromString("themes/$theme_name.less", file_get_contents('./less/theme.less'));
 	/* /LessCSS */
 	//$zip->addFromString("js/jquery.mobile.min.js", htmlspecialchars(file_get_contents("http://code.jquery.com/mobile/latest/jquery.mobile.min.js")));
