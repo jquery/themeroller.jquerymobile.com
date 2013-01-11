@@ -1,0 +1,124 @@
+/* Mixins */
+
+/* jQuery Mobile namspace: jqm, http://lesscss.org/#-namespaces */
+#jqm {
+	/* bg */
+	.bg(@start, @end) {
+		.bg-signal(@start,@end,@webkit,@webkitSignal);
+		.bg-signal(@start,@end,@moz,@mozSignal);
+		.bg-signal(@start,@end,@ms,@msSignal);
+		.bg-signal(@start,@end,@opera,@operaSignal);
+		.bg-signal(@start,@end,@w3c,@w3cSignal);
+	}
+	.bg-signal(@start,@end,@b,@signal) when (@b=true) and (@signal=1) {
+		background-image: -webkit-gradient(linear, left top, left bottom, from(@start), to(@end)); /* Saf4+, Chrome */
+		background-image: -webkit-linear-gradient(@start, @end); /* Chrome 10+, Saf5.1+ */
+	}
+	.bg-signal(@start,@end,@b,@signal) when (@b=true) and (@signal=2) {
+		background-image: -moz-linear-gradient(@start ,@end); /* FF3.6 */
+	}
+	.bg-signal(@start,@end,@b,@signal) when (@b=true) and (@signal=3) {
+		background-image: -o-linear-gradient(@start ,@end); /* Opera 11.10+ */
+	}
+	.bg-signal(@start,@end,@b,@signal) when (@b=true) and (@signal=4) {
+		background-image: -ms-linear-gradient(@start ,@end); /* IE10 */
+	}
+	.bg-signal(@start,@end,@b,@signal) when (@b=true) and (@signal=5) {
+		background-image: linear-gradient(@start ,@end);
+	}
+	.bg-signal(@start,@end,@b,@signal) when not(@b=true) { }
+
+	/* border-radius */
+	.border-radius(@radius) {
+		.border-radius-signal(@radius,@webkit,@webkitSignal);
+		.border-radius-signal(@radius,@moz,@mozSignal);
+		.border-radius-signal(@radius,@w3c,@w3cSignal);
+	}
+	.border-radius(@top-left,@top-right,@bottom-right,@bottom-left) {
+		.border-radius-signal(@top-left,@top-right,@bottom-right,@bottom-left,@webkit,@webkitSignal);
+		.border-radius-signal(@top-left,@top-right,@bottom-right,@bottom-left,@moz,@mozSignal);
+		.border-radius-signal(@top-left,@top-right,@bottom-right,@bottom-left,@w3c,@w3cSignal);
+	}
+	.border-radius-signal(@radius,@b,@signal) when (@b=true) and (@signal=1) {
+		-webkit-border-radius: @radius;
+	}
+	.border-radius-signal(@radius,@b,@signal) when (@b=true) and (@signal=2) {
+		-moz-border-radius: @radius;
+	}
+	.border-radius-signal(@radius,@b,@signal) when (@b=true) and (@signal=5) {
+		border-radius: @radius;
+	}
+	.border-radius-signal(@radius,@b,@signal) when not(@b=true) { }
+	.border-radius-signal(@top-left,@top-right,@bottom-right,@bottom-left,@b,@signal) when (@b=true) and (@signal=1) {
+		-webkit-border-radius: @top-left @top-right @bottom-right @bottom-left;
+	}
+	.border-radius-signal(@top-left,@top-right,@bottom-right,@bottom-left,@b,@signal) when (@b=true) and (@signal=2) {
+		-moz-border-radius: @top-left @top-right @bottom-right @bottom-left;
+	}
+	.border-radius-signal(@top-left,@top-right,@bottom-right,@bottom-left,@b,@signal) when (@b=true) and (@signal=5) {
+		border-radius: @top-left @top-right @bottom-right @bottom-left;
+	}
+	.border-radius-signal(@top-left,@top-right,@bottom-right,@bottom-left,@b,@signal) when not(@b=true) { }
+	
+	/* background-size */
+	.background-size(@width, @height) {
+		.background-size-signal(@width, @height, @webkit, @webkitSignal);
+		.background-size-signal(@width, @height, @moz, @mozSignal);
+		.background-size-signal(@width, @height, @opera, @operaSignal);
+		.background-size-signal(@width, @height, @w3c, @w3cSignal);
+	}
+	.background-size-signal(@width, @height, @b, @signal) when (@b=true) and (@signal=1) {
+		-webkit-background-size: @width @height;
+	}
+	.background-size-signal(@width, @height, @b, @signal) when (@b=true) and (@signal=2) {
+		-moz-background-size: @width @height;
+	}
+	.background-size-signal(@width, @height, @b, @signal) when (@b=true) and (@signal=3) {
+		-o-background-size: @width @height;
+	}
+	.background-size-signal(@width, @height, @b, @signal) when (@b=true) and (@signal=5) {
+		background-size: @width @height;
+	}
+	.background-size-signal(@width, @height, @b, @signal) when not (@b=true) {}
+	
+	/* box-size */
+	.box-shadow(@arg1) {
+		.box-shadow-signal(@arg1, @webkit, @webkitSignal);
+		.box-shadow-signal(@arg1, @moz, @mozSignal);
+		.box-shadow-signal(@arg1, @w3c, @w3cSignal);
+	}
+	.box-shadow(@arg1, @arg2) {
+		.box-shadow-signal(@arg1, @arg2, @webkit, @webkitSignal);
+		.box-shadow-signal(@arg1, @arg2, @moz, @mozSignal);
+		.box-shadow-signal(@arg1, @arg2, @w3cSignal);
+	}
+	.box-shadow-signal(@a1, @b, @signal) when (@b=true) and (@signal=1) {
+		-webkit-box-shadow: @a1;
+	}
+	.box-shadow-signal(@a1,@b, @signal) when (@b=true) and (@signal=2) {
+		-moz-box-shadow: @a1;
+	}
+	.box-shadow-signal(@a1, @b, @signal) when (@b=true) and (@signal=5) {
+		box-shadow: @a1;
+	}
+	.box-shadow-signal(@a1, @b, @signal) when not (@b=true) {}
+	.box-shadow-signal(@a1, @a2, @b, @signal) when (@b=true) and (@signal=1) {
+		-webkit-box-shadow: @a1, @a2;
+	}
+	.box-shadow-signal(@a1, @a2, @b, @signal) when (@b=true) and (@signal=2) {
+		-moz-box-shadow: @a1, @a2;
+	}
+	.box-shadow-signal(@a1, @a2, @b, @signal) when (@b=true) and (@signal=5) {
+		box-shadow: @a1, @a2;
+	}
+	.box-shadow-signal(@a1, @a2, @b, @signal) when not (@b=true) {}
+	
+	/* btn-attrs */
+	.btn-attrs(@background, @border, @color, @font-weight:bold) {
+		background: @background;
+		border: @border;
+		color: @color;
+		font-weight: @font-weight
+	}
+	
+}

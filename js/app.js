@@ -98,7 +98,6 @@ TR.addSwatch = function( new_style, duplicate ) {
         var next_tab = TR.tabCount + 1,
             lower = TR.alpha[TR.tabCount - 1],
             upper = lower.toUpperCase();
-        
         //new_style flag is only set if styles have not been added to TR.styleArray
         //or CSS yet. correctNumberOfSwatches calles addSwatch with new_style=false
         //so this block is skipped
@@ -770,10 +769,16 @@ TR.initDialogs = function() {
                 var theme_name = $( "input", this ).val();
                 if( theme_name && theme_name.indexOf(" ") == -1 ) {
                     
+                    var style_attributes = [];
+                    $('input[data-name]').each(function(i,el) {
+                        style_attributes.push($(el).attr('data-name')+'|'+$(el).val());
+                    })
+                    var less = style_attributes.join('___');
+					
                     $.ajax({
                         url: "./zip.php",
                         type: "POST",
-                        data: "ver=" + TR.version + "&theme_name=" + $( "input", this ).val() + "&file=" + encodeURIComponent(TR.styleBlock.text()),
+                        data: "ver=" + TR.version + "&theme_name=" + $( "input", this ).val() + "&file=" + encodeURIComponent(TR.styleBlock.text()) + "&less=" + encodeURIComponent(less),
                         dataType: "text",
                         mimeType: "text/plain",
                         beforeSend: function() {

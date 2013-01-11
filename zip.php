@@ -1,4 +1,23 @@
 <?php
+
+	// http://bavotasan.com/2011/convert-hex-color-to-rgb-using-php/
+	function hex2rgb($hex) {
+	   $hex = str_replace("#", "", $hex);
+
+	   if(strlen($hex) == 3) {
+		  $r = hexdec(substr($hex,0,1).substr($hex,0,1));
+		  $g = hexdec(substr($hex,1,1).substr($hex,1,1));
+		  $b = hexdec(substr($hex,2,1).substr($hex,2,1));
+	   } else {
+		  $r = hexdec(substr($hex,0,2));
+		  $g = hexdec(substr($hex,2,2));
+		  $b = hexdec(substr($hex,4,2));
+	   }
+	   $rgb = array($r, $g, $b);
+	   //return implode(",", $rgb); // returns the rgb values separated by commas
+	   return $rgb; // returns an array with the rgb values
+	}
+
 	require_once('version.php');
 	date_default_timezone_set('America/Los_Angeles');
 
@@ -7,6 +26,29 @@
 
 	$theme_name = $_POST["theme_name"];
 	$uncompressed = $_POST["file"];
+	/* LessCSS */
+	$compressed_less = $_POST["less"];
+	$less_attrs = explode('___',$compressed_less);
+	$swatches = array();
+	$global_vars = array();
+	foreach($less_attrs as $attr) {
+		$couple = explode('|',$attr);
+		$key = $couple[0];
+		$value = $couple[1];
+		if($key != 'recent' && substr($key,1,1)=='-') {
+			$letter = substr($key,0,1);
+			$attribute = substr($key,2);
+			$swatches[$letter][$attribute] = $value;
+		} elseif($key != 'recent' && substr($key,0,7)=='global-') {
+			$attribute = substr($key,7);
+			if($attribute=='box-shadow-color') {
+				$global_vars[$attribute][] = $value;
+			} else {
+				$global_vars[$attribute] = $value;
+			}
+		}
+	}
+	/* /LessCSS */
 	
 	/*
 	//no longer using alternate image paths - keep this here in case we do later on
@@ -88,9 +130,40 @@
 	$zip->addFromString("themes/images/icons-18-black.png", file_get_contents("http://code.jquery.com/mobile/" . $JQM_VERSION . "/images/icons-18-black.png"));
 	$zip->addFromString("themes/images/icons-36-white.png", file_get_contents("http://code.jquery.com/mobile/" . $JQM_VERSION . "/images/icons-36-white.png"));
 	$zip->addFromString("themes/images/icons-36-black.png", file_get_contents("http://code.jquery.com/mobile/" . $JQM_VERSION . "/images/icons-36-black.png"));
-	$zip->addFromString("themes/" . $match, file_get_contents("http://code.jquery.com/mobile/" . $JQM_VERSION . "/" . $match));
+	//$zip->addFromString("themes/" . $match, file_get_contents("http://code.jquery.com/mobile/" . $JQM_VERSION . "/" . $match));
 	$zip->addFromString("themes/" . $theme_name . ".css", $uncompressed);
 	$zip->addFromString("themes/" . $theme_name . ".min.css", $compressed);
+	
+	/* LessCSS */
+	$less_string = file_get_contents('./less/swatch.less');
+	$global_string = file_get_contents('./less/global.less');
+	$app_string = "@import \"global.less\";\n@import \"jqm-mixins.less\";";
+	$global_vars['icon-color'] = ($global_vars['icon-color']=='white'?'#ffffff':'#000000');
+	$opacity = ($global_vars['icon-disc']/100);
+	$global_vars['icon-disc'] = "rgba(".implode(',',hex2rgb($global_vars['icon-color'])).",".$opacity.")";
+	$global_vars['icon-alt-color'] = ($swatch['global']['icon-color']=='#ffffff'?'#000000':'#ffffff');
+	$global_vars['icon-alt-disc'] = "rgba(".implode(',',hex2rgb($global_vars['icon-alt-color'])).",".$opacity.")";
+	$global_vars['icon-shadow-color'] = "rgba(".implode(',',hex2rgb($global_vars['icon-alt-color'])).",".$opacity.")";
+	foreach($global_vars as $property => $value ) {
+		if($property == 'box-shadow-color') {
+			$global_string = str_replace('{{box-shadow-color}}',"rgba(".implode(',',hex2rgb($value[0])).",".($value[1]/100).")",$global_string);		
+		} else {
+			$global_string = str_replace('{{'.$property.'}}',$value,$global_string);
+		}
+	}
+	$zip->addFromString("themes/global.less", $global_string);
+	foreach($swatches as $letter => $swatch) {
+		$swatchString = str_replace('{{swatch}}',$letter,$less_string);
+		foreach($swatch as $property => $value ) {
+			$swatchString = str_replace('{{'.$property.'}}',$value,$swatchString);
+		}
+		$zip->addFromString("themes/swatch-$letter.less", $swatchString);
+		$app_string .= "\n@import \"swatch-$letter.less\";";
+	}
+	$zip->addFromString("themes/jqm-mixins.less", file_get_contents('./less/jqm-mixins.less'));
+	$zip->addFromString("themes/app.less", $app_string);
+	$zip->addFromString("themes/$theme_name.less", file_get_contents('./less/theme.less'));
+	/* /LessCSS */
 	//$zip->addFromString("js/jquery.mobile.min.js", htmlspecialchars(file_get_contents("http://code.jquery.com/mobile/latest/jquery.mobile.min.js")));
 	//$zip->addFromString("js/jquery.min.js", htmlspecialchars(file_get_contents("http://code.jquery.com/jquery.min.js")));
 	$zip->addFromString("index.html", "\n<!DOCTYPE html>\n<html>\n	<head>\n		<meta charset=\"utf-8\">\n		<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n		<title>jQuery Mobile: Theme Download</title>\n		<link rel=\"stylesheet\" href=\"themes/" . $theme_name . ".min.css\" />\n		<link rel=\"stylesheet\" href=\"http://code.jquery.com/mobile/" . $JQM_VERSION . "/jquery.mobile.structure-" . $JQM_VERSION . ".min.css\" />\n		<script src=\"http://code.jquery.com/jquery-" . $JQUERY_VERSION . ".min.js\"></script>\n		<script src=\"http://code.jquery.com/mobile/" . $JQM_VERSION . "/jquery.mobile-" . $JQM_VERSION . ".min.js\"></script>\n	</head>\n	<body>\n		<div data-role=\"page\" data-theme=\"a\">\n			<div data-role=\"header\" data-position=\"inline\">\n				<h1>It Worked!</h1>\n			</div>\n			<div data-role=\"content\" data-theme=\"a\">\n				<p>Your theme was successfully downloaded. You can use this page as a reference for how to link it up!</p>\n				<pre>\n<strong>&lt;link rel=&quot;stylesheet&quot; href=&quot;themes/" . $theme_name . ".min.css&quot; /&gt;</strong>\n&lt;link rel=&quot;stylesheet&quot; href=&quot;http://code.jquery.com/mobile/" . $JQM_VERSION . "/jquery.mobile.structure-" . $JQM_VERSION . ".min.css&quot; /&gt;\n&lt;script src=&quot;http://code.jquery.com/jquery-" . $JQUERY_VERSION . ".min.js&quot;&gt;&lt;/script&gt;\n&lt;script src=&quot;http://code.jquery.com/mobile/" . $JQM_VERSION . "/jquery.mobile-" . $JQM_VERSION . ".min.js&quot;&gt;&lt;/script&gt;\n				</pre>\n				<p>This is content color swatch \"A\" and a preview of a <a href=\"#\" class=\"ui-link\">link</a>.</p>\n				<label for=\"slider1\">Input slider:</label>\n				<input type=\"range\" name=\"slider1\" id=\"slider1\" value=\"50\" min=\"0\" max=\"100\" data-theme=\"a\" />\n				<fieldset data-role=\"controlgroup\"  data-type=\"horizontal\" data-role=\"fieldcontain\">\n				<legend>Cache settings:</legend>\n				<input type=\"radio\" name=\"radio-choice-a1\" id=\"radio-choice-a1\" value=\"on\" checked=\"checked\" />\n				<label for=\"radio-choice-a1\">On</label>\n				<input type=\"radio\" name=\"radio-choice-a1\" id=\"radio-choice-b1\" value=\"off\"  />\n				<label for=\"radio-choice-b1\">Off</label>\n				</fieldset>\n			</div>\n		</div>\n	</body>\n</html>");

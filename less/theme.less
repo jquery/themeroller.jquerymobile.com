@@ -1,0 +1,355 @@
+@import "app.less";
+
+/* Structure */
+
+/* links within "buttons" 
+-----------------------------------------------------------------------------------------------------------*/
+
+a.ui-link-inherit {
+	text-decoration: none !important;
+}
+
+
+/* Active class used as the "on" state across all themes
+-----------------------------------------------------------------------------------------------------------*/
+.ui-btn-active {
+	border:  @global-active-border;
+	background: @global-active-background-color;
+	font-weight: bold;
+	color: @global-active-color;
+	cursor: pointer;
+	text-shadow: @global-active-shadow-x @global-active-shadow-y @global-active-shadow-radius @global-active-shadow-color;
+	text-decoration: none;
+	#jqm > .bg(@global-active-background-start, @global-active-background-end);
+	font-family: @global-font-family;
+}
+.ui-btn-active:visited,
+.ui-btn-active:hover,
+.ui-btn-active a.ui-link-inherit {
+	color: @global-active-color;
+}
+
+
+/* button inner top highlight
+-----------------------------------------------------------------------------------------------------------*/
+
+.ui-btn-inner {
+	border-top: 1px solid 	#fff;
+	border-color: 			rgba(255,255,255,.3);
+}
+
+
+/* corner rounding classes
+-----------------------------------------------------------------------------------------------------------*/
+
+.ui-corner-tl {
+	#jqm > .border-radius(@global-radii-blocks,0,0,0);
+}
+.ui-corner-tr {
+	#jqm > .border-radius(0,@global-radii-blocks,0,0);
+}
+.ui-corner-bl {
+	#jqm > .border-radius(0,0,0,@global-radii-blocks);
+}
+.ui-corner-br {
+	#jqm > .border-radius(0,0,@global-radii-blocks,0);
+}
+.ui-corner-top {
+	#jqm > .border-radius(@global-radii-blocks,@global-radii-blocks,0,0);
+}
+.ui-corner-bottom {
+	#jqm > .border-radius(0,0,@global-radii-blocks,@global-radii-blocks);
+}
+.ui-corner-right {
+	#jqm > .border-radius(0,@global-radii-blocks,@global-radii-blocks,0);
+}
+.ui-corner-left {
+	#jqm > .border-radius(@global-radii-blocks,0,0,@global-radii-blocks);
+}
+.ui-corner-all {
+	#jqm > .border-radius(@global-radii-blocks);
+}
+.ui-corner-none {
+	#jqm > .border-radius(0);
+}
+
+/* Form field separator
+-----------------------------------------------------------------------------------------------------------*/
+.ui-br {
+	border-bottom: rgb(130,130,130);
+	border-bottom: rgba(130,130,130,.3);
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+/* Interaction cues
+-----------------------------------------------------------------------------------------------------------*/
+.ui-disabled {
+	filter: Alpha(Opacity=30);
+	opacity: .3;
+	zoom: 1;
+}
+.ui-disabled,
+.ui-disabled a {
+	cursor: default !important;
+	pointer-events: none;
+}
+
+/* Icons
+-----------------------------------------------------------------------------------------------------------*/
+
+.ui-icon,
+.ui-icon-searchfield:after {
+	background: @global-icon-color;
+	background: @global-icon-disc;
+	background-image: @global-icon-set;
+	background-repeat: no-repeat;
+	#jqm > .border-radius(9px);
+}
+
+
+/* Alt icon color
+-----------------------------------------------------------------------------------------------------------*/
+
+.ui-icon-alt {
+	background: @global-icon-alt-color;
+	background: @global-icon-alt-disc;
+	background-image: @global-icon-alt-set;
+	background-repeat: no-repeat;
+}
+
+/* HD/"retina" sprite
+-----------------------------------------------------------------------------------------------------------*/
+
+@media only screen and (-webkit-min-device-pixel-ratio: 1.5),
+       only screen and (min--moz-device-pixel-ratio: 1.5),
+       only screen and (min-resolution: 240dpi) {
+	
+	.ui-icon-plus, .ui-icon-minus, .ui-icon-delete, .ui-icon-arrow-r,
+	.ui-icon-arrow-l, .ui-icon-arrow-u, .ui-icon-arrow-d, .ui-icon-check,
+	.ui-icon-gear, .ui-icon-refresh, .ui-icon-forward, .ui-icon-back,
+	.ui-icon-grid, .ui-icon-star, .ui-icon-alert, .ui-icon-info, .ui-icon-home, .ui-icon-search, .ui-icon-searchfield:after, 
+	.ui-icon-checkbox-off, .ui-icon-checkbox-on, .ui-icon-radio-off, .ui-icon-radio-on {
+		background-image: url(images/icons-36-white.png);
+		#jqm > .background-size(776px, 18px);
+	}
+	.ui-icon-alt {
+		background-image: url(images/icons-36-black.png);
+	}
+}
+
+/* plus minus */
+.ui-icon-plus {
+	background-position: 	-0 50%;
+}
+.ui-icon-minus {
+	background-position: 	-36px 50%;
+}
+
+/* delete/close */
+.ui-icon-delete {
+	background-position: 	-72px 50%;
+}
+
+/* arrows */
+.ui-icon-arrow-r {
+	background-position: 	-108px 50%;
+}
+.ui-icon-arrow-l {
+	background-position: 	-144px 50%;
+}
+.ui-icon-arrow-u {
+	background-position: 	-180px 50%;
+}
+.ui-icon-arrow-d {
+	background-position: 	-216px 50%;
+}
+
+/* misc */
+.ui-icon-check {
+	background-position: 	-252px 50%;
+}
+.ui-icon-gear {
+	background-position: 	-288px 50%;
+}
+.ui-icon-refresh {
+	background-position: 	-324px 50%;
+}
+.ui-icon-forward {
+	background-position: 	-360px 50%;
+}
+.ui-icon-back {
+	background-position: 	-396px 50%;
+}
+.ui-icon-grid {
+	background-position: 	-432px 50%;
+}
+.ui-icon-star {
+	background-position: 	-468px 50%;
+}
+.ui-icon-alert {
+	background-position: 	-504px 50%;
+}
+.ui-icon-info {
+	background-position: 	-540px 50%;
+}
+.ui-icon-home {
+	background-position: 	-576px 50%;
+}
+.ui-icon-search,
+.ui-icon-searchfield:after {
+	background-position: 	-612px 50%;
+}
+.ui-icon-checkbox-off {
+	background-position: 	-684px 50%;
+}
+.ui-icon-checkbox-on {
+	background-position: 	-648px 50%;
+}
+.ui-icon-radio-off {
+	background-position: 	-756px 50%;
+}
+.ui-icon-radio-on {
+	background-position: 	-720px 50%;
+}
+
+
+/* checks,radios */
+.ui-checkbox .ui-icon,
+.ui-selectmenu-list .ui-icon {
+	#jqm > .border-radius(3px);
+}
+.ui-icon-checkbox-off,
+.ui-icon-radio-off {
+	background-color: transparent;	
+}
+.ui-checkbox-on .ui-icon,
+.ui-radio-on .ui-icon {
+	background-color: @global-active-background-color; /* NOTE: this hex should match the active state color. It's repeated here for cascade */
+}
+
+/* loading icon */
+.ui-icon-loading {
+	background: url(images/ajax-loader.gif);
+	background-size: 46px 46px;
+}
+
+
+/* Button corner classes
+-----------------------------------------------------------------------------------------------------------*/
+
+.ui-btn-corner-tl {
+	#jqm > .border-radius(@global-radii-buttons,0,0,0);
+}
+.ui-btn-corner-tr {
+	#jqm > .border-radius(0,@global-radii-buttons,0,0);
+}
+.ui-btn-corner-bl {
+	#jqm > .border-radius(0,0,0,@global-radii-buttons);
+}
+.ui-btn-corner-br {
+	#jqm > .border-radius(0,0,@global-radii-buttons,0);
+}
+.ui-btn-corner-top {
+	#jqm > .border-radius(@global-radii-buttons,@global-radii-buttons,0,0);
+}
+.ui-btn-corner-bottom {
+	#jqm > .border-radius(0,0,@global-radii-buttons,@global-radii-buttons);
+}
+.ui-btn-corner-right {
+	#jqm > .border-radius(0,@global-radii-buttons,@global-radii-buttons,0);
+}
+.ui-btn-corner-left {
+	#jqm > .border-radius(@global-radii-buttons,0,0,@global-radii-buttons);
+}
+.ui-btn-corner-all {
+	#jqm > .border-radius(@global-radii-buttons);
+}
+
+/* radius clip workaround for cleaning up corner trapping */
+.ui-corner-tl,
+.ui-corner-tr,
+.ui-corner-bl,
+.ui-corner-br,
+.ui-corner-top,
+.ui-corner-bottom,
+.ui-corner-right,
+.ui-corner-left,
+.ui-corner-all,
+.ui-btn-corner-tl,
+.ui-btn-corner-tr,
+.ui-btn-corner-bl,
+.ui-btn-corner-br,
+.ui-btn-corner-top,
+.ui-btn-corner-bottom,
+.ui-btn-corner-right,
+.ui-btn-corner-left,
+.ui-btn-corner-all {
+  -webkit-background-clip: padding-box;
+     -moz-background-clip: padding;
+          background-clip: padding-box;
+}
+
+/* Overlay / modal
+-----------------------------------------------------------------------------------------------------------*/
+
+.ui-overlay {
+	background: #666;
+	filter: Alpha(Opacity=50);
+	opacity: .5;
+	position: absolute;
+	width: 100%;
+	height: 100%;
+}
+.ui-overlay-shadow {
+	#jqm > .box-shadow(0px 0px 12px rgba(0,0,0,.6));
+}
+.ui-shadow {
+	#jqm > .box-shadow(@global-box-shadow-size @global-box-shadow-color);
+}
+.ui-bar-a .ui-shadow,
+.ui-bar-b .ui-shadow ,
+.ui-bar-c .ui-shadow  {
+	#jqm > .box-shadow(0px 1px 0 rgba(255,255,255,.3));
+}
+.ui-shadow-inset {
+	#jqm > .box-shadow(inset 0px 1px 4px rgba(0,0,0,.2));
+}
+.ui-icon-shadow {
+	#jqm > .box-shadow(@global-icon-shadow-size @global-icon-shadow-color);
+}
+
+/* Focus state - set here for specificity (note: these classes are added by JavaScript)
+-----------------------------------------------------------------------------------------------------------*/
+
+.ui-btn:focus, .ui-link-inherit:focus {
+	outline: 0;
+}
+.ui-btn.ui-focus {
+	z-index: 1;
+}
+.ui-focus,
+.ui-btn:focus {
+	#jqm > .box-shadow(inset 0px 0px 3px @global-active-background-color, 0px 0px 9px @global-active-background-color);
+}
+.ui-input-text.ui-focus,
+.ui-input-search.ui-focus {
+	#jqm > .box-shadow(0px 0px 12px @global-active-background-color);	
+}
+
+/* unset box shadow in browsers that don't do it right
+-----------------------------------------------------------------------------------------------------------*/
+
+.ui-mobile-nosupport-boxshadow * {
+	-moz-box-shadow: none !important;
+	-webkit-box-shadow: none !important;
+	box-shadow: none !important;
+}
+
+/* ...and bring back focus */
+.ui-mobile-nosupport-boxshadow .ui-focus,
+.ui-mobile-nosupport-boxshadow .ui-btn:focus,
+.ui-mobile-nosupport-boxshadow .ui-link-inherit:focus {
+	outline-width: 1px;
+	outline-style: auto;
+}
