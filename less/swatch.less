@@ -1,0 +1,171 @@
+/* Swatch {{swatch}}
+-----------------------------------------------------------------------------------------------------------*/
+
+/* Vars */
+
+/* bar */
+@{{swatch}}-bar-border: {{bar-border}};
+@{{swatch}}-bar-background-color: {{bar-background-color}};
+@{{swatch}}-bar-color: {{bar-color}};
+@{{swatch}}-bar-shadow-x: {{bar-shadow-x}};
+@{{swatch}}-bar-shadow-y: {{bar-shadow-y}};
+@{{swatch}}-bar-shadow-radius: {{bar-shadow-radius}};
+@{{swatch}}-bar-shadow-color: {{bar-shadow-color}};
+@{{swatch}}-bar-background-start: {{bar-background-start}};
+@{{swatch}}-bar-background-end: {{bar-background-end}};
+@{{swatch}}-bar-link-color: {{body-link-color}};
+@{{swatch}}-bar-link-visited: {{body-link-visited}};
+@{{swatch}}-bar-link-hover: {{body-link-hover}};
+@{{swatch}}-bar-link-active: {{body-link-active}};
+
+/* body */
+@{{swatch}}-body-border: {{body-border}};
+@{{swatch}}-body-color: {{body-color}};
+@{{swatch}}-body-shadow-x: {{body-shadow-x}};
+@{{swatch}}-body-shadow-y: {{body-shadow-y}};
+@{{swatch}}-body-shadow-radius: {{body-shadow-radius}};
+@{{swatch}}-body-shadow-color: {{body-shadow-color}};
+@{{swatch}}-body-background-color: {{body-background-color}};
+@{{swatch}}-body-background-start: {{body-background-start}};
+@{{swatch}}-body-background-end: {{body-background-end}};
+@{{swatch}}-body-link-color: {{body-link-color}};
+@{{swatch}}-body-link-visited: {{body-link-visited}};
+@{{swatch}}-body-link-hover: {{body-link-hover}};
+@{{swatch}}-body-link-active: {{body-link-active}};
+
+/* btn-up */
+@{{swatch}}-bup-border: {{bup-border}};
+@{{swatch}}-bup-background-color: {{bup-background-color}};
+@{{swatch}}-bup-color: {{bup-color}};
+@{{swatch}}-bup-shadow-x: {{bup-shadow-x}};
+@{{swatch}}-bup-shadow-y: {{bup-shadow-y}};
+@{{swatch}}-bup-shadow-radius: {{bup-shadow-radius}};
+@{{swatch}}-bup-shadow-color: {{bup-shadow-color}};
+@{{swatch}}-bup-background-start: {{bup-background-start}};
+@{{swatch}}-bup-background-end: {{bup-background-end}};
+
+/* btn-hover */
+@{{swatch}}-bhover-border: {{bhover-border}};
+@{{swatch}}-bhover-background-color: {{bhover-background-color}};
+@{{swatch}}-bhover-color: {{bhover-color}};
+@{{swatch}}-bhover-shadow-x: {{bhover-shadow-x}};
+@{{swatch}}-bhover-shadow-y: {{bhover-shadow-y}};
+@{{swatch}}-bhover-shadow-radius: {{bhover-shadow-radius}};
+@{{swatch}}-bhover-shadow-color: {{bhover-shadow-color}};
+@{{swatch}}-bhover-background-start: {{bhover-background-start}};
+@{{swatch}}-bhover-background-end: {{bhover-background-end}};
+
+/* btn-down */
+@{{swatch}}-bdown-border: {{bdown-border}};
+@{{swatch}}-bdown-background-color: {{bdown-background-color}};
+@{{swatch}}-bdown-color: {{bdown-color}};
+@{{swatch}}-bdown-shadow-x: {{bdown-shadow-x}};
+@{{swatch}}-bdown-shadow-y: {{bdown-shadow-y}};
+@{{swatch}}-bdown-shadow-radius: {{bdown-shadow-radius}};
+@{{swatch}}-bdown-shadow-color: {{bdown-shadow-color}};
+@{{swatch}}-bdown-background-start: {{bdown-background-start}};
+@{{swatch}}-bdown-background-end: {{bdown-background-end}};
+
+
+
+
+/* Style */
+
+.ui-bar-{{swatch}} {
+	border: @{{swatch}}-bar-border;
+	background: @{{swatch}}-bar-background-color;
+	color: @{{swatch}}-bar-color;
+	font-weight: bold;
+	text-shadow: @{{swatch}}-bar-shadow-x @{{swatch}}-bar-shadow-y @{{swatch}}-bar-shadow-radius @{{swatch}}-bar-shadow-color;
+	#jqm > .bg(@{{swatch}}-bar-background-start, @{{swatch}}-bar-background-end);
+}
+.ui-bar-{{swatch}} .ui-link-inherit {
+	color: @{{swatch}}-bar-color;
+}
+
+.ui-bar-{{swatch}} a.ui-link {
+	color: @{{swatch}}-bar-link-color;
+	font-weight: bold;
+	&:visited {
+		color: @{{swatch}}-bar-link-visited;
+	}
+	&:hover {
+		color: @{{swatch}}-bar-link-hover;
+	}
+	&:active {
+		color: @{{swatch}}-bar-link-active;
+	}
+}
+
+.ui-bar-{{swatch}} {
+	font-family: @global-font-family;
+	input, select, textarea, button {
+		font-family: @global-font-family;
+	}
+}
+.ui-body-{{swatch}},
+.ui-overlay-{{swatch}} {
+	border: @{{swatch}}-body-border;
+	color: @{{swatch}}-body-color;
+	text-shadow: @{{swatch}}-body-shadow-x @{{swatch}}-body-shadow-y @{{swatch}}-body-shadow-radius @{{swatch}}-body-shadow-color;
+	background: @{{swatch}}-body-background-color;
+	#jqm > .bg(@{{swatch}}-body-background-start, @{{swatch}}-body-background-end);
+}
+.ui-overlay-{{swatch}} {
+	background-image: none;
+	border-width: 0;
+}
+.ui-body-{{swatch}} {
+	font-family: @global-font-family;
+	input, select, textarea, button {
+		font-family: @global-font-family;
+	}
+}
+.ui-body-{{swatch}} .ui-link-inherit {
+	color: @{{swatch}}-body-color;
+}
+
+.ui-body-{{swatch}} .ui-link {
+	color: @{{swatch}}-body-link-color;
+	font-weight: bold;
+	&:visited {
+		color: @{{swatch}}-body-link-visited;
+	}
+	&:hover {
+		color: @{{swatch}}-body-link-hover;
+	}
+	&:active {
+		color: @{{swatch}}-body-link-active;
+	}
+}
+
+.ui-btn-up-{{swatch}} {
+	#jqm > .btn-attrs(@{{swatch}}-bup-background-color, @{{swatch}}-bup-border, @{{swatch}}-bup-color);
+	text-shadow: @{{swatch}}-bup-shadow-x @{{swatch}}-bup-shadow-y @{{swatch}}-bup-shadow-radius @{{swatch}}-bup-shadow-color;
+	#jqm > .bg(@{{swatch}}-bup-background-start, a-bup-background-end);
+	&:visited, a.ui-link-inherit {
+		color: @{{swatch}}-bup-color;
+	}
+}
+.ui-btn-hover-{{swatch}} {
+	#jqm > .btn-attrs(@{{swatch}}-bhover-background-color, @{{swatch}}-bhover-border, @{{swatch}}-bhover-color);
+	text-shadow: @{{swatch}}-bhover-shadow-x @{{swatch}}-bhover-shadow-y @{{swatch}}-bhover-shadow-radius @{{swatch}}-bhover-shadow-color;
+	#jqm > .bg(@{{swatch}}-bhover-background-start, @{{swatch}}-bhover-background-end);
+	&:visited,&:hover,a.ui-link-inherit {
+		color: @{{swatch}}-bhover-color;
+	}
+}
+.ui-btn-down-{{swatch}} {
+	#jqm > .btn-attrs(@{{swatch}}-bdown-background-color, @{{swatch}}-bdown-border, @{{swatch}}-bdown-color);
+	text-shadow: @{{swatch}}-bdown-shadow-x @{{swatch}}-bdown-shadow-y @{{swatch}}-bdown-shadow-radius @{{swatch}}-bdown-shadow-color;
+	#jqm > .bg(@{{swatch}}-bdown-background-start, @{{swatch}}-bdown-background-end);
+	&:visited,&:hover,a.ui-link-inherit {
+		color: @{{swatch}}-bdown-color;
+	}
+}
+.ui-btn-up-{{swatch}},
+.ui-btn-hover-{{swatch}},
+.ui-btn-down-{{swatch}} {
+	font-family: @global-font-family;
+	text-decoration: none;
+}
