@@ -122,6 +122,10 @@ TR.createControl = function( control, label, subGroup ) {
 			}
 			controlMarkup += '</select>';
 			break;
+        case "button":
+            controlMarkup += '<button id="' + name + '" data-type="' +
+                             group + '" data-name="' + name + '">Update Font</button>';
+            break;
 		default:
 			break;
 	}
@@ -164,7 +168,12 @@ TR.panelDictBase = {
 				"type": "text",
 				"group": "font-family",
 				"name": "global-font-family",
-			}
+			},
+        "Google Font": {
+				"type": "button",
+				"group": "font-family",
+				"name": "google-font-button"
+            }
 		},
 		
 		"Active State": {

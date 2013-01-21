@@ -537,6 +537,20 @@ TR.initControls = function() {
         TR.updateAllCSS();
     });
 
+    $("#google-font-button").click(function(ev) {
+        ev.preventDefault();
+        var fonts = $('[data-name=global-font-family]').val();
+        var google_font = fonts.split(',')[0].trim();
+
+        if(google_font) {
+            TR.google_font = google_font;
+            TR.styleArray[name] = "font-family: " + fonts;
+            TR.iframe.find('link[href*="fonts.googleapis.com"]').remove();
+            TR.iframe.find('head').append('<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=' + google_font + '" type="text/css" />');
+            TR.updateAllCSS();
+        }
+    });
+
     //Link, Text Color, Text Shadow, Border Color
     $( "[data-type=link], [data-type=color], [data-type=text-shadow], [data-type=border]" )
         .bind( "blur change keyup", function(){
@@ -768,12 +782,17 @@ TR.initDialogs = function() {
             },
             "Download Zip": function() {
                 var theme_name = $( "input", this ).val();
+                var data = "ver=" + TR.version + "&theme_name=" + $( "input", this ).val() + "&file=" + encodeURIComponent(TR.styleBlock.text());
+                if(TR.google_font) {
+                    data += "&font=" + TR.google_font;
+                }
+
                 if( theme_name && theme_name.indexOf(" ") == -1 ) {
                     
                     $.ajax({
                         url: "./zip.php",
                         type: "POST",
-                        data: "ver=" + TR.version + "&theme_name=" + $( "input", this ).val() + "&file=" + encodeURIComponent(TR.styleBlock.text()),
+                        data: data,
                         dataType: "text",
                         mimeType: "text/plain",
                         beforeSend: function() {
