@@ -1,8 +1,8 @@
 /*
-* jQuery Mobile Git Build: SHA1: b53575d20a94849d961ebd99846f8156a6ec2637 <> Date: Tue Jan 15 09:51:14 2013 -0800
+* jQuery Mobile Git Build: SHA1: 56a6976b89feddf34e163c3fcc7196ae0a44c1a0 <> Date: Mon Feb 4 08:28:28 2013 -0800
 * http://jquerymobile.com
 *
-* Copyright 2010, 2013 jQuery Foundation, Inc.  and other contributors
+* Copyright 2010, 2013 jQuery Foundation, Inc. and other contributors
 * Released under the MIT license.
 * http://jquery.org/license
 *
@@ -19,7 +19,7 @@
 	background: 			#eeeeee /*{a-bar-background-color}*/;
 	color: 					#3e3e3e /*{a-bar-color}*/;
 	font-weight: bold;
-	text-shadow: 0 /*{a-bar-shadow-x}*/ 1px /*{a-bar-shadow-y}*/ 1px /*{a-bar-shadow-radius}*/ 	#ffffff /*{a-bar-shadow-color}*/;
+	text-shadow: 0 /*{a-bar-shadow-x}*/ 1px /*{a-bar-shadow-y}*/ 0 /*{a-bar-shadow-radius}*/ 	#ffffff /*{a-bar-shadow-color}*/;
 	background-image: -webkit-gradient(linear, left top, left bottom, from( #f0f0f0 /*{a-bar-background-start}*/), to( #dddddd /*{a-bar-background-end}*/)); /* Saf4+, Chrome */
 	background-image: -webkit-linear-gradient( #f0f0f0 /*{a-bar-background-start}*/, #dddddd /*{a-bar-background-end}*/); /* Chrome 10+, Saf5.1+ */
 	background-image:    -moz-linear-gradient( #f0f0f0 /*{a-bar-background-start}*/, #dddddd /*{a-bar-background-end}*/); /* FF3.6 */
@@ -179,7 +179,7 @@ a.ui-link-inherit {
 	font-weight: bold;
 	color: 					#ffffff /*{global-active-color}*/;
 	cursor: pointer;
-	text-shadow: 0 /*{global-active-shadow-x}*/ 1px /*{global-active-shadow-y}*/ 1px /*{global-active-shadow-radius}*/ #3373a5 /*{global-active-shadow-color}*/;
+	text-shadow: 0 /*{global-active-shadow-x}*/ 1px /*{global-active-shadow-y}*/ 0 /*{global-active-shadow-radius}*/ #3373a5 /*{global-active-shadow-color}*/;
 	text-decoration: none;
 	background-image: -webkit-gradient(linear, left top, left bottom, from( #5393c5 /*{global-active-background-start}*/), to( #6facd5 /*{global-active-background-end}*/)); /* Saf4+, Chrome */
 	background-image: -webkit-linear-gradient( #5393c5 /*{global-active-background-start}*/, #6facd5 /*{global-active-background-end}*/); /* Chrome 10+, Saf5.1+ */
@@ -239,24 +239,118 @@ a.ui-link-inherit {
 
 .ui-icon,
 .ui-icon-searchfield:after {
-	background: 						#666666 /*{global-icon-color}*/;
-	background: 						rgba(0,0,0,.4) /*{global-icon-disc}*/;
+	background-color: 						#666666 /*{global-icon-color}*/;
+	background-color: 						rgba(0,0,0,.4) /*{global-icon-disc}*/;
 	background-image: url(images/icons-18-white.png) /*{global-icon-set}*/;
 	background-repeat: no-repeat;
-	-moz-border-radius: 				9px;
 	-webkit-border-radius: 				9px;
 	border-radius: 						9px;
 }
 
-
 /* Alt icon color
 -----------------------------------------------------------------------------------------------------------*/
 
-.ui-icon-alt {
-	background: 						#fff;
-	background: 						rgba(255,255,255,.3);
+.ui-icon-alt .ui-icon,
+.ui-icon-alt .ui-icon-searchfield:after {
+	background-color: 						#fff;
+	background-color: 						rgba(255,255,255,.3);
 	background-image: url(images/icons-18-black.png);
 	background-repeat: no-repeat;
+}
+
+/* No disc
+-----------------------------------------------------------------------------------------------------------*/
+
+.ui-icon-nodisc .ui-icon,
+.ui-icon-nodisc .ui-icon-searchfield:after,
+.ui-icon-nodisc .ui-icon-alt .ui-icon,
+.ui-icon-nodisc .ui-icon-alt .ui-icon-searchfield:after {
+	background-color: transparent;
+}
+
+/* Icon sprite
+-----------------------------------------------------------------------------------------------------------*/
+
+/* plus minus */
+.ui-icon-plus {
+	background-position: 	-1px -1px;
+}
+.ui-icon-minus {
+	background-position: 	-37px -1px;
+}
+/* delete/close */
+.ui-icon-delete {
+	background-position: 	-73px -1px;
+}
+/* arrows */
+.ui-icon-arrow-r {
+	background-position: 	-108px -1px;
+}
+.ui-icon-arrow-l {
+	background-position: 	-144px -1px;
+}
+.ui-icon-arrow-u {
+	background-position: 	-180px -1px;
+}
+.ui-icon-arrow-d {
+	background-position: 	-216px -1px;
+}
+/* misc */
+.ui-icon-check {
+	background-position: 	-252px -1px;
+}
+.ui-icon-gear {
+	background-position: 	-288px -1px;
+}
+.ui-icon-refresh {
+	background-position: 	-323px -1px;
+}
+.ui-icon-forward {
+	background-position: 	-360px -1px;
+}
+.ui-icon-back {
+	background-position: 	-396px -1px;
+}
+.ui-icon-grid {
+	background-position: 	-432px -1px;
+}
+.ui-icon-star {
+	background-position: 	-467px -1px;
+}
+.ui-icon-alert {
+	background-position: 	-503px -1px;
+}
+.ui-icon-info {
+	background-position: 	-539px -1px;
+}
+.ui-icon-home {
+	background-position: 	-575px -1px;
+}
+/* search */
+.ui-icon-search,
+.ui-icon-searchfield:after {
+	background-position: 	-611px -1px;
+}
+/* checkbox radio */
+.ui-icon-checkbox-on {
+	background-position: 	-647px -1px;
+}
+.ui-icon-checkbox-off {
+	background-position: 	-683px -1px;
+}
+.ui-icon-radio-on {
+	background-position: 	-718px -1px;
+}
+.ui-icon-radio-off {
+	background-position: 	-754px -1px;
+}
+/* menu edit */
+.ui-icon-bars {
+	background-position: 	-788px -1px;
+
+}
+.ui-icon-edit {
+	background-position: 	-824px -1px;
 }
 
 /* HD/"retina" sprite
@@ -269,108 +363,98 @@ a.ui-link-inherit {
 	.ui-icon-plus, .ui-icon-minus, .ui-icon-delete, .ui-icon-arrow-r,
 	.ui-icon-arrow-l, .ui-icon-arrow-u, .ui-icon-arrow-d, .ui-icon-check,
 	.ui-icon-gear, .ui-icon-refresh, .ui-icon-forward, .ui-icon-back,
-	.ui-icon-grid, .ui-icon-star, .ui-icon-alert, .ui-icon-info, .ui-icon-home, .ui-icon-bars, .ui-icon-edit, .ui-icon-search, .ui-icon-searchfield:after, 
+	.ui-icon-grid, .ui-icon-star, .ui-icon-alert, .ui-icon-info, .ui-icon-home, .ui-icon-bars, .ui-icon-edit,
+	.ui-icon-search, .ui-icon-searchfield:after, 
 	.ui-icon-checkbox-off, .ui-icon-checkbox-on, .ui-icon-radio-off, .ui-icon-radio-on {
 		background-image: url(images/icons-36-white.png);
-		/* Set the background size 2px larger to avoid rounding errors in chrome */
-		-moz-background-size: 842px 18px;
-		-o-background-size: 842px 18px;
-		-webkit-background-size: 842px 18px;
-		background-size: 842px 18px;
+		-moz-background-size: 864px 18px;
+		-o-background-size: 864px 18px;
+		-webkit-background-size: 864px 18px;
+		background-size: 864px 18px;
 	}
-	.ui-icon-alt {
+
+	.ui-icon-alt .ui-icon {
 		background-image: url(images/icons-36-black.png);
 	}
-}
 
-/* plus minus */
-.ui-icon-plus {
-	background-position: 	-0 50%;
+	.ui-icon-plus {
+		background-position: 	0px 50%;
+	}
+	.ui-icon-minus {
+		background-position: 	-36px 50%;
+	}
+	.ui-icon-delete {
+		background-position: 	-72px 50%;
+	}
+	.ui-icon-arrow-r {
+		background-position: 	-108px 50%;
+	}
+	.ui-icon-arrow-l {
+		background-position: 	-144px 50%;
+	}
+	.ui-icon-arrow-u {
+		background-position: 	-179px 50%;
+	}
+	.ui-icon-arrow-d {
+		background-position: 	-215px 50%;
+	}
+	.ui-icon-check {
+		background-position: 	-252px 50%;
+	}
+	.ui-icon-gear {
+		background-position: 	-287px 50%;
+	}
+	.ui-icon-refresh {
+		background-position: 	-323px 50%;
+	}
+	.ui-icon-forward {
+		background-position: 	-360px 50%;
+	}
+	.ui-icon-back {
+		background-position: 	-395px 50%;
+	}
+	.ui-icon-grid {
+		background-position: 	-431px 50%;
+	}
+	.ui-icon-star {
+		background-position: 	-467px 50%;
+	}
+	.ui-icon-alert {
+		background-position: 	-503px 50%;
+	}
+	.ui-icon-info {
+		background-position: 	-538px 50%;
+	}
+	.ui-icon-home {
+		background-position: 	-575px 50%;
+	}
+	.ui-icon-search,
+	.ui-icon-searchfield:after {
+		background-position: 	-611px 50%;
+	}
+	.ui-icon-checkbox-on {
+		background-position: 	-647px 50%;
+	}
+	.ui-icon-checkbox-off {
+		background-position: 	-683px 50%;
+	}
+	.ui-icon-radio-on {
+		background-position: 	-718px 50%;
+	}
+	.ui-icon-radio-off {
+		background-position: 	-754px 50%;
+	}
+	.ui-icon-bars {
+		background-position: 	-788px 50%;
+	
+	}.ui-icon-edit {
+		background-position: 	-824px 50%;
+	}
 }
-.ui-icon-minus {
-	background-position: 	-36px 50%;
-}
-
-/* delete/close */
-.ui-icon-delete {
-	background-position: 	-72px 50%;
-}
-
-/* arrows */
-.ui-icon-arrow-r {
-	background-position: 	-108px 50%;
-}
-.ui-icon-arrow-l {
-	background-position: 	-144px 50%;
-}
-.ui-icon-arrow-u {
-	background-position: 	-180px 50%;
-}
-.ui-icon-arrow-d {
-	background-position: 	-216px 50%;
-}
-
-/* misc */
-.ui-icon-check {
-	background-position: 	-252px 50%;
-}
-.ui-icon-gear {
-	background-position: 	-288px 50%;
-}
-.ui-icon-refresh {
-	background-position: 	-324px 50%;
-}
-.ui-icon-forward {
-	background-position: 	-360px 50%;
-}
-.ui-icon-back {
-	background-position: 	-396px 50%;
-}
-.ui-icon-grid {
-	background-position: 	-432px 50%;
-}
-.ui-icon-star {
-	background-position: 	-468px 50%;
-}
-.ui-icon-alert {
-	background-position: 	-504px 50%;
-}
-.ui-icon-info {
-	background-position: 	-540px 50%;
-}
-.ui-icon-home {
-	background-position: 	-576px 50%;
-}
-.ui-icon-bars {
-	background-position: 	-785px 50%;
-
-}.ui-icon-edit {
-	background-position: 	-824px 50%;
-}
-
-
-.ui-icon-search,
-.ui-icon-searchfield:after {
-	background-position: 	-612px 50%;
-}
-.ui-icon-checkbox-off {
-	background-position: 	-684px 50%;
-}
-.ui-icon-checkbox-on {
-	background-position: 	-648px 50%;
-}
-.ui-icon-radio-off {
-	background-position: 	-756px 50%;
-}
-.ui-icon-radio-on {
-	background-position: 	-720px 50%;
-}
-
 
 /* checks,radios */
 .ui-checkbox .ui-icon,
 .ui-selectmenu-list .ui-icon {
-	-moz-border-radius: 3px;
 	-webkit-border-radius: 3px;
 	border-radius: 3px;
 }
@@ -389,8 +473,7 @@ a.ui-link-inherit {
 	background-size: 46px 46px;
 }
 
-
-/* Button corner classes
+/* Button corner class
 -----------------------------------------------------------------------------------------------------------*/
 .ui-btn-corner-all {
 	-webkit-border-radius: 				1em /*{global-radii-buttons}*/;
@@ -421,9 +504,9 @@ a.ui-link-inherit {
 	box-shadow: 0px 0px 12px 				rgba(0,0,0,.6);
 }
 .ui-shadow {
-	-moz-box-shadow: 0px 1px 4px /*{global-box-shadow-size}*/ 			rgba(0,0,0,.3) /*{global-box-shadow-color}*/;
-	-webkit-box-shadow: 0px 1px 4px /*{global-box-shadow-size}*/ 		rgba(0,0,0,.3) /*{global-box-shadow-color}*/;
-	box-shadow: 0px 1px 4px /*{global-box-shadow-size}*/ 				rgba(0,0,0,.3) /*{global-box-shadow-color}*/;
+	-moz-box-shadow: 0px 1px 3px /*{global-box-shadow-size}*/ 			rgba(0,0,0,.2) /*{global-box-shadow-color}*/;
+	-webkit-box-shadow: 0px 1px 3px /*{global-box-shadow-size}*/ 		rgba(0,0,0,.2) /*{global-box-shadow-color}*/;
+	box-shadow: 0px 1px 3px /*{global-box-shadow-size}*/ 				rgba(0,0,0,.2) /*{global-box-shadow-color}*/;
 }
 .ui-bar-a .ui-shadow,
 .ui-bar-b .ui-shadow ,
