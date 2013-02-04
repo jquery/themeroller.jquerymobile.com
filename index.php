@@ -64,7 +64,7 @@
 				match for unlimited possibilities. We recommend building themes with at least 3 swatches (A-C). 
 			</p>
 			<p>
-				<strong>To upgrade a theme to 1.2:</strong> Click the Import button, paste in your uncompressed theme, then tweak and download the upgraded version.
+				<strong>To upgrade a theme to <?php echo $JQM_VERSION; ?>:</strong> Click the Import button, paste in your uncompressed theme, then tweak and download the upgraded version.
 			</p>
 
 			<div class="buttonpane">
