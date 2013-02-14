@@ -49,7 +49,7 @@ TR.addInspectorAttributes = function( swatch ) {
         }),
 		static = TR.iframe.find( ".ui-li-static.ui-btn-up-" + swatch );
         
-    slider.attr( "data-form", "ui-btn-down-" + swatch ).attr( "data-theme", swatch );
+    slider.attr( "data-form", "ui-btn-up-" + swatch ).attr( "data-theme", swatch ).addClass( "ui-btn-up-" + swatch );
     slider.find( "a" ).attr( "data-form", "ui-btn-up-" + swatch ).attr( "data-theme", swatch );
     btn.attr( "data-theme", swatch ).attr( "data-form", "ui-btn-up-" + swatch );
     btn.find( ".ui-icon" ).attr( "data-form", "ui-icon" );
@@ -919,6 +919,7 @@ TR.initDraggableColors = function() {
             ".ui-bar-" : "-bar",
             ".ui-body-" : "-body",
             ".ui-btn-up-": "-bup",
+            ".ui-btn-down-": "-bdown",
             ".ui-link": "-link",
             ".ui-btn-active": "-active"
         }
@@ -926,7 +927,7 @@ TR.initDraggableColors = function() {
         //different alpha array - no global
         var alphabet = [ "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z" ];
 
-        var droppables = [ ".ui-btn-up-", ".ui-bar-", ".ui-body-" ];
+        var droppables = [ ".ui-btn-up-", ".ui-btn-down-", ".ui-bar-", ".ui-body-" ];
         
         if(TR.movingColor) {
             TR.movingColor = 0;
