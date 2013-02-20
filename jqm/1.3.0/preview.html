@@ -36,19 +36,19 @@
 		<p>
 			Sample text and <a class="ui-link" data-form="ui-body-a" href="#" data-theme="a">links</a>.
 		</p>
-		
-		<div data-role="fieldcontain" class="ui-listview-inset">
+
+		<ul data-role="listview" data-inset="true">
+            <li data-role="list-divider" data-swatch="a" data-theme="a" data-form="ui-bar-a">List Header</li>
+            <li data-form="ui-btn-up-a" data-swatch="a" data-theme="a">Read-only list item</li>
+            <li data-form="ui-btn-up-a"><a href="#">Linked list item</a></li>
+		</ul>
+        
+		<div data-role="fieldcontain">
 		    <fieldset data-role="controlgroup">
-			<li data-swatch="a" class="ui-li ui-li-divider ui-btn ui-bar-a ui-corner-top" data-role="list-divider" role="" data-form="ui-bar-a">List Header</li>
-        <li class="ui-li ui-li-static ui-btn-up-a" data-form="ui-btn-up-a" data-theme="a">Read-only list item</li>
-		
 				<input type="radio" name="radio-choice-a" id="radio-choice-1-a" value="choice-1" checked="checked" />
-		        <label for="radio-choice-1-a" data-form="ui-btn-up-a" class="ui-corner-none">Radio 1</label>
+		        <label for="radio-choice-1-a" data-form="ui-btn-up-a">Radio</label>
 
-         		<input type="radio" name="radio-choice-a" id="radio-choice-2-a" value="choice-2" />
-	         	<label for="radio-choice-2-a" data-form="ui-btn-up-a">Radio 2</label>
-
-				<input type="checkbox" name="checkbox-a" id="checkbox-a" class="custom" checked="checked" />
+				<input type="checkbox" name="checkbox-a" id="checkbox-a" checked="checked" />
 				<label for="checkbox-a" data-form="ui-btn-up-a">Checkbox</label>
 					
 		    </fieldset>
