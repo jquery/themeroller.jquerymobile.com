@@ -611,6 +611,11 @@ TR.initControls = function() {
     $( "[data-type=icon_set]" ).bind( "blur mouseup", function() {
         TR.styleArray[$( this ).attr( "data-name" )] = "url(images/icons-18-" + this.value + ".png)";
         TR.styleArray["global-large-icon-set"] = "url(images/icons-36-" + this.value + ".png)";
+
+        var iconalt = (this.value == 'white') ? 'black' : 'white';
+        TR.styleArray["global-icon-alt-set"] = "url(images/icons-18-" + iconalt + ".png)";
+        TR.styleArray["global-large-icon-alt-set"] = "url(images/icons-36-" + iconalt + ".png)";
+
         TR.updateAllCSS();
     });
 
