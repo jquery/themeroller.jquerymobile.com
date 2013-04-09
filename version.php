@@ -45,6 +45,8 @@ function versionCompare( $version1, $version2 ) {
 
 $VERSION_LIST = preg_grep('/^([^.])/', scandir( "jqm" ));
 
+$VERSION_LIST = array_reverse( $VERSION_LIST );
+
 $JQM_VERSION = "";
 
 foreach( $VERSION_LIST as $VERSION ) {
