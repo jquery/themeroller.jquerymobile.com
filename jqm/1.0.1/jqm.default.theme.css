@@ -864,7 +864,7 @@ a.ui-link-inherit {
 .ui-icon-alt {
 	background: 						#fff;
 	background: 						rgba(255,255,255,.3);
-	background-image: url(images/icons-18-black.png);
+	background-image: url(images/icons-18-black.png) /*{global-icon-alt-set}*/;
 	background-repeat: no-repeat;
 }
 
@@ -887,7 +887,7 @@ a.ui-link-inherit {
 		background-size: 776px 18px;
 	}
 	.ui-icon-alt {
-		background-image: url(images/icons-36-black.png);
+		background-image: url(images/icons-36-black.png) /*{global-large-icon-alt-set}*/;
 	}
 }
 
