@@ -1106,42 +1106,53 @@ TR.initStyleArray = function( refresh ) {
     escaped_style = style.replace( /\n/g, "%0A" );
     escaped_style = escaped_style.replace( /\t/g, "%09" );
     
-    var reg = new RegExp( "(?:font-family:)[^/\\*]+/\\*{[^\\*/]*}\\*/|\\s*\\S*\\s*/\\*{[^\\*/]*}\\*/" ),
-        reference = "",
-        length = 0,
-        index = -1,
+    var regReferences = new RegExp( '/\\*\\{([^\\}]*)}\\*/', 'g' ),
+        regVal = new RegExp( '^(?:([\\S\\s]*)(font-family:\\s*[\\S\\s]*)|([\\s\\S]*?\\s*)(\\S*\\s*))$' ),
+        afterLast = 0,
+        preReference,
+        match,
+        val,
+        referenceComment,
+        reference,
         i = 0;
     
-    while( style.length > 0 ) {
-        var temp = reg.exec( style ) + "";
-        length = temp.length;
-        reference = /{.*}/.exec( temp ) + "";
-        reference = reference.substr( 1,reference.length-2 );
-        index = style.search( reg );
-        if( index != -1 ) {
-            TR.tokens[i++] = {
-                value: style.substr( 0, index ), 
-                type: "string"
-            };
-            TR.tokens[i++] = {
-                value: style.substr( index, length ).trim(), 
-                type: "placeholder", 
-                ref: reference
-            };
-            //update TR.styleArray
-            if( refresh != "refresh" ) {
-                TR.styleArray[reference] = TR.tokens[i-1].value.replace( /\/\*.*\*\//, "" ).trim();
-            }
-            //cut off string and continue
-            style = style.substring( index+length ); 
-        } else {
-            TR.tokens[i++] = {
-                value: style,
-                type: "string"
-            };
-            style = "";
+    while ( ( matchRef = regReferences.exec( style ) ) != null ) {
+        referenceComment = matchRef[0];
+        reference = matchRef[1];
+        preReference = style.substring( afterLast, regReferences.lastIndex - referenceComment.length );
+        matchVal = preReference.match( regVal );
+        if ( !matchVal ) {//should not occur unless someone borks regVal
+            val = '';
         }
-        
+        if ( matchVal[1] != undefined) {//font-family match
+            preReference = matchVal[1];
+            val = matchVal[2];
+        }
+        else {// all other values
+            preReference = matchVal[3];
+            val = matchVal[4];
+        }
+        afterLast = regReferences.lastIndex;
+        TR.tokens2[i++] = {
+            value: preReference,
+            type: "string"
+        };
+        TR.tokens2[i++] = {
+            value: val + referenceComment,
+            type: "placeholder",
+            ref: reference
+        };
+        //update TR.styleArray
+        if ( refresh != "refresh" ) {
+            TR.styleArray2[reference] = val.trim();
+        }
+    }
+    
+    if (style.length) {
+        TR.tokens2[i] = {
+            value: style.substring( afterLast ),
+            type: "string"
+        };
     }
 }
 
