@@ -84,9 +84,7 @@ TR.merge = function( css, version, importing ) {
 TR.fixNumberOfSwatches = function( style, count ) {
 	var diff = count - 1;
 	if( diff > 0 ) {
-		var start = style.search( /\/\* A.*\n-*\*\// ),
-        	end = style.search( /\/\* Structure /),
- 			swatch_a = style.substring( start, end );
+		var swatch_a = style.match( /(\/\*\sA.*[\r\n]+-*\*\/[\s\S]+?)\s*\/\*\sStructure\s/ )[1];
 		
 		for( var i = 0; i < diff; i++) {
 			var letter = String.fromCharCode( i + 98 );
@@ -94,7 +92,7 @@ TR.fixNumberOfSwatches = function( style, count ) {
 			var temp_style_template = swatch_a.replace( /-a,/g, "-" + letter + "," ).replace( /-a\s/g, "-" + letter + " " )
 				.replace( /-a\:/g, "-" + letter + ":" ).replace( /{a-/g, "{" + letter + "-" ).replace( /\/\*\sA/, "/* " + letter.toUpperCase() );
 			
-			style = style.replace( /\/\*\sStructure\s/, temp_style_template + "\n\n/* Structure " );
+			style = style.replace( /\s*(\/\*\sStructure\s)/, '\n\n\n' + temp_style_template.replace( '$', '$$' ) + '\n\n\n$1' );
 		}
 	}
 	return style;

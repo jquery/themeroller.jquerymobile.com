@@ -8,7 +8,7 @@
  * Dual licensed under the MIT or GPL Version 2 licenses.
  * http://jquery.org/license
  *
- * 
+ *
  * Originally created by Tyler Benziger: https://github.com/TylerBenziger
  *
  */
@@ -38,7 +38,7 @@ TR.firstLoad = 1;
 
 TR.hexDigits = new Array("0","1","2","3","4","5","6","7","8","9","a","b","c","d","e","f");
 
-//cleaning up a few classes and adding a few attributes so the 
+//cleaning up a few classes and adding a few attributes so the
 //inspector works properly after jQuery Mobile has done its markup injection
 TR.addInspectorAttributes = function( swatch ) {
     var slider = TR.iframe.find( "[name=slider][data-theme=" + swatch + "]" ).siblings( "div" ),
@@ -47,14 +47,14 @@ TR.addInspectorAttributes = function( swatch ) {
         radio = TR.iframe.find( ".ui-content" ).each(function() {
             $( this ).find( ".ui-radio:first span:first" ).removeClass( "ui-corner-top" );
         }),
-		static = TR.iframe.find( ".ui-li-static.ui-btn-up-" + swatch );
+        static = TR.iframe.find( ".ui-li-static.ui-btn-up-" + swatch );
         
     slider.attr( "data-form", "ui-btn-up-" + swatch ).attr( "data-theme", swatch ).addClass( "ui-btn-up-" + swatch );
     slider.find( "a" ).attr( "data-form", "ui-btn-up-" + swatch ).attr( "data-theme", swatch );
     select.attr( "id", "select-choice-" + swatch );
-	btn.attr( "data-theme", swatch ).attr( "data-form", "ui-btn-up-" + swatch );
+    btn.attr( "data-theme", swatch ).attr( "data-form", "ui-btn-up-" + swatch );
     btn.find( ".ui-icon" ).attr( "data-form", "ui-icon" );
-	static.attr( "data-theme", swatch );
+    static.attr( "data-theme", swatch );
 }
 
 //adds a most-recent-color to the five right-most draggables in the quickswatch panel
@@ -93,7 +93,7 @@ TR.updateMostRecent = function( newColor ) {
     }
 }
 
-//adds some CSS, a tab panel, and a preview for the new swatch 
+//adds some CSS, a tab panel, and a preview for the new swatch
 TR.addSwatch = function( new_style, duplicate ) {
     var duplicate = duplicate || null;
     $( ".delete-swatch-a" ).show();
@@ -116,26 +116,24 @@ TR.addSwatch = function( new_style, duplicate ) {
                 css = TR.styleBlock.text();
             if( duplicate ) {
                 //if there is a swatch to be duplicated, we use the letter passed in to do our regex patterns
-                var start_reg = new RegExp( "\\/\\*\\s" + duplicate.toUpperCase() + ".*\\n-*\\*\\/" ),
-                    end_reg = new RegExp( "\\/\\*\\s" + TR.alpha[ TR.num[duplicate] + 1 ].toUpperCase() + ".*\\n-*\\*\\/" );
+                var temp_css_template_dupe,
+                    temp_css_reg = new RegExp( "(\\/\\*\\s" + duplicate.toUpperCase() + ".*[\\r\\n]+-*\\*\\/[\\s\\S]+?)\\s*\\/\\*\\s(?:" + TR.alpha[ TR.num[duplicate] + 1 ].toUpperCase() + "\\b.*[\\r\\n]+-*|Structure\\s+)\\*\\/" );
                 
-                if( css.search( end_reg ) == -1 ) {
-                    end_reg = new RegExp( "\\/\\*\\sStructure " );
+                if ( temp_css_template_dupe = css.match(temp_css_reg) ) {
+                    temp_css_template = temp_css_template_dupe[1];
+                    var reg1 = new RegExp( "-" + duplicate + ",", "g" ),
+                        reg2 = new RegExp( "-" + duplicate + "\\s", "g" ),
+                        reg3 = new RegExp( "\\{" + duplicate + "-", "g" ),
+                        reg4 = new RegExp( "-" + duplicate + ":", "g" ),
+                        reg5 = new RegExp( "\\/\\*\\s" + duplicate.toUpperCase(), "g" );
+                    temp_css_template = temp_css_template.replace( reg1, "-" + lower + "," )
+                        .replace( reg2, "-" + lower + " " )
+                        .replace( reg3, "{" + lower + "-" )
+                        .replace( reg4, "-" + lower + ":" )
+                        .replace( reg5, "/* " + upper );
                 }
-                temp_css_template = css.substring( css.search( start_reg ), css.search( end_reg ) );
-
-                var reg1 = new RegExp( "-" + duplicate + ",", "g" ),
-                    reg2 = new RegExp( "-" + duplicate + "\\s", "g" ),
-                    reg3 = new RegExp( "\\{" + duplicate + "-", "g" ),
-                    reg4 = new RegExp( "-" + duplicate + ":", "g" ),
-                    reg5 = new RegExp( "\\/\\*\\s" + duplicate.toUpperCase(), "g" );
-                temp_css_template = temp_css_template.replace( reg1, "-" + lower + "," )
-                    .replace( reg2, "-" + lower + " " )
-                    .replace( reg3, "{" + lower + "-" )
-                    .replace( reg4, "-" + lower + ":" )
-                    .replace( reg5, "/* " + upper );
             }
-            css = css.replace( /\/\*\sStructure\s/, temp_css_template + "\n\n/* Structure " );
+            css = css.replace( /\s*(\/\*\sStructure\s)/, '\n\n\n' + temp_css_template.replace( '$', '$$' ) + '\n\n\n$1' );
             TR.styleBlock.text( css );
         }
         
@@ -180,10 +178,10 @@ TR.addSwatch = function( new_style, duplicate ) {
         if( TR.firstAdd ) {
             //apply paging of the tabs
             $( "#tabs" ).tabs("paging", {
-                cycle: true, 
-                follow: true, 
-                tabsPerPage: 0, 
-                followOnSelect: true, 
+                cycle: true,
+                follow: true,
+                tabsPerPage: 0,
+                followOnSelect: true,
                 selectOnAdd: false
             });
             TR.firstAdd = 0;
@@ -208,7 +206,7 @@ TR.addSwatchEvent = function(e) {
 }
 
 //When a color is dropped this function applies a color to the element
-//automatically detecting things like 
+//automatically detecting things like
 TR.applyColor = function( color, prefix ) {
     var color_arr = color.split( "" ),
         red = parseInt( (color_arr[1] + color_arr[2]), 16 ),
@@ -273,7 +271,7 @@ TR.applyColor = function( color, prefix ) {
             $( "input[data-name=" + prefix + "-shadow-color]" ).val( "#eeeeee" ).css( "background-color", "#eeeeee" );
             TR.styleArray[prefix + "-color"] = "#000000";
             TR.styleArray[prefix + "-shadow-color"] = "#eeeeee";
-        } else {    
+        } else {
             $( "input[data-name=" + prefix + "-color]" ).val( "#ffffff" ).css( "background-color", "#ffffff" );
             $( "input[data-name=" + prefix + "-shadow-color]" ).val( "#444444" ).css( "background-color", "#444444" );
             TR.styleArray[prefix + "-color"] = "#ffffff";
@@ -376,7 +374,7 @@ TR.correctNumberOfSwatches = function() {
                 mimeType: "text/plain",
                 success: function( data ) {
                     $( "#upload textarea" ).val( data );
-                    TR.styleBlock.text( data ); 
+                    TR.styleBlock.text( data );
                     TR.correctNumberOfSwatches();
                     for ( var letter = TR.num[ "a" ]; letter < TR.num[ "c" ]; letter++ ) {
                         TR.addSwatch( true, "a" );
@@ -425,7 +423,7 @@ TR.deleteSwatch = function( e, ele ) {
     e.preventDefault();
        var delete_class = ele.attr( "class" );
     var letter =  delete_class.substr( delete_class.length - 1, delete_class.length );
-    var number = TR.num[letter];    
+    var number = TR.num[letter];
 
     //log before delete
     TR.undoLog.push( TR.styleBlock.text() );
@@ -467,7 +465,7 @@ TR.deleteSwatch = function( e, ele ) {
     
     //delete the swatch's CSS from the file
     var css = TR.styleBlock.text(),
-        start_reg = new RegExp ("\\/\\*\\s" + TR.alpha[TR.tabCount - 2].toUpperCase() + "\\s*\\n-*\\*\\/" ),
+        start_reg = new RegExp ("\\/\\*\\s" + TR.alpha[TR.tabCount - 2].toUpperCase() + "\\s*-*\\*\\/" ),
         end_reg = new RegExp( "\\/\\*\\sStructure \\*\\/" ),
         start = css.search( start_reg ),
         end = css.search( end_reg ),
@@ -499,6 +497,9 @@ TR.deleteSwatch = function( e, ele ) {
 
 //takes a hex color and computes the grayscale value
 TR.grayValue = function( color ) {
+    if ( !/^[^a-z][a-f\d]{6}/i.test( color ) ) {
+        return 127;
+    }
     var color_arr = color.split( "" );
     
     var red = parseInt( ( color_arr[1] + color_arr[2] ), 16 );
@@ -533,15 +534,8 @@ TR.initControls = function() {
         TR.redo();
     })
     
-    //Font Family
-    $( "[data-type=font-family]" ).bind( "blur change keyup", function() {
-        var name = $( this ).attr( "data-name" );
-        TR.styleArray[name] = "font-family: " + this.value;
-        TR.updateAllCSS();
-    });
-
-    //Link, Text Color, Text Shadow, Border Color
-    $( "[data-type=link], [data-type=color], [data-type=text-shadow], [data-type=border]" )
+    //Link, Text Color, Text Shadow, Border Color, Font Family
+    $( "[data-type=link], [data-type=color], [data-type=text-shadow], [data-type=border], [data-type=font-family]" )
         .bind( "blur change keyup", function(){
             TR.styleArray[$( this ).attr( "data-name" )] = this.value;
             TR.updateAllCSS();
@@ -553,7 +547,7 @@ TR.initControls = function() {
         var name = $this.attr( "data-name" );
         var slider = $( ".slider[data-type=radius][data-name=" + name + "]" );
         var val = parseFloat( $this.val().replace(/[^0-9\.]/g, "") );
-        slider.slider( "value", val );
+        slider.slider( "value", isNaN(val) ? 0 : val );
         TR.styleArray[name] = $this.val();
         TR.updateAllCSS();
     });
@@ -618,17 +612,25 @@ TR.initControls = function() {
     $( "[data-type=box_shadow]" ).bind( "blur change keyup", function() {
         var color_el = $( "[data-type=box_shadow]:first" ),
             opac_el = $( "[data-type=box_shadow]:eq(1)" ),
-            color_arr = color_el.val().split( "" ),
-            red = parseInt( (color_arr[1] + color_arr[2]), 16 ),
-            green = parseInt( (color_arr[3] + color_arr[4]), 16 ),
-            blue = parseInt( (color_arr[5] + color_arr[6]), 16 ),
-            opacity = parseFloat( opac_el.val() ) / 100;
+            value = color_el.val().trim();
+        
+        if ( /^[^a-z][a-f\d]{6}/i.test(value) ) {
+            var color_arr = value.split( "" ),
+                red = parseInt( (color_arr[1] + color_arr[2]), 16 ),
+                green = parseInt( (color_arr[3] + color_arr[4]), 16 ),
+                blue = parseInt( (color_arr[5] + color_arr[6]), 16 ),
+                opacity = parseFloat( opac_el.val() ) / 100;
             
-        if ( !opacity ) {
-            opacity = 0;
+            if ( !opacity ) {
+                opacity = 0;
+            }
+            
+            TR.styleArray["global-box-shadow-color"] = "rgba(" + red + "," + green + "," + blue + "," + opacity + ")";
+        }
+        else {
+            TR.styleArray["global-box-shadow-color"] = value;
         }
         
-        TR.styleArray["global-box-shadow-color"] = "rgba(" + red + "," + green + "," + blue + "," + opacity + ")";  
         TR.updateAllCSS();
     });
     
@@ -652,7 +654,7 @@ TR.initControls = function() {
 
         if( elements[0] == "with_disc" ) {
             TR.styleArray["global-icon-color"] = elements[1];
-            TR.styleArray["global-icon-disc"] = "rgba(" + red + "," + green + "," + blue + "," + ( parseFloat(elements[2]) / 100 ) + ")";   
+            TR.styleArray["global-icon-disc"] = "rgba(" + red + "," + green + "," + blue + "," + ( parseFloat(elements[2]) / 100 ) + ")";
             TR.styleArray["global-icon-shadow"] = "rgba(255,255,255,.4)";
         } else {
             TR.styleArray["global-icon-disc"] = "transparent";
@@ -695,7 +697,7 @@ TR.initControls = function() {
     $( ".colorwell" ).bind( "change" , function() {
         var $this = $( this );
         $( ".slider[data-name=" + $this.attr("data-name") + "][data-type=" + $this.attr("data-type") + "] a").css({
-            "background": $this.val(), 
+            "background": $this.val(),
             "border-color": $this.val()
         });
     });
@@ -704,7 +706,7 @@ TR.initControls = function() {
     $( "input[data-type=background]" ).each(function() {
         var $this = $( this )
         $( ".slider[data-type=background][data-name=" + $this.attr("data-name") + "] a" ).css({
-            "background": $this.val(), 
+            "background": $this.val(),
             "border-color": $this.val()
         });
     });
@@ -766,8 +768,8 @@ TR.initDialogs = function() {
     $( "#download" ).dialog( $.extend( {}, dialogObj, {
         width: 850,
         buttons: {
-            "Close": function() { 
-                $( this ).dialog( "close" ); 
+            "Close": function() {
+                $( this ).dialog( "close" );
             },
             "Download Zip": function() {
                 var theme_name = $( "input", this ).val();
@@ -802,8 +804,8 @@ TR.initDialogs = function() {
         resizable: false,
         draggable: false,
         buttons: {
-            "Cancel": function() { 
-                $( ".dialog#newColor" ).dialog( "close" ); 
+            "Cancel": function() {
+                $( ".dialog#newColor" ).dialog( "close" );
             },
             "Submit": function() {
                 var color = $( "#newColorInput" ).val().toLowerCase();
@@ -868,7 +870,7 @@ TR.initDialogs = function() {
 
     //download dialog
     $( "#download-button" ).click(function() {
-        $( "#download" ).dialog( "open" );          
+        $( "#download" ).dialog( "open" );
         return false;
     });
     
@@ -903,9 +905,7 @@ TR.initDraggableColors = function() {
         drop: function() {
             var $this = $( this );
             var color = $(".ui-draggable-dragging").css("background-color");
-            if( color != "transparent" ) {
-                color = TR.rgbtohex( color );
-            }
+            color = TR.rgbtohex( color );
             $( ".ui-draggable .ui-draggable-dragging" ).trigger( "drop" );
             $this.val( color ).css( "background-color", color );
             $this.trigger( "change" );
@@ -987,9 +987,7 @@ TR.initDraggableColors = function() {
                     swatch = element.attr( "data-swatch" );
                 }
                 var color = $( ".color-drag.ui-draggable-dragging" ).css( "background-color" ) || $( ".kuler-color.ui-draggable-dragging" ).css( "background-color" );
-                if( color != "transparent" ) {
-                    color = TR.rgbtohex( color );
-                }
+                color = TR.rgbtohex( color );
             
                 for( var i in classtokey ) {
                     if( el_class.indexOf(i) != -1 ) {
@@ -1021,7 +1019,7 @@ TR.initInspector = function() {
     TR.iframe.find( "[data-form]" ).mouseup(function(e) {
         if( $("#inspector-button").hasClass("active") ) {
             e.stopPropagation();
-            TR.selectElement( $(this) );        
+            TR.selectElement( $(this) );
             TR.iframe.find( "#highlight" ).show();
         }
     });
@@ -1035,7 +1033,7 @@ TR.initInspector = function() {
             
             var parent = this;
             
-            TR.iframe.find( "#highlight" ).mousemove(function(e) { 
+            TR.iframe.find( "#highlight" ).mousemove(function(e) {
                 var highlight = $( this );
                 $( "[data-form]", parent ).each(function() {
                     var $form = $( this ),
@@ -1045,12 +1043,12 @@ TR.initInspector = function() {
 
                     if( e.pageX <= right && e.pageX >= left && e.pageY <= bottom && e.pageY >= top ) {
                         highlight.css({
-                            "z-index": 20, 
-                            "position": "absolute", 
-                            "top": ( top - 3 ) + "px", 
-                            "left": ( left - 3 ) + "px", 
-                            "width": width + "px", 
-                            "height": height + "px", 
+                            "z-index": 20,
+                            "position": "absolute",
+                            "top": ( top - 3 ) + "px",
+                            "left": ( left - 3 ) + "px",
+                            "width": width + "px",
+                            "height": height + "px",
                             "border": "3px solid #0cc"
                         }).show();
                     }
@@ -1058,12 +1056,12 @@ TR.initInspector = function() {
             });
             
             $( "iframe" ).contents().find( "#highlight" ).css({
-                "z-index": 20, 
-                "position": "absolute", 
-                "top": (top-3) + "px", 
-                "left": (left-3) + "px", 
-                "width": width + "px", 
-                "height": + height + "px", 
+                "z-index": 20,
+                "position": "absolute",
+                "top": (top-3) + "px",
+                "left": (left-3) + "px",
+                "width": width + "px",
+                "height": + height + "px",
                 "border": "3px solid #0cc"
             }).show();
         }
@@ -1084,10 +1082,9 @@ TR.initInspector = function() {
 //initialize graySwatch CSS template for a new blank swatch
 TR.initGraySwatch = function() {
     var css = TR.styleBlock.text(),
-        start_reg = new RegExp( "\\/\\*\\sA.*\\n-*\\*\\/" ),
-        end_reg = new RegExp( "\\/\\*\\sStructure " );
+        swatch_reg = new RegExp( "(\\/\\*\\sA.*[\\r\\n]+-*\\*\\/[\\s\\S]+?)\\/\\*\\sStructure " );
 
-    TR.graySwatch = css.substring( css.search( start_reg ), css.search( end_reg ) );
+    TR.graySwatch = css.match(swatch_reg)[1];
 }
 
 //initStyleArray is used to initialize the array of tokens and the TR.styleArray
@@ -1103,45 +1100,55 @@ TR.initStyleArray = function( refresh ) {
     }
 
     var style = TR.styleBlock.text();
-    escaped_style = style.replace( /\n/g, "%0A" );
-    escaped_style = escaped_style.replace( /\t/g, "%09" );
     
-    var reg = new RegExp( "(?:font-family:)[^/\\*]+/\\*{[^\\*/]*}\\*/|\\s*\\S*\\s*/\\*{[^\\*/]*}\\*/" ),
-        reference = "",
-        length = 0,
-        index = -1,
+    var regReferences = new RegExp( '/\\*\\{([^\\}]*)}\\*/', 'g' ),
+        regVal = new RegExp( '^(?:([\\S\\s]*font-family:)(\\s*[\\S\\s]*)|([\\s\\S]*?)(\\s*\\S*\\s*))$' ),
+        matchRef,
+        matchVal,
+        afterLast = 0,
+        preReference,
+        val,
+        referenceComment,
+        reference,
         i = 0;
     
-    while( style.length > 0 ) {
-        var temp = reg.exec( style ) + "";
-        length = temp.length;
-        reference = /{.*}/.exec( temp ) + "";
-        reference = reference.substr( 1,reference.length-2 );
-        index = style.search( reg );
-        if( index != -1 ) {
-            TR.tokens[i++] = {
-                value: style.substr( 0, index ), 
-                type: "string"
-            };
-            TR.tokens[i++] = {
-                value: style.substr( index, length ).trim(), 
-                type: "placeholder", 
-                ref: reference
-            };
-            //update TR.styleArray
-            if( refresh != "refresh" ) {
-                TR.styleArray[reference] = TR.tokens[i-1].value.replace( /\/\*.*\*\//, "" ).trim();
-            }
-            //cut off string and continue
-            style = style.substring( index+length ); 
-        } else {
-            TR.tokens[i++] = {
-                value: style,
-                type: "string"
-            };
-            style = "";
+    while ( ( matchRef = regReferences.exec( style ) ) != null ) {
+        referenceComment = matchRef[0];
+        reference = matchRef[1];
+        preReference = style.substring( afterLast, regReferences.lastIndex - referenceComment.length );
+        matchVal = preReference.match( regVal );
+        if ( !matchVal ) {//should not occur unless someone borks regVal
+            val = '';
         }
-        
+        if ( matchVal[1] != undefined) {//font-family match
+            preReference = matchVal[1];
+            val = matchVal[2];
+        }
+        else {// all other values
+            preReference = matchVal[3];
+            val = matchVal[4];
+        }
+        afterLast = regReferences.lastIndex;
+        TR.tokens[i++] = {
+            value: preReference,
+            type: "string"
+        };
+        TR.tokens[i++] = {
+            value: val + referenceComment,
+            type: "placeholder",
+            ref: reference
+        };
+        //update TR.styleArray
+        if ( refresh != "refresh" ) {
+            TR.styleArray[reference] = val.trim();
+        }
+    }
+    
+    if (style.length) {
+        TR.tokens[i] = {
+            value: style.substring( afterLast ),
+            type: "string"
+        };
     }
 }
 
@@ -1262,7 +1269,7 @@ TR.percentColor = function( color, percent ) {
 }
 
 //updates Inspector behaviors in the iframe for a newly added swatch
-TR.refreshIframe = function( swatch ) { 
+TR.refreshIframe = function( swatch ) {
     //click behavior for inspector
     TR.iframe.find( ".ui-bar-" + swatch + ", " + ".ui-body-" + swatch + ", .ui-bar-" + swatch + " [data-form], .ui-body-" + swatch + " [data-form]" ).mouseup(function(e) {
         if( $("#inspector-button").hasClass("active") ) {
@@ -1288,7 +1295,7 @@ TR.refreshIframe = function( swatch ) {
                 data_theme = "global";
             }
             
-            $( "#tabs" ).tabs( "select", TR.num[data_theme] );  
+            $( "#tabs" ).tabs( "select", TR.num[data_theme] );
             
             setTimeout(function() {
                 $( "#tab" + (TR.num[data_theme] + 1) + " .accordion" ).each(function() {
@@ -1329,12 +1336,12 @@ TR.refreshIframe = function( swatch ) {
                     var bottom = top + height;
                     if( e.pageX <= right && e.pageX >= left && e.pageY <= bottom && e.pageY >= top ) {
                         $( highlight ).css({
-                            "z-index": 20, 
-                            "position": "absolute", 
-                            "top": (top - 3) + "px", 
-                            "left": (left - 3) + "px", 
-                            "width": width + "px", 
-                            "height": height + "px", 
+                            "z-index": 20,
+                            "position": "absolute",
+                            "top": (top - 3) + "px",
+                            "left": (left - 3) + "px",
+                            "width": width + "px",
+                            "height": height + "px",
                             "border": "3px solid #0cc"
                         }).show();
                     }
@@ -1343,12 +1350,12 @@ TR.refreshIframe = function( swatch ) {
             });
             
             TR.iframe.find( "#highlight" ).css({
-                "z-index": 20, 
-                "position": "absolute", 
-                "top": (top - 3) + "px", 
-                "left": (left - 3) + "px", 
-                "width": width + "px", 
-                "height": height + "px", 
+                "z-index": 20,
+                "position": "absolute",
+                "top": (top - 3) + "px",
+                "left": (left - 3) + "px",
+                "width": width + "px",
+                "height": height + "px",
                 "border": "3px solid #0cc"
             }).show();
         }
@@ -1357,20 +1364,20 @@ TR.refreshIframe = function( swatch ) {
 
 //Function to convert hex format to a rgba color
 TR.rgbatohex = function(rgba) {
-    rgba = rgba.match(/^rgba\((\d+),\s*(\d+),\s*(\d+),\s*([\d.]+)\)$/);
-    return "#" + TR.hex(rgba[1]) + TR.hex(rgba[2]) + TR.hex(rgba[3]);
+    var rgbDec = rgba.match(/^rgba\((\d+),\s*(\d+),\s*(\d+),/);
+    return rgbDec ? "#" + TR.hex(rgbDec[1]) + TR.hex(rgbDec[2]) + TR.hex(rgbDec[3]) : rgba;
 }
 
 //Function to get opacity from rgba
 TR.rgbaOpacity = function(rgba) {
-    rgba = rgba.match(/^rgba\((\d+),\s*(\d+),\s*(\d+),\s*([\d.]+)\)$/);
-    return rgba[4];
+    var oDec = rgba.match(/^rgba\(\d+,\s*\d+,\s*\d+,\s*([\d.]+)\)$/);
+    return oDec ? oDec[1] : rgba;
 }
 
-//Function to convert hex format to a rgb color
+//Function to convert rgb color to a hex format
 TR.rgbtohex = function(rgb) {
-    rgb = rgb.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
-    return "#" + TR.hex(rgb[1]) + TR.hex(rgb[2]) + TR.hex(rgb[3]);
+    var rgbDec = rgb.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
+    return rgbDec ? "#" + TR.hex(rgbDec[1]) + TR.hex(rgbDec[2]) + TR.hex(rgbDec[3]) : rgb;
 }
 
 //function used to open a specific accordion
@@ -1399,7 +1406,7 @@ TR.selectElement = function( element ) {
         data_theme = "global";
     }
 
-    $( "#tabs" ).tabs( "select", TR.num[data_theme] );  
+    $( "#tabs" ).tabs( "select", TR.num[data_theme] );
     
     setTimeout(function() {
         $( "#tab" + (TR.num[data_theme]+1) ).find( ".accordion" ).each(function() {
@@ -1476,7 +1483,7 @@ TR.updateFormValues = function( $this ) {
                 colorwell = field.hasClass("colorwell") ? 1 : 0;
 
             if( i.indexOf("font-family") != -1 ) {
-                field.val( TR.styleArray[i].replace(/font-family:\s*/, "") );
+                field.val( value );
             } else if( i.indexOf("global-icon") != -1 ) {
                 if( i == "global-icon-set" ) {
                     field = $this.find( "select[data-name=global-icon-set]" );
@@ -1495,11 +1502,12 @@ TR.updateFormValues = function( $this ) {
                             with_disc.val( "without_disc" );
                         } else {
                             var hex = TR.rgbatohex( value ),
-                                opac = TR.rgbaOpacity( value );
+                                opac = TR.rgbaOpacity( value ),
+                                opacFloat = parseFloat(opac);
                             disc_color.val( hex ).css( "background-color", hex );
-                            disc_opacity.val( parseFloat(opac) * 100 );
+                            disc_opacity.val( isNaN(opacFloat) ? opac : opacFloat * 100 );
                             with_disc.val( "with_disc" );
-                            if( TR.grayValue(hex) < 127 ) {
+                            if( TR.grayValue( hex ) < 127 ) {
                                 disc_color.css( "color", "#ffffff" );
                             } else {
                                 disc_color.css( "color", "#000000" );
@@ -1512,9 +1520,10 @@ TR.updateFormValues = function( $this ) {
                     var shadow_color = $this.find( "[data-name=global-box-shadow-color].colorwell" ),
                         shadow_opacity = $this.find( "[data-name=global-box-shadow-color]:not(.colorwell)" ),
                         hex = TR.rgbatohex( value ),
-                        opac = TR.rgbaOpacity( value );
+                        opac = TR.rgbaOpacity( value ),
+                        opacFloat = parseFloat(opac);
                     shadow_color.val( hex ).css( "background-color", hex );
-                    shadow_opacity.val( parseFloat(opac) * 100 );
+                    shadow_opacity.val( isNaN(opacFloat) ? opac : opacFloat * 100 );
                     if( TR.grayValue(hex) < 127 ) {
                         shadow_color.css( "color", "#ffffff" );
                     } else {
@@ -1525,7 +1534,7 @@ TR.updateFormValues = function( $this ) {
                 }
             } else {
                 field.val( value );
-                if( colorwell ) {
+                if ( colorwell && value != '' ) {
                     if( TR.grayValue(value) < 127 ) {
                         field.css( "color", "#ffffff" );
                     } else {
@@ -1550,9 +1559,9 @@ TR.updateThemeRoller = function( tab ) {
 
     var $tab = $( "#tab" + tab );
     $tab.find( ".accordion" ).accordion({
-        header: "h3", 
-        active: false, 
-        clearStyle: true, 
+        header: "h3",
+        active: false,
+        clearStyle: true,
         collapsible: true
     });
     
@@ -1561,14 +1570,14 @@ TR.updateThemeRoller = function( tab ) {
         var name = $( this ).attr( "data-name" );
         if( name.indexOf("shadow-color") == -1 ) {
             $( "#colorpicker" ).css({
-                "position": "absolute", 
-                "left": 40, 
+                "position": "absolute",
+                "left": 40,
                 "top": pos.top + 21
             });
         } else {
             $( "#colorpicker" ).css({
-                "position": "absolute", 
-                "left": 100, 
+                "position": "absolute",
+                "left": 100,
                 "top": pos.top + 21
             });
         }
@@ -1577,7 +1586,7 @@ TR.updateThemeRoller = function( tab ) {
         $( "#colorpicker" ).css( "position", "static" );
         $( "#colorpicker" ).hide();
         $tab.find( ".slider[data-name=" + $(this).attr("data-name") + "][data-type=" + $(this).attr("data-type") + "] a" ).css({
-            "background": $( this ).val(), 
+            "background": $( this ).val(),
             "border-color": $( this ).val()
         });
     });
@@ -1599,7 +1608,7 @@ TR.updateThemeRoller = function( tab ) {
         $( selected = this ).css( "opacity", 1 ).addClass( "colorwell-selected" );
     });
     $tab.find( ".slider" ).slider({
-        max : 80, 
+        max : 80,
         value: 40
     });
 
@@ -1610,9 +1619,7 @@ TR.updateThemeRoller = function( tab ) {
         drop: function() {
             var $this = $( this );
             var color = $(".ui-draggable-dragging").css("background-color");
-            if( color != "transparent" ) {
-                color = TR.rgbtohex( color );
-            }
+            color = TR.rgbtohex( color );
             $( ".ui-draggable .ui-draggable-dragging" ).trigger( "drop" );
             $this.val( color ).css( "background-color", color );
             $this.trigger( "change" );
@@ -1621,14 +1628,14 @@ TR.updateThemeRoller = function( tab ) {
     
     $tab.find( "input[data-type=background]" ).each(function() {
         $tab.find( ".slider[data-type=background][data-name=" + $(this).attr("data-name") + "] a" ).css({
-            "background": $( this ).val(), 
+            "background": $( this ).val(),
             "border-color": $( this ).val()
         });
     });
 
     $tab.find( ".colorwell" ).bind( "change", function() {
         $tab.find( ".slider[data-name=" + $(this).attr("data-name") + "][data-type=" + $(this).attr("data-type") + "] a" ).css({
-            "background": $( this ).val(), 
+            "background": $( this ).val(),
             "border-color": $( this ).val()
         });
     });
@@ -1659,12 +1666,7 @@ TR.updateThemeRoller = function( tab ) {
         }
     });
     
-    $tab.find( "[data-type=font-family]" ).bind( "blur change keyup", function() {
-        TR.styleArray[$( this ).attr( "data-name" )] = "font-family: " + this.value;
-        TR.updateAllCSS();
-    });
-    
-    $( "[data-type=color], [data-type=text-shadow], [data-type=border], [data-type=link]", "#tab" + tab )
+    $( "[data-type=color], [data-type=text-shadow], [data-type=border], [data-type=link], [data-type=font-family]", "#tab" + tab )
         .bind( "blur change keyup", function(){
             TR.styleArray[$( this ).attr( "data-name" )] = this.value;
             TR.updateAllCSS();
