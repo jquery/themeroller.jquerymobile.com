@@ -116,26 +116,24 @@ TR.addSwatch = function( new_style, duplicate ) {
                 css = TR.styleBlock.text();
             if( duplicate ) {
                 //if there is a swatch to be duplicated, we use the letter passed in to do our regex patterns
-                var start_reg = new RegExp( "\\/\\*\\s" + duplicate.toUpperCase() + ".*\\n-*\\*\\/" ),
-                    end_reg = new RegExp( "\\/\\*\\s" + TR.alpha[ TR.num[duplicate] + 1 ].toUpperCase() + ".*\\n-*\\*\\/" );
+                var temp_css_template_dupe,
+                    temp_css_reg = new RegExp( "(\\/\\*\\s" + duplicate.toUpperCase() + ".*[\\r\\n]+-*\\*\\/[\\s\\S]+?)\\s*\\/\\*\\s(?:" + TR.alpha[ TR.num[duplicate] + 1 ].toUpperCase() + "\\b.*[\\r\\n]+-*|Structure\\s+)\\*\\/" );
                 
-                if( css.search( end_reg ) == -1 ) {
-                    end_reg = new RegExp( "\\/\\*\\sStructure " );
+                if ( temp_css_template_dupe = css.match(temp_css_reg) ) {
+                    temp_css_template = temp_css_template_dupe[1];
+                    var reg1 = new RegExp( "-" + duplicate + ",", "g" ),
+                        reg2 = new RegExp( "-" + duplicate + "\\s", "g" ),
+                        reg3 = new RegExp( "\\{" + duplicate + "-", "g" ),
+                        reg4 = new RegExp( "-" + duplicate + ":", "g" ),
+                        reg5 = new RegExp( "\\/\\*\\s" + duplicate.toUpperCase(), "g" );
+                    temp_css_template = temp_css_template.replace( reg1, "-" + lower + "," )
+                        .replace( reg2, "-" + lower + " " )
+                        .replace( reg3, "{" + lower + "-" )
+                        .replace( reg4, "-" + lower + ":" )
+                        .replace( reg5, "/* " + upper );
                 }
-                temp_css_template = css.substring( css.search( start_reg ), css.search( end_reg ) );
-
-                var reg1 = new RegExp( "-" + duplicate + ",", "g" ),
-                    reg2 = new RegExp( "-" + duplicate + "\\s", "g" ),
-                    reg3 = new RegExp( "\\{" + duplicate + "-", "g" ),
-                    reg4 = new RegExp( "-" + duplicate + ":", "g" ),
-                    reg5 = new RegExp( "\\/\\*\\s" + duplicate.toUpperCase(), "g" );
-                temp_css_template = temp_css_template.replace( reg1, "-" + lower + "," )
-                    .replace( reg2, "-" + lower + " " )
-                    .replace( reg3, "{" + lower + "-" )
-                    .replace( reg4, "-" + lower + ":" )
-                    .replace( reg5, "/* " + upper );
             }
-            css = css.replace( /\/\*\sStructure\s/, temp_css_template + "\n\n/* Structure " );
+            css = css.replace( /\s*(\/\*\sStructure\s)/, '\n\n\n' + temp_css_template.replace( '$', '$$' ) + '\n\n\n$1' );
             TR.styleBlock.text( css );
         }
         
@@ -467,7 +465,7 @@ TR.deleteSwatch = function( e, ele ) {
     
     //delete the swatch's CSS from the file
     var css = TR.styleBlock.text(),
-        start_reg = new RegExp ("\\/\\*\\s" + TR.alpha[TR.tabCount - 2].toUpperCase() + "\\s*\\n-*\\*\\/" ),
+        start_reg = new RegExp ("\\/\\*\\s" + TR.alpha[TR.tabCount - 2].toUpperCase() + "\\s*-*\\*\\/" ),
         end_reg = new RegExp( "\\/\\*\\sStructure \\*\\/" ),
         start = css.search( start_reg ),
         end = css.search( end_reg ),
@@ -1084,10 +1082,9 @@ TR.initInspector = function() {
 //initialize graySwatch CSS template for a new blank swatch
 TR.initGraySwatch = function() {
     var css = TR.styleBlock.text(),
-        start_reg = new RegExp( "\\/\\*\\sA.*\\n-*\\*\\/" ),
-        end_reg = new RegExp( "\\/\\*\\sStructure " );
+        swatch_reg = new RegExp( "(\\/\\*\\sA.*[\\r\\n]+-*\\*\\/[\\s\\S]+?)\\/\\*\\sStructure " );
 
-    TR.graySwatch = css.substring( css.search( start_reg ), css.search( end_reg ) );
+    TR.graySwatch = css.match(swatch_reg)[1];
 }
 
 //initStyleArray is used to initialize the array of tokens and the TR.styleArray
