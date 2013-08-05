@@ -10,7 +10,7 @@ TR.initPanel = function() {
 	var tabPanel, tabPanelLabel,
 		controlGroup, controlGroupLabel,
 		control, controlLabel,
-		newTabPanel, newAccordion,
+		newTab, newTabPanel, newAccordion,
 		newControlGroup, newControl,
 		count = 1;
 	

@@ -1103,14 +1103,13 @@ TR.initStyleArray = function( refresh ) {
     }
 
     var style = TR.styleBlock.text();
-    escaped_style = style.replace( /\n/g, "%0A" );
-    escaped_style = escaped_style.replace( /\t/g, "%09" );
     
     var regReferences = new RegExp( '/\\*\\{([^\\}]*)}\\*/', 'g' ),
         regVal = new RegExp( '^(?:([\\S\\s]*font-family:)(\\s*[\\S\\s]*)|([\\s\\S]*?)(\\s*\\S*\\s*))$' ),
+        matchRef,
+        matchVal,
         afterLast = 0,
         preReference,
-        match,
         val,
         referenceComment,
         reference,
