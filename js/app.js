@@ -533,15 +533,8 @@ TR.initControls = function() {
         TR.redo();
     })
     
-    //Font Family
-    $( "[data-type=font-family]" ).bind( "blur change keyup", function() {
-        var name = $( this ).attr( "data-name" );
-        TR.styleArray[name] = "font-family: " + this.value;
-        TR.updateAllCSS();
-    });
-
-    //Link, Text Color, Text Shadow, Border Color
-    $( "[data-type=link], [data-type=color], [data-type=text-shadow], [data-type=border]" )
+    //Link, Text Color, Text Shadow, Border Color, Font Family
+    $( "[data-type=link], [data-type=color], [data-type=text-shadow], [data-type=border], [data-type=font-family]" )
         .bind( "blur change keyup", function(){
             TR.styleArray[$( this ).attr( "data-name" )] = this.value;
             TR.updateAllCSS();
@@ -1107,7 +1100,7 @@ TR.initStyleArray = function( refresh ) {
     escaped_style = escaped_style.replace( /\t/g, "%09" );
     
     var regReferences = new RegExp( '/\\*\\{([^\\}]*)}\\*/', 'g' ),
-        regVal = new RegExp( '^(?:([\\S\\s]*)(font-family:\\s*[\\S\\s]*)|([\\s\\S]*?\\s*)(\\S*\\s*))$' ),
+        regVal = new RegExp( '^(?:([\\S\\s]*font-family:)(\\s*[\\S\\s]*)|([\\s\\S]*?)(\\s*\\S*\\s*))$' ),
         afterLast = 0,
         preReference,
         match,
@@ -1487,7 +1480,7 @@ TR.updateFormValues = function( $this ) {
                 colorwell = field.hasClass("colorwell") ? 1 : 0;
 
             if( i.indexOf("font-family") != -1 ) {
-                field.val( TR.styleArray[i].replace(/font-family:\s*/, "") );
+                field.val( value );
             } else if( i.indexOf("global-icon") != -1 ) {
                 if( i == "global-icon-set" ) {
                     field = $this.find( "select[data-name=global-icon-set]" );
@@ -1670,12 +1663,7 @@ TR.updateThemeRoller = function( tab ) {
         }
     });
     
-    $tab.find( "[data-type=font-family]" ).bind( "blur change keyup", function() {
-        TR.styleArray[$( this ).attr( "data-name" )] = "font-family: " + this.value;
-        TR.updateAllCSS();
-    });
-    
-    $( "[data-type=color], [data-type=text-shadow], [data-type=border], [data-type=link]", "#tab" + tab )
+    $( "[data-type=color], [data-type=text-shadow], [data-type=border], [data-type=link], [data-type=font-family]", "#tab" + tab )
         .bind( "blur change keyup", function(){
             TR.styleArray[$( this ).attr( "data-name" )] = this.value;
             TR.updateAllCSS();
