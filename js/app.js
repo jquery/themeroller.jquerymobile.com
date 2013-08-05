@@ -499,6 +499,9 @@ TR.deleteSwatch = function( e, ele ) {
 
 //takes a hex color and computes the grayscale value
 TR.grayValue = function( color ) {
+    if ( !/^[^a-z][a-f\d]{6}/i.test( color ) ) {
+        return 127;
+    }
     var color_arr = color.split( "" );
     
     var red = parseInt( ( color_arr[1] + color_arr[2] ), 16 );
@@ -546,7 +549,7 @@ TR.initControls = function() {
         var name = $this.attr( "data-name" );
         var slider = $( ".slider[data-type=radius][data-name=" + name + "]" );
         var val = parseFloat( $this.val().replace(/[^0-9\.]/g, "") );
-        slider.slider( "value", val );
+        slider.slider( "value", isNaN(val) ? 0 : val );
         TR.styleArray[name] = $this.val();
         TR.updateAllCSS();
     });
@@ -611,17 +614,25 @@ TR.initControls = function() {
     $( "[data-type=box_shadow]" ).bind( "blur change keyup", function() {
         var color_el = $( "[data-type=box_shadow]:first" ),
             opac_el = $( "[data-type=box_shadow]:eq(1)" ),
-            color_arr = color_el.val().split( "" ),
-            red = parseInt( (color_arr[1] + color_arr[2]), 16 ),
-            green = parseInt( (color_arr[3] + color_arr[4]), 16 ),
-            blue = parseInt( (color_arr[5] + color_arr[6]), 16 ),
-            opacity = parseFloat( opac_el.val() ) / 100;
+            value = color_el.val().trim();
+        
+        if ( /^[^a-z][a-f\d]{6}/i.test(value) ) {
+            var color_arr = value.split( "" ),
+                red = parseInt( (color_arr[1] + color_arr[2]), 16 ),
+                green = parseInt( (color_arr[3] + color_arr[4]), 16 ),
+                blue = parseInt( (color_arr[5] + color_arr[6]), 16 ),
+                opacity = parseFloat( opac_el.val() ) / 100;
             
-        if ( !opacity ) {
-            opacity = 0;
+            if ( !opacity ) {
+                opacity = 0;
+            }
+            
+            TR.styleArray["global-box-shadow-color"] = "rgba(" + red + "," + green + "," + blue + "," + opacity + ")";
+        }
+        else {
+            TR.styleArray["global-box-shadow-color"] = value;
         }
         
-        TR.styleArray["global-box-shadow-color"] = "rgba(" + red + "," + green + "," + blue + "," + opacity + ")";  
         TR.updateAllCSS();
     });
     
@@ -896,9 +907,7 @@ TR.initDraggableColors = function() {
         drop: function() {
             var $this = $( this );
             var color = $(".ui-draggable-dragging").css("background-color");
-            if( color != "transparent" ) {
-                color = TR.rgbtohex( color );
-            }
+            color = TR.rgbtohex( color );
             $( ".ui-draggable .ui-draggable-dragging" ).trigger( "drop" );
             $this.val( color ).css( "background-color", color );
             $this.trigger( "change" );
@@ -980,9 +989,7 @@ TR.initDraggableColors = function() {
                     swatch = element.attr( "data-swatch" );
                 }
                 var color = $( ".color-drag.ui-draggable-dragging" ).css( "background-color" ) || $( ".kuler-color.ui-draggable-dragging" ).css( "background-color" );
-                if( color != "transparent" ) {
-                    color = TR.rgbtohex( color );
-                }
+                color = TR.rgbtohex( color );
             
                 for( var i in classtokey ) {
                     if( el_class.indexOf(i) != -1 ) {
@@ -1361,20 +1368,20 @@ TR.refreshIframe = function( swatch ) {
 
 //Function to convert hex format to a rgba color
 TR.rgbatohex = function(rgba) {
-    rgba = rgba.match(/^rgba\((\d+),\s*(\d+),\s*(\d+),\s*([\d.]+)\)$/);
-    return "#" + TR.hex(rgba[1]) + TR.hex(rgba[2]) + TR.hex(rgba[3]);
+    var rgbDec = rgba.match(/^rgba\((\d+),\s*(\d+),\s*(\d+),/);
+    return rgbDec ? "#" + TR.hex(rgbDec[1]) + TR.hex(rgbDec[2]) + TR.hex(rgbDec[3]) : rgba;
 }
 
 //Function to get opacity from rgba
 TR.rgbaOpacity = function(rgba) {
-    rgba = rgba.match(/^rgba\((\d+),\s*(\d+),\s*(\d+),\s*([\d.]+)\)$/);
-    return rgba[4];
+    var oDec = rgba.match(/^rgba\(\d+,\s*\d+,\s*\d+,\s*([\d.]+)\)$/);
+    return oDec ? oDec[1] : rgba;
 }
 
-//Function to convert hex format to a rgb color
+//Function to convert rgb color to a hex format
 TR.rgbtohex = function(rgb) {
-    rgb = rgb.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
-    return "#" + TR.hex(rgb[1]) + TR.hex(rgb[2]) + TR.hex(rgb[3]);
+    var rgbDec = rgb.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
+    return rgbDec ? "#" + TR.hex(rgbDec[1]) + TR.hex(rgbDec[2]) + TR.hex(rgbDec[3]) : rgb;
 }
 
 //function used to open a specific accordion
@@ -1499,9 +1506,10 @@ TR.updateFormValues = function( $this ) {
                             with_disc.val( "without_disc" );
                         } else {
                             var hex = TR.rgbatohex( value ),
-                                opac = TR.rgbaOpacity( value );
+                                opac = TR.rgbaOpacity( value ),
+                                opacFloat = parseFloat(opac);
                             disc_color.val( hex ).css( "background-color", hex );
-                            disc_opacity.val( parseFloat(opac) * 100 );
+                            disc_opacity.val( isNaN(opacFloat) ? opac : opacFloat * 100 );
                             with_disc.val( "with_disc" );
                             if( TR.grayValue(hex) < 127 ) {
                                 disc_color.css( "color", "#ffffff" );
@@ -1516,9 +1524,10 @@ TR.updateFormValues = function( $this ) {
                     var shadow_color = $this.find( "[data-name=global-box-shadow-color].colorwell" ),
                         shadow_opacity = $this.find( "[data-name=global-box-shadow-color]:not(.colorwell)" ),
                         hex = TR.rgbatohex( value ),
-                        opac = TR.rgbaOpacity( value );
+                        opac = TR.rgbaOpacity( value ),
+                        opacFloat = parseFloat(opac);
                     shadow_color.val( hex ).css( "background-color", hex );
-                    shadow_opacity.val( parseFloat(opac) * 100 );
+                    shadow_opacity.val( isNaN(opacFloat) ? opac : opacFloat * 100 );
                     if( TR.grayValue(hex) < 127 ) {
                         shadow_color.css( "color", "#ffffff" );
                     } else {
@@ -1529,7 +1538,7 @@ TR.updateFormValues = function( $this ) {
                 }
             } else {
                 field.val( value );
-                if( colorwell ) {
+                if ( colorwell && value != '' ) {
                     if( TR.grayValue(value) < 127 ) {
                         field.css( "color", "#ffffff" );
                     } else {
@@ -1614,9 +1623,7 @@ TR.updateThemeRoller = function( tab ) {
         drop: function() {
             var $this = $( this );
             var color = $(".ui-draggable-dragging").css("background-color");
-            if( color != "transparent" ) {
-                color = TR.rgbtohex( color );
-            }
+            color = TR.rgbtohex( color );
             $( ".ui-draggable .ui-draggable-dragging" ).trigger( "drop" );
             $this.val( color ).css( "background-color", color );
             $this.trigger( "change" );
