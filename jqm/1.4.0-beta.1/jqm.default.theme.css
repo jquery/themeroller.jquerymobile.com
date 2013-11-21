@@ -559,6 +559,8 @@ html head + body .ui-body-b.ui-focus {
 	box-shadow: 0 0 12px 			#33ccff /*{b-active-background-color}*/;
 }
 
+/* Structure */
+
 /* Disabled
 -----------------------------------------------------------------------------------------------------------*/
 /* Class ui-disabled deprecated in 1.4. :disabled not supported by IE8 so we use [disabled] */
