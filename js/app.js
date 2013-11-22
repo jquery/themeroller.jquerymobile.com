@@ -1024,7 +1024,7 @@ TR.initDraggableColors = function() {
 //intialize mouseover and click events for Inspector
 TR.initInspector = function() {
     //click on an element with inspector-on and select element in panel
-    TR.iframe.find( "[data-form]" ).mouseup(function(e) {
+    TR.iframe.delegate( "[data-form]", "mouseup", function(e) {
         if( $("#inspector-button").hasClass("active") ) {
             e.stopPropagation();
             TR.selectElement( $(this) );        
@@ -1033,7 +1033,7 @@ TR.initInspector = function() {
     });
     
     //highlight moves as you mouseover things
-    TR.iframe.find( "[data-form]" ).bind( "mouseover", function() {
+    TR.iframe.delegate( "[data-form]", "mouseover", function() {
         var $this = $( this );
         if( $("#inspector-button").hasClass("active") ) {
             var left = $this.offset().left, top = $this.offset().top,
