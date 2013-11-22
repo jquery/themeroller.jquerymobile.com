@@ -988,8 +988,13 @@ TR.initDraggableColors = function() {
                 //if no acceptable element was found, drop the color
                 $( ".ui-draggable .ui-draggable-dragging" ).trigger( "drop" );
             } else {
-                //else apply the color and select the element in the panel
-                var swatch = element.attr( "data-theme" );
+                // else apply the color and select the element in the panel
+                // In case of a >= 1.4 label we consider the element to which it may be referring
+                var swatch = ( TR.version.indexOf( "1.4." ) >= 0 ?
+                    ( element.is( "label" ) ?
+                        $( TR.iframe[ 0 ].getElementById( element.attr( "for" ) ) ) :
+                        element ) :
+                    element ).attr( "data-theme" );
                 if( el_class == ".ui-btn-active" ) {
                     swatch = "global";
                 }
