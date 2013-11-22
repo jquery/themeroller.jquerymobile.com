@@ -931,6 +931,10 @@ TR.initDraggableColors = function() {
             ".ui-btn-active": "-active"
         }
 
+        if ( TR.version.indexOf( "1.4." ) >= 0 ) {
+            classtokey[ ".ui-btn-" ] = "-bup";
+        }
+
         //different alpha array - no global
         var alphabet = [ "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z" ];
 
