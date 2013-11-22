@@ -158,7 +158,7 @@ TR.addSwatch = function( new_style, duplicate ) {
         var iframe_window = $( "iframe" )[0].contentWindow;
         //This is a bug in JQM. Header initialization is using a live pagecreate handler on the page
         //ideally we should be able to write iframe_window.$(".swatch:last").trigger("create");
-        if ( TR.version.indexOf( "1.4." ) < -1 ) {
+        if ( TR.version.indexOf( "1.4." ) < 0 ) {
             iframe_window.$( ".ui-page" ).trigger( "pagecreate" );
         } else {
             iframe_window.$( ".ui-page" ).page().enhanceWithin();
@@ -1176,7 +1176,7 @@ TR.initThemeRoller = function() {
     }
     
     //remove page theme class so iframe looks ok
-    if ( TR.version.indexOf( "1.4." ) < -1 ) {
+    if ( TR.version.indexOf( "1.4." ) < 0 ) {
         TR.iframe.find( "[data-role=page]" ).removeClass( "ui-body-c" );
     } else {
         TR.iframe.find( "[data-role=page]" ).removeClass( "ui-page-theme-a" );
