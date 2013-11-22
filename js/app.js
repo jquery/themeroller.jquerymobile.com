@@ -938,7 +938,7 @@ TR.initDraggableColors = function() {
         //different alpha array - no global
         var alphabet = [ "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z" ];
 
-        var droppables = [ ".ui-btn-", ".ui-btn-up-", ".ui-btn-down-", ".ui-bar-", ".ui-body-", "ui-page-theme-" ];
+        var droppables = [ ".ui-btn-", ".ui-btn-up-", ".ui-btn-down-", ".ui-bar-", ".ui-body-", ".ui-page-theme-" ];
         
         if(TR.movingColor) {
             TR.movingColor = 0;
