@@ -1046,6 +1046,7 @@ TR.initDraggableColors = function() {
             
             var element = null;
             var el_class = "";
+            var foundKey = false;
             //loop through possible classes and if mouse is above one,
             //end the loop (order is based on precedence)
             for( var i = 0; i < droppables.length; i++ ) {
@@ -1109,8 +1110,14 @@ TR.initDraggableColors = function() {
                     for ( var j in classtokey[ i ] ) {
                         if( el_class.indexOf( j ) != -1 ) {
                             TR.applyColor( color, swatch + classtokey[i][j] );
+                            foundKey = true;
+                        }
+                        if ( foundKey ) {
                             break;
                         }
+                    }
+                    if ( foundKey ) {
+                        break;
                     }
                 }
                                 
