@@ -1,5 +1,5 @@
 (function( $, window, undefined ) {
-	
+
 TR.initPanel = function() {
 	if ( $.isEmptyObject( TR.panelDict ) ) {
 		TR.panelDict = TR.panelDictBase;
@@ -12,16 +12,23 @@ TR.initPanel = function() {
 		control, controlLabel,
 		newTabPanel, newAccordion,
 		newControlGroup, newControl,
+		TRVersion = $( "#version" ).text(),
 		count = 1;
 	
 	for ( var tab in TR.panelDict ) {
 		tabPanel = TR.panelDict[ tab ];
+		if ( tabPanel.version && !TR.versionCompare( TRVersion, tabPanel.version ) ) {
+			continue;
+		}
 		tabPanelLabel = tabPanel.label;
 		//create tabPanel and tab
 		newTab = $( '<li><a href="#tab' + count + '">' + tab + '</a></li>' );
 		newTabPanel = $( '<div id="tab' + count + '"><h1></h1></div>' );
 		for ( controlGroupLabel in tabPanel ) {
 			controlGroup = tabPanel[ controlGroupLabel ];
+			if ( controlGroup.version && !TR.versionCompare( TRVersion, controlGroup.version ) ) {
+				continue;
+			}
 			if ( typeof controlGroup !== "string" ) {
 				//create accordion
 				newAccordion = $( '<div class="accordion"><div><h3><a href="#">' + controlGroupLabel + '</a></h3><form></form></div></div>' );
@@ -168,6 +175,7 @@ TR.panelDictBase = {
 		},
 		
 		"Active State": {
+			"version": "(-1.4)",
 			"data-form": "ui-btn-active",
 			
 			"Text Color": {
@@ -309,7 +317,65 @@ TR.panelDictBase = {
 		"duplicate": "duplicate-swatch-a",
 		
 		"delete": "delete-swatch-a",
-		
+
+		// Duplicated from global active state for version >= 1.4
+		"Active State": {
+			"version": "[1.4-)",
+			"data-form": "ui-btn-active-a",
+			
+			"Text Color": {
+				"type": "color",
+				"group": "color",
+				"name": "a-active-color"
+			},
+			
+			"Text Shadow": [
+				{
+					"type": "number",
+					"unit": "px",
+					"group": "text-shadow",
+					"name": "a-active-shadow-x",
+					"title": "Controls the horizontal offset of text shadow"
+				},
+				
+				{
+					"type": "number",
+					"unit": "px",
+					"group": "text-shadow",
+					"name": "a-active-shadow-y",
+					"title": "Controls the vertical offset of text shadow"
+				},
+				
+				{
+					"type": "number",
+					"unit": "px",
+					"group": "text-shadow",
+					"name": "a-active-shadow-radius",
+					"title": "Controls the blur of text shadow"
+				},
+				
+				{
+					"type": "color",
+					"group": "text-shadow",
+					"name": "a-active-shadow-color",
+					"separator": true
+				},
+			],
+            
+			"Background": {
+				"type": "gradient",
+				"group": "background",
+				"name": "a-active-background-color",
+				"separator": true
+			},
+			
+			"Border": {
+				"type": "color",
+				"group": "border",
+				"name": "a-active-border"
+			}
+		},
+
 		"Header/Footer Bar": {
 			"data-form": "ui-bar-a",
 			
