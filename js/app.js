@@ -1023,20 +1023,16 @@ TR.initDraggableColors = function() {
     //if so it runs throught the dom to see if the mouse position is above
     //an acceptable element, if so it calls applyColor on that element
     $(document).mouseup(function(e) {
-        var classtokey = {
-            ".ui-bar-" : "-bar",
-            ".ui-body-" : "-body",
-            ".ui-page-theme-" : "-page",
-            ".ui-btn-up-": "-bup",
-            ".ui-btn-": "-btn",
-            ".ui-btn-down-": "-bdown",
-            ".ui-link": "-link",
-            ".ui-btn-active": "-active"
-        }
-
-        if ( TR.versionCompare( "[1.4-)" ) ) {
-            classtokey[ ".ui-btn-" ] = "-bup";
-        }
+        var classtokey = [
+            { ".ui-bar-" : "-bar" },
+            { ".ui-body-" : "-body" },
+            { ".ui-page-theme-" : "-page" },
+            { ".ui-btn-up-": "-bup" },
+            { ".ui-btn-down-": "-bdown" },
+            { ".ui-link": "-link" },
+            { ".ui-btn-active": "-active" },
+            { ".ui-btn-": ( TR.versionCompare( "[1.4-)" ) ? "-bup" : "-btn" ) }
+        ];
 
         //different alpha array - no global
         var alphabet = [ "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z" ];
@@ -1110,9 +1106,11 @@ TR.initDraggableColors = function() {
                 }
             
                 for( var i in classtokey ) {
-                    if( el_class.indexOf(i) != -1 ) {
-                        TR.applyColor( color, swatch + classtokey[i] );
-                        break;
+                    for ( var j in classtokey[ i ] ) {
+                        if( el_class.indexOf( j ) != -1 ) {
+                            TR.applyColor( color, swatch + classtokey[i][j] );
+                            break;
+                        }
                     }
                 }
                                 
