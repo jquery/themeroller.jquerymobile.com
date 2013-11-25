@@ -1095,7 +1095,7 @@ TR.initDraggableColors = function() {
                         $( TR.iframe[ 0 ].getElementById( element.attr( "for" ) ) ) :
                         element ) :
                     element ).attr( "data-theme" );
-                if( el_class == ".ui-btn-active" ) {
+                if( el_class == ".ui-btn-active" && TR.versionCompare( "(-1.4)" ) ) {
                     swatch = "global";
                 }
                 if( el_class.indexOf(".ui-bar") != -1 ) {
@@ -1563,8 +1563,12 @@ TR.selectElement = function( element ) {
     }
 
     if( element.hasClass("ui-btn-active") ) {
-        data_theme = "global";
-        form = "ui-btn-active";
+        if ( TR.versionCompare( "(-1.4)" ) ) {
+            data_theme = "global";
+            form = "ui-btn-active";
+        } else {
+            form = "ui-btn-active-" + data_theme;
+        }
     }
     if( form == "ui-link" ) {
         data_theme = "global";
@@ -1573,8 +1577,8 @@ TR.selectElement = function( element ) {
         data_theme = "global";
     }
 
-    $( "#tabs" ).tabs( "select", TR.num[data_theme] );  
-    
+    $( "#tabs" ).tabs( "select", TR.num[data_theme] );
+
     setTimeout(function() {
         $( "#tab" + (TR.num[data_theme]+1) ).find( ".accordion" ).each(function() {
             if( $(this).attr("data-form") == form ) {
