@@ -432,7 +432,7 @@ TR.panelDictBase = {
 			}
 		},
 		
-		"Content Body": {
+		"Body": {
 			"data-form": "ui-body-a",
 			
 			"Link Color": {
