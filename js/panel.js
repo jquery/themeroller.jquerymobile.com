@@ -35,6 +35,9 @@ TR.initPanel = function() {
 				newControlGroup = newAccordion.find( "form" );
 				for ( controlLabel in controlGroup ) {
 					control = controlGroup[ controlLabel ];
+					if ( control.version && !TR.versionCompare( TRVersion, control.version ) ) {
+						continue;
+					}
 					if (typeof control !== "string" ) {
 						//create control
 						newControlGroup.append( TR.createControl( control, controlLabel ) );
