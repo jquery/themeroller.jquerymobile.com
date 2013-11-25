@@ -439,6 +439,7 @@ TR.panelDictBase = {
 			"data-form": "ui-body-a",
 			
 			"Link Color": {
+				"version": "(-1.4)",
 				"type": "link",
 				"group": "link",
 				"name": "a-body-link-color"
