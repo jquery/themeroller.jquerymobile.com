@@ -8,7 +8,7 @@
  * Dual licensed under the MIT or GPL Version 2 licenses.
  * http://jquery.org/license
  *
- * 
+ *
  * Originally created by Tyler Benziger: https://github.com/TylerBenziger
  *
  */
@@ -138,7 +138,7 @@ TR.versionCompare = function( version, intervals ) {
 	return returnValue;
 };
 
-//cleaning up a few classes and adding a few attributes so the 
+//cleaning up a few classes and adding a few attributes so the
 //inspector works properly after jQuery Mobile has done its markup injection
 TR.addInspectorAttributes = function( swatch ) {
     var slider = TR.iframe.find( "[name=slider][data-theme=" + swatch + "]" ).siblings( "div" ),
@@ -148,7 +148,7 @@ TR.addInspectorAttributes = function( swatch ) {
             $( this ).find( ".ui-radio:first span:first" ).removeClass( "ui-corner-top" );
         }),
 		static = TR.iframe.find( ".ui-li-static.ui-btn-up-" + swatch );
-        
+
     slider.attr( "data-form", "ui-btn-up-" + swatch ).attr( "data-theme", swatch ).addClass( "ui-btn-up-" + swatch );
     slider.find( "a" ).attr( "data-form", "ui-btn-up-" + swatch ).attr( "data-theme", swatch );
     select.attr( "id", "select-choice-" + swatch );
@@ -161,13 +161,13 @@ TR.addInspectorAttributes = function( swatch ) {
 TR.addMostRecent = function( color ) {
     var found = 0,
         most_recents = $( "#most-recent-colors .color-drag" );
-    
+
     most_recents.each( function() {
         if( color == $(this).css("background-color") ) {
             found = 1;
         }
     });
-    
+
     if( !found ) {
         var last = null;
         most_recents.each(function() {
@@ -193,7 +193,7 @@ TR.updateMostRecent = function( newColor ) {
     }
 }
 
-//adds some CSS, a tab panel, and a preview for the new swatch 
+//adds some CSS, a tab panel, and a preview for the new swatch
 TR.addSwatch = function( new_style, duplicate ) {
     var duplicate = duplicate || null;
     $( ".delete-swatch-a" ).show();
@@ -201,7 +201,7 @@ TR.addSwatch = function( new_style, duplicate ) {
         var next_tab = TR.tabCount + 1,
             lower = TR.alpha[TR.tabCount - 1],
             upper = lower.toUpperCase();
-        
+
         //new_style flag is only set if styles have not been added to TR.styleArray
         //or CSS yet. correctNumberOfSwatches calles addSwatch with new_style=false
         //so this block is skipped
@@ -219,7 +219,7 @@ TR.addSwatch = function( new_style, duplicate ) {
                 //if there is a swatch to be duplicated, we use the letter passed in to do our regex patterns
                 var start_reg = new RegExp( "\\/\\*\\s" + duplicate.toUpperCase() + ".*\\n-*\\*\\/" ),
                     end_reg = new RegExp( "\\/\\*\\s" + TR.alpha[ TR.num[duplicate] + 1 ].toUpperCase() + ".*\\n-*\\*\\/" );
-                
+
                 if( css.search( end_reg ) == -1 ) {
                     end_reg = new RegExp( "\\/\\*\\sStructure " );
                 }
@@ -239,23 +239,23 @@ TR.addSwatch = function( new_style, duplicate ) {
             css = css.replace( /\/\*\sStructure\s/, temp_css_template + "\n\n/* Structure " );
             TR.styleBlock.text( css );
         }
-        
+
         //giving the contents of the new tab
         var temp_panel_template = TR.panelTemplate.replace( /Swatch A/, "Swatch " + upper )
             .replace( /"a\-/g, "\"" + lower + "-" ).replace( /\-a"/g, "-" + lower + "\"" );
-        
+
         $( "#tabs" ).tabs( "add", "#tab" + (TR.tabCount + 1), "+" )
             .find( "ul li a[href=#tab" + TR.tabCount + "]" ).text( upper );
 
         var newTabPanel = $( "#tab" + TR.tabCount );
 
         newTabPanel.html( temp_panel_template );
-        
+
         //adding swatch to preview document
         var temp_swatch_template = TR.swatchTemplate.replace( /"a"/g, "\"" + lower + "\"" ).replace( />A<\/h1>/g, ">" + upper + "</h1>" )
             .replace( /-a\s/g, "-" + lower + " " ).replace( /-a\"/g, "-" + lower + "\"" );
         $( temp_swatch_template ).insertAfter( TR.iframe.find(".swatch:last") );
-        
+
         var iframe_window = $( "iframe" )[0].contentWindow;
         //This is a bug in JQM. Header initialization is using a live pagecreate handler on the page
         //ideally we should be able to write iframe_window.$(".swatch:last").trigger("create");
@@ -264,10 +264,10 @@ TR.addSwatch = function( new_style, duplicate ) {
         } else {
             iframe_window.$( ".ui-page" ).page().enhanceWithin();
         }
-        
+
         //adding data-form attribute to slider
         TR.addInspectorAttributes( lower );
-             
+
         //redefine the token array
         //not with refresh because we've only defined the CSS
         //let initStyleArray edit the styleArray
@@ -277,29 +277,29 @@ TR.addSwatch = function( new_style, duplicate ) {
 
         //binds all appropriate events for accordions and new tab
         TR.updateThemeRoller( TR.tabCount );
-        
+
         //adjust the height of the add-swatch box
         var swatch_height = TR.iframe.find( ".swatch:last" ).outerHeight();
         TR.iframe.find( ".add-swatch" ).height( swatch_height );
-        
+
         if( TR.firstAdd ) {
             //apply paging of the tabs
             $( "#tabs" ).tabs("paging", {
-                cycle: true, 
-                follow: true, 
-                tabsPerPage: 0, 
-                followOnSelect: true, 
+                cycle: true,
+                follow: true,
+                tabsPerPage: 0,
+                followOnSelect: true,
                 selectOnAdd: false
             });
             TR.firstAdd = 0;
         }
-        
+
         TR.refreshIframe( TR.alpha[TR.tabCount - 1] );
         TR.iframe.find( "[data-role=dialog]" ).remove();
-        
+
         //reconfigure binding of addSwatch event
         $( "[href=#tab" + TR.tabCount + "]" ).unbind( "click", TR.addSwatchEvent );
-        
+
         $( "[href=#tab" + next_tab + "]" ).bind( "click", TR.addSwatchEvent );
 
         TR.tabCount++;
@@ -313,7 +313,7 @@ TR.addSwatchEvent = function(e) {
 }
 
 //When a color is dropped this function applies a color to the element
-//automatically detecting things like 
+//automatically detecting things like
 TR.applyColor = function( color, prefix ) {
     var color_arr = color.split( "" ),
         red = parseInt( (color_arr[1] + color_arr[2]), 16 ),
@@ -322,11 +322,11 @@ TR.applyColor = function( color, prefix ) {
         gray = TR.grayValue( color ),
         swatch = prefix.substr( 0, 1 ),
         element = prefix.substr( 2, prefix.length - 2 );
-        
+
     element = prefix.split( "-" );
     element[0] = "";
     element = element.join( "" );
-    
+
     //if we're on a button hover we call this same function with button down as element
     if( element == "bhover" ) {
         color = TR.percentColor( color, 1.15 );
@@ -378,7 +378,7 @@ TR.applyColor = function( color, prefix ) {
             $( "input[data-name=" + prefix + "-shadow-color]" ).val( "#eeeeee" ).css( "background-color", "#eeeeee" );
             TR.styleArray[prefix + "-color"] = "#000000";
             TR.styleArray[prefix + "-shadow-color"] = "#eeeeee";
-        } else {    
+        } else {
             $( "input[data-name=" + prefix + "-color]" ).val( "#ffffff" ).css( "background-color", "#ffffff" );
             $( "input[data-name=" + prefix + "-shadow-color]" ).val( "#444444" ).css( "background-color", "#444444" );
             TR.styleArray[prefix + "-color"] = "#ffffff";
@@ -417,7 +417,7 @@ TR.computeGradient = function( color, slider_value ) {
     var blue = parseInt( (color_arr[5] + color_arr[6]), 16 );
 
     var convex, red_start, green_start, blue_start, percent;
-        
+
     if( slider_value >= 40 ) {
         convex = 1;
         percent = 1 + ( slider_value - 40 ) / 100;
@@ -474,7 +474,7 @@ TR.correctNumberOfSwatches = function() {
             var error_message = $( "<h3>Invalid Theme</h3><p>Reminder: We can only store this theme URL on the server for 30 days, then it will be deleted. \
             Download a theme to keep a copy safe that you can import later.</p>" ).css( "color", "#f00" );
             $( "#welcome h1" ).after( error_message );
-        
+
             //import default theme
             $.ajax({
                 url: "jqm/" + TR.version + "/jqm.starter.theme.css",
@@ -482,7 +482,7 @@ TR.correctNumberOfSwatches = function() {
                 mimeType: "text/plain",
                 success: function( data ) {
                     $( "#upload textarea" ).val( data );
-                    TR.styleBlock.text( data ); 
+                    TR.styleBlock.text( data );
                     TR.correctNumberOfSwatches();
                     for ( var letter = TR.num[ "a" ]; letter < TR.num[ "c" ]; letter++ ) {
                         TR.addSwatch( true, "a" );
@@ -501,7 +501,7 @@ TR.correctNumberOfSwatches = function() {
         }
     }
     var swatch_counter = matches.length + 2;
-    
+
     //start at A and go over current tabs and update form values
     for( var i = 1; i < TR.tabCount; i++ ) {
         TR.updateFormValues( $("#tab" + i) );
@@ -511,11 +511,11 @@ TR.correctNumberOfSwatches = function() {
     for( ; TR.tabCount < swatch_counter && TR.tabCount < 28;  ) {
         TR.addSwatch( false );
     }
-    
+
     //remove swatches from preview if necessary and tabs
     for( ; TR.tabCount > swatch_counter; TR.tabCount-- ) {
         TR.iframe.find( ".swatch:last" ).remove();
-        
+
         $( "#tabs .ui-tabs-panel:last" ).attr( "id", "tab" + (TR.tabCount - 1) );
         $( "#tabs ul li a:contains(\"+\")" ).attr( "href", "#tab" + (TR.tabCount - 1) );
         if( $("#tabs").tabs("option", "selected") == (TR.tabCount - 2) ) {
@@ -531,7 +531,7 @@ TR.deleteSwatch = function( e, ele ) {
     e.preventDefault();
        var delete_class = ele.attr( "class" );
     var letter =  delete_class.substr( delete_class.length - 1, delete_class.length );
-    var number = TR.num[letter];    
+    var number = TR.num[letter];
 
     //log before delete
     TR.undoLog.push( TR.styleBlock.text() );
@@ -559,7 +559,7 @@ TR.deleteSwatch = function( e, ele ) {
 
         TR.updateFormValues( $("#tab" + i) );
     }
-    
+
     //deleting the last swatch's rules in the TR.styleArray
     var last_letter = TR.alpha[TR.tabCount - 2];
     var prefix = last_letter + "-";
@@ -570,7 +570,7 @@ TR.deleteSwatch = function( e, ele ) {
         }
     }
     TR.styleArray = newStyleArray;
-    
+
     //delete the swatch's CSS from the file
     var css = TR.styleBlock.text(),
         start_reg = new RegExp ("\\/\\*\\s" + TR.alpha[TR.tabCount - 2].toUpperCase() + "\\s*\\n-*\\*\\/" ),
@@ -580,7 +580,7 @@ TR.deleteSwatch = function( e, ele ) {
         part1 = css.substring(0, start),
         part2 = css.substring(end, css.length);
     TR.styleBlock.text( part1 + part2 );
-    
+
     TR.tabCount--;
     $( "#tabs" ).find( ".ui-tabs-panel:last" ).attr( "id", "tab" + TR.tabCount ).end()
         .find( "ul li a:contains(\"+\")" ).attr( "href", "#tab" + TR.tabCount );
@@ -589,24 +589,24 @@ TR.deleteSwatch = function( e, ele ) {
         $( "#tabs" ).tabs( "select", TR.tabCount - 2 );
     }
     $( "#tabs" ).tabs( "remove", TR.tabCount - 1 );
-    
+
     if( TR.tabCount == 3 ) {
         $( ".delete-swatch-a" ).hide();
     }
-    
+
     var swatch_height = TR.iframe.find( ".swatch:last" ).outerHeight();
     TR.iframe.find( ".add-swatch" ).height(swatch_height);
-        
+
     TR.initStyleArray( "refresh" );
     TR.updateAllCSS( true );
-    
+
     return false;
 }
 
 //takes a hex color and computes the grayscale value
 TR.grayValue = function( color ) {
     var color_arr = color.split( "" );
-    
+
     var red = parseInt( ( color_arr[1] + color_arr[2] ), 16 );
     var green = parseInt( ( color_arr[3] + color_arr[4] ), 16 );
     var blue = parseInt( ( color_arr[5] + color_arr[6] ), 16 );
@@ -633,12 +633,12 @@ TR.initControls = function() {
     $( "#undo" ).click(function() {
         TR.undo();
     });
-    
+
     //Redo
     $( "#redo" ).click(function() {
         TR.redo();
     })
-    
+
     //Font Family
     $( "[data-type=font-family]" ).bind( "blur change keyup", function() {
         var name = $( this ).attr( "data-name" );
@@ -699,7 +699,7 @@ TR.initControls = function() {
             TR.updateAllCSS();
         }
     });
-    
+
     //Start and End colors
     $( "[data-type=start] , [data-type=end]" ).bind( "blur mouseup change keyup", function() {
         var index = $( this ).attr( "data-name" ) + "";
@@ -729,15 +729,15 @@ TR.initControls = function() {
             green = parseInt( (color_arr[3] + color_arr[4]), 16 ),
             blue = parseInt( (color_arr[5] + color_arr[6]), 16 ),
             opacity = parseFloat( opac_el.val() ) / 100;
-            
+
         if ( !opacity ) {
             opacity = 0;
         }
-        
-        TR.styleArray["global-box-shadow-color"] = "rgba(" + red + "," + green + "," + blue + "," + opacity + ")";  
+
+        TR.styleArray["global-box-shadow-color"] = "rgba(" + red + "," + green + "," + blue + "," + opacity + ")";
         TR.updateAllCSS();
     });
-    
+
     //Box Shadow
     $( "[data-type=box_shadow][data-name=global-box-shadow-size]" ).bind( "blur change keyup", function() {
         TR.styleArray["global-box-shadow-size"] = $(this).val();
@@ -758,7 +758,7 @@ TR.initControls = function() {
 
         if( elements[0] == "with_disc" ) {
             TR.styleArray["global-icon-color"] = elements[1];
-            TR.styleArray["global-icon-disc"] = "rgba(" + red + "," + green + "," + blue + "," + ( parseFloat(elements[2]) / 100 ) + ")";   
+            TR.styleArray["global-icon-disc"] = "rgba(" + red + "," + green + "," + blue + "," + ( parseFloat(elements[2]) / 100 ) + ")";
             TR.styleArray["global-icon-shadow"] = "rgba(255,255,255,.4)";
         } else {
             TR.styleArray["global-icon-disc"] = "transparent";
@@ -801,7 +801,7 @@ TR.initControls = function() {
     $( ".colorwell" ).bind( "change" , function() {
         var $this = $( this );
         $( ".slider[data-name=" + $this.attr("data-name") + "][data-type=" + $this.attr("data-type") + "] a").css({
-            "background": $this.val(), 
+            "background": $this.val(),
             "border-color": $this.val()
         });
     });
@@ -810,7 +810,7 @@ TR.initControls = function() {
     $( "input[data-type=background]" ).each(function() {
         var $this = $( this )
         $( ".slider[data-type=background][data-name=" + $this.attr("data-name") + "] a" ).css({
-            "background": $this.val(), 
+            "background": $this.val(),
             "border-color": $this.val()
         });
     });
@@ -818,7 +818,7 @@ TR.initControls = function() {
     $( "[class|=\"delete-swatch\"]" ).click( function(e) {
         TR.deleteSwatch( e, $(this) );
     });
-    
+
     $( "[class|=\"duplicate-swatch\"]" ).click( function(e) {
         e.preventDefault();
         var letter = $(this).attr('class').split('-');
@@ -835,7 +835,7 @@ TR.initDialogs = function() {
         resizable: false,
         draggable: false,
     };
-    
+
     $( "#welcome" ).dialog( $.extend( {}, dialogObj, {
         width: 560,
         buttons: {
@@ -844,7 +844,7 @@ TR.initDialogs = function() {
             }
         }
     }));
-    
+
     $( "#share" ).dialog( $.extend( {}, dialogObj, {
         width: 800,
         buttons: {
@@ -854,7 +854,7 @@ TR.initDialogs = function() {
             }
         }
     }));
-        
+
     $( "#importing" ).dialog( $.extend( {}, dialogObj, {
         height: 70
     }));
@@ -868,17 +868,17 @@ TR.initDialogs = function() {
             }
         }
     }));
-    
+
     $( "#download" ).dialog( $.extend( {}, dialogObj, {
         width: 850,
         buttons: {
-            "Close": function() { 
-                $( this ).dialog( "close" ); 
+            "Close": function() {
+                $( this ).dialog( "close" );
             },
             "Download Zip": function() {
                 var theme_name = $( "input", this ).val();
                 if( theme_name && theme_name.indexOf(" ") == -1 ) {
-                    
+
                     $.ajax({
                         url: "./zip.php",
                         type: "POST",
@@ -893,7 +893,7 @@ TR.initDialogs = function() {
                             $( "#download" ).dialog( "close" );
                         }
                     });
-                    
+
                 } else {
                     alert( "Invalid theme name" );
                 }
@@ -908,8 +908,8 @@ TR.initDialogs = function() {
         resizable: false,
         draggable: false,
         buttons: {
-            "Cancel": function() { 
-                $( ".dialog#newColor" ).dialog( "close" ); 
+            "Cancel": function() {
+                $( ".dialog#newColor" ).dialog( "close" );
             },
             "Submit": function() {
                 var color = $( "#newColorInput" ).val().toLowerCase();
@@ -935,16 +935,16 @@ TR.initDialogs = function() {
                 });
         }
     });
-        
-    
+
+
     //ajax call performed when share link is clicked
     $( "#share-button" ).click(function(e) {
         e.preventDefault();
-        
+
         $( "#share" ).dialog( "open" );
-        
+
         var post_data = "ver=" + TR.version + "&file=" + TR.styleBlock.text();
-        
+
         $.ajax({
             type: "post",
             url: "share.php",
@@ -959,13 +959,13 @@ TR.initDialogs = function() {
             }
         });
     });
-    
+
     //help dialog
     $( "#help-button" ).click(function(e) {
         e.preventDefault();
         $( "#help" ).dialog( "open" );
     });
-    
+
     //upload dialog
     $( "#import-button" ).click(function() {
         $( "#upload" ).dialog( "open" );
@@ -974,10 +974,10 @@ TR.initDialogs = function() {
 
     //download dialog
     $( "#download-button" ).click(function() {
-        $( "#download" ).dialog( "open" );          
+        $( "#download" ).dialog( "open" );
         return false;
     });
-    
+
     //removing the close button from ui-dialogs
     $( ".tr_widget .ui-dialog-titlebar-close" ).remove();
 }
@@ -999,9 +999,9 @@ TR.initDraggableColors = function() {
             TR.movingColor = 1;
         }
     });
-    
+
     $( ".color-drag.disabled" ).draggable( "disable" );
-    
+
     //droppable for colorwell
     $( ".colorwell" ).droppable({
         accept: ".color-drag",
@@ -1017,7 +1017,7 @@ TR.initDraggableColors = function() {
             $this.trigger( "change" );
         }
     });
-    
+
     //large mouseup event detects if the user is dragging a color
     //if so it runs throught the dom to see if the mouse position is above
     //an acceptable element, if so it calls applyColor on that element
@@ -1037,12 +1037,12 @@ TR.initDraggableColors = function() {
         var alphabet = [ "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z" ];
 
         var droppables = [ ".ui-btn-", ".ui-btn-up-", ".ui-btn-down-", ".ui-bar-", ".ui-body-", ".ui-page-theme-" ];
-        
+
         if(TR.movingColor) {
             TR.movingColor = 0;
             var frame_offset = $( "iframe" ).offset();
             var el_offset = TR.iframe.find( ".ui-bar-a" ).offset();
-            
+
             var element = null;
             var el_class = "";
             var foundKey = false;
@@ -1104,7 +1104,7 @@ TR.initDraggableColors = function() {
                 if( color != "transparent" ) {
                     color = TR.rgbtohex( color );
                 }
-            
+
                 for( var i in classtokey ) {
                     for ( var j in classtokey[ i ] ) {
                         if( el_class.indexOf( j ) != -1 ) {
@@ -1119,15 +1119,15 @@ TR.initDraggableColors = function() {
                         break;
                     }
                 }
-                                
+
                 TR.selectElement(element);
-    
+
                 //store color in most recent colors
                 var color = element.css("background-color");
                 TR.addMostRecent( color );
             }
         }
-        
+
     });
 
     //triggering change on current colorwell forces the update of the css as well as
@@ -1143,21 +1143,21 @@ TR.initInspector = function() {
     TR.iframe.delegate( "[data-form]", "mouseup", function(e) {
         if( $("#inspector-button").hasClass("active") ) {
             e.stopPropagation();
-            TR.selectElement( $(this) );        
+            TR.selectElement( $(this) );
             TR.iframe.find( "#highlight" ).show();
         }
     });
-    
+
     //highlight moves as you mouseover things
     TR.iframe.delegate( "[data-form]", "mouseover", function() {
         var $this = $( this );
         if( $("#inspector-button").hasClass("active") ) {
             var left = $this.offset().left, top = $this.offset().top,
                 width = $this.outerWidth(), height = $this.outerHeight();
-            
+
             var parent = this;
-            
-            TR.iframe.find( "#highlight" ).mousemove(function(e) { 
+
+            TR.iframe.find( "#highlight" ).mousemove(function(e) {
                 var highlight = $( this );
                 $( "[data-form]", parent ).each(function() {
                     var $form = $( this ),
@@ -1167,36 +1167,36 @@ TR.initInspector = function() {
 
                     if( e.pageX <= right && e.pageX >= left && e.pageY <= bottom && e.pageY >= top ) {
                         highlight.css({
-                            "z-index": 20, 
-                            "position": "absolute", 
-                            "top": ( top - 3 ) + "px", 
-                            "left": ( left - 3 ) + "px", 
-                            "width": width + "px", 
-                            "height": height + "px", 
+                            "z-index": 20,
+                            "position": "absolute",
+                            "top": ( top - 3 ) + "px",
+                            "left": ( left - 3 ) + "px",
+                            "width": width + "px",
+                            "height": height + "px",
                             "border": "3px solid #0cc"
                         }).show();
                     }
                 });
             });
-            
+
             $( "iframe" ).contents().find( "#highlight" ).css({
-                "z-index": 20, 
-                "position": "absolute", 
-                "top": (top-3) + "px", 
-                "left": (left-3) + "px", 
-                "width": width + "px", 
-                "height": + height + "px", 
+                "z-index": 20,
+                "position": "absolute",
+                "top": (top-3) + "px",
+                "left": (left-3) + "px",
+                "width": width + "px",
+                "height": + height + "px",
                 "border": "3px solid #0cc"
             }).show();
         }
     });
-    
+
     TR.iframe.find( "#highlight" ).mousedown(function() {
         if( $("#inspector-button").hasClass("active") ) {
             $( this ).css( "z-index", -1 );
         }
     });
-    
+
     TR.iframe.bind( "mouseleave", function() {
         TR.iframe.find( "#highlight" ).hide();
         TR.iframe.find( "#highlight" ).unbind( "mousemove" );
@@ -1227,13 +1227,13 @@ TR.initStyleArray = function( refresh ) {
     var style = TR.styleBlock.text();
     escaped_style = style.replace( /\n/g, "%0A" );
     escaped_style = escaped_style.replace( /\t/g, "%09" );
-    
+
     var reg = new RegExp( "(?:font-family:)[^/\\*]+/\\*{[^\\*/]*}\\*/|\\s*\\S*\\s*/\\*{[^\\*/]*}\\*/" ),
         reference = "",
         length = 0,
         index = -1,
         i = 0;
-    
+
     while( style.length > 0 ) {
         var temp = reg.exec( style ) + "";
         length = temp.length;
@@ -1242,12 +1242,12 @@ TR.initStyleArray = function( refresh ) {
         index = style.search( reg );
         if( index != -1 ) {
             TR.tokens[i++] = {
-                value: style.substr( 0, index ), 
+                value: style.substr( 0, index ),
                 type: "string"
             };
             TR.tokens[i++] = {
-                value: style.substr( index, length ).trim(), 
-                type: "placeholder", 
+                value: style.substr( index, length ).trim(),
+                type: "placeholder",
                 ref: reference
             };
             //update TR.styleArray
@@ -1255,7 +1255,7 @@ TR.initStyleArray = function( refresh ) {
                 TR.styleArray[reference] = TR.tokens[i-1].value.replace( /\/\*.*\*\//, "" ).trim();
             }
             //cut off string and continue
-            style = style.substring( index+length ); 
+            style = style.substring( index+length );
         } else {
             TR.tokens[i++] = {
                 value: style,
@@ -1263,7 +1263,7 @@ TR.initStyleArray = function( refresh ) {
             };
             style = "";
         }
-        
+
     }
 }
 
@@ -1276,7 +1276,7 @@ TR.initThemeRoller = function() {
     //copy it to #styleblock so its in the scope of the iframe
     TR.styleBlock = TR.iframe.find( "#styleblock" );
     TR.styleBlock.text( $("#style").text() );
-    
+
     //store current version and preselect it in the import dropdown
     TR.version = $( "#version" ).text();
     $( "#upgrade-to-version" ).val( TR.version );
@@ -1290,7 +1290,7 @@ TR.initThemeRoller = function() {
     for( var i = 0; i < 3; i++ ) {
         TR.addInspectorAttributes( starting_swatches[i] );
     }
-    
+
     //remove page theme class so iframe looks ok
     if ( TR.versionCompare( "(-1.4)" ) ) {
         TR.iframe.find( "[data-role=page]" ).removeClass( "ui-body-c" );
@@ -1298,7 +1298,7 @@ TR.initThemeRoller = function() {
         TR.iframe.find( "[data-role=page]" ).removeClass( "ui-page-theme-a" );
     }
     TR.iframe.find( "[data-role=dialog]" ).remove();
-    
+
     //initialize templates for adding swatches later
     TR.panelTemplate = $( "#tab2" ).html();
 
@@ -1359,7 +1359,7 @@ TR.initThemeRoller = function() {
       TR.swatchTemplate = "<div class=\"preview ui-shadow swatch\"> <div class=\"ui-header ui-bar-a\" data-swatch=\"a\" data-theme=\"a\" data-form=\"ui-bar-a\" data-role=\"header\" role=\"banner\">       <a class=\"ui-btn-left ui-btn ui-btn-icon-notext ui-btn-corner-all ui-shadow ui-btn-up-a\" data-iconpos=\"notext\" data-theme=\"a\" data-role=\"button\" data-icon=\"home\" title=\" Home \">           <span class=\"ui-btn-inner ui-btn-corner-all\">             <span class=\"ui-btn-text\"> Home </span>               <span data-form=\"ui-icon\" class=\"ui-icon ui-icon-home ui-icon-shadow\"></span>           </span>     </a>        <h1 class=\"ui-title\" tabindex=\"0\" role=\"heading\" aria-level=\"1\">A</h1>      <a class=\"ui-btn-right ui-btn ui-btn-icon-notext ui-btn-corner-all ui-shadow ui-btn-up-a\" data-iconpos=\"notext\" data-theme=\"a\" data-role=\"button\" data-icon=\"grid\" title=\" Navigation \">            <span class=\"ui-btn-inner ui-btn-corner-all\">             <span class=\"ui-btn-text\"> Navigation </span>             <span data-form=\"ui-icon\" class=\"ui-icon ui-icon-grid ui-icon-shadow\"></span>           </span>     </a>    </div>      <div class=\"ui-content ui-body-a\" data-theme=\"a\" data-form=\"ui-body-a\" data-role=\"content\" role=\"main\">           <p>         Sample text and <a class=\"ui-link\" data-form=\"ui-body-a\" href=\"#\" data-theme=\"a\">links</a>.     </p>                <div data-role=\"fieldcontain\">            <fieldset data-role=\"controlgroup\">           <li data-swatch=\"a\" class=\"ui-li ui-li-divider ui-btn ui-bar-a ui-corner-top\" data-role=\"list-divider\" role=\"\" data-form=\"ui-bar-a\">List Header</li>                      <input type=\"radio\" name=\"radio-choice-a\" id=\"radio-choice-1-a\" value=\"choice-1\" checked=\"checked\" />             <label for=\"radio-choice-1-a\" data-form=\"ui-btn-up-a\" class=\"ui-corner-none\">Radio 1</label>              <input type=\"radio\" name=\"radio-choice-a\" id=\"radio-choice-2-a\" value=\"choice-2\" />             <label for=\"radio-choice-2-a\" data-form=\"ui-btn-up-a\">Radio 2</label>               <input type=\"checkbox\" name=\"checkbox-a\" id=\"checkbox-a\" class=\"custom\" checked=\"checked\" />              <label for=\"checkbox-a\" data-form=\"ui-btn-up-a\">Checkbox</label>                                </fieldset>     </div>      <div data-role=\"fieldcontain\">            <fieldset data-role=\"controlgroup\" data-type=\"horizontal\">              <input type=\"radio\" name=\"radio-view-a\" id=\"radio-view-a-a\" value=\"list\" checked=\"checked\"/>              <label for=\"radio-view-a-a\" data-form=\"ui-btn-up-a\">On</label>              <input type=\"radio\" name=\"radio-view-a\" id=\"radio-view-b-a\" value=\"grid\"  />                <label for=\"radio-view-b-a\" data-form=\"ui-btn-up-a\">Off</label>             </fieldset>         </div>              <div data-role=\"fieldcontain\">            <select name=\"select-choice-1\" id=\"select-choice-1\" data-native-menu=\"false\" data-theme=\"a\" data-form=\"ui-btn-up-a\">              <option value=\"standard\">Option 1</option>                <option value=\"rush\">Option 2</option>                <option value=\"express\">Option 3</option>             <option value=\"overnight\">Option 4</option>           </select>       </div>              <input type=\"text\" value=\"Text Input\" class=\"input\" data-form=\"ui-body-a\" />                <div data-role=\"fieldcontain\">            <input type=\"range\" name=\"slider\" value=\"50\" min=\"0\" max=\"100\" data-form=\"ui-body-a\" data-theme=\"a\" data-highlight=\"true\" />        </div>              <button data-icon=\"star\" data-theme=\"a\" data-form=\"ui-btn-up-a\">Button</button>   </div></div>";
     }
     TR.panelTemplate = $( "#tab2" ).html();
-    
+
     //call initialization methods
     TR.initGraySwatch();
     TR.initAddSwatch();
@@ -1370,7 +1370,7 @@ TR.initThemeRoller = function() {
     TR.initStyleArray();
     TR.correctNumberOfSwatches();
     TR.initVersioning();
-    
+
     if ( !TR.importedStyle ) {
         //start the app out with 3 swatches A-C default starter style only has 1
         for ( var letter = TR.num[ "a" ]; letter < TR.num[ "c" ]; letter++ ) {
@@ -1433,26 +1433,26 @@ TR.percentColor = function( color, percent ) {
             blue = "00";
         }
     }
-    
+
     return "#" + red + "" + green + "" + blue + "";
 }
 
 //updates Inspector behaviors in the iframe for a newly added swatch
-TR.refreshIframe = function( swatch ) { 
+TR.refreshIframe = function( swatch ) {
     //click behavior for inspector
     TR.iframe.find( ".ui-bar-" + swatch + ", " + ".ui-body-" + swatch + ", .ui-bar-" + swatch + " [data-form], .ui-body-" + swatch + " [data-form]" ).mouseup(function(e) {
         if( $("#inspector-button").hasClass("active") ) {
             e.stopPropagation();
             //apply attributes to slider of the new swatch
-                    
+
             var data_theme = $( this ).attr( "data-theme" );
             var form = $( this ).attr( "data-form" );
-            
+
             if(!data_theme) {
                 data_theme = form.split( "-" );
                 data_theme = data_theme[data_theme.length - 1];
             }
-            
+
             if( $(this).hasClass("ui-radio-on") ) {
                 data_theme = "global";
                 form = "ui-btn-active";
@@ -1463,9 +1463,9 @@ TR.refreshIframe = function( swatch ) {
             if( form == "ui-icon" ) {
                 data_theme = "global";
             }
-            
-            $( "#tabs" ).tabs( "select", TR.num[data_theme] );  
-            
+
+            $( "#tabs" ).tabs( "select", TR.num[data_theme] );
+
             setTimeout(function() {
                 $( "#tab" + (TR.num[data_theme] + 1) + " .accordion" ).each(function() {
                     if( $(this).attr("data-form") == form ) {
@@ -1479,11 +1479,11 @@ TR.refreshIframe = function( swatch ) {
                     }
                 });
             }, 200);
-                    
+
             TR.iframe.find( "#highlight" ).show();
         }
     });
-    
+
     //bind hover behavior for inspector
     TR.iframe.find( "[data-form$=-" + swatch + "]" ).bind( "mouseover", function() {
         if( $("#inspector-button").hasClass("active") ) {
@@ -1491,9 +1491,9 @@ TR.refreshIframe = function( swatch ) {
             var top = $( this ).offset().top;
             var width = $( this ).outerWidth();
             var height = $( this ).outerHeight();
-            
+
             var parent = this;
-            
+
             TR.iframe.find( "#highlight" ).mousemove(function(e) {
                 var highlight = this;
                 $( "[data-form]", parent ).each(function() {
@@ -1505,26 +1505,26 @@ TR.refreshIframe = function( swatch ) {
                     var bottom = top + height;
                     if( e.pageX <= right && e.pageX >= left && e.pageY <= bottom && e.pageY >= top ) {
                         $( highlight ).css({
-                            "z-index": 20, 
-                            "position": "absolute", 
-                            "top": (top - 3) + "px", 
-                            "left": (left - 3) + "px", 
-                            "width": width + "px", 
-                            "height": height + "px", 
+                            "z-index": 20,
+                            "position": "absolute",
+                            "top": (top - 3) + "px",
+                            "left": (left - 3) + "px",
+                            "width": width + "px",
+                            "height": height + "px",
                             "border": "3px solid #0cc"
                         }).show();
                     }
                 });
-                
+
             });
-            
+
             TR.iframe.find( "#highlight" ).css({
-                "z-index": 20, 
-                "position": "absolute", 
-                "top": (top - 3) + "px", 
-                "left": (left - 3) + "px", 
-                "width": width + "px", 
-                "height": height + "px", 
+                "z-index": 20,
+                "position": "absolute",
+                "top": (top - 3) + "px",
+                "left": (left - 3) + "px",
+                "width": width + "px",
+                "height": height + "px",
                 "border": "3px solid #0cc"
             }).show();
         }
@@ -1554,11 +1554,11 @@ TR.rgbtohex = function(rgb) {
 TR.selectElement = function( element ) {
     var data_theme = element.attr( "data-theme" );
     var form = element.attr( "data-form" );
-    
+
     if( !form ) {
         return;
     }
-    
+
     if( !data_theme ) {
         data_theme = form.split( "-" );
         data_theme = data_theme[data_theme.length - 1];
@@ -1627,7 +1627,7 @@ TR.updateAllCSS = function( skip_log ) {
         TR.undoLog.push( TR.styleBlock.text() );
         TR.redoLog = [];
     }
-    
+
     for( var i in TR.tokens ) {
         var t = TR.tokens[i];
         if( t.type == "placeholder" ) {
@@ -1637,7 +1637,7 @@ TR.updateAllCSS = function( skip_log ) {
         }
     }
     new_style = new_style.join( "" );
-    
+
     TR.styleBlock.text( new_style );
 }
 
@@ -1730,25 +1730,25 @@ TR.updateThemeRoller = function( tab ) {
 
     var $tab = $( "#tab" + tab );
     $tab.find( ".accordion" ).accordion({
-        header: "h3", 
-        active: false, 
-        clearStyle: true, 
+        header: "h3",
+        active: false,
+        clearStyle: true,
         collapsible: true
     });
-    
+
     $tab.find( ".colorwell" ).focus(function() {
         var pos = $( this ).offset();
         var name = $( this ).attr( "data-name" );
         if( name.indexOf("shadow-color") == -1 ) {
             $( "#colorpicker" ).css({
-                "position": "absolute", 
-                "left": 40, 
+                "position": "absolute",
+                "left": 40,
                 "top": pos.top + 21
             });
         } else {
             $( "#colorpicker" ).css({
-                "position": "absolute", 
-                "left": 100, 
+                "position": "absolute",
+                "left": 100,
                 "top": pos.top + 21
             });
         }
@@ -1757,11 +1757,11 @@ TR.updateThemeRoller = function( tab ) {
         $( "#colorpicker" ).css( "position", "static" );
         $( "#colorpicker" ).hide();
         $tab.find( ".slider[data-name=" + $(this).attr("data-name") + "][data-type=" + $(this).attr("data-type") + "] a" ).css({
-            "background": $( this ).val(), 
+            "background": $( this ).val(),
             "border-color": $( this ).val()
         });
     });
-    
+
     var f = $.farbtastic( "#colorpicker" );
     var p = $( "#colorpicker" ).css( "opacity", 1 );
     var selected;
@@ -1779,7 +1779,7 @@ TR.updateThemeRoller = function( tab ) {
         $( selected = this ).css( "opacity", 1 ).addClass( "colorwell-selected" );
     });
     $tab.find( ".slider" ).slider({
-        max : 80, 
+        max : 80,
         value: 40
     });
 
@@ -1798,21 +1798,21 @@ TR.updateThemeRoller = function( tab ) {
             $this.trigger( "change" );
         }
     });
-    
+
     $tab.find( "input[data-type=background]" ).each(function() {
         $tab.find( ".slider[data-type=background][data-name=" + $(this).attr("data-name") + "] a" ).css({
-            "background": $( this ).val(), 
+            "background": $( this ).val(),
             "border-color": $( this ).val()
         });
     });
 
     $tab.find( ".colorwell" ).bind( "change", function() {
         $tab.find( ".slider[data-name=" + $(this).attr("data-name") + "][data-type=" + $(this).attr("data-type") + "] a" ).css({
-            "background": $( this ).val(), 
+            "background": $( this ).val(),
             "border-color": $( this ).val()
         });
     });
-    
+
     $tab.find( ".more" ).click(function( e ) {
         e.preventDefault();
         var index = $( this ).attr( "data-name" );
@@ -1838,18 +1838,18 @@ TR.updateThemeRoller = function( tab ) {
             TR.showStartEnd[index] = "showing";
         }
     });
-    
+
     $tab.find( "[data-type=font-family]" ).bind( "blur change keyup", function() {
         TR.styleArray[$( this ).attr( "data-name" )] = "font-family: " + this.value;
         TR.updateAllCSS();
     });
-    
+
     $( "[data-type=color], [data-type=text-shadow], [data-type=border], [data-type=link]", "#tab" + tab )
         .bind( "blur change keyup", function(){
             TR.styleArray[$( this ).attr( "data-name" )] = this.value;
             TR.updateAllCSS();
         });
-    
+
     $tab.find( "[data-type=background]" ).bind("blur slide mouseup change keyup", function(event, slider) {
         if( !TR.timerID ) {
             TR.timerID = setTimeout(function() {
@@ -1874,7 +1874,7 @@ TR.updateThemeRoller = function( tab ) {
             TR.updateAllCSS();
         }
     });
-    
+
     $tab.find( "[data-type=start]" ).add( $tab.find( "[data-type=end]" ) ).bind("blur mouseup change keyup", function() {
         var index = $( this ).attr( "data-name" ) + "";
         index = index.split( "-" );
@@ -1890,7 +1890,7 @@ TR.updateThemeRoller = function( tab ) {
     $( ".delete-swatch-" + TR.alpha[tab - 1] ).click( function(e){
         TR.deleteSwatch( e, $(this) );
     });
-    
+
     $( ".duplicate-swatch-" + TR.alpha[tab - 1] ).click( function(e) {
         e.preventDefault();
         var letter = $(this).attr('class').split('-');
