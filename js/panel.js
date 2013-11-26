@@ -76,6 +76,7 @@ TR.createControl = function( control, label, subGroup ) {
 	var controlMarkup = subGroup ? '' : '<label class="first">' + label.toUpperCase() + '</label>',
 		type = control.type,
 		group = control.group,
+		version = $( "#version" ).text(),
 		name = control.name;
 
 	if ( TR.isArray( control ) ) {
@@ -105,6 +106,7 @@ TR.createControl = function( control, label, subGroup ) {
 			}
 			break;
 		case "link":
+			prefix = version.indexOf("1.4" ) != -1 ? name.replace("-color", "") : prefix;
 			controlMarkup += '<input data-type="' + group + '" data-name="' + name + '" class="colorwell"/>&nbsp;&nbsp;<a class="more" data-name="' + name + '" href="#">+</a><br class="clear" />';
 			controlMarkup += '<div class="start-end links" data-name="' + name + '">';
 			controlMarkup += '<label class="first">LINK HOVER</label><input data-type="' + group + '" data-name="' + prefix + '-hover" class="colorwell"/><br class="clear" />';
@@ -376,6 +378,17 @@ TR.panelDictBase = {
 				"group": "border",
 				"name": "a-active-border"
 			}
+		},
+
+		"Link": {
+			"version": "[1.4-)",
+			"data-form": "ui-link-a",
+
+			"Link Color": {
+				"type": "link",
+				"group": "link",
+				"name": "a-link-color"
+			},
 		},
 
 		"Header/Footer Bar": {
