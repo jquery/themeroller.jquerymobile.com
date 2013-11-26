@@ -1251,8 +1251,19 @@ TR.initStyleArray = function( refresh ) {
                 ref: reference
             };
             //update TR.styleArray
-            if( refresh !== "refresh" || (refresh === "refresh" && TR.styleArray[reference] === undefined) ) {
-                TR.styleArray[reference] = TR.tokens[i-1].value.replace( /\/\*.*\*\//, "" ).trim();
+            if( refresh !== "refresh" ||
+                ( refresh === "refresh" &&
+                    TR.styleArray[reference] === undefined ) ) {
+                // Use the value from <swatch>-body-* to initialize the value
+                // for <swatch>-page-* if the former one is defined and the
+                // latter one is not.
+                if ( TR.styleArray[reference] === undefined && ( reference.match( /[a-z]-page-/ ) ) &&
+                    TR.styleArray[ reference.replace( "-page-", "-body-" ) ] !== undefined ) {
+                    TR.styleArray[ reference ] = TR.styleArray[ reference.replace( "-page-", "-body-" ) ];
+                // Finally, if all else fails, grab the value from the existing theme
+                } else {
+                    TR.styleArray[reference] = TR.tokens[i-1].value.replace( /\/\*.*\*\//, "" ).trim();
+                }
             }
             //cut off string and continue
             style = style.substring( index+length );
