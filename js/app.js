@@ -390,7 +390,7 @@ TR.applyColor = function( color, prefix ) {
         //links are lighter on hover and darker once visited
         var lighter = TR.percentColor( color, 1.15 );
         var darker = TR.percentColor( color, 0.65 );
-        var styleName = TR.version.indexOf( "1.4") != -1 ? "-link" : "-body-link";
+        var styleName = TR.versionCompare( "[1.4-)" ) ? "-link" : "-body-link";
         TR.styleArray[swatch + styleName + "-color"] = color;
         TR.styleArray[swatch + styleName + "-active"] = color;
         TR.styleArray[swatch + styleName + "-hover"] = lighter;

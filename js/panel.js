@@ -40,7 +40,7 @@ TR.initPanel = function() {
 					}
 					if (typeof control !== "string" ) {
 						//create control
-						newControlGroup.append( TR.createControl( control, controlLabel ) );
+						newControlGroup.append( TR.createControl( TRVersion, control, controlLabel ) );
 					} else {
 						newAccordion.attr( "data-form", control );
 					}
@@ -72,17 +72,16 @@ TR.initPanel = function() {
 	TR.initializeUI();
 }
 
-TR.createControl = function( control, label, subGroup ) {
+TR.createControl = function( TRVersion, control, label, subGroup ) {
 	var controlMarkup = subGroup ? '' : '<label class="first">' + label.toUpperCase() + '</label>',
 		type = control.type,
 		group = control.group,
-		version = $( "#version" ).text(),
 		name = control.name;
 
 	if ( TR.isArray( control ) ) {
 		var controlSubGroup = $( "" );
 		for ( var i in control ) {
-			controlMarkup += TR.createControl( control[ i ], label, true );
+			controlMarkup += TR.createControl( TRVersion, control[ i ], label, true );
 		}
 		if ( control[i].separator ) {
 			return $( controlMarkup += '<br class="clear" /><div class="separator"></div>' );
@@ -106,7 +105,7 @@ TR.createControl = function( control, label, subGroup ) {
 			}
 			break;
 		case "link":
-			prefix = version.indexOf("1.4" ) != -1 ? name.replace("-color", "") : prefix;
+			prefix = TR.versionCompare( TRVersion, "[1.4-)" ) ? name.replace("-color", "") : prefix;
 			controlMarkup += '<input data-type="' + group + '" data-name="' + name + '" class="colorwell"/>&nbsp;&nbsp;<a class="more" data-name="' + name + '" href="#">+</a><br class="clear" />';
 			controlMarkup += '<div class="start-end links" data-name="' + name + '">';
 			controlMarkup += '<label class="first">LINK HOVER</label><input data-type="' + group + '" data-name="' + prefix + '-hover" class="colorwell"/><br class="clear" />';
