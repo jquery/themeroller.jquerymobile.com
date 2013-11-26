@@ -1315,7 +1315,7 @@ TR.initThemeRoller = function() {
             "<div class=\"ui-content ui-page-theme-a\" data-form=\"ui-page-theme-a\" data-theme=\"a\" role=\"main\">" +
                 "<div data-theme=\"a\" data-form=\"ui-body-a\" class=\"ui-body ui-body-a ui-corner-all\">" +
                     "<p>Body</p>" +
-                    "<p>Sample text and <a href=\"#\" data-theme=\"a\">links</a>.</p>" +
+                    "<p>Sample text and <a href=\"#\" data-theme=\"a\" data-form=\"ui-link-a\">links</a>.</p>" +
                 "</div>" +
                 "<ul data-role=\"listview\" data-inset=\"true\" data-theme=\"a\">" +
                     "<li data-role=\"list-divider\" data-theme=\"a\" data-swatch=\"a\" data-form=\"ui-bar-a\">List Header</li>" +
