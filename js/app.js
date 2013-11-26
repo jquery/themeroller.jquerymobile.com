@@ -1252,7 +1252,7 @@ TR.initStyleArray = function( refresh ) {
                 ref: reference
             };
             //update TR.styleArray
-            if( refresh != "refresh" ) {
+            if( refresh !== "refresh" || (refresh === "refresh" && TR.styleArray[reference] === undefined) ) {
                 TR.styleArray[reference] = TR.tokens[i-1].value.replace( /\/\*.*\*\//, "" ).trim();
             }
             //cut off string and continue
