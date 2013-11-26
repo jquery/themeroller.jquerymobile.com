@@ -390,14 +390,15 @@ TR.applyColor = function( color, prefix ) {
         //links are lighter on hover and darker once visited
         var lighter = TR.percentColor( color, 1.15 );
         var darker = TR.percentColor( color, 0.65 );
-        TR.styleArray[swatch + "-body-link-color"] = color;
-        TR.styleArray[swatch + "-body-link-active"] = color;
-        TR.styleArray[swatch + "-body-link-hover"] = lighter;
-        TR.styleArray[swatch + "-body-link-visited"] = darker;
-        $( "input[data-name=" + swatch + "-body-link-color]" ).val( color ).css( "background-color", color );
-        $( "input[data-name=" + swatch + "-body-link-active]" ).val( color ).css( "background-color", color );
-        $( "input[data-name=" + swatch + "-body-link-hover]" ).val( darker ).css( "background-color", lighter );
-        $( "input[data-name=" + swatch + "-body-link-visited]" ).val( lighter ).css( "background-color", darker );
+        var styleName = TR.version.indexOf( "1.4") != -1 ? "-link" : "-body-link";
+        TR.styleArray[swatch + styleName + "-color"] = color;
+        TR.styleArray[swatch + styleName + "-active"] = color;
+        TR.styleArray[swatch + styleName + "-hover"] = lighter;
+        TR.styleArray[swatch + styleName + "-visited"] = darker;
+        $( "input[data-name=" + swatch + styleName + "-color]" ).val( color ).css( "background-color", color );
+        $( "input[data-name=" + swatch + styleName + "-active]" ).val( color ).css( "background-color", color );
+        $( "input[data-name=" + swatch + styleName + "-hover]" ).val( darker ).css( "background-color", lighter );
+        $( "input[data-name=" + swatch + styleName + "-visited]" ).val( lighter ).css( "background-color", darker );
     }
 
     //we've updated TR.styleArray now update the CSS
