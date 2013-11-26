@@ -76,8 +76,9 @@ TR.createControl = function( control, label, subGroup ) {
 	var controlMarkup = subGroup ? '' : '<label class="first">' + label.toUpperCase() + '</label>',
 		type = control.type,
 		group = control.group,
-		name = control.name;
-	
+		name = control.name,
+		TRVersion = $( "#version" ).text();
+
 	if ( TR.isArray( control ) ) {
 		var controlSubGroup = $( "" );
 		for ( var i in control ) {
@@ -90,7 +91,6 @@ TR.createControl = function( control, label, subGroup ) {
 		return $( controlMarkup + '<br class="clear" />' );
 	}
 
-	
 	var prefix = name.split( "-" );
 	prefix = prefix[0] + "-" + prefix[1] + "-" + prefix[2];
 
@@ -118,12 +118,15 @@ TR.createControl = function( control, label, subGroup ) {
 			break;
 		case "gradient":
 			controlMarkup += '<input data-type="' + group + '" data-name="' + name + '" class="colorwell" />';
-			controlMarkup += '<div class="slider" data-type="' + group + '" data-name="' + name + '"></div>&nbsp;&nbsp;'
-			controlMarkup += '<a class="more" data-name="' + prefix + '" href="">+</a>';
-			controlMarkup += '<div class="start-end" data-name="' + prefix + '">';
-			controlMarkup += '<label class="first">START</label>';
-			controlMarkup += '<input data-type="start" data-name="' + prefix + '-start" class="colorwell"/>';
-			controlMarkup += '<label>END</label><input data-name="' + prefix + '-end" data-type="end" class="colorwell" /></div>';
+			// Background gradients will be ignored on jQM 1.4 and over.
+			if ( TR.versionCompare( TRVersion, "(-1.4)" ) ) {
+				controlMarkup += '<div class="slider" data-type="' + group + '" data-name="' + name + '"></div>&nbsp;&nbsp;'
+				controlMarkup += '<a class="more" data-name="' + prefix + '" href="">+</a>';
+				controlMarkup += '<div class="start-end" data-name="' + prefix + '">';
+				controlMarkup += '<label class="first">START</label>';
+				controlMarkup += '<input data-type="start" data-name="' + prefix + '-start" class="colorwell"/>';
+				controlMarkup += '<label>END</label><input data-name="' + prefix + '-end" data-type="end" class="colorwell" /></div>';
+			}
 			break;
 		case "select":
 			controlMarkup += '<select data-type="' + group + '" data-name="' + name + '">';
@@ -135,7 +138,7 @@ TR.createControl = function( control, label, subGroup ) {
 		default:
 			break;
 	}
-	
+
 	if ( noBreak ) {
 		return $( controlMarkup );
 	}
