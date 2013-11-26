@@ -324,15 +324,14 @@ TR.panelDictBase = {
 
 		"delete": "delete-swatch-a",
 
-		// Duplicated from global active state for version >= 1.4
-		"Active State": {
+		"Page": {
 			"version": "[1.4-)",
-			"data-form": "ui-btn-active-a",
+			"data-form": "ui-page-theme-a",
 
 			"Text Color": {
 				"type": "color",
 				"group": "color",
-				"name": "a-active-color"
+				"name": "a-page-color"
 			},
 
 			"Text Shadow": [
@@ -340,7 +339,7 @@ TR.panelDictBase = {
 					"type": "number",
 					"unit": "px",
 					"group": "text-shadow",
-					"name": "a-active-shadow-x",
+					"name": "a-page-shadow-x",
 					"title": "Controls the horizontal offset of text shadow"
 				},
 
@@ -348,7 +347,7 @@ TR.panelDictBase = {
 					"type": "number",
 					"unit": "px",
 					"group": "text-shadow",
-					"name": "a-active-shadow-y",
+					"name": "a-page-shadow-y",
 					"title": "Controls the vertical offset of text shadow"
 				},
 
@@ -356,14 +355,14 @@ TR.panelDictBase = {
 					"type": "number",
 					"unit": "px",
 					"group": "text-shadow",
-					"name": "a-active-shadow-radius",
+					"name": "a-page-shadow-radius",
 					"title": "Controls the blur of text shadow"
 				},
 
 				{
 					"type": "color",
 					"group": "text-shadow",
-					"name": "a-active-shadow-color",
+					"name": "a-page-shadow-color",
 					"separator": true
 				},
 			],
@@ -371,26 +370,15 @@ TR.panelDictBase = {
 			"Background": {
 				"type": "gradient",
 				"group": "background",
-				"name": "a-active-background-color",
+				"name": "a-page-background-color",
 				"separator": true
 			},
 
 			"Border": {
 				"type": "color",
 				"group": "border",
-				"name": "a-active-border"
+				"name": "a-page-border"
 			}
-		},
-
-		"Link": {
-			"version": "[1.4-)",
-			"data-form": "ui-link-a",
-
-			"Link Color": {
-				"type": "link",
-				"group": "link",
-				"name": "a-link-color"
-			},
 		},
 
 		"Header/Footer Bar": {
@@ -512,61 +500,15 @@ TR.panelDictBase = {
 			}
 		},
 
-		"Page": {
+		"Link": {
 			"version": "[1.4-)",
-			"data-form": "ui-page-theme-a",
+			"data-form": "ui-link-a",
 
-			"Text Color": {
-				"type": "color",
-				"group": "color",
-				"name": "a-page-color"
+			"Link Color": {
+				"type": "link",
+				"group": "link",
+				"name": "a-link-color"
 			},
-
-			"Text Shadow": [
-				{
-					"type": "number",
-					"unit": "px",
-					"group": "text-shadow",
-					"name": "a-page-shadow-x",
-					"title": "Controls the horizontal offset of text shadow"
-				},
-
-				{
-					"type": "number",
-					"unit": "px",
-					"group": "text-shadow",
-					"name": "a-page-shadow-y",
-					"title": "Controls the vertical offset of text shadow"
-				},
-
-				{
-					"type": "number",
-					"unit": "px",
-					"group": "text-shadow",
-					"name": "a-page-shadow-radius",
-					"title": "Controls the blur of text shadow"
-				},
-
-				{
-					"type": "color",
-					"group": "text-shadow",
-					"name": "a-page-shadow-color",
-					"separator": true
-				},
-			],
-
-			"Background": {
-				"type": "gradient",
-				"group": "background",
-				"name": "a-page-background-color",
-				"separator": true
-			},
-
-			"Border": {
-				"type": "color",
-				"group": "border",
-				"name": "a-page-border"
-			}
 		},
 
 		"Button: Normal": {
@@ -730,6 +672,64 @@ TR.panelDictBase = {
 				"type": "color",
 				"group": "border",
 				"name": "a-bdown-border"
+			}
+		},
+
+		// Duplicated from global active state for version >= 1.4
+		"Active State": {
+			"version": "[1.4-)",
+			"data-form": "ui-btn-active-a",
+
+			"Text Color": {
+				"type": "color",
+				"group": "color",
+				"name": "a-active-color"
+			},
+
+			"Text Shadow": [
+				{
+					"type": "number",
+					"unit": "px",
+					"group": "text-shadow",
+					"name": "a-active-shadow-x",
+					"title": "Controls the horizontal offset of text shadow"
+				},
+
+				{
+					"type": "number",
+					"unit": "px",
+					"group": "text-shadow",
+					"name": "a-active-shadow-y",
+					"title": "Controls the vertical offset of text shadow"
+				},
+
+				{
+					"type": "number",
+					"unit": "px",
+					"group": "text-shadow",
+					"name": "a-active-shadow-radius",
+					"title": "Controls the blur of text shadow"
+				},
+
+				{
+					"type": "color",
+					"group": "text-shadow",
+					"name": "a-active-shadow-color",
+					"separator": true
+				},
+			],
+
+			"Background": {
+				"type": "gradient",
+				"group": "background",
+				"name": "a-active-background-color",
+				"separator": true
+			},
+
+			"Border": {
+				"type": "color",
+				"group": "border",
+				"name": "a-active-border"
 			}
 		}
 	},
