@@ -215,7 +215,8 @@ TR.addSwatch = function( new_style, duplicate ) {
             //adding swatch to CSS
             var temp_css_template = TR.graySwatch.replace( /-a,/g, "-" + lower + "," )
                 .replace( /-a:/g, "-" + lower + ":" ).replace( /-a\s/g, "-" + lower + " " )
-                .replace( /\{a-/g, "{" + lower + "-" ).replace( /\/\*\sA/, "/* " + upper ),
+                .replace( /\{a-/g, "{" + lower + "-" ).replace( /\/\*\sA/, "/* " + upper )
+                .replace( /-a\./g, "-" + lower + "." ),
                 css = TR.styleBlock.text();
             if( duplicate ) {
                 //if there is a swatch to be duplicated, we use the letter passed in to do our regex patterns
