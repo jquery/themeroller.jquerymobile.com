@@ -106,26 +106,23 @@ function singleVersionComparison( leftHandSideVersion, operation, rightHandSideV
 // >= or <= comparison whereas a round bracket denotes strict comparison.
 // The list of intervals is comma-separated
 TR.versionCompare = function( version, intervals ) {
-	var startCompare = ">=",
-		endCompare = "<=",
-		returnValue = false;
+	var returnValue = false;
 
+	// If no version is passed in, use TR.version
 	if ( arguments.length === 1 ) {
 		intervals = version;
 		version = TR.version;
 	}
 
 	$.each( intervals.split( "," ), function( index, interval ) {
-		if ( interval.charAt( 0 ) === "(" ) {
-			startCompare = ">";
-		}
-		if ( interval.charAt( interval.length - 1 ) === ")" ) {
-			endCompare = "<";
-		}
-		interval = interval.replace(/\[|\)|\]|\(/g, "" );
-		interval = interval.split( "-" );
-		// Invalid interval
+		var startCompare = ( interval.charAt( 0 ) ? ">" : ">=" ),
+			endCompare = ( interval.charAt( interval.length - 1 ) ? "<" : "<=" );
+
+		// Get rid of brackets enclosing the interval and split out the two versions
+		interval = interval.replace(/\[|\)|\]|\(/g, "" ).split( "-" );
+
 		if ( interval.length !== 2 ) {
+			// We found an invalid interval - stop $.each-ing and return false.
 			return false;
 		} else if ( ( interval[ 0 ] === interval[ 1 ] === "" ) ||
 			( ( interval[ 0 ] === "" ) && singleVersionComparison( version, endCompare, interval[ 1 ] ) ) ||
