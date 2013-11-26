@@ -118,12 +118,15 @@ TR.createControl = function( TRVersion, control, label, subGroup ) {
 			break;
 		case "gradient":
 			controlMarkup += '<input data-type="' + group + '" data-name="' + name + '" class="colorwell" />';
-			controlMarkup += '<div class="slider" data-type="' + group + '" data-name="' + name + '"></div>&nbsp;&nbsp;'
-			controlMarkup += '<a class="more" data-name="' + prefix + '" href="">+</a>';
-			controlMarkup += '<div class="start-end" data-name="' + prefix + '">';
-			controlMarkup += '<label class="first">START</label>';
-			controlMarkup += '<input data-type="start" data-name="' + prefix + '-start" class="colorwell"/>';
-			controlMarkup += '<label>END</label><input data-name="' + prefix + '-end" data-type="end" class="colorwell" /></div>';
+			// Background gradients will be ignored on jQM 1.4 and over.
+			if ( TR.versionCompare( TRVersion, "(-1.4)" ) ) {
+				controlMarkup += '<div class="slider" data-type="' + group + '" data-name="' + name + '"></div>&nbsp;&nbsp;'
+				controlMarkup += '<a class="more" data-name="' + prefix + '" href="">+</a>';
+				controlMarkup += '<div class="start-end" data-name="' + prefix + '">';
+				controlMarkup += '<label class="first">START</label>';
+				controlMarkup += '<input data-type="start" data-name="' + prefix + '-start" class="colorwell"/>';
+				controlMarkup += '<label>END</label><input data-name="' + prefix + '-end" data-type="end" class="colorwell" /></div>';
+			}
 			break;
 		case "select":
 			controlMarkup += '<select data-type="' + group + '" data-name="' + name + '">';
