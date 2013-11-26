@@ -497,6 +497,63 @@ TR.panelDictBase = {
 			}
 		},
 
+		"Page": {
+			"version": "[1.4-)",
+			"data-form": "ui-page-theme-a",
+
+			"Text Color": {
+				"type": "color",
+				"group": "color",
+				"name": "a-page-color"
+			},
+
+			"Text Shadow": [
+				{
+					"type": "number",
+					"unit": "px",
+					"group": "text-shadow",
+					"name": "a-page-shadow-x",
+					"title": "Controls the horizontal offset of text shadow"
+				},
+
+				{
+					"type": "number",
+					"unit": "px",
+					"group": "text-shadow",
+					"name": "a-page-shadow-y",
+					"title": "Controls the vertical offset of text shadow"
+				},
+
+				{
+					"type": "number",
+					"unit": "px",
+					"group": "text-shadow",
+					"name": "a-page-shadow-radius",
+					"title": "Controls the blur of text shadow"
+				},
+
+				{
+					"type": "color",
+					"group": "text-shadow",
+					"name": "a-page-shadow-color",
+					"separator": true
+				},
+			],
+
+			"Background": {
+				"type": "gradient",
+				"group": "background",
+				"name": "a-page-background-color",
+				"separator": true
+			},
+
+			"Border": {
+				"type": "color",
+				"group": "border",
+				"name": "a-page-border"
+			}
+		},
+
 		"Button: Normal": {
 			"data-form": "ui-btn-up-a",
 
