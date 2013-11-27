@@ -1286,6 +1286,32 @@ TR.initStyleArray = function( refresh ) {
         }
 
     }
+
+    // As of 1.4 make sure that if the background colour of the chosen keys
+    // does not differ from the corresponding border colour, then we use the
+    // border colour calculation to establish a new border colour.
+    if ( TR.upgrading && TR.versionCompare( TR.upgrading, "[1.4-)" ) ) {
+        var element, swatch, backgroundColor, borderKey;
+            elements = [ "active", "bar", "bdown", "bhover", "bup", "body" ],
+            swatches = [ "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k",
+                "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x",
+                "y", "z" ];
+
+        for ( element in elements ) {
+            for ( swatch in swatches ) {
+                backgroundColor = TR.styleArray[ swatches[ swatch ] + "-" +
+                    elements[ element ] + "-background-color" ];
+                borderKey = swatches[ swatch ] + "-" +
+                    elements[ element ] + "-border";
+
+                if ( backgroundColor === TR.styleArray[ borderKey ] &&
+                    backgroundColor !== undefined ) {
+                    TR.styleArray[ borderKey ] = TR.borderColor( backgroundColor,
+                        TR.grayValue( backgroundColor ) );
+                }
+            }
+        }
+    }
 }
 
 //first initialization method called when the DOM and the iframe are both loaded
