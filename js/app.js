@@ -312,6 +312,13 @@ TR.addSwatchEvent = function(e) {
     TR.addSwatch( true );
 }
 
+// Compute a border colour based on a background colour
+TR.borderColor = function( color, gray ) {
+    return ( gray > 90 ) ?
+        TR.percentColor( color, 0.55 ):
+        TR.percentColor( color, 1.4 );
+};
+
 //When a color is dropped this function applies a color to the element
 //automatically detecting things like
 TR.applyColor = function( color, prefix ) {
@@ -370,12 +377,7 @@ TR.applyColor = function( color, prefix ) {
             $( "input[data-name=" + prefix + "-border]" ).val( color ).css( "background-color", color );
             TR.styleArray[prefix + "-border"] = color;
         } else {
-            var border;
-            if( gray > 90 ) {
-                border = TR.percentColor( color, 0.55 );
-            } else {
-                border = TR.percentColor( color, 1.4 );
-            }
+            var border = TR.borderColor( color, gray );
             $( "input[data-name=" + prefix + "-border]" ).val( border ).css( "background-color", border );
             TR.styleArray[prefix + "-border"] = border;
         }
