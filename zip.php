@@ -89,14 +89,10 @@
 
 		$zip->addFromString("themes/jquery.mobile.icons.min.css", file_get_contents("jqm/" . $JQM_VERSION . "/jquery.mobile.icons.min.css"));
 
-	    $zip->addEmptyDir("themes/images/icons-png/");
-
         foreach(glob("jqm/" . $JQM_VERSION . "/images/icons-png/*") as $file) {
         	$name = str_replace("jqm/" . $JQM_VERSION . "/images/icons-png/", "", $file);
         	$zip->addFile($file, "themes/images/icons-png/" . $name);
         }
-
-
 	} else {
 		$JQM_ICONS_LINK = "";
 
