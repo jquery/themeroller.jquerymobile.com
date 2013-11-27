@@ -61,7 +61,7 @@
 			<p>
 				Create up to 26 theme "swatches" lettered from A-Z, 
 				each with a unique color scheme, then mix and
-				match for unlimited possibilities. We recommend building themes with at least 3 swatches (A-C). 
+				match for unlimited possibilities. 
 			</p>
 			<p>
 				<strong>To upgrade a theme to <?php echo $JQM_VERSION; ?>:</strong> Click the Import button, paste in your uncompressed theme, then tweak and download the upgraded version.
@@ -179,7 +179,7 @@
 			</ul>
 
 			<h3 id="theme-intro">Theme basics <a href="#help-top" class="help-top">^ Top</a></h3>
-			<p>A jQuery Mobile theme contains a both global settings for things like rounded corner radius and active (on) state, and up to to 26 "swatches" lettered from A-Z, each with a unique color scheme that can be mixed and matched for unlimited possibilities. Each swatch  sets the colors, textures and font settings for the primary elements: toolbar, content block and button. Buttons have 3 interaction states: normal, hover, pressed. We recommend building themes with at least 3 swatches (A-C).</p>
+			<p>A jQuery Mobile theme contains a both global settings for things like rounded corner radius and active (on) state, and up to to 26 "swatches" lettered from A-Z, each with a unique color scheme that can be mixed and matched for unlimited possibilities. Each swatch  sets the colors, textures and font settings for the primary elements: toolbar, content block and button. Buttons have 3 interaction states: normal, hover, pressed.</p>
 
 			<h3 id="getting-started">Getting Started <a href="#help-top" class="help-top">^ Top</a></h3>
 			<p>The ThemeRoller interface has 3 major zones: the left column contains the inspector panel, along the top is the QuickSwatch/Kuler bar, and below this is the preview window. </p>
