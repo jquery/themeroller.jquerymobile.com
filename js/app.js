@@ -357,8 +357,16 @@ TR.applyColor = function( color, prefix ) {
         TR.styleArray[prefix + "-background-end"] = end;
         TR.styleArray[prefix + "-background-color"] = color;
 
-        //special border for content body elements
-        if( element != "body" ) {
+        //special border for content body elements and as of 1.4
+        // for buttons, actives and bars as well
+        if( ( TR.versionCompare( "(-1.4)" ) && element != "body" ) ||
+            ( TR.versionCompare( "[1.4-)" ) &&
+                element != "active" &&
+                element != "bar" &&
+                element != "body" &&
+                element != "bdown" &&
+                element != "bhover" &&
+                element != "bup" ) ) {
             $( "input[data-name=" + prefix + "-border]" ).val( color ).css( "background-color", color );
             TR.styleArray[prefix + "-border"] = color;
         } else {
