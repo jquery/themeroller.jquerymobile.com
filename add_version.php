@@ -102,24 +102,9 @@
         $contents = preg_replace( "/\#([A-Fa-f0-9])([A-Fa-f0-9])([A-Fa-f0-9])\s/s", "#$1$1$2$2$3$3 ", $contents );
         writeFile( $default, $contents );
         
-        $contents = preg_replace( "/\/\*\s*A\s*-*\*\/.*(\/\*\s*B\s*-*\*\/)/s", "$1", $contents );
-        $contents = preg_replace( "/\/\*\s*B\s*-*\*\/.*(\/\*\s*C\s*-*\*\/)/s", "$1", $contents );
-        $contents = preg_replace( "/\/\*\s*D\s*-*\*\/.*(\/\*\s*E\s*-*\*\/)/s", "$1", $contents );
-        $contents = preg_replace( "/\/\*\s*E\s*-*\*\/.*(\/\*\s*Structure\s*-*\*\/)/s", "$1", $contents );
-        preg_match( "/(\/\*\s*C\s*-*\*\/.*)\/\*\sStructure\s\*\//s", $contents, $matches );
-        $c_swatch = $matches[ 1 ];
-        
-        //Build A swatch
-        $temp = preg_replace( "/-c\s/", "-a ", $c_swatch );
-        $temp = preg_replace( "/-c,/", "-a,", $temp );
-        $temp = preg_replace( "/{c-/", "{a-", $temp );
-        $temp = preg_replace( "/-c:/", "-a:", $temp );
-        $a_swatch = preg_replace( "/\/\*\s*C(\s*-*\*\/)/", "/* A$1", $temp );
-        
-        $contents = preg_replace( "/\/\*\s*C\s*-*\*\/.*\/\*\sStructure\s\*\//s",
-            $a_swatch . "/* Structure */", $contents );
-        
-		writeFile( $starter, $contents );
+        $contents = preg_replace( "/\/\*\s*B\s*-*\*\/.*(\/\*\s*Structure\s*-*\*\/)/s", "$1", $contents );
+
+        writeFile( $starter, $contents );
     }
 
     function rrmdir($dir) {
