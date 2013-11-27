@@ -37,6 +37,7 @@ TR.initVersioning = function() {
 }
 
 TR.travelTo = function( version, importing ) {
+	TR.upgrading = version;
 	$.ajax({
 		url: "jqm/" + version + "/jqm.starter.theme.css",
 		dataType: "text",
@@ -48,7 +49,7 @@ TR.travelTo = function( version, importing ) {
 				$( "#upload" ).dialog( "close" );
 			}
 		}
-	});
+	}).always( function() { delete TR.upgrading; } );
 }
 
 TR.passTheme = function( version ) {
@@ -62,7 +63,7 @@ TR.passTheme = function( version ) {
 //and merges the two and writes out to styleBlock, ready for travel
 TR.merge = function( css, version, importing ) {
 	TR.undoLog.push( TR.styleBlock.text() );
-	
+
 	if( importing ) {	
 		//takes in the imported CSS and puts values into styleArray
 		TR.styleBlock.text($('#load-css').val());
