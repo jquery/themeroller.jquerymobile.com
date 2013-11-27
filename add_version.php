@@ -29,10 +29,6 @@
         echo "Getting jQuery Mobile Images...\n";
         mkdir( 'images' );
         chdir( 'images' );
-        getFile( $jqm_path . "/images/icons-18-white.png", "icons-18-white.png" );
-        getFile( $jqm_path . "/images/icons-18-black.png", "icons-18-black.png" );
-        getFile( $jqm_path . "/images/icons-36-white.png", "icons-36-white.png" );
-        getFile( $jqm_path . "/images/icons-36-black.png", "icons-36-black.png" );
         getFile( $jqm_path . "/images/ajax-loader.gif", "ajax-loader.gif" );
         chdir( '..' );
         //Get jQuery Mobile JS
