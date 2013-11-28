@@ -115,7 +115,7 @@
 				This will generate a Zip file that contains both a compressed (for production) and uncompressed (for editing) 
 				version of the theme.
 			</p>
-			<p><strong>To use your theme</strong>, add it to the head of your page before the jquery.mobile.structure file, like this:</p>
+			<p><strong>To use your theme</strong>, add it<?php if(isset($JQM_VERSION) && preg_match("/1.4/", $JQM_VERSION)) echo " together with the icon CSS file";?> to the head of your page before the jquery.mobile.structure file, like this:</p>
 			<pre>
 				<code>
 &lt;!DOCTYPE html&gt;
@@ -126,6 +126,7 @@
   &lt;meta charset="utf-8" /&gt;
   &lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;
   <b class="highlight">&lt;link rel="stylesheet" href="css/themes/my-custom-theme.css" /&gt;</b>
+  <?php if(isset($JQM_VERSION) && preg_match("/1.4/", $JQM_VERSION)) echo '<b class="highlight">&lt;link rel="stylesheet" href="css/themes/jquery.mobile.icons.min.css" /&gt;</b><br>';?>
   &lt;link rel="stylesheet" href="http://code.jquery.com/mobile/<span class="version-num"><?php echo $JQM_VERSION; ?></span>/jquery.mobile.structure-<span class="version-num"><?php echo $JQM_VERSION; ?></span>.min.css" /&gt; 
   &lt;script src="http://code.jquery.com/jquery-<?php echo $JQUERY_VERSION; ?>.min.js"&gt;&lt;/script&gt; 
   &lt;script src="http://code.jquery.com/mobile/<span class="version-num"><?php echo $JQM_VERSION; ?></span>/jquery.mobile-<span class="version-num"><?php echo $JQM_VERSION; ?></span>.min.js"&gt;&lt;/script&gt; 
