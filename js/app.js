@@ -1239,6 +1239,7 @@ TR.initStyleArray = function( refresh ) {
     escaped_style = escaped_style.replace( /\t/g, "%09" );
 
     var reg = new RegExp( "(?:font-family:)[^/\\*]+/\\*{[^\\*/]*}\\*/|\\s*\\S*\\s*/\\*{[^\\*/]*}\\*/" ),
+        useExistingTheme,
         reference = "",
         length = 0,
         index = -1,
@@ -1260,8 +1261,19 @@ TR.initStyleArray = function( refresh ) {
                 type: "placeholder",
                 ref: reference
             };
+
             //update TR.styleArray
-            if( refresh !== "refresh" ||
+            useExistingTheme = false;
+
+            // When downgrading from >= 1.4 to < 1.4 we discard corner radii -
+            // that is, we intentionally grab the value from the theme to which
+            // we're moving
+            if( refresh === "refresh" && TR.upgrading &&
+                TR.versionCompare( TR.version, "[1.4-)" ) &&
+                TR.versionCompare( TR.upgrading, "(-1.4)" ) &&
+                reference.indexOf( "radii" ) ) {
+                useExistingTheme = true;
+            } else if( refresh !== "refresh" ||
                 ( refresh === "refresh" &&
                     TR.styleArray[reference] === undefined ) ) {
                 // Use the value from <swatch>-body-* to initialize the value
@@ -1272,9 +1284,14 @@ TR.initStyleArray = function( refresh ) {
                     TR.styleArray[ reference ] = TR.styleArray[ reference.replace( "-page-", "-body-" ) ];
                 // Finally, if all else fails, grab the value from the existing theme
                 } else {
-                    TR.styleArray[reference] = TR.tokens[i-1].value.replace( /\/\*.*\*\//, "" ).trim();
+                    useExistingTheme = true;
                 }
             }
+
+            if ( useExistingTheme ) {
+                TR.styleArray[reference] = TR.tokens[i-1].value.replace( /\/\*.*\*\//, "" ).trim();
+            }
+
             //cut off string and continue
             style = style.substring( index+length );
         } else {
