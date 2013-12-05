@@ -99,6 +99,18 @@ function singleVersionComparison( leftHandSideVersion, operation, rightHandSideV
     }
 }
 
+// Replaces the swatch @fromLetter, specified in lowercase, with the swatch
+// @toLetter, also specified in lowercase
+TR.replaceSwatchLetter = function( css, fromLetter, toLetter ) {
+	return ( css
+		.replace( ( new RegExp( "-" + fromLetter + ",", "g" ) ), "-" + toLetter + "," )
+		.replace( ( new RegExp( "-" + fromLetter + "\\:", "g" ) ), "-" + toLetter + ":" )
+		.replace( ( new RegExp( "-" + fromLetter + "\\s", "g" ) ), "-" + toLetter + " " )
+		.replace( ( new RegExp( "{" + fromLetter + "-", "g" ) ), "{" + toLetter + "-" )
+		.replace( ( new RegExp( "-" + fromLetter + "\\.", "g" ) ), "-" + toLetter + "." )
+		.replace( ( new RegExp( "/\\*\\s" + fromLetter.toUpperCase() ) ), "/* " + toLetter.toUpperCase() ) );
+};
+
 // Check if a version is in one of a number of intervals
 // Version numbers are assumed to be of the form [0-9]+(\.[0-9]+)*
 // An interval is a tuple of versions separated by a dash enclosed on the left
@@ -210,10 +222,7 @@ TR.addSwatch = function( new_style, duplicate ) {
             TR.redoLog = [];
 
             //adding swatch to CSS
-            var temp_css_template = TR.graySwatch.replace( /-a,/g, "-" + lower + "," )
-                .replace( /-a:/g, "-" + lower + ":" ).replace( /-a\s/g, "-" + lower + " " )
-                .replace( /\{a-/g, "{" + lower + "-" ).replace( /\/\*\sA/, "/* " + upper )
-                .replace( /-a\./g, "-" + lower + "." ),
+            var temp_css_template = TR.replaceSwatchLetter( TR.graySwatch, "a", lower ),
                 css = TR.styleBlock.text();
             if( duplicate ) {
                 //if there is a swatch to be duplicated, we use the letter passed in to do our regex patterns
@@ -225,16 +234,7 @@ TR.addSwatch = function( new_style, duplicate ) {
                 }
                 temp_css_template = css.substring( css.search( start_reg ), css.search( end_reg ) );
 
-                var reg1 = new RegExp( "-" + duplicate + ",", "g" ),
-                    reg2 = new RegExp( "-" + duplicate + "\\s", "g" ),
-                    reg3 = new RegExp( "\\{" + duplicate + "-", "g" ),
-                    reg4 = new RegExp( "-" + duplicate + ":", "g" ),
-                    reg5 = new RegExp( "\\/\\*\\s" + duplicate.toUpperCase(), "g" );
-                temp_css_template = temp_css_template.replace( reg1, "-" + lower + "," )
-                    .replace( reg2, "-" + lower + " " )
-                    .replace( reg3, "{" + lower + "-" )
-                    .replace( reg4, "-" + lower + ":" )
-                    .replace( reg5, "/* " + upper );
+                temp_css_template = TR.replaceSwatchLetter( temp_css_template, duplicate, lower );
             }
             css = css.replace( /\/\*\sStructure\s/, temp_css_template + "\n\n/* Structure " );
             TR.styleBlock.text( css );
