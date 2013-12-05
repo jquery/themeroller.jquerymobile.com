@@ -227,7 +227,7 @@ TR.addSwatch = function( new_style, duplicate ) {
             if( duplicate ) {
                 //if there is a swatch to be duplicated, we use the letter passed in to do our regex patterns
                 var start_reg = new RegExp( "\\/\\*\\s" + duplicate.toUpperCase() + ".*\\n-*\\*\\/" ),
-                    end_reg = new RegExp( "\\/\\*\\s" + TR.alpha[ TR.num[duplicate] + 1 ].toUpperCase() + ".*\\n-*\\*\\/" );
+                    end_reg = new RegExp( "\\/\\*\\s" + TR.alpha[ TR.num[duplicate] + 1 ].toUpperCase() + "\s*\\n-*\\*\\/" );
 
                 if( css.search( end_reg ) == -1 ) {
                     end_reg = new RegExp( "\\/\\*\\sStructure " );
