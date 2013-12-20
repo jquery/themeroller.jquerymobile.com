@@ -127,8 +127,9 @@ TR.versionCompare = function( version, intervals ) {
 	}
 
 	$.each( intervals.split( "," ), function( index, interval ) {
-		var startCompare = ( interval.charAt( 0 ) ? ">" : ">=" ),
-			endCompare = ( interval.charAt( interval.length - 1 ) ? "<" : "<=" );
+		var startCompare = ( ( interval.charAt( 0 ) === "(" ) ? ">" : ">=" ),
+            endCompare = ( ( interval.charAt( interval.length - 1 ) === ")" ) ? "<" : "<=" );
+
 
 		// Get rid of brackets enclosing the interval and split out the two versions
 		interval = interval.replace(/\[|\)|\]|\(/g, "" ).split( "-" );
