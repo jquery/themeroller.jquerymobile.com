@@ -127,8 +127,9 @@ TR.versionCompare = function( version, intervals ) {
 	}
 
 	$.each( intervals.split( "," ), function( index, interval ) {
-		var startCompare = ( interval.charAt( 0 ) ? ">" : ">=" ),
-			endCompare = ( interval.charAt( interval.length - 1 ) ? "<" : "<=" );
+		var startCompare = ( ( interval.charAt( 0 ) === "(" ) ? ">" : ">=" ),
+            endCompare = ( ( interval.charAt( interval.length - 1 ) === ")" ) ? "<" : "<=" );
+
 
 		// Get rid of brackets enclosing the interval and split out the two versions
 		interval = interval.replace(/\[|\)|\]|\(/g, "" ).split( "-" );
@@ -1382,7 +1383,7 @@ TR.initThemeRoller = function() {
                 "<ul data-role=\"listview\" data-inset=\"true\" data-theme=\"a\">" +
                     "<li data-role=\"list-divider\" data-theme=\"a\" data-swatch=\"a\" data-form=\"ui-bar-a\">List Header</li>" +
                     "<li data-form=\"ui-body-a\" data-swatch=\"a\" data-theme=\"a\">Read-only list item</li>" +
-                    "<li><a class=\"ui-btn-a ui-btn\" data-form=\"ui-btn-up-a\" data-swatch=\"a\" data-theme=\"a\" href=\"#\">Linked list item</a></li>" +
+                    "<li><a class=\"ui-btn-a ui-btn ui-btn-icon-right ui-icon-carat-r\" data-form=\"ui-btn-up-a\" data-swatch=\"a\" data-theme=\"a\" href=\"#\">Linked list item</a></li>" +
                 "</ul>" +
                 "<div data-role=\"fieldcontain\">" +
                     "<fieldset data-role=\"controlgroup\">" +
