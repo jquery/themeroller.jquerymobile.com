@@ -21,7 +21,7 @@
 	<title>ThemeRoller | jQuery Mobile</title>
 	
 	<link rel="canonical" href="index.php" />
-	<link rel="shortcut icon" type="image/x-icon" href="images/favicon.png" />
+	<link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico" />
 
 	<link rel="stylesheet" type="text/css" href="css/tr.layout.css" media="all" />
 	<link rel="stylesheet" type="text/css" href="css/jquery.ui.css" />
