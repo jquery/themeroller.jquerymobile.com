@@ -111,6 +111,14 @@ TR.replaceSwatchLetter = function( css, fromLetter, toLetter ) {
 		.replace( ( new RegExp( "/\\*\\s" + fromLetter.toUpperCase() ) ), "/* " + toLetter.toUpperCase() ) );
 };
 
+// Regular expressions involved in parsing the style block
+TR.RegExp = {
+	swatchDelimiter: function( uppercaseLetter ) {
+		return new RegExp( "\\/\\*\\s" + uppercaseLetter + "\\s*\\n-*\\*\\/" );
+	},
+	structure: /\/\*\sStructure\s\*\//
+};
+
 // Check if a version is in one of a number of intervals
 // Version numbers are assumed to be of the form [0-9]+(\.[0-9]+)*
 // An interval is a tuple of versions separated by a dash enclosed on the left
@@ -227,17 +235,17 @@ TR.addSwatch = function( new_style, duplicate ) {
                 css = TR.styleBlock.text();
             if( duplicate ) {
                 //if there is a swatch to be duplicated, we use the letter passed in to do our regex patterns
-                var start_reg = new RegExp( "\\/\\*\\s" + duplicate.toUpperCase() + ".*\\n-*\\*\\/" ),
-                    end_reg = new RegExp( "\\/\\*\\s" + TR.alpha[ TR.num[duplicate] + 1 ].toUpperCase() + "\s*\\n-*\\*\\/" );
+                var start_reg = TR.RegExp.swatchDelimiter( duplicate.toUpperCase() ),
+                    end_reg = TR.RegExp.swatchDelimiter( TR.alpha[ TR.num[duplicate] + 1 ].toUpperCase() );
 
                 if( css.search( end_reg ) == -1 ) {
-                    end_reg = new RegExp( "\\/\\*\\sStructure " );
+                    end_reg = TR.RegExp.structure;
                 }
                 temp_css_template = css.substring( css.search( start_reg ), css.search( end_reg ) );
 
                 temp_css_template = TR.replaceSwatchLetter( temp_css_template, duplicate, lower );
             }
-            css = css.replace( /\/\*\sStructure\s/, temp_css_template + "\n\n/* Structure " );
+            css = css.replace( TR.RegExp.structure, temp_css_template + "\n\n/* Structure */" );
             TR.styleBlock.text( css );
         }
 
@@ -584,8 +592,8 @@ TR.deleteSwatch = function( e, ele ) {
 
     //delete the swatch's CSS from the file
     var css = TR.styleBlock.text(),
-        start_reg = new RegExp ("\\/\\*\\s" + TR.alpha[TR.tabCount - 2].toUpperCase() + "\\s*\\n-*\\*\\/" ),
-        end_reg = new RegExp( "\\/\\*\\sStructure \\*\\/" ),
+        start_reg = TR.RegExp.swatchDelimiter( TR.alpha[TR.tabCount - 2].toUpperCase() ),
+        end_reg = TR.RegExp.structure,
         start = css.search( start_reg ),
         end = css.search( end_reg ),
         part1 = css.substring(0, start),
@@ -1217,8 +1225,8 @@ TR.initInspector = function() {
 //initialize graySwatch CSS template for a new blank swatch
 TR.initGraySwatch = function() {
     var css = TR.styleBlock.text(),
-        start_reg = new RegExp( "\\/\\*\\sA.*\\n-*\\*\\/" ),
-        end_reg = new RegExp( "\\/\\*\\sStructure " );
+        start_reg = TR.RegExp.swatchDelimiter( "A" ),
+        end_reg = TR.RegExp.structure;
 
     TR.graySwatch = css.substring( css.search( start_reg ), css.search( end_reg ) );
 }
