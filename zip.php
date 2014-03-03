@@ -73,21 +73,14 @@
 	if ($zip->open($filename, ZIPARCHIVE::CREATE)!==TRUE) {
 	    exit("cannot open <$filename>\n");
 	}
-	
-	preg_match("/url\(images\/ajax-load[^\)]*\)/", $uncompressed, $match);
-	if(!isset($match[0])) {
-	    $match = "ajax-loader.gif";
-	} else {
-	    $match = $match[0];
-	    $match = preg_replace("/url\(/", "", $match);
-	    $match = preg_replace("/\)/", "", $match);
-	}
 	    
 	//add files to zip and echo it back to page
 	if(preg_match("/1.4/", $JQM_VERSION)) {
 		$JQM_ICONS_LINK = "		<link rel=\"stylesheet\" href=\"themes/jquery.mobile.icons.min.css\" />\n";
 
 		$zip->addFromString("themes/jquery.mobile.icons.min.css", file_get_contents("jqm/" . $JQM_VERSION . "/jquery.mobile.icons.min.css"));
+
+		$zip->addFromString("themes/images/ajax-loader.gif", file_get_contents("jqm/" . $JQM_VERSION . "/images/ajax-loader.gif"));
 
         foreach(glob("jqm/" . $JQM_VERSION . "/images/icons-png/*") as $file) {
         	$name = str_replace("jqm/" . $JQM_VERSION . "/images/icons-png/", "", $file);
@@ -100,6 +93,16 @@
 		$zip->addFromString("themes/images/icons-18-black.png", file_get_contents("http://code.jquery.com/mobile/" . $JQM_VERSION . "/images/icons-18-black.png"));
 		$zip->addFromString("themes/images/icons-36-white.png", file_get_contents("http://code.jquery.com/mobile/" . $JQM_VERSION . "/images/icons-36-white.png"));
 		$zip->addFromString("themes/images/icons-36-black.png", file_get_contents("http://code.jquery.com/mobile/" . $JQM_VERSION . "/images/icons-36-black.png"));
+
+		preg_match("/url\(images\/ajax-load[^\)]*\)/", $uncompressed, $match);
+		if(!isset($match[0])) {
+		    $match = "ajax-loader.gif";
+		} else {
+		    $match = $match[0];
+		    $match = preg_replace("/url\(/", "", $match);
+		    $match = preg_replace("/\)/", "", $match);
+		}
+
 	}
 	$zip->addFromString("themes/" . $match, file_get_contents("http://code.jquery.com/mobile/" . $JQM_VERSION . "/" . $match));
 	$zip->addFromString("themes/" . $theme_name . ".css", $uncompressed);
