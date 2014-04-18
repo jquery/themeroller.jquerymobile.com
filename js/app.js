@@ -962,7 +962,7 @@ TR.initDialogs = function() {
 
         $( "#share" ).dialog( "open" );
 
-        var post_data = "ver=" + TR.version + "&file=" + TR.styleBlock.text();
+        var post_data = "ver=" + TR.version + "&file=" + encodeURIComponent( TR.styleBlock.text() );
 
         $.ajax({
             type: "post",
