@@ -401,7 +401,14 @@
     			    echo '<div style="display: none" id="imported-style">true</div>';
     			}
 			?>
-			
+			<div id="starter"><?php
+					//If the file exists we add the CSS here, if not, we leave it blank for the JS to find on load
+					$file_path = "jqm/" . $JQM_VERSION . "/jqm.starter.theme.css";
+					if( is_file($file_path) ) {
+						echo file_get_contents( $file_path );
+					}
+				?>
+			</div>
 			<div id="style"><?php
 					if( isset($style) ) {
 						echo $style;
