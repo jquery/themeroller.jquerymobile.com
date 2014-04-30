@@ -10,6 +10,7 @@ img{border: none;}
 /*ThemeRoller Mobile*/
 #version{display: none;}
 #style{display: none;}
+#starter{display: none;}
 .sub #page h2{text-align: left; width: 100%; margin: auto; margin-top: 20px}
 
 #tr_panel .more{color: #000; margin-left: 5px; font-family: courier, mono-space; border: 1px solid #000; padding: 2px 5px 0 5px; font-weight: bold; text-decoration: none;}

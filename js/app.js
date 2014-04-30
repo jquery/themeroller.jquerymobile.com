@@ -1224,7 +1224,7 @@ TR.initInspector = function() {
 
 //initialize graySwatch CSS template for a new blank swatch
 TR.initGraySwatch = function() {
-    var css = TR.styleBlock.text(),
+    var css = $( "#starter" ).text(),
         start_reg = TR.RegExp.swatchDelimiter( "A" ),
         end_reg = TR.RegExp.structure;
 
