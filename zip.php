@@ -7,23 +7,23 @@
 
 	$theme_name = $_POST["theme_name"];
 	$uncompressed = $_POST["file"];
-	
+
 	/*
 	//no longer using alternate image paths - keep this here in case we do later on
 	//this preg_replace went from url(jqm/1.1.0-rc.1/images/....) to url(images/....)
 	//replace image paths with appropriate ones
-	$uncompressed = preg_replace_callback('/url\(\.\.\/jqm\/[^\/]*\//sim', 
+	$uncompressed = preg_replace_callback('/url\(\.\.\/jqm\/[^\/]*\//sim',
 		create_function(
 			'$matches',
 			'return "url(";'
 		), $uncompressed);
 	*/
-	
+
 	//minifying CSS file
 	$comment_pos = strpos($uncompressed, "\n/* Swatches");
 	$comment = substr($uncompressed, 0, $comment_pos);
 	$css = substr($uncompressed, $comment_pos, strlen($uncompressed) - $comment_pos);
-	
+
     $compressed = preg_replace_callback('/(\/\*.*?\*\/|\n|\t)/sim',
         create_function(
             '$matches',
@@ -38,7 +38,7 @@
         ), $compressed);
 
 	$compressed = $comment . $compressed;
-	
+
 	$zip = new ZipArchive();
 
 	if(!is_dir('zips')){
@@ -47,7 +47,7 @@
 
 	$dir = scandir('zips');
 	$today = date('His', strtotime('now'));
-	
+
 	//Loop to detect if any other zips are being created at this very second,
 	//Also deletes zip that are older than 15 seconds
 	$last_file_num = 0;
@@ -58,7 +58,7 @@
 				$date = explode('-', $file_name[0]);
 				$file_num = $date[4];
 				$time = $date[3];
-					
+
 				if(is_numeric($file_num) && $file_num > $last_file_num && $date == $today) {
 					$last_file_num = $file_num;
 				}
@@ -73,7 +73,7 @@
 	if ($zip->open($filename, ZIPARCHIVE::CREATE)!==TRUE) {
 	    exit("cannot open <$filename>\n");
 	}
-	    
+
 	//add files to zip and echo it back to page
 	if(preg_match("/1.4/", $JQM_VERSION)) {
 		$JQM_ICONS_TAG = "<link rel=\"stylesheet\" href=\"themes/jquery.mobile.icons.min.css\" />";
@@ -123,47 +123,7 @@
 			"</strong>";
 	}
 
-	$zip->addFromString("index.html", <<<indexHtml
-<!DOCTYPE html>
-<html>
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>jQuery Mobile: Theme Download</title>
-	<link rel="stylesheet" href="themes/$theme_name.min.css" />$JQM_ICONS_LINK
-	<link rel="stylesheet" href="http://code.jquery.com/mobile/$JQM_VERSION/jquery.mobile.structure-$JQM_VERSION.min.css" />
-	<script src="http://code.jquery.com/jquery-$JQUERY_VERSION.min.js"></script>
-	<script src="http://code.jquery.com/mobile/$JQM_VERSION/jquery.mobile-$JQM_VERSION.min.js"></script>
-</head>
-<body>
-	<div data-role="page" data-theme="a">
-		<div data-role="header" data-position="inline">
-			<h1>It Worked!</h1>
-		</div>
-		<div data-role="content" data-theme="a">
-			<p>Your theme was successfully downloaded. You can use this page as a reference for how to link it up!</p>
-			<pre>
-<strong>&lt;link rel=&quot;stylesheet&quot; href=&quot;themes/$theme_name.min.css&quot; /&gt;</strong>$JQM_ICONS_LINK_DOC
-&lt;link rel=&quot;stylesheet&quot; href=&quot;http://code.jquery.com/mobile/$JQM_VERSION/jquery.mobile.structure-$JQM_VERSION.min.css&quot; /&gt;
-&lt;script src=&quot;http://code.jquery.com/jquery-$JQUERY_VERSION.min.js&quot;&gt;&lt;/script&gt;
-&lt;script src=&quot;http://code.jquery.com/mobile/$JQM_VERSION/jquery.mobile-$JQM_VERSION.min.js&quot;&gt;&lt;/script&gt;
-			</pre>
-			<p>This is content color swatch "A" and a preview of a <a href="#" class="ui-link">link</a>.</p>
-			<label for="slider1">Input slider:</label>
-			<input type="range" name="slider1" id="slider1" value="50" min="0" max="100" data-theme="a" />
-			<fieldset data-role="controlgroup"  data-type="horizontal" data-role="fieldcontain">
-			<legend>Cache settings:</legend>
-			<input type="radio" name="radio-choice-a1" id="radio-choice-a1" value="on" checked="checked" />
-			<label for="radio-choice-a1">On</label>
-			<input type="radio" name="radio-choice-a1" id="radio-choice-b1" value="off"  />
-			<label for="radio-choice-b1">Off</label>
-			</fieldset>
-		</div>
-	</div>
-</body>
-</html>
-indexHtml
-);
+	$zip->addFromString("index.html", include('inc/index.html.inc'));
 	$zip->close();
 	echo ($filename);
 ?>
