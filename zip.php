@@ -117,10 +117,9 @@
 		$JQM_ICONS_LINK = "\n	" . $JQM_ICONS_TAG;
 		$JQM_ICONS_LINK_DOC = "\n<strong>" .
 			preg_replace(
-				[ '/["]/', "/[<]/", "/[>]/" ],
-				[ "&quot;", "&lt;", "&gt;" ],
-				$JQM_ICONS_TAG ) .
-			"</strong>";
+				array( '/["]/', "/[<]/", "/[>]/" ),
+				array( "&quot;", "&lt;", "&gt;" ),
+				$JQM_ICONS_TAG );
 	}
 
 	$zip->addFromString("index.html", include('inc/index.html.inc'));
