@@ -117,8 +117,8 @@
 		$JQM_ICONS_LINK = "\n	" . $JQM_ICONS_TAG;
 		$JQM_ICONS_LINK_DOC = "\n<strong>" .
 			preg_replace(
-				[ '/["]/', "/[<]/", "/[>]/" ],
-				[ "&quot;", "&lt;", "&gt;" ],
+				array( '/["]/', "/[<]/", "/[>]/" ),
+				array( "&quot;", "&lt;", "&gt;" ),
 				$JQM_ICONS_TAG ) .
 			"</strong>";
 	}
