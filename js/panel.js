@@ -90,6 +90,10 @@ TR.createControl = function( TRVersion, control, label, subGroup ) {
 		return $( controlMarkup + '<br class="clear" />' );
 	}
 
+	if ( control.version && !TR.versionCompare( TRVersion, control.version ) ) {
+		return "";
+	}
+
 	var prefix = name.split( "-" );
 	prefix = prefix[0] + "-" + prefix[1] + "-" + prefix[2];
 
