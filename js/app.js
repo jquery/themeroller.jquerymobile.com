@@ -780,6 +780,7 @@ TR.initControls = function() {
             TR.styleArray["global-icon-disc"] = "rgba(" + red + "," + green + "," + blue + "," + ( parseFloat(elements[2]) / 100 ) + ")";
             TR.styleArray["global-icon-shadow"] = "rgba(255,255,255,.4)";
         } else {
+            TR.styleArray["global-icon-color"] = "transparent";
             TR.styleArray["global-icon-disc"] = "transparent";
             TR.styleArray["global-icon-shadow"] = "transparent";
         }
