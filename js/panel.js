@@ -264,6 +264,7 @@ TR.panelDictBase = {
 
 			"Default Icon": [
 				{
+					"version": "(-1.4)",
 					"type": "select",
 					"group": "icon_set",
 					"name": "global-icon-set",
