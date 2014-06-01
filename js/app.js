@@ -1392,7 +1392,6 @@ TR.initThemeRoller = function() {
                     "<li data-role=\"list-divider\" data-theme=\"a\" data-swatch=\"a\" data-form=\"ui-bar-a\">List Header</li>" +
                     "<li data-form=\"ui-body-a\" data-swatch=\"a\" data-theme=\"a\">Read-only list item</li>" +
                     "<li><a class=\"ui-btn-a ui-btn ui-btn-icon-right ui-icon-carat-r\" data-form=\"ui-btn-up-a\" data-swatch=\"a\" data-theme=\"a\" href=\"#\">Linked list item</a></li>" +
-                    "<li class=\"ui-alt-icon\"><a class=\"ui-btn-a ui-btn ui-btn-icon-right ui-icon-carat-r\" data-form=\"ui-btn-up-a\" data-swatch=\"a\" data-theme=\"a\" href=\"#\">Alternative icon</a></li>" +
                 "</ul>" +
                 "<div data-role=\"fieldcontain\">" +
                     "<fieldset data-role=\"controlgroup\">" +
@@ -1419,21 +1418,30 @@ TR.initThemeRoller = function() {
                         "<option value=\"overnight\">Option 4</option>" +
                     "</select>" +
                 "</div>" +
-                "<div data-role=\"fieldcontain\" class=\"ui-alt-icon\">" +
-                    "<select name=\"select-choice-alt\" id=\"select-choice-alt-a\" data-native-menu=\"false\" data-theme=\"a\" data-form=\"ui-btn-up-a\">" +
-                        "<option>Alternative icon</option>" +
-                        "<option value=\"standard\">Option 1</option>" +
-                        "<option value=\"rush\">Option 2</option>" +
-                        "<option value=\"express\">Option 3</option>" +
-                        "<option value=\"overnight\">Option 4</option>" +
-                    "</select>" +
-                "</div>" +
                     "<input type=\"text\" value=\"Text Input\" data-theme=\"a\" class=\"input\" data-form=\"ui-body-a\" />" +
                     "<div data-role=\"fieldcontain\">" +
                         "<input type=\"range\" name=\"slider\" value=\"50\" min=\"0\" max=\"100\" data-form=\"ui-body-a\" data-theme=\"a\" data-highlight=\"true\" />" +
                     "</div>" +
                     "<button data-icon=\"star\" data-theme=\"a\" data-form=\"ui-btn-up-a\">Button</button>" +
-                    "<button data-icon=\"star\" data-theme=\"a\" data-form=\"ui-btn-up-a\" class=\"ui-alt-icon\">Button</button>" +
+                    "<div data-role=\"collapsible\" data-inset=\"false\">" +
+                        "<h2>Alternative icons</h2>" +
+                        "<div class=\"ui-alt-icon\">" +
+                            "<ul data-inset=\"true\" data-role=\"listview\">" +
+                                "<li data-role=\"list-divider\" data-theme=\"a\" data-swatch=\"a\" data-form=\"ui-bar-a\">List Header</li>" +
+                                "<li><a href=\"#\">Linked list item</li>" +
+                            "</ul>" +
+                            "<div data-role=\"fieldcontain\">" +
+                                "<select name=\"select-choice\" id=\"select-choice-alt-a\" data-native-menu=\"false\" data-theme=\"a\" data-form=\"ui-btn-up-a\">" +
+                                    "<option>Select menu</option>" +
+                                    "<option value=\"standard\">Option 1</option>" +
+                                    "<option value=\"rush\">Option 2</option>" +
+                                    "<option value=\"express\">Option 3</option>" +
+                                    "<option value=\"overnight\">Option 4</option>" +
+                                "</select>" +
+                            "</div>" +
+                            "<button data-icon=\"star\" data-theme=\"a\" data-form=\"ui-btn-up-a\">Button</button>" +
+                        "</div>" +
+                    "</div>" +
                 "</div>" +
             "</div>";
     } else if ( TR.versionCompare( "[1.3-)" ) ) {
