@@ -81,6 +81,16 @@
 	overflow-y: hidden !important;
 }
 
+#alt-icon-preview-form {
+	margin-top: -16px;
+	margin-left: 8px;
+	margin-bottom: 12px;
+}
+
+#alt-icon-preview-form .ui-checkbox {
+	margin: 0;
+}
+
 /* Copying some things from the default theme's swatch a */
 #alt-icon-preview-form {
 	background: none;
