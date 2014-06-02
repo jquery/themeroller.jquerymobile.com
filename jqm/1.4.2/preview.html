@@ -12,8 +12,38 @@
 
   <script src="jquery.min.js"></script> 
   <script src="jqm.min.js"></script>  
+  <script>
+$( document )
+	.ready( function() {
+		var path = $.mobile.path,
+			demoLink = $( "#demo-link" ),
+			demoUrl = path.parseUrl( demoLink.attr( "href" ) );
+
+		demoUrl.pathname = "/" + $.mobile.version + demoUrl.pathname;
+
+		$( "#alt-icon-preview-checkbox" ).checkboxradio();
+		demoLink.attr( "href", path.getLocation( demoUrl ) );
+	})
+	.on( "submit", "#alt-icon-preview-form", function( event ) {
+		event.preventDefault();
+	})
+	.on( "change", "#alt-icon-preview-checkbox", function() {
+		$( "body" ).toggleClass( "ui-alt-icon",
+			$( "#alt-icon-preview-checkbox" ).prop( "checked" ) );
+	})
+  </script>
+  <style>
+#alt-icon-preview-form {
+	border: 0;
+}
+  </style>
 </head>
 <body>
+
+<form id="alt-icon-preview-form" class="ui-body-a">
+	<label>Show alternative icons in preview<input type="checkbox" id="alt-icon-preview-checkbox" data-wrapper-class="ui-btn-inline"></label>
+	See <a id="demo-link" class="ui-link" href="http://demos.jquerymobile.com/icons/#Blackvs.whiteiconsets">icon demos</a> for usage.
+</form>
 
 <div class="preview ui-shadow swatch">
 	<div class="ui-header ui-bar-a" data-swatch="a" data-theme="a" data-form="ui-bar-a" data-role="header" role="banner">
