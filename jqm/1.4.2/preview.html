@@ -28,21 +28,17 @@ $( document )
 		event.preventDefault();
 	})
 	.on( "change", "#alt-icon-preview-checkbox", function() {
-		$( "body" ).toggleClass( "ui-alt-icon",
-			$( "#alt-icon-preview-checkbox" ).prop( "checked" ) );
+		$( ".swatch" )
+			.toggleClass( "ui-alt-icon",
+				$( "#alt-icon-preview-checkbox" ).prop( "checked" ) );
 	})
   </script>
-  <style>
-#alt-icon-preview-form {
-	border: 0;
-}
-  </style>
 </head>
 <body>
 
-<form id="alt-icon-preview-form" class="ui-body-a">
+<form id="alt-icon-preview-form">
 	<label>Show alternative icons in preview<input type="checkbox" id="alt-icon-preview-checkbox" data-mini="true" data-wrapper-class="ui-btn-inline"></label>
-	See <a id="demo-link" class="ui-link" target="_blank" href="http://demos.jquerymobile.com/icons/#Blackvs.whiteiconsets">icon demos</a> for usage.
+	See <a id="demo-link" target="_blank" href="http://demos.jquerymobile.com/icons/#Blackvs.whiteiconsets">icon demos</a> for usage.
 </form>
 
 <div class="preview ui-shadow swatch">

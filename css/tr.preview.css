@@ -80,3 +80,39 @@
 .preview .ui-content{
 	overflow-y: hidden !important;
 }
+
+/* Copying some things from the default theme's swatch a */
+#alt-icon-preview-form {
+	background: none;
+	color: #333333;
+	text-shadow: 0 1px 0 #f3f3f3;
+}
+
+#alt-icon-preview-form .ui-btn {
+	background-color: #f6f6f6;
+	border-width: 1px;
+	border-style: solid;
+	border-color: #dddddd;
+}
+
+#alt-icon-preview-form a,
+#alt-icon-preview-form a:visited {
+	color: #3388cc;
+	font-weight: bold;
+}
+
+#alt-icon-preview-form a:hover {
+	color: #005599;
+}
+
+#alt-icon-preview-form .ui-btn:hover {
+	background-color: #ededed;
+}
+
+#alt-icon-preview-form .ui-btn:active {
+	background-color: #e8e8e8;
+}
+
+#alt-icon-preview-form .ui-btn.ui-checkbox-on:after {
+	background-color: #3388cc;
+}
