@@ -498,7 +498,7 @@ iframe body{
 	
 		#current-version {
 			font-size: 13px;
-			color: #75B043;
+			color: #3eb249;
 			padding-bottom: 10px;
 			border-bottom: 1px solid #f2f2f2;
 			margin-top:-3px;
@@ -512,7 +512,7 @@ iframe body{
 		
 		#version-select ul li {
 			margin: 5px 0 0 0;
-			color: #75B043;
+			color: #3eb249;
 			cursor: pointer;
 		}
 		
