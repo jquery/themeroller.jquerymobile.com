@@ -56,7 +56,7 @@
 		//Altering version.php with new key value pair for jQm, and jQuery versions
 		chdir( '../..' );
 		$contents = file_get_contents( 'version.php' );
-		$contents = preg_replace( "/(\\\$ALL_JQUERY_VERSIONS.*)\n.*\);/s", "$1,\n\t\"" . $jqm . "\" => \"" . $jq . "\"\n);", $contents );
+		$contents = preg_replace( "/(\\\$ALL_JQUERY_VERSIONS.*)\n.?\);/s", "$1,\n\t\"" . $jqm . "\" => \"" . $jq . "\"\n);", $contents, 1 );
 		writeFile( 'version.php', $contents );
         
     } else {

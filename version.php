@@ -43,7 +43,15 @@ function versionCompare( $version1, $version2 ) {
     }
 }
 
-$VERSION_LIST = preg_grep('/^([^.])/', scandir( "jqm" ));
+$ALL_JQUERY_VERSIONS = array(
+    "1.0.1" => "1.6.4",
+	"1.1.2" => "1.7.2",
+	"1.2.1" => "1.8.3",
+	"1.3.2" => "1.9.1",
+	"1.4.2" => "1.10.2"
+);
+
+$VERSION_LIST = array_keys( $ALL_JQUERY_VERSIONS );
 
 $VERSION_LIST = array_reverse( $VERSION_LIST );
 
@@ -54,13 +62,5 @@ foreach( $VERSION_LIST as $VERSION ) {
         $JQM_VERSION = $VERSION;
     }
 }
-
-$ALL_JQUERY_VERSIONS = array(
-    "1.0.1" => "1.6.4",
-	"1.1.2" => "1.7.2",
-	"1.2.1" => "1.8.3",
-	"1.3.2" => "1.9.1",
-	"1.4.2" => "1.10.2"
-);
 
 ?>
