@@ -48,7 +48,7 @@ $ALL_JQUERY_VERSIONS = array(
 	"1.1.2" => "1.7.2",
 	"1.2.1" => "1.8.3",
 	"1.3.2" => "1.9.1",
-	"1.4.3" => "1.11.1"
+	"1.4.4" => "1.11.1"
 );
 
 $VERSION_LIST = array_keys( $ALL_JQUERY_VERSIONS );
