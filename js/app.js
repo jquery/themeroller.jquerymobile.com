@@ -168,14 +168,14 @@ TR.addInspectorAttributes = function( swatch ) {
         radio = TR.iframe.find( ".ui-content" ).each(function() {
             $( this ).find( ".ui-radio:first span:first" ).removeClass( "ui-corner-top" );
         }),
-		static = TR.iframe.find( ".ui-li-static.ui-btn-up-" + swatch );
+		staticListItem = TR.iframe.find( ".ui-li-static.ui-btn-up-" + swatch );
 
     slider.attr( "data-form", "ui-btn-up-" + swatch ).attr( "data-theme", swatch ).addClass( "ui-btn-up-" + swatch );
     slider.find( "a" ).attr( "data-form", "ui-btn-up-" + swatch ).attr( "data-theme", swatch );
     select.attr( "id", "select-choice-" + swatch );
 	btn.attr( "data-theme", swatch ).attr( "data-form", "ui-btn-up-" + swatch );
     btn.find( ".ui-icon" ).attr( "data-form", "ui-icon" );
-	static.attr( "data-theme", swatch );
+	staticListItem.attr( "data-theme", swatch );
 }
 
 //adds a most-recent-color to the five right-most draggables in the quickswatch panel
