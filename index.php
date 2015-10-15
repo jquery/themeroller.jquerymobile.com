@@ -69,7 +69,6 @@
 
 			<div class="buttonpane">
 				<div class="separator"></div>
-				<img src="images/target_big.png" alt=" "/>
 				<div id="colors">
 					<div class="color-drag disabled" style="background-color: #C1272D"></div>
 					<div class="color-drag disabled" style="background-color: #ED1C24"></div>
