@@ -78,6 +78,7 @@ h2{
 
 .ui-dialog .ui-dialog-buttonpane #colors{
 	margin: 10px -5px 0 0;
+	padding-left: 27px;
 }
 
 .ui-dialog .ui-dialog-buttonpane p{
@@ -85,6 +86,7 @@ h2{
 	float: left;
 	font-size: 14px;
 	margin-top: 3px;
+	padding-left: 27px;
 }
 
 .ui-dialog ul li{
@@ -288,7 +290,6 @@ h2{
 
 #sliders{
 	margin-top: 15px;
-	padding: 0 10px;
 }
 
 #sliders span{

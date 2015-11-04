@@ -100,7 +100,6 @@
 			<textarea id="load-css"></textarea>
 			<div class="buttonpane">
 
-				<img src="images/target_big.png" alt=" "/>
 				<p>
 					Copy and paste the contents of any uncompressed 
 					jQuery Mobile theme file to load it in for editing.
@@ -135,7 +134,6 @@
 			</pre>
 			<div class="buttonpane">
 				<div class="separator"></div>
-				<img src="images/target_big.png" alt=" "/>
 				<p>
 					Tip: To edit your theme later, use the import feature to paste in the uncompressed theme file
 				</p>
@@ -157,7 +155,6 @@
 			</div>
 			<div class="buttonpane">
 				<div class="separator"></div>
-				<img src="images/target_big.png" alt=" "/>
 				<p>
 					Important note: We can only store this theme URL on the server for 30 days, then it will be deleted. 
 					Download a theme to keep a copy safe that you can import later.
@@ -201,7 +198,6 @@
 
 			<div class="buttonpane">
 				<div class="separator"></div>
-				<img src="images/target_big.png" alt=" "/>
 				<p>
 					&nbsp;&nbsp;
 				</p>
@@ -333,7 +329,6 @@
 							<div class="color-drag" style="background-color: #603813"></div>
 						</div>
 						<div id="sliders">
-							<img src="images/target.png" alt=" "/>
 							<span>LIGHTNESS</span><div id="lightness_slider"></div>
 							<span>SATURATION</span><div id="saturation_slider"></div>
 						</div>
