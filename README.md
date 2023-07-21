@@ -1,4 +1,4 @@
-##README
+## README
 
 This is the new repo for the jQuery Mobile ThemeRoller tool.
 

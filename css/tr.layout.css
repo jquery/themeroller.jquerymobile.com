@@ -216,19 +216,6 @@ h2{
 	margin-left: 10px;
 }
 
-#quickswatch #kuler-activation{
-	color: #29ABE2;
-	font-weight: normal;
-	margin-left: 5px;
-	cursor: pointer;
-}
-
-#quickswatch h2 #kuler-activation img{
-	position: relative;
-	top: -1px;
-	margin-left: 4px;
-}
-
 #quickswatch .colors{
 	padding: 10px;
 	margin-top: -10px;

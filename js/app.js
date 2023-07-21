@@ -1120,7 +1120,7 @@ TR.initDraggableColors = function() {
                 if( el_class.indexOf(".ui-bar") != -1 ) {
                     swatch = element.attr( "data-swatch" );
                 }
-                var color = $( ".color-drag.ui-draggable-dragging" ).css( "background-color" ) || $( ".kuler-color.ui-draggable-dragging" ).css( "background-color" );
+                var color = $( ".color-drag.ui-draggable-dragging" ).css( "background-color" );
                 if( color != "transparent" ) {
                     color = TR.rgbtohex( color );
                 }

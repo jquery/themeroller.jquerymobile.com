@@ -10,8 +10,6 @@
     	$style = urldecode($_POST['style']);
     }
     $JQUERY_VERSION = $ALL_JQUERY_VERSIONS[ $JQM_VERSION ] ? $ALL_JQUERY_VERSIONS[ $JQM_VERSION ] : "1.6.4";
-
-    $kuler_markup = rtrim( preg_replace( "/\n/", "\n\t\t\t\t\t", file_get_contents( "kuler/kuler.html" ) ) ) . "\n";
 ?>
 <!DOCTYPE html>
 <html>             
@@ -27,7 +25,6 @@
 	<link rel="stylesheet" type="text/css" href="css/jquery.ui.css" />
 	<link rel="stylesheet" type="text/css" href="css/farbtastic.css" />
 	<link rel="stylesheet" type="text/css" href="css/tr.panel.css" />
-	<link rel="stylesheet" type="text/css" href="kuler/kuler.css" />
 
 	<script type="text/javascript" src="js/lib/jquery.js"></script>
 	<script type="text/javascript" src="js/lib/jquery.ui.js"></script>
@@ -39,7 +36,6 @@
 	<script type="text/javascript" src="js/panel.js"></script>
 	<script type="text/javascript" src="js/ui.js"></script>
 	<script type="text/javascript" src="js/version.js"></script>
-	<script type="text/javascript" src="kuler/kuler.js"></script>
 	<?php
 	    if( file_exists( "jqm/" . $JQM_VERSION . "/panel.js" ) ) {
 	         echo '<script type="text/javascript" src="jqm/' . $JQM_VERSION . '/panel.js"></script>';
@@ -333,11 +329,6 @@
 							<span>SATURATION</span><div id="saturation_slider"></div>
 						</div>
 					</div>
-					<?php 
-					    if( isset($kuler_markup) ) {
-					        echo $kuler_markup;
-					    }
-					?>
 					<div id="most-recent-colors">
 						<div class="picker">
 							<h2>Recent Colors</h2>
