@@ -8,34 +8,21 @@
 	$theme_name = $_POST["theme_name"];
 	$uncompressed = $_POST["file"];
 
-	/*
-	//no longer using alternate image paths - keep this here in case we do later on
-	//this preg_replace went from url(jqm/1.1.0-rc.1/images/....) to url(images/....)
-	//replace image paths with appropriate ones
-	$uncompressed = preg_replace_callback('/url\(\.\.\/jqm\/[^\/]*\//sim',
-		create_function(
-			'$matches',
-			'return "url(";'
-		), $uncompressed);
-	*/
-
 	//minifying CSS file
 	$comment_pos = strpos($uncompressed, "\n/* Swatches");
 	$comment = substr($uncompressed, 0, $comment_pos);
 	$css = substr($uncompressed, $comment_pos, strlen($uncompressed) - $comment_pos);
 
     $compressed = preg_replace_callback('/(\/\*.*?\*\/|\n|\t)/sim',
-        create_function(
-            '$matches',
-            'return "";'
-        ), $css);
+        function($matches) {
+            return "";
+        }, $css);
 
     // remove all around in ",", ":" and "{"
     $compressed = preg_replace_callback('/\s?(,|{|:){1}\s?/sim',
-        create_function(
-            '$matches',
-            'return $matches[1];'
-        ), $compressed);
+        function($matches) {
+            return $matches[1];
+        }, $compressed);
 
 	$compressed = $comment . $compressed;
 
