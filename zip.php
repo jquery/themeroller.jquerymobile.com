@@ -89,13 +89,10 @@
 		    $match = preg_replace("/url\(/", "", $match);
 		    $match = preg_replace("/\)/", "", $match);
 		}
-
+		$zip->addFromString("themes/" . $match, file_get_contents("http://code.jquery.com/mobile/" . $JQM_VERSION . "/" . $match));
 	}
-	$zip->addFromString("themes/" . $match, file_get_contents("http://code.jquery.com/mobile/" . $JQM_VERSION . "/" . $match));
 	$zip->addFromString("themes/" . $theme_name . ".css", $uncompressed);
 	$zip->addFromString("themes/" . $theme_name . ".min.css", $compressed);
-	//$zip->addFromString("js/jquery.mobile.min.js", htmlspecialchars(file_get_contents("http://code.jquery.com/mobile/latest/jquery.mobile.min.js")));
-	//$zip->addFromString("js/jquery.min.js", htmlspecialchars(file_get_contents("http://code.jquery.com/jquery.min.js")));
 
 	if ( $JQM_ICONS_TAG == "" ) {
 		$JQM_ICONS_LINK = "";
