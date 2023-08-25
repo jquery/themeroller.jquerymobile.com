@@ -6,8 +6,10 @@
 	 * - Remove any old ZIP file.
 	 * - Tell the client the public URL to this ZIP file.
 	 *
-	 * By default, the zips directory is assumed "zips" in the project directory.
-	 * You can override it using the THEMEROLLER_ZIPDIR environment variable.
+	 * By default, zip files are stored in the "zips/" subdirectory of
+	 * the document root (this directory). You can override it using the
+	 * THEMEROLLER_ZIPDIR environment variable, in which case you must
+	 * take care to serve that publicly from /zips on the same domain.
 	 */
 
 	require_once('version.php');
