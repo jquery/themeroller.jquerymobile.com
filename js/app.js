@@ -865,16 +865,6 @@ TR.initDialogs = function() {
         }
     }));
 
-    $( "#share" ).dialog( $.extend( {}, dialogObj, {
-        width: 800,
-        buttons: {
-            "Done": function() {
-                $( this ).find( "input" ).val( "" );
-                $( this ).dialog( "close" );
-            }
-        }
-    }));
-
     $( "#importing" ).dialog( $.extend( {}, dialogObj, {
         height: 70
     }));
@@ -954,30 +944,6 @@ TR.initDialogs = function() {
                     input.next().css( "background-color", input.val() );
                 });
         }
-    });
-
-
-    //ajax call performed when share link is clicked
-    $( "#share-button" ).click(function(e) {
-        e.preventDefault();
-
-        $( "#share" ).dialog( "open" );
-
-        var post_data = "ver=" + TR.version + "&file=" + encodeURIComponent( TR.styleBlock.text() );
-
-        $.ajax({
-            type: "post",
-            url: "share.php",
-            data: post_data,
-            beforeSend: function() {
-                $( "#share .loading-text" ).show();
-                $( "#share" ).dialog( "open" );
-            },
-            success: function( data ) {
-                $( "#share .loading-text" ).hide();
-                $( "#share input" ).val( data );
-            }
-        });
     });
 
     //help dialog

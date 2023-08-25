@@ -1,8 +1,5 @@
 <?php
     require_once( 'version.php' );
-    if ( isset($_GET['style_id']) ) {
-    	$style_id = $_GET['style_id'];
-    }
     if ( isset($_GET['ver']) ) {
         $JQM_VERSION = $_GET['ver'];
     }
@@ -135,39 +132,16 @@
 				</p>
 			</div>
 		</div>
-		
-		<div id="share" class="dialog" title=" ">
-			<h1><strong>Share</strong> Theme</h1>
-			<p>
-				Use this link to share a copy of your theme. People can download 
-				or edit a copy of the theme, but your version won’t be changed. 
-			</p>
-			<div class="input-wrapper">
-			    <input type="text" value="" />
-			    <span class="loading-text">
-			        <img src="images/ajax-load-black.gif" />
-    			    Loading...
-			    </span>
-			</div>
-			<div class="buttonpane">
-				<div class="separator"></div>
-				<p>
-					Important note: We can only store this theme URL on the server for 30 days, then it will be deleted. 
-					Download a theme to keep a copy safe that you can import later.
-				</p>
-			</div>
-		</div>
 
 		<div id="help" class="dialog" title=" ">
 			<h1 id="help-top"><strong>ThemeRoller Mobile Help</strong></h1>
 
-			<p>The ThemeRoller Mobile tool makes it easy to create custom-designed themes for your mobile site or app. Just pick colors, then share your theme URL, or download the theme and drop it into your site.</p>
+			<p>The ThemeRoller Mobile tool makes it easy to create custom-designed themes for your mobile site or app. Just pick colors, download the theme, and drop it into your site.</p>
 			<ul>
 				<li><a href="#theme-intro">Theme basics</a></li>
 				<li><a href="#getting-started">Getting started</a></li>
 				<li><a href="#downloading">Downloading themes</a></li>
 				<li><a href="#importing">Importing themes</a></li>
-				<li><a href="#sharing">Sharing themes</a></li>
 				<li><a href="#supported">Supported browsers</a></li>
 			</ul>
 
@@ -176,18 +150,15 @@
 
 			<h3 id="getting-started">Getting Started <a href="#help-top" class="help-top">^ Top</a></h3>
 			<p>The ThemeRoller interface has 3 major zones: the left column contains the inspector panel, along the top is the QuickSwatch/Kuler bar, and below this is the preview window. </p>
-			<p>Use the <strong>inspector pane</strong> to set global theme settings on the first tab and tweak the individual style options for each swatch. Above the tabs, there are links to download, share, or import a theme.</p>
-			<p>In the <strong>QuickSwatch bar</strong>, you can turn the inspector feature on to automatically expand the relevant inspector section when you click on an element in the preview pane. Drag and drop a color from the QuickSwatch panel onto an element in the preview pane and the tool with automatically calculate text color and shadow, borders, gradients and even button states. The sliders make it easy to adjust the lightness and saturation of the colors. Click the Adobe Kuler Swatches to load pre-made color palettes from Adobe's popular color palette sharing site.</p>
+			<p>Use the <strong>inspector pane</strong> to set global theme settings on the first tab and tweak the individual style options for each swatch. Above the tabs, there are links to download, or import a theme.</p>
+			<p>In the <strong>QuickSwatch bar</strong>, you can turn the inspector feature on to automatically expand the relevant inspector section when you click on an element in the preview pane. Drag and drop a color from the QuickSwatch panel onto an element in the preview pane and the tool with automatically calculate text color and shadow, borders, gradients and even button states. The sliders make it easy to adjust the lightness and saturation of the colors.</p>
 				<p>The <strong>preview pane</strong> shows a sample of common jQuery Mobile widgets that live update each time you make a change to the theme so you can quickly test and tweak the theme.</p>
 
 				<h3 id="downloading">Downloading themes <a href="#help-top" class="help-top">^ Top</a></h3>
 				<p>Once you have created your final theme, click the <strong>Download Theme</strong> link at the top of the inspector panel. In the download dialog, give your theme a name and press the <strong>Download Zip</strong> button. This will generate a zip file that contains both the compressed (production-ready) and uncompressed (editable) theme files and a simple test page (index.html) to show that everything worked (whew) and instructions on how to add the theme to your site. It's pretty simple: link your custom theme in the head of the page followed by the jQuery Mobile structure theme and you're ready to go. </p>
 
 				<h3 id="importing">Importing themes <a href="#help-top" class="help-top">^ Top</a></h3>
-				<p>The import feature is primarily designed to make it easy to either edit a theme you've downloaded or to generate an updated version of a theme for a new release of the library. When you download a theme, be sure keep the uncompressed version of the theme CSS file because this is used in the import process. To import a theme, click the <strong>Import</strong> link and paste the entire contents of the uncompressed theme file (select all > copy > paste) into the text input in the dialog, and the system will parse the theme into an editable format for sharing and downloading.</p>
-
-				<h3 id="sharing">Sharing themes <a href="#help-top" class="help-top">^ Top</a></h3>
-				<p>To generate a theme URL that can be shared with others, click the <strong>Share</strong> link and copy the URL. Post it on Twitter and become a famous theme artist. Anyone that opens the shared URL can edit or download the theme, but this activity won't affect your original theme. Note that due to the high volume of traffic, we can only store your theme on the server for 30 days so shared links have an expiration date. Be sure to download a copy of your theme for safekeeping.</p>
+				<p>The import feature is primarily designed to make it easy to either edit a theme you've downloaded or to generate an updated version of a theme for a new release of the library. When you download a theme, be sure keep the uncompressed version of the theme CSS file because this is used in the import process. To import a theme, click the <strong>Import</strong> link and paste the entire contents of the uncompressed theme file (select all > copy > paste) into the text input in the dialog, and the system will parse the theme into an editable format for downloading or changing further.</p>
 
 				<h3 id="supported">Supported browsers <a href="#help-top" class="help-top">^ Top</a></h3>
 				<p>This is a beta version of a developer tool so we're committing to supporting the <strong>latest</strong> versions of popular desktop browsers: Chrome, Firefox, Safari. Even though the tool works in IE9, it doesn't support CSS gradients so we don't recommend recommend using this browser to create themes. If you're running into issues, maybe try a different browser or <a href="https://github.com/jquery/web-jquery-mobile-theme-roller/issues" target="new"><strong>log an issue</strong></a> in the tracker.</p>
@@ -252,15 +223,6 @@
 						<div class="text">
 							<span class="big">Import</span>
 							<span>or upgrade</span>
-						</div>
-					</div>
-				</div>
-				<div class="tb-button" id="share-button">
-					<div class="tb-button-inner">
-						<img src="images/share.png" alt="Share" />
-						<div class="text">
-							<span class="big">Share</span>
-							<span>theme link</span>
 						</div>
 					</div>
 				</div>
@@ -382,7 +344,7 @@
 			?>
 			
 			<?php
-    			if( isset($style) || isset($style_id) ) {
+    			if( isset($style) ) {
     			    echo '<div style="display: none" id="imported-style">true</div>';
     			}
 			?>
@@ -400,9 +362,6 @@
 					} else {
 						//If the file exists we add the CSS here, if not, we leave it blank for the JS to find on load
 						$file_path = "jqm/" . $JQM_VERSION . "/jqm.starter.theme.css";
-						if( isset($style_id) ) {
-							$file_path = "jqm/" . $JQM_VERSION . "/user_themes/" . $style_id . ".css";
-						}
 						if( is_file($file_path) ) {
 							echo file_get_contents( $file_path );
 						}
