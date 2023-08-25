@@ -1,4 +1,15 @@
 <?php
+	/**
+	 * This does the following:
+	 *
+	 * - Create a new ZIP file on disk for the requested theme options.
+	 * - Remove any old ZIP file.
+	 * - Tell the client the public URL to this ZIP file.
+	 *
+	 * By default, the zips directory is assumed "zips" in the project directory.
+	 * You can override it using the THEMEROLLER_ZIPDIR environment variable.
+	 */
+
 	require_once('version.php');
 	date_default_timezone_set('America/Los_Angeles');
 
@@ -26,17 +37,18 @@
 
 	$compressed = $comment . $compressed;
 
+	$zirDir = getenv('THEMEROLLER_ZIPDIR') ?: ( __DIR__ . '/zips' );
 	$zip = new ZipArchive();
 
-	if(!is_dir('zips')){
-		mkdir('zips');
+	if (!is_dir($zirDir)) {
+		mkdir($zirDir);
 	}
 
-	$dir = scandir('zips');
+	$dir = scandir($zirDir);
 	$today = date('His', strtotime('now'));
 
-	//Loop to detect if any other zips are being created at this very second,
-	//Also deletes zip that are older than 15 seconds
+	// Loop to detect if any other zip files are being created at this very second,
+	// Also delete any zip files that are older than 15 seconds
 	$last_file_num = 0;
 	foreach($dir as $file) {
 		if($file != '.' && $file != '..' && $file != '.DS_Store') {
@@ -50,15 +62,17 @@
 					$last_file_num = $file_num;
 				}
 				if(strtotime('now - 15 seconds') >= strtotime($time) || strtotime('now + 15 seconds') <= strtotime($time)) {
-					unlink('zips/' . $file);
+					unlink($zirDir . '/' . $file);
 				}
 			}
 		}
 	}
-	$filename = "./zips/jquery-mobile-theme-" .  $today . "-" . $last_file_num . ".zip";
+	$filename = "jquery-mobile-theme-" .  $today . "-" . $last_file_num . ".zip";
+	$filepath = "$zirDir/$filename";
+	$url = "./zips/$filename";
 
-	if ($zip->open($filename, ZIPARCHIVE::CREATE)!==TRUE) {
-	    exit("cannot open <$filename>\n");
+	if ($zip->open($filepath, ZIPARCHIVE::CREATE)!==TRUE) {
+	    exit("cannot open <$filepath>\n");
 	}
 
 	//add files to zip and echo it back to page
@@ -109,5 +123,4 @@
 
 	$zip->addFromString("index.html", include('inc/index.html.inc'));
 	$zip->close();
-	echo ($filename);
-?>
+	echo $url;
