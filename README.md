@@ -1,11 +1,7 @@
-## README
+## jQuery Mobile ThemeRoller
 
-This is the new repo for the jQuery Mobile ThemeRoller tool.
+Notes on PHP configs for the hosted version:
 
-Notes on PHP configs for hosted version of jQm ThemeRoller:
+* The PHP function call `file_get_contents()` is used in a few places. For this to work, the PHP configuration `allow_url_fopen` must be enabled (which it is by default).
 
-1. The php function call file_get_contents() is used in a few places. In order for this to work, the php configuration allow_url_fopen must be set to true.
-
-2. When a user generates a 'Share Theme' link, the theme.css file is hosted temporarily (The script that stores the files and generates the url also runs a cleanup script to ensure no files older than 30 days are on the server). There must be enough space to accommodate many themes being stored here at once.
-
-3. When a user clicks "Download ZIP" the server must be able to create the zip and its contents, as well as store it temporarily (again self-cleaning script keeps files only 15 seconds old) so it can be downloaded through the browser.
+* When a user clicks "Download ZIP" the server must be able to create the zip and its contents, as well as store it temporarily (again self-cleaning script keeps files only 15 seconds old) so it can be downloaded through the browser. This requires that PHP can create a writable "zips" folder in the root of the repository checkout. Alternatively, you can create one ahead of time. You can override this location via the `THEMEROLLER_ZIPDIR` environment variable.

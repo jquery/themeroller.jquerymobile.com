@@ -1,4 +1,3 @@
 .DS_Store
-zips/*.zip
 .htaccess
-build/*
+/zips
