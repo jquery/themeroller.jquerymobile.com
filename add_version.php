@@ -10,7 +10,7 @@
 
         chdir( 'jqm' );
         rrmdir( $jqm );
-        
+
         //get most recent version of jqm
         $versions = preg_grep('/^([^.])/', scandir( "." ));
         $most_recent = '';
@@ -19,15 +19,15 @@
                 $most_recent = $version;
             }
         }
-        
+
         mkdir( $jqm );
         chdir( $jqm );
-    
+
         //Get the jqm zip file
         echo "Downloading the jQuery Mobile ZIP file...\n";
         getFile( $jqm_zip, $jqm_dir . ".zip" );
 
-        //Extract the files to a temporary directory 
+        //Extract the files to a temporary directory
         $zip = new ZipArchive;
         if ( $zip->open( $jqm_dir . ".zip" ) === true ) {
             $zip->extractTo( $jqm_dir );
@@ -89,10 +89,7 @@
         echo "Generating Preview Markup...\n";
         $contents = @file_get_contents( '../' . $most_recent . '/preview.html' );
         writeFile( 'preview.html', $contents );
-        //Create user_themes directory with README placeholder
-        echo "Creating user_themes directory...\n";
-        mkdir( "user_themes" );
-        writeFile( 'user_themes/README.md', 'This is where theme files are temporarily stored when a user "shares" a theme.' );
+
         //Create empty panel.js file
         writeFile( 'panel.js', '' );
         //Altering version.php with new key value pair for jQm, and jQuery versions
@@ -100,7 +97,7 @@
         $contents = file_get_contents( 'version.php' );
         $contents = preg_replace( "/(\\\$ALL_JQUERY_VERSIONS.*)\n.?\);/s", "$1,\n\t\"" . $jqm . "\" => \"" . $jq . "\"\n);", $contents, 1 );
         writeFile( 'version.php', $contents );
-        
+
     } else {
         echo 'This script must be executed via command line';
     }
@@ -120,26 +117,26 @@
             curl_setopt($handle, CURLOPT_RETURNTRANSFER, 1);
             $contents = curl_exec( $handle );
             curl_close( $handle );
-        
+
             //write them out to local file
             writeFile( $filename, $contents );
             return true;
         }
     }
-    
+
     function writeFile( $filename, $string ) {
         $file = fopen( $filename, 'w' );
         fwrite( $file, $string );
         fclose( $file );
     }
-    
+
     function createStarter( $default, $starter ) {
         $contents = file_get_contents( $default );
-        
+
         //replace all 3 digit hex with matching 6 digit ones
         $contents = preg_replace( "/\#([A-Fa-f0-9])([A-Fa-f0-9])([A-Fa-f0-9])\s/s", "#$1$1$2$2$3$3 ", $contents );
         writeFile( $default, $contents );
-        
+
         $contents = preg_replace( "/\/\*\s*B\s*-*\*\/.*(\/\*\s*Structure\s*-*\*\/)/s", "$1", $contents );
 
         writeFile( $starter, $contents );
