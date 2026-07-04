@@ -15,7 +15,7 @@
         $versions = preg_grep('/^([^.])/', scandir( "." ));
         $most_recent = '';
         foreach( $versions as $version ) {
-            if ( versionCompare( $version, $most_recent ) ) {
+            if ( version_compare( $version, $most_recent, '>' ) ) {
                 $most_recent = $version;
             }
         }
