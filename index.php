@@ -1,12 +1,12 @@
 <?php
     require_once( 'version.php' );
-    if ( isset($_GET['ver']) ) {
+    if ( is_string(@$_GET['ver']) && isset($ALL_JQUERY_VERSIONS[$_GET['ver']]) ) {
         $JQM_VERSION = $_GET['ver'];
     }
     if ( isset($_POST['style']) ) {
     	$style = urldecode($_POST['style']);
     }
-    $JQUERY_VERSION = $ALL_JQUERY_VERSIONS[ $JQM_VERSION ] ? $ALL_JQUERY_VERSIONS[ $JQM_VERSION ] : "1.6.4";
+    $JQUERY_VERSION = $ALL_JQUERY_VERSIONS[ $JQM_VERSION ] ?? '1.6.4';
 ?>
 <!DOCTYPE html>
 <html>             
@@ -348,26 +348,26 @@
     			    echo '<div style="display: none" id="imported-style">true</div>';
     			}
 			?>
-			<div id="starter"><?php
+			<pre id="starter"><?php
 					//If the file exists we add the CSS here, if not, we leave it blank for the JS to find on load
 					$file_path = "jqm/" . $JQM_VERSION . "/jqm.starter.theme.css";
 					if( is_file($file_path) ) {
-						echo file_get_contents( $file_path );
+						echo htmlspecialchars( file_get_contents( $file_path ) );
 					}
 				?>
-			</div>
-			<div id="style"><?php
+			</pre>
+			<pre id="style"><?php
 					if( isset($style) ) {
-						echo $style;
+						echo htmlspecialchars( $style );
 					} else {
 						//If the file exists we add the CSS here, if not, we leave it blank for the JS to find on load
 						$file_path = "jqm/" . $JQM_VERSION . "/jqm.starter.theme.css";
 						if( is_file($file_path) ) {
-							echo file_get_contents( $file_path );
+							echo htmlspecialchars( file_get_contents( $file_path ) );
 						}
 					}
 				?>
-			</div>
+			</pre>
 
 		</div>
 	</div>
