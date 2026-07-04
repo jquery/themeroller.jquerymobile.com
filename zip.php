@@ -15,11 +15,26 @@
 	require_once('version.php');
 	date_default_timezone_set('America/Los_Angeles');
 
-    $JQM_VERSION = $_POST["ver"];
+    if (is_string(@$_POST['ver']) && isset($ALL_JQUERY_VERSIONS[$_POST['ver']])) {
+        $JQM_VERSION = $_POST['ver'];
+    }
     $JQUERY_VERSION = $ALL_JQUERY_VERSIONS[ $JQM_VERSION ];
 
-	$theme_name = $_POST["theme_name"];
-	$uncompressed = $_POST["file"];
+	$theme_name = strtr($_POST['theme_name'] ?? '', [
+		'/' => '',
+		'\\' => '',
+	]);
+	if (!$theme_name) {
+		http_response_code(400);
+		print "Missing parameter: theme_name\n";
+		exit;
+	}
+	$uncompressed = $_POST['file'] ?? '';
+	if (!$uncompressed) {
+		http_response_code(400);
+		print "Missing parameter: file\n";
+		exit;
+	}
 
 	//minifying CSS file
 	$comment_pos = strpos($uncompressed, "\n/* Swatches");

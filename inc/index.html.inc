@@ -1,10 +1,13 @@
-<?php return <<<EOF
+<?php
+
+$theme_name_encoded = htmlspecialchars(rawurlencode($theme_name));
+return <<<EOF
 <html>
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>jQuery Mobile: Theme Download</title>
-	<link rel="stylesheet" href="themes/$theme_name.min.css" />$JQM_ICONS_LINK
+	<link rel="stylesheet" href="themes/$theme_name_encoded.min.css" />$JQM_ICONS_LINK
 	<link rel="stylesheet" href="http://code.jquery.com/mobile/$JQM_VERSION/jquery.mobile.structure-$JQM_VERSION.min.css" />
 	<script src="http://code.jquery.com/jquery-$JQUERY_VERSION.min.js"></script>
 	<script src="http://code.jquery.com/mobile/$JQM_VERSION/jquery.mobile-$JQM_VERSION.min.js"></script>
@@ -17,7 +20,7 @@
 		<div data-role="content" data-theme="a">
 			<p>Your theme was successfully downloaded. You can use this page as a reference for how to link it up!</p>
 			<pre>
-<strong>&lt;link rel=&quot;stylesheet&quot; href=&quot;themes/$theme_name.min.css&quot; /&gt;</strong>$JQM_ICONS_LINK_DOC
+<strong>&lt;link rel=&quot;stylesheet&quot; href=&quot;themes/$theme_name_encoded.min.css&quot; /&gt;</strong>$JQM_ICONS_LINK_DOC
 &lt;link rel=&quot;stylesheet&quot; href=&quot;http://code.jquery.com/mobile/$JQM_VERSION/jquery.mobile.structure-$JQM_VERSION.min.css&quot; /&gt;
 &lt;script src=&quot;http://code.jquery.com/jquery-$JQUERY_VERSION.min.js&quot;&gt;&lt;/script&gt;
 &lt;script src=&quot;http://code.jquery.com/mobile/$JQM_VERSION/jquery.mobile-$JQM_VERSION.min.js&quot;&gt;&lt;/script&gt;
