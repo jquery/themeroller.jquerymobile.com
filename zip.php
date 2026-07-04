@@ -15,10 +15,10 @@
 	require_once('version.php');
 	date_default_timezone_set('America/Los_Angeles');
 
-    if (is_string(@$_POST['ver']) && isset($ALL_JQUERY_VERSIONS[$_POST['ver']])) {
-        $JQM_VERSION = $_POST['ver'];
-    }
-    $JQUERY_VERSION = $ALL_JQUERY_VERSIONS[ $JQM_VERSION ];
+	if (is_string(@$_POST['ver']) && isset($ALL_JQUERY_VERSIONS[$_POST['ver']])) {
+		$JQM_VERSION = $_POST['ver'];
+		$JQUERY_VERSION = $ALL_JQUERY_VERSIONS[ $JQM_VERSION ];
+	}
 
 	$theme_name = strtr($_POST['theme_name'] ?? '', [
 		'/' => '',

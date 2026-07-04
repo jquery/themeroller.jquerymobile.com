@@ -1,12 +1,12 @@
 <?php
-    require_once( 'version.php' );
-    if ( is_string(@$_GET['ver']) && isset($ALL_JQUERY_VERSIONS[$_GET['ver']]) ) {
-        $JQM_VERSION = $_GET['ver'];
-    }
-    if ( isset($_POST['style']) ) {
-    	$style = urldecode($_POST['style']);
-    }
-    $JQUERY_VERSION = $ALL_JQUERY_VERSIONS[ $JQM_VERSION ] ?? '1.6.4';
+	require_once 'version.php';
+	if ( is_string(@$_GET['ver']) && isset($ALL_JQUERY_VERSIONS[$_GET['ver']]) ) {
+		$JQM_VERSION = $_GET['ver'];
+		$JQUERY_VERSION = $ALL_JQUERY_VERSIONS[ $JQM_VERSION ];
+	}
+	if ( isset($_POST['style']) ) {
+		$style = urldecode($_POST['style']);
+	}
 ?>
 <!DOCTYPE html>
 <html>             
